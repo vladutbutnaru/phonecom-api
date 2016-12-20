@@ -119,7 +119,7 @@
 				],
                 "parameters": [
                     {
-                        "name": "filters",
+                        "name": "filters[id]",
                          "in": "query",
                         "description": "Filters to apply",
                         "required": false,
@@ -131,7 +131,7 @@
 					},
                     
                      {
-                        "name": "sort",
+                        "name": "sort[id]",
                          "in": "query",
                          "description": "Sort rule to apply",
                         "required": false,
@@ -428,7 +428,7 @@
                     
                     },
                     {
-                        "name": "filters",
+                        "name": "filters[id]",
                          "in": "query",
                         "description": "Filters to apply",
                         "required": false,
@@ -440,7 +440,7 @@
 					},
                     
                      {
-                        "name": "sort",
+                        "name": "sort[id]",
                          "in": "query",
                          "description": "Sort rule to apply",
                         "required": false,
@@ -701,7 +701,7 @@
                         "description": "Invalid parameters specified"
                     },
                      "404": {
-                        "description": "No sub accounts found"
+                        "description": "Endpoint not responding"
                     }
                 },
                  "security": [
@@ -854,7 +854,7 @@
                     "type": "string"
                 }
                 , "master_account": {
-                    "$ref": "#/definitions/Master_Account"
+                    "$ref": "#/definitions/SubAccountSummary"
                 }
                 , "contact": {
                     "$ref": "#/definitions/Contact"
@@ -867,7 +867,7 @@
                 "name": "Account"
             }
         },
-        "Master_Account": {
+        "SubAccountSummary": {
             "type": "object"
             , "properties": {
                 "id": {
@@ -879,7 +879,7 @@
                 }
             }
             , "xml": {
-                "name": "Master_Account"
+                "name": "SubAccountSummary"
             }
         },
         "Address": {
