@@ -527,10 +527,10 @@
             "parameters":[
                {
                   "name":"account_id",
-                  "in":"path",
-                  "description":"Account ID",
-                  "required":true,
-                  "type":"integer"
+                   "in":"path",
+                   "description":"Account ID",
+                   "required":true,
+                   "type":"integer"
                },
                {
                   "name":"data",
