@@ -36,6 +36,14 @@
             "url":"https://apidocs.phone.com"
             }
 		  },
+		  {
+            "name": "contacts",
+            "description": "This services allows you to interact with your contacts.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
           {
             "name": "subaccount",
             "description": "This services allows you to interact with your subaccounts.",
@@ -701,7 +709,364 @@
                 }
             }
         },
-      
+
+      "/accounts/{account_id}/extensions/{extension_id}/contacts": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Show a list of address book contacts",
+                "description": "",
+                "operationId": "list-account-extension-contacts",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "filters[id]",
+                        "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[group_id]",
+                        "in": "query",
+                        "description": "Group filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[updated_at]",
+                        "in": "query",
+                        "description": "Updated At filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[id]",
+                        "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[updated_at]",
+                        "in": "query",
+                        "description": "Updated At sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListAccountExtensionContacts"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Add a new address book contact for an extension",
+                "description": "",
+                "operationId": "create-account-extension-contact",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Contact data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateContactParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "replace-account-extension-contact",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Contact data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateContactParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+        "/accounts/{account_id}/extensions/{extension_id}/contacts/{contact_id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Retrieve the details of an address book contact",
+                "description": "",
+                "operationId": "get-account-extension-contact",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "contact_id",
+                        "in": "path",
+                        "description": "Contact ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "delete-account-extension-contact",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "contact_id",
+                        "in": "path",
+                        "description": "Contact ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteAccountExtensionContact"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+
       "/accounts/{account_id}/subaccounts": {
             "get": {
                 "tags": [
@@ -1184,6 +1549,263 @@
        
    },
    "definitions":{
+
+	   "ListAccountExtensionContacts": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "type": "string"
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListAccountExtensionContacts"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/ContactListAccountExtensionContacts"
+                }
+            }
+        },
+        "SortListAccountExtensionContacts": {
+            "type": "object",
+            "properties": {
+                "id": {
+					"type": "string"
+				}
+            }
+        },
+        "ContactListAccountExtensionContacts": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "prefix": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "middle_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phonetic_first_name": {
+                    "type": "string"
+                },
+                "phonetic_middle_name": {
+                    "type": "string"
+                },
+                "phonetic_last_name": {
+                    "type": "string"
+                },
+                "suffix": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "company": {
+                    "type": "string"
+                },
+                "department": {
+                   "type": "string" 
+                },
+                "job_title": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "integer"
+                },
+                "emails": {
+                    "$ref": "#/definitions/Emails"
+                },
+                "phone_numbers": {
+                    "$ref": "#/definitions/PhoneNumbers"
+                },
+                "addresses": {
+                    "$ref": "#/definitions/Addresses"
+                },
+                "group": {
+                    "$ref": "#/definitions/GroupListAccountExtensionContacts"
+                }
+            }
+        },
+        "Emails": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Email"
+            }
+        },
+        "Email": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "PhoneNumbers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/PhoneNumber"
+            }
+        },
+        "PhoneNumber": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "normalized": {
+                    "type": "string"
+                }
+            }
+        },
+        "Addresses": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/AddressListAccountExtensionContacts"
+            }
+        },
+        "AddressListAccountExtensionContacts": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "zip": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                }
+            }
+        },
+        "GroupListAccountExtensionContacts": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateContactParams": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "description": "First Name"
+                },
+                "middle_name": {
+                    "type": "string",
+                    "description": "Middle Name"
+                },
+                "last_name": {
+                    "type": "string",
+                    "description": "Last Name"
+                },
+                "prefix": {
+                    "type": "string",
+                    "description": "Prefix"
+                },
+                "phonetic_first_name": {
+                    "type": "string",
+                    "description": "Phonetic First Name"
+                },
+                "phonetic_middle_name": {
+                    "type": "string",
+                    "description": "Phonetic Middle Name"
+                },
+                "phonetic_last_name": {
+                    "type": "string",
+                    "description": "Phonetic Last Name"
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Suffix"
+                },
+                "nickname": {
+                    "type": "string",
+                    "description": "Nickname"
+                },
+                "company": {
+                    "type": "string",
+                    "description": "Company Name"
+                },
+                "department": {
+                    "type": "string",
+                    "description": "Department Name"
+                },
+                "job_title": {
+                    "type": "string",
+                    "description": "Job Title"
+                },
+                "emails": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    },
+                    "description": "Email Addresses"
+                },
+                "phone_numbers": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    },
+                    "description": "Phone Numbers"
+                },
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    },
+                    "description": "Addresses"
+                },
+                "group": {
+                    "type": "string",
+                    "description": "Contact Group //type: object"
+                }
+            }
+        },
+        "DeleteAccountExtensionContact": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
 
 	  "ListAccountExtensions": {
             "type": "object",
