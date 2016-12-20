@@ -220,35 +220,35 @@
                   "type":"integer"
                },
                {
-                  "name":"filters_id",
+                  "name":"filters[id]",
                   "in":"query",
                   "description":"ID filter",
                   "required":false,
                   "type":"string"
                },
                {
-                  "name":"filters_direction",
+                  "name":"filters[direction]",
                   "in":"query",
                   "description":"Direction filter",
                   "required":false,
                   "type":"string"
                },
                {
-                  "name":"filters_from",
+                  "name":"filters[from]",
                   "in":"query",
                   "description":"Caller ID filter",
                   "required":false,
                   "type":"string"
                },
                {
-                  "name":"sort_id",
+                  "name":"sort[id]",
                   "in":"query",
                   "description":"Sort by ID",
                   "required":false,
                   "type":"string"
                },
                {
-                  "name":"sort_created_at",
+                  "name":"sort[created_at]",
                   "in":"query",
                   "description":"Sort by created time of message",
                   "required":false,
