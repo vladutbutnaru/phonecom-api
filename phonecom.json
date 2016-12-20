@@ -29,6 +29,14 @@
          }
           },
           {
+            "name": "extensions",
+            "description": "This services allows you to interact with your account extensions.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
+          {
             "name": "subaccount",
             "description": "This services allows you to interact with your subaccounts.",
             "externalDocs":{
@@ -408,6 +416,291 @@
             }
          }
       },
+
+      "/accounts/{account_id}/extensions": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "extensions"
+                ],
+                "summary": "Get a list of extensions visible to the authenticated user or client",
+                "description": "",
+                "operationId": "list-account-extensions",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "filters[id]",
+                        "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[extension]",
+                        "in": "query",
+                        "description": "Extension filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[name]",
+                        "in": "query",
+                        "description": "Name filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[id]",
+                        "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[extension]",
+                        "in": "query",
+                        "description": "Extension sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[name]",
+                        "in": "query",
+                        "description": "Name sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListAccountExtensions"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "extensions"
+                ],
+                "summary": "Create an individual extension",
+                "description": "",
+                "operationId": "create-account-extension",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Account Extensions Data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateAccountExtensionParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Extension"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+        "/accounts/{account_id}/extensions/{extension_id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "extensions"
+                ],
+                "summary": "Show details of an individual extension",
+                "description": "",
+                "operationId": "get-account-extension",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Extension"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "extensions"
+                ],
+                "summary": "Replace an individual extension",
+                "description": "",
+                "operationId": "replace-account-extension",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Account Extensions Data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ReplaceAccountExtensionParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Extension"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
       
       "/accounts/{account_id}/subaccounts": {
             "get": {
@@ -891,6 +1184,442 @@
        
    },
    "definitions":{
+
+	  "ListAccountExtensions": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "$ref": "#/definitions/FilterListAccountExtensions"
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListAccountExtensions"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/Extension"
+                }
+            }
+        },
+        "FilterListAccountExtensions": {
+            "type": "object",
+            "properties": {
+                "start_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "SortListAccountExtensions": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "Extension": {
+            "type": "object",
+            "required": [
+                "id",
+                "usage_type",
+                "extension",
+                "name",
+                "full_name",
+                "timezone",
+                "name_greeting",
+                "include_in_directory",
+                "caller_id",
+                "local_area_code",
+                "enable_call_waiting",
+                "enable_outbound_calls",
+                "voicemail",
+                "call_notifications"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "usage_type": {
+                    "type": "string"
+                },
+                "extension": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "timezone": {
+                    "type": "string"
+                },
+                "name_greeting": {
+                    "$ref": "#/definitions/NameGreeting"
+                },
+                "include_in_directory": {
+                    "type": "boolean"
+                },
+                "caller_id": {
+                    "type": "string"
+                },
+                "local_area_code": {
+                    "type": "string"
+                },
+                "enable_call_waiting": {
+                    "type": "boolean"
+                },
+                "enable_outbound_calls": {
+                    "type": "boolean"
+                },
+                "voicemail": {
+                    "$ref": "#/definitions/Voicemail"
+                },
+                "call_notifications": {
+                    "$ref": "#/definitions/Notification"
+                },
+                "device_membership": {
+                    "$ref": "#/definitions/DeviceMembership"
+                },
+                "route": {
+                    "$ref": "#/definitions/Route"
+                }
+            }
+        },
+        "NameGreeting": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Voicemail": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "greeting": {
+                    "$ref": "#/definitions/Greeting"
+                },
+                "attachments": {
+                    "type": "string"
+                },
+                "notifications": {
+                    "$ref": "#/definitions/Notification"
+                },
+                "transcription": {
+                    "type": "string"
+                }
+            }
+        },
+        "Greeting": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "alternate": {
+                    "$ref": "#/definitions/Alternate"
+                },
+                "standard": {
+                  "$ref": "#/definitions/Standard"  
+                },
+                "enable_leave_message_prompt": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Alternate": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Standard": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Notification": {
+            "type": "object",
+            "properties": {
+                "emails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sms": {
+                    "type": "string"
+                }
+            }
+        },
+        "DeviceMembership": {
+            "type": "object",
+            "properties": {
+                "line": {
+                    "type": "integer"
+                },
+                "device": {
+                    "$ref": "#/definitions/Device"
+                }
+            }
+        },
+        "Device": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Route": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateAccountExtensionParams": {
+            "type": "object",
+            "properties": {
+                "caller_id": {
+                    "type": "string",
+                    "description": "Caller ID"
+                },
+                "usage_type": {
+                    "type": "string",
+                    "description": "Extension type"
+                },
+                "allows_call_waiting": {
+                    "type": "boolean",
+                    "description": "Allows call waiting"
+                },
+                "extension": {
+                    "type": "integer",
+                    "description": "Extension number (auto-generated if empty)"
+                },
+                "include_in_directory": {
+                    "type": "boolean",
+                    "description": "Include in dial-by-name directory"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name (auto-generated if empty)"
+                },
+                "full_name": {
+                    "type": "string",
+                    "description": "Contact name"
+                },
+                "timezone": {
+                    "type": "string",
+                    "description": "Timezone"
+                },
+                "name_greeting": {
+                    "type": "string",
+                    "description": "Recording lookup object"
+                },
+                "voicemail[greeting][alternate]": {
+                    "type": "string",
+                    "description": "Recording lookup object"
+                },
+                "local_area_code": {
+                    "type": "integer",
+                    "description": "Local area code"
+                },
+                "voicemail[greeting][enable_leave_message_prompt]": {
+                    "type": "boolean",
+                    "description": "Enable the \"leave a message\" prompt for voicemail"
+                },
+                "voicemail[enabled]": {
+                    "type": "boolean",
+                    "description": "Voicemail enabled"
+                },
+                "enable_outbound_calls": {
+                    "type": "boolean",
+                    "description": "Enable outgoing calls"
+                },
+                "enable_call_waiting": {
+                    "type": "boolean",
+                    "description": "Enable Call Waiting"
+                },
+                "voicemail[password]": {
+                    "type": "integer",
+                    "description": "Voicemail password"
+                },
+                "voicemail[greeting][type]": {
+                    "type": "string",
+                    "description": "Voicemail greeting type"
+                },
+                "voicemail[greeting][standard]": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "voicemail[transcription]": {
+                    "type": "string",
+                    "description": "Voicemail transcription type"
+                },
+                "voicemail[notifications][emails]": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Email notifications for voicemails. Can be a single email or an array of emails //type: mixed"
+                },
+                "voicemail[notifications][sms]": {
+                    "type": "string",
+                    "description": "SMS notifications for voicemails"
+                },
+                "call_notifications[emails]": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Email notifications for calls. Can be a single email or an array of emails  //type: mixed"
+                },
+                "call_notifications[sms]": {
+                    "type": "string",
+                    "description": "SMS notifications for calls"
+                }
+            }
+        },
+        "ReplaceAccountExtensionParams": {
+            "type": "object",
+            "properties": {
+                "voicemail[greeting][alternate]": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "name_greeting": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name (required)"
+                },
+                "timezone": {
+                    "type": "string",
+                    "description": "Timezone"
+                },
+                "include_in_directory": {
+                    "type": "boolean",
+                    "description": "Include in dial-by-name directory"
+                },
+                "extension": {
+                    "type": "integer",
+                    "description": "Extension number (required)"
+                },
+                "enable_outbound_calls": {
+                    "type": "boolean",
+                    "description": "Enable outgoing calls"
+                },
+                "usage_type": {
+                    "type": "string",
+                    "description": "Extension type"
+                },
+                "voicemail[password]": {
+                    "type": "integer",
+                    "description": "Voicemail password"
+                },
+                "full_name": {
+                    "type": "string",
+                    "description": "Contact name"
+                },
+                "enable_call_waiting": {
+                    "type": "boolean",
+                    "description": "Enable Call Waiting"
+                },
+                "voicemail[greeting][standard]": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "voicemail[greeting][type]": {
+                    "type": "string",
+                    "description": "Voicemail greeting type"
+                },
+                "caller_id": {
+                    "type": "string",
+                    "description": "Caller ID"
+                },
+                "local_area_code": {
+                    "type": "integer",
+                    "description": "Local area code"
+                },
+                "voicemail[enabled]": {
+                    "type": "boolean",
+                    "description": "Voicemail enabled"
+                },
+                "voicemail[greeting][enable_leave_message_prompt]": {
+                    "type": "boolean",
+                    "description": "Use leave message prompt after voicemail"
+                },
+                "voicemail[transcription]": {
+                    "type": "string",
+                    "description": "Voicemail transcription type"
+                },
+                "voicemail[notifications][emails]": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Email notifications for voicemails. Can be a single email or an array of emails //type: mixed"
+                },
+                "voicemail[notifications][sms]": {
+                    "type": "string",
+                    "description": "SMS notifications for voicemails"
+                },
+                "call_notifications[emails]": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Email notifications for calls. Can be a single email or an array of emails //type: mixed"
+                },
+                "call_notifications[sms]": {
+                    "type": "string",
+                    "description": "SMS notifications for calls"
+                },
+                "route": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Route object lookup (must belong to this extension) //type: mixed"
+                }
+            }
+        },
+
       "Sms":{
          "type":"object",
          "required":[
