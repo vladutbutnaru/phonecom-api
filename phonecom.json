@@ -1,0 +1,1071 @@
+{
+   "swagger":"2.0",
+   "info":{
+      "description":"This is a Phone.com api Swagger definition",
+      "version":"1.0.0",
+      "title":"Phone.com API",
+      "contact":{
+         "email":"contact@phone.com"
+      }
+   },
+   "host":"api.phone.com",
+   "basePath":"/v4",
+   "tags":[
+      {
+         "name":"sms",
+         "description":"Create, list or get SMS",
+         "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+         }
+      },
+         
+          {
+            "name": "account",
+            "description": "This service allows you to interact with your accounts",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+         }
+          },
+          {
+            "name": "subaccount",
+            "description": "This services allows you to interact with your subaccounts.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+         }
+		},
+		 {
+            "name": "call-logs",
+            "description": "The Call Logs API returns a list of call detail records for the account.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+         }
+		}
+   ],
+   "securityDefinitions":{
+      "bearer":{
+         "type":"apiKey",
+         "name":"Authorization",
+         "in":"header"
+      }
+   },
+   "schemes":[
+      "https"
+   ],
+   "paths":{
+      "/accounts/{account_id}": {
+            "get": {
+                "tags": [
+					"account"
+				],
+                 "summary": "Find Account by ID",
+                 "description": "Returns a single account",
+                 "operationId": "getAccountById",
+                 "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+                 "produces": [
+					"application/json"
+				],
+                "parameters": [
+                    {
+                        "name": "account_id", 
+                         "in": "path",
+                         "description": "ID of account to return", 
+                        "required": true, 
+                        "type": "integer", 
+                        "format": "int64"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/Account"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid ID supplied"
+                    },
+                     "404": {
+                        "description": "Account not found"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            }
+        },
+         "/accounts": {
+            "get": {
+                "tags": [
+					"account"
+				],
+                 "summary": "Get a list of accounts visible to the authenticated user or client",
+                 "description": "This service lists the accounts accessible to the authenticated client. In most cases, there will only be one such account",
+                 "operationId": "listAccounts",
+                 "consumes":[
+               "application/json"
+            ],
+                 "produces": [
+
+				 "application/json"
+				],
+                "parameters": [
+                    {
+                        "name": "filters",
+                         "in": "query",
+                        "description": "Filters to apply",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                    
+                     {
+                        "name": "sort",
+                         "in": "query",
+                         "description": "Sort rule to apply",
+                        "required": false,
+                         "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                   
+					},
+                    
+                    {
+                        "name": "limit",
+                         "in": "query",
+                         "description": "Max results",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                    {
+                        "name": "offset",
+                         "in": "query",
+                         "description": "Results to skip",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                     {
+                        "name": "fields",
+                         "in": "query",
+                         "description": "Field set",
+                         "required": false,
+                        "type": "string"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/ListAccountsResponse"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                     "404": {
+                        "description": "No accounts found"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            }
+        },
+        
+      "/accounts/{account_id}/sms":{
+         "get":{
+            "security":[
+               {
+                  "bearer":[]
+               }
+            ],
+            "tags":[
+               "sms"
+            ],
+            "summary":"Get a list of SMS messages for an account",
+            "description":"",
+            "operationId":"list-account-sms",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/xml",
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"account_id",
+                  "in":"path",
+                  "description":"Account ID",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"filters_id",
+                  "in":"query",
+                  "description":"ID filter",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"filters_direction",
+                  "in":"query",
+                  "description":"Direction filter",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"filters_from",
+                  "in":"query",
+                  "description":"Caller ID filter",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"sort_id",
+                  "in":"query",
+                  "description":"Sort by ID",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"sort_created_at",
+                  "in":"query",
+                  "description":"Sort by created time of message",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"limit",
+                  "in":"query",
+                  "description":"Max results",
+                  "required":false,
+                  "type":"integer"
+               },
+               {
+                  "name":"offset",
+                  "in":"query",
+                  "description":"Results to skip",
+                  "required":false,
+                  "type":"integer"
+               },
+               {
+                  "name":"fields",
+                  "in":"query",
+                  "description":"Field set",
+                  "required":false,
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"successful operation",
+                  "schema":{
+                     "$ref":"#/definitions/ListSms"
+                  }
+               },
+               "422":{
+                  "description":"Invalid parameters specified"
+               },
+               "404":{
+                  "description":"No accounts found"
+               }
+            }
+         },
+         "post":{
+            "security":[
+               {
+                  "bearer":[ ]
+               }
+            ],
+            "tags":[
+               "sms"
+            ],
+            "summary":"Send a SMS to one or a group of recipients",
+            "description":"",
+            "operationId":"create-account-sms",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/xml",
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"account_id",
+                  "in":"path",
+                  "description":"Account ID",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"data",
+                  "in":"body",
+                  "description":"SMS data",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/CreateSmsParams"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"",
+                  "schema":{
+                     "$ref":"#/definitions/Sms"
+                  }
+               },
+               "422":{
+                  "description":"Invalid parameters specified"
+               },
+               "404":{
+                  "description":"No accounts found"
+               }
+            }
+         }
+      },
+      "/accounts/{account_id}/sms/{sms_id}":{
+         "get":{
+            "security":[
+               {
+                  "bearer":[
+
+                  ]
+               }
+            ],
+            "tags":[
+               "sms"
+            ],
+            "summary":"Show details of an individual SMS",
+            "description":"",
+            "operationId":"get-account-sms",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/xml",
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"account_id",
+                  "in":"path",
+                  "description":"Account ID",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "in":"path",
+                  "name":"sms_id",
+                  "description":"SMS ID",
+                  "required":true,
+                  "type":"integer"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"",
+                  "schema":{
+                     "$ref":"#/definitions/Sms"
+                  }
+               },
+               "422":{
+                  "description":"Invalid parameters specified"
+               },
+               "404":{
+                  "description":"No accounts found"
+               }
+            }
+         }
+      },
+      
+      "/accounts/{account_id}/subaccounts": {
+            "get": {
+                "tags": [
+					"subaccount"
+				],
+                 "summary": "Get a list of subaccounts for the authenticated user or client",
+                 "description": "This service lists the Subaccount of the authenticated client. In most cases, there will not be any.",
+                 "operationId": "listSubAccounts",
+                 "consumes":[
+               "application/json"
+            ],
+                 "produces": [
+
+				 "application/json"
+				],
+                "parameters": [
+                  
+                  {
+                    "name": "account_id",
+                         "in": "path",
+                         "description": "Account ID",
+                         "required": true,
+                         "type": "integer",
+                        "format": "int64"
+                    
+                    },
+                    {
+                        "name": "filters",
+                         "in": "query",
+                        "description": "Filters to apply",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                    
+                     {
+                        "name": "sort",
+                         "in": "query",
+                         "description": "Sort rule to apply",
+                        "required": false,
+                         "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                   
+					},
+                    
+                    {
+                        "name": "limit",
+                         "in": "query",
+                         "description": "Max results",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                    {
+                        "name": "offset",
+                         "in": "query",
+                         "description": "Results to skip",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                     {
+                        "name": "fields",
+                         "in": "query",
+                         "description": "Field set",
+                         "required": false,
+                        "type": "string"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/ListAccountsResponse"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                     "404": {
+                        "description": "No sub accounts found"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            },
+           "post":{
+            "security":[
+               {
+                  "bearer":[ ]
+               }
+            ],
+            "tags":[
+               "subaccount"
+            ],
+            "summary":"Add a subaccount for the authenticated user or client",
+            "description":"This service shows the details of an individual Subaccount.",
+            "operationId":"createSubaccount",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+             
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"account_id",
+                  "in":"path",
+                  "description":"Account ID",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"data",
+                  "in":"body",
+                  "description":"SMS data",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/Account"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"",
+                  "schema":{
+                     "$ref":"#/definitions/Account"
+                  }
+               },
+               "422":{
+                  "description":"Invalid parameters specified"
+               },
+               "404":{
+                  "description":"Invalid Endpoint"
+               }
+            }
+         }
+        },
+       
+       
+             "/accounts/{account_id}/call-logs": {
+            "get": {
+                "tags": [
+					"call-logs"
+				],
+                 "summary": "Get a list of call details associated with your account",
+                 "description": "This service lists the call logs for a given account.",
+                 "operationId": "listCallLogs",
+                 "consumes":[
+               "application/json"
+            ],
+                 "produces": [
+
+				 "application/json"
+				],
+                "parameters": [
+                  
+                  {
+                    "name": "account_id",
+                         "in": "path",
+                         "description": "Account ID",
+                         "required": true,
+                         "type": "integer",
+                        "format": "int64"
+                    
+                    },
+                    {
+                        "name": "filters[id]",
+                         "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                     {
+                        "name": "filters[start_time]",
+                         "in": "query",
+                        "description": "Call start time filter",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                      {
+                        "name": "filters[direction]",
+                         "in": "query",
+                        "description": "Call direction filter: in or out",
+                        "required": false,
+                          "type": "string"
+                        
+                      
+					},
+                      {
+                        "name": "filters[called_number]",
+                         "in": "query",
+                        "description": "Called number",
+                        "required": false,
+                          "type": "string"
+                       
+                      
+					},
+                      {
+                        "name": "filters[type]",
+                         "in": "query",
+                        "description": "Call type, such as 'call', 'fax', 'audiogram'",
+                        "required": false,
+                          "type": "string"
+                       
+                      
+					},
+                      {
+                        "name": "filters[created_at]",
+                         "in": "query",
+                        "description": "Call log creation time filter",
+                        "required": false,
+                          "type": "string"
+                       
+                      
+					},
+                    
+                     {
+                        "name": "sort[id]",
+                         "in": "query",
+                         "description": "ID sorting",
+                        "required": false,
+                         "type": "string"
+                       
+                   
+					},
+                       {
+                        "name": "sort[start_time]",
+                         "in": "query",
+                         "description": "Sorting by call start time: asc or desc",
+                        "required": false,
+                         "type": "string"
+                       
+                   
+					},
+                         {
+                        "name": "sort[created_at]",
+                         "in": "query",
+                         "description": "Sorting by call log creation time: asc or desc",
+                        "required": false,
+                         "type": "string"
+                       
+                   
+					},
+                    {
+                        "name": "limit",
+                         "in": "query",
+                         "description": "Max results",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                    {
+                        "name": "offset",
+                         "in": "query",
+                         "description": "Results to skip",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                     {
+                        "name": "fields",
+                         "in": "query",
+                         "description": "Field set: 'all' or 'brief",
+                         "required": false,
+                        "type": "string"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/ListCallLogsResponse"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                     "404": {
+                        "description": "No sub accounts found"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            }
+         
+        }
+       
+       
+       
+       
+   },
+   "definitions":{
+      "Sms":{
+         "type":"object",
+         "required":[
+            "from",
+            "to",
+            "direction",
+            "created_epoch",
+            "created_at",
+            "text"
+         ],
+         "properties":{
+            "id":{
+               "type":"string"
+            },
+            "from":{
+               "type":"string"
+            },
+            "to":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/Recipient"
+               }
+            },
+            "direction":{
+               "type":"string"
+            },
+            "created_epoch":{
+               "type":"integer"
+            },
+            "created_at":{
+               "type":"string",
+               "format":"date-time"
+            },
+            "text":{
+               "type":"string"
+            }
+         }
+      },
+      "Recipient":{
+         "type":"object",
+         "properties":{
+            "number":{
+               "type":"string"
+            },
+            "status":{
+               "type":"string"
+            }
+         }
+      },
+      "ListSms":{
+         "type":"object",
+         "properties":{
+            "filters":{
+               "$ref":"#/definitions/Filter"
+            },
+            "sort":{
+               "$ref":"#/definitions/Sort"
+            },
+            "total":{
+               "type":"integer"
+            },
+            "offset":{
+               "type":"integer"
+            },
+            "limit":{
+               "type":"integer"
+            },
+            "items":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/Sms"
+               }
+            }
+         }
+      },
+      "Filter":{
+         "type":"object",
+         "properties":{
+            "id":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               }
+            },
+            "direction":{
+               "type":"string"
+            },
+            "from":{
+               "type":"string"
+            }
+         }
+      },
+
+     
+      "Sort":{
+         "type":"object",
+         "properties":{
+            "id":{
+               "type":"string"
+            },
+            "created_at":{
+               "type":"string"
+            }
+         }
+      },
+      "CreateSmsParams":{
+         "type":"object",
+         "properties":{
+            "from":{
+               "type":"string"
+            },
+            "to":{
+               "type":"string"
+            },
+            "text":{
+               "type":"string"
+            }
+         }
+      },
+       "Account": {
+            "type": "object"
+            , "properties": {
+                "id": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "name": {
+                    "type": "string"
+                }
+                , "username": {
+                    "type": "string"
+                }
+                , "password": {
+                    "type": "string"
+                }
+                , "master_account": {
+                    "$ref": "#/definitions/Master_Account"
+                }
+                , "contact": {
+                    "$ref": "#/definitions/Contact"
+                }
+                , "billing_contact": {
+                    "$ref": "#/definitions/Contact"
+                }
+            }
+            , "xml": {
+                "name": "Account"
+            }
+        },
+        "Master_Account": {
+            "type": "object"
+            , "properties": {
+                "id": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "name": {
+                    "type": "string"
+                }
+            }
+            , "xml": {
+                "name": "Master_Account"
+            }
+        },
+        "Address": {
+            "type": "object"
+            , "properties": {
+                "line_1": {
+                    "type": "string"
+                }
+                , "line_2": {
+                    "type": "string"
+                }
+                , "city": {
+                    "type": "string"
+                }
+                , "province": {
+                    "type": "string"
+                }
+                , "postal_code": {
+                    "type": "string"
+                }
+                , "country": {
+                    "type": "string"
+                }
+            }
+            , "xml": {
+                "name": "Address"
+            }
+        },
+        "Contact": {
+            "type": "object"
+            , "properties": {
+                "name": {
+                    "type": "string"
+                }
+                , "company": {
+                    "type": "string"
+                }
+                , "address": {
+                    "$ref": "#/definitions/Address"
+                }
+                , "phone": {
+                    "type": "string"
+                }
+                , "fax": {
+                    "type": "string"
+                }
+                , "primary_email": {
+                    "type": "string"
+                }
+                , "alternate_email": {
+                    "type": "string"
+                }
+            }
+            , "xml": {
+                "name": "Contact"
+            }
+        },
+        "ListAccountsResponse": {
+            "type": "object"
+            , "properties": {
+                "filters": {
+                    "type": "array"
+                    , "items": {
+                        "$ref": "#/definitions/Filter"
+                    }
+                }
+                , "sort": {
+                    "$ref": "#/definitions/Sort"
+                }
+                , "total": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "offset": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "limit": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "items": {
+                    "type": "array"
+                    , "items": {
+                        "$ref": "#/definitions/Account"
+                    }
+                }
+            }
+            , "xml": {
+                "name": "ListAccountsResponse"
+            }
+        },
+        "ListCallLogsResponse": {
+            "type": "object"
+            , "properties": {
+                "filters": {
+                    "type": "array",
+                     "items": {
+                       "type":"string"
+                    }
+                }
+                , "sort": {
+                     "type": "array",
+                     "items": {
+                       "type":"string"
+                    }
+                }
+                , "total": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "offset": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "limit": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "items": {
+                    "type": "array"
+                    , "items": {
+                        "$ref": "#/definitions/CallLog"
+                    }
+                }
+            }
+            , "xml": {
+                "name": "ListCallLogsResponse"
+            }
+        },
+       "CallLog": {
+             "type": "object",
+             "properties": {
+                
+                 "id": {
+                    "type": "string"
+                },
+                 "uuid": {
+                    "type": "string"
+                    
+                },
+                 "caller_id": {
+                    "type": "string"
+                },
+                "called_number": {
+                    "type": "string"
+                },
+                 
+                "start_time": {
+                    "type": "string"
+                },
+                  "created_at": {
+                    "type": "string"
+                },
+                  "direction": {
+                    "type": "string"
+                },
+                  "type": {
+                    "type": "string"
+                },
+                   "call_duration": {
+                    "type": "integer",
+                       "format": "int64"
+                },
+                   "is_monitored": {
+                    "type": "string"
+                },
+                   "call_number": {
+                    "type": "number",
+                       "format": "float"
+                },
+                   "final_action": {
+                    "type": "string"
+                },
+                   "call_recording": {
+                    "type": "string"
+                }
+             
+            }
+            , "xml": {
+                "name": "CallLog"
+            }
+           
+           
+       }
+        
+       
+   }
+}
