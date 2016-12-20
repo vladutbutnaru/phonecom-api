@@ -43,6 +43,14 @@
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
          }
+		},
+       		 {
+            "name": "schedule",
+            "description": "Schedules are used at various places in your Phone.com account.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+         }
 		}
    ],
    "securityDefinitions":{
@@ -711,6 +719,171 @@
 				]
             }
          
+        },
+          "/accounts/{account_id}/schedules/{schedule_id}": {
+            "get": {
+                "tags": [
+					"schedule"
+				],
+                 "summary": "Show details of an individual schedule",
+                 "description": "This service shows the details of an individual schedule.",
+                 "operationId": "getScheduleById",
+                 "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+                 "produces": [
+					"application/json"
+				],
+                "parameters": [
+                    {
+                        "name": "account_id", 
+                         "in": "path",
+                         "description": "Account ID", 
+                        "required": true, 
+                        "type": "integer", 
+                        "format": "int64"
+					},
+                     {
+                        "name": "schedule_id", 
+                         "in": "path",
+                         "description": "Schedule ID", 
+                        "required": true, 
+                        "type": "integer", 
+                        "format": "int64"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/Schedule"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid IDs supplied"
+                    },
+                     "404": {
+                        "description": "Schedule not found"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            }
+        },
+            "/accounts/{account_id}/schedules": {
+            "get": {
+                "tags": [
+					"schedule"
+				],
+                 "summary": "Get a list of schedules for an account",
+                 "description": "This service gives access to all Schedules for an Account.",
+                 "operationId": "getSchedules",
+                 "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+                 "produces": [
+					"application/json"
+				],
+                "parameters": [
+                    {
+                        "name": "account_id", 
+                         "in": "path",
+                         "description": "Account ID", 
+                        "required": true, 
+                        "type": "integer", 
+                        "format": "int64"
+					},
+                     {
+                        "name": "filters[id]",
+                         "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                      {
+                        "name": "filters[name]",
+                         "in": "query",
+                        "description": "Name filter",
+                        "required": false,
+                          "type": "array",
+                         "items": {
+                         "type":"string"
+                        }
+                      
+					},
+                      {
+                        "name": "sort[id]",
+                         "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                          "type": "string"
+                       
+                      
+					},
+                       {
+                        "name": "sort[name]",
+                         "in": "query",
+                        "description": "Name sorting",
+                        "required": false,
+                          "type": "string"
+                       
+                      
+					},
+                     {
+                        "name": "limit",
+                         "in": "query",
+                         "description": "Max results",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                    {
+                        "name": "offset",
+                         "in": "query",
+                         "description": "Results to skip",
+                         "required": false,
+                         "type": "integer",
+                        "format": "int64"
+					},
+                    
+                     {
+                        "name": "fields",
+                         "in": "query",
+                         "description": "Field set",
+                         "required": false,
+                        "type": "string"
+					}
+				],
+                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                         "schema": {
+                            "$ref": "#/definitions/ScheduleListResponse"
+                        }
+                    },
+                     "422": {
+                        "description": "Invalid ID supplied"
+                    },
+                     "404": {
+                        "description": "Endpoint not responding"
+                    }
+                },
+                 "security": [
+                    {
+                        "bearer": []
+					}
+				]
+            }
         }
        
        
@@ -1064,7 +1237,65 @@
             }
            
            
-       }
+       },
+           "Schedule": {
+             "type": "object",
+             "properties": {
+                
+                 "id": {
+                    "type": "integer",
+                     "format": "int64"
+                },
+                 "name": {
+                    "type": "string"
+                    
+                }
+             
+            }
+            , "xml": {
+                "name": "Schedule"
+            }
+           
+           
+       },
+              "ScheduleListResponse": {
+            "type": "object"
+            , "properties": {
+                "filters": {
+                    "type": "array",
+                     "items": {
+                       "type":"string"
+                    }
+                }
+                , "sort": {
+                     "type": "array",
+                     "items": {
+                       "type":"string"
+                    }
+                }
+                , "total": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "offset": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "limit": {
+                    "type": "integer"
+                    , "format": "int64"
+                }
+                , "items": {
+                    "type": "array"
+                    , "items": {
+                        "$ref": "#/definitions/Schedule"
+                    }
+                }
+            }
+            , "xml": {
+                "name": "ScheduleListResponse"
+            }
+        }
         
        
    }
