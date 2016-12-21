@@ -45,6 +45,14 @@
             }
 		  },
 		  {
+            "name": "trunks",
+            "description": "This services allows you to interact with your trunks.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
+		  {
             "name": "contacts",
             "description": "This services allows you to interact with your contacts.",
             "externalDocs":{
@@ -1393,6 +1401,325 @@
                 }
             }
         },
+        
+        "/accounts/{account_id}/trunks": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "trunks"
+                ],
+                "summary": "Get a list of trunks for an account",
+                "description": "",
+                "operationId": "list-account-trunks",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "filters[id]",
+                        "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[name]",
+                        "in": "query",
+                        "description": "Name filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[id]",
+                        "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[name]",
+                        "in": "query",
+                        "description": "Name sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListAccountTrunks"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "trunks"
+                ],
+                "summary": "Add a trunk record with SIP information",
+                "description": "",
+                "operationId": "create-account-trunk",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Trunk data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateTrunkParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Trunk"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+        "/accounts/{account_id}/trunks/{trunk_id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "trunks"
+                ],
+                "summary": "Show details of an individual trunk",
+                "description": "",
+                "operationId": "get-account-trunk",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "trunk_id",
+                        "in": "path",
+                        "description": "Trunk ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Trunk"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "trunks"
+                ],
+                "summary": "Replace parameters in a trunk",
+                "description": "",
+                "operationId": "replace-account-trunk",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "trunk_id",
+                        "in": "path",
+                        "description": "Trunk ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Trunk data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateTrunkParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Trunk"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "trunks"
+                ],
+                "summary": "Delete a trunk from account",
+                "description": "",
+                "operationId": "delete-account-trunk",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "trunk_id",
+                        "in": "path",
+                        "description": "Trunk ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteTrunk"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
 
       "/accounts/{account_id}/subaccounts": {
             "get": {
@@ -2729,6 +3056,152 @@
             }
         },
         "DeleteQueue": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        
+        "ListAccountTrunks": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListAccountTrunks"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/Trunk"
+                }
+            }
+        },
+        "SortListAccountTrunks": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Trunk": {
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "uri",
+                "codecs",
+                "max_concurrent_calls",
+                "max_minutes_per_month",
+                "greeting",
+                "error_message"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                },
+                "codecs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "max_concurrent_calls": {
+                    "type": "integer"
+                },
+                "max_minutes_per_month": {
+                    "type": "integer"
+                },
+                "max_call_duration": {
+                    "type": "integer"
+                },
+                "greeting": {
+                    "$ref": "#/definitions/GreetingListAccountTrunks"
+                },
+                "error_message": {
+                    "$ref": "#/definitions/ErrorMessageListAccountTrunks"
+                }
+            }
+        },
+        "GreetingListAccountTrunks": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "ErrorMessageListAccountTrunks": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateTrunkParams": {
+            "type": "object",
+            "required": [
+                "name", "url"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of Trunk"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URI of Trunk (in the form of SIP/user@host.com:port)"
+                },
+                "max_concurrent_calls": {
+                    "type": "integer",
+                    "description": "Max concurrent calls"
+                },
+                "max_minutes_per_month": {
+                    "type": "integer",
+                    "description": "Max minutes per month"
+                },
+                "greeting": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "error_message": {
+                    "type": "object",
+                    "description": "Recording lookup object"
+                },
+                "codecs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    },
+                    "description": "Custom audio codec configuration"
+                }
+            }
+        },
+        "DeleteTrunk": {
             "type": "object",
             "properties": {
                 "success": {
