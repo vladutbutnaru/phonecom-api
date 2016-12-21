@@ -60,6 +60,14 @@
             "url":"https://apidocs.phone.com"
             }
 		  },
+		  {
+            "name": "groups",
+            "description": "This services allows you to interact with your groups.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
           {
             "name": "subaccount",
             "description": "This services allows you to interact with your subaccounts.",
@@ -1721,6 +1729,351 @@
             }
         },
 
+        "/accounts/{account_id}/extensions/{extension_id}/contact-groups": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Show a list of contact groups belonging to an extension",
+                "description": "",
+                "operationId": "list-contact-groups",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "filters[id]",
+                        "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[name]",
+                        "in": "query",
+                        "description": "Name filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[id]",
+                        "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[name]",
+                        "in": "query",
+                        "description": "Name sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListContactGroups"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "create-contact-group",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Group name",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateGroupParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ContactGroup"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+        "/accounts/{account_id}/extensions/{extension_id}/contact-groups/{group_id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "get-contact-group",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "Group ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ContactGroup"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "replace-contact-group",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "Group ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ContactGroup"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Delete an addressbook group",
+                "description": "",
+                "operationId": "delete-contact-group",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "extension_id",
+                        "in": "path",
+                        "description": "Extension ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "Group ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteContactGroup"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+
       "/accounts/{account_id}/subaccounts": {
             "get": {
                 "tags": [
@@ -3202,6 +3555,72 @@
             }
         },
         "DeleteTrunk": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+
+        "ListContactGroups": {
+            "type": "object",
+            "properties": {
+                "filters": {
+
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListContactGroups"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/ContactGroups"
+                }
+            }
+        },
+        "CreateGroupParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Group name"
+                }
+            }
+        },
+        "SortListContactGroups": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "ContactGroups": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ContactGroup"
+            }
+        },
+        "ContactGroup": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "DeleteContactGroup": {
             "type": "object",
             "properties": {
                 "success": {
