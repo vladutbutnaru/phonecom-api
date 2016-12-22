@@ -30,7 +30,7 @@
           },
           {
             "name": "extensions",
-            "description": "This services allows you to interact with your account extensions.",
+            "description": "These services allows you to interact with your account extensions.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -38,7 +38,7 @@
 		  },
 		  {
             "name": "queues",
-            "description": "This services allows you to interact with your account queues.",
+            "description": "These services allows you to interact with your account queues.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -46,7 +46,7 @@
 		  },
 		  {
             "name": "trunks",
-            "description": "This services allows you to interact with your trunks.",
+            "description": "These services allows you to interact with your trunks.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -54,7 +54,7 @@
 		  },
 		  {
             "name": "contacts",
-            "description": "This services allows you to interact with your contacts.",
+            "description": "These services allows you to interact with your contacts.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -62,7 +62,15 @@
 		  },
 		  {
             "name": "groups",
-            "description": "This services allows you to interact with your groups.",
+            "description": "These services allows you to interact with your groups.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
+		  {
+            "name": "available-numbers",
+            "description": "These services allows you to list available phone numbers.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -70,7 +78,7 @@
 		  },
           {
             "name": "subaccount",
-            "description": "This services allows you to interact with your subaccounts.",
+            "description": "These services allows you to interact with your subaccounts.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com"
@@ -2073,6 +2081,188 @@
                 }
             }
         },
+        
+        "/phone-numbers/available": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "available-numbers"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "list-available-phone-numbers",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filters[phone_number]",
+                        "in": "query",
+                        "description": "Phone Number filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[country_code]",
+                        "in": "query",
+                        "description": "Country Code filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[npa]",
+                        "in": "query",
+                        "description": "NANP NPA filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "filters[nxx]",
+                        "in": "query",
+                        "description": "NANP NXX filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[xxxx]",
+                        "in": "query",
+                        "description": "NANP XXXX filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[city]",
+                        "in": "query",
+                        "description": "City filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[province]",
+                        "in": "query",
+                        "description": "State or Province (postal code) filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[country]",
+                        "in": "query",
+                        "description": "Country (postal code) filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[price]",
+                        "in": "query",
+                        "description": "Price filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[category]",
+                        "in": "query",
+                        "description": "Category filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[internal]",
+                        "in": "query",
+                        "description": "Internal (quasi-random) sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[price]",
+                        "in": "query",
+                        "description": "Price sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[phone_number]",
+                        "in": "query",
+                        "description": "Phone Number sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListAvailableNumbers"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
 
       "/accounts/{account_id}/subaccounts": {
             "get": {
@@ -3625,6 +3815,90 @@
             "properties": {
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+
+        "ListAvailableNumbers": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "$ref": "#/definitions/FilterListAvailableNumbers"
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListAvailableNumbers"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/PhoneNumbersAvailableNumbers"
+                }
+            }
+        },
+        "FilterListAvailableNumbers": {
+            "type": "object",
+            "properties": {
+                "npa": {
+                    "type": "string"
+                }
+            }
+        },
+        "SortListAvailableNumbers": {
+            "type": "object",
+            "properties": {
+                "phone_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "PhoneNumbersAvailableNumbers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/PhoneNumberAvailableNumbers"
+            }
+        },
+        "PhoneNumberAvailableNumbers": {
+            "type": "object",
+            "properties": {
+                "phone_number": {
+                    "type": "string"
+                },
+                "formatted": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "is_toll_free": {
+                    "type": "integer"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "npa": {
+                    "type": "string"
+                },
+                "nxx": {
+                    "type": "string"
+                },
+                "xxxx": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "province": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
                 }
             }
         },
