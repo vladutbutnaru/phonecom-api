@@ -76,6 +76,14 @@
             "url":"https://apidocs.phone.com"
             }
 		  },
+		  {
+            "name": "number-regions",
+            "description": "These services allows you to list available number regions.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
           {
             "name": "subaccount",
             "description": "These services allows you to interact with your subaccounts.",
@@ -2263,6 +2271,196 @@
                 }
             }
         },
+        
+        "/phone-numbers/available/regions": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "number-regions"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "list-available-phone-number-regions",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filters[country_code]",
+                        "in": "query",
+                        "description": "International calling code filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[npa]",
+                        "in": "query",
+                        "description": "Area Code filter (North America only)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[nxx]",
+                        "in": "query",
+                        "description": "2nd set of 3 digits filter (North America only)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[is_toll_free]",
+                        "in": "query",
+                        "description": "Toll-free status filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[city]",
+                        "in": "query",
+                        "description": "City filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[province_postal_code]",
+                        "in": "query",
+                        "description": "State or Province filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[country_postal_code]",
+                        "in": "query",
+                        "description": "Country filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[country_code]",
+                        "in": "query",
+                        "description": "International calling code sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[npa]",
+                        "in": "query",
+                        "description": "Area Code sorting (North America only)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[nxx]",
+                        "in": "query",
+                        "description": "2nd set of 3 digits sorting (North America)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[is_toll_free]",
+                        "in": "query",
+                        "description": "Toll Free status sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[city]",
+                        "in": "query",
+                        "description": "City sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[province_postal_code]",
+                        "in": "query",
+                        "description": "State or Province sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[country_postal_code]",
+                        "in": "query",
+                        "description": "Country sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "Fields to group by (supports the same set of fields as the filters and sorting)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListPhoneNumbersRegions"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
 
       "/accounts/{account_id}/subaccounts": {
             "get": {
@@ -3899,6 +4097,75 @@
                 },
                 "country": {
                     "type": "string"
+                }
+            }
+        },
+        
+        "ListPhoneNumbersRegions": {
+            "type": "object",
+            "properties": {
+                "group_by": {
+                    "$ref": "#/definitions/GroupByListPhoneNumbersRegions"
+                },
+                "filters": {
+                    "$ref": "#/definitions/FilterListPhoneNumbersRegions"
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListPhoneNumbersRegions"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/PhoneNumbersRegions"
+                }
+            }
+        },
+        "GroupByListPhoneNumbersRegions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "FilterListPhoneNumbersRegions": {
+            "type": "object",
+            "properties": {
+                "country_postal_code": {
+                    "type": "string"
+                },
+                "npa": {
+                    "type": "string"
+                }
+            }
+        },
+        "SortListPhoneNumbersRegions": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                }
+            }
+        },
+        "PhoneNumbersRegions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/PhoneNumbersRegion"
+            }
+        },
+        "PhoneNumbersRegion": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
                 }
             }
         },
