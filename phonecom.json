@@ -69,6 +69,14 @@
             }
 		  },
 		  {
+            "name": "menus",
+            "description": "These services allows you to interact with menus.",
+            "externalDocs":{
+            "description":"Find out more",
+            "url":"https://apidocs.phone.com"
+            }
+		  },
+		  {
             "name": "available-numbers",
             "description": "These services allows you to list available phone numbers.",
             "externalDocs":{
@@ -2462,6 +2470,325 @@
             }
         },
 
+        "/accounts/{account_id}/menus": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Get a list of menus for an account",
+                "description": "",
+                "operationId": "list-account-menus",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "filters[id]",
+                        "in": "query",
+                        "description": "ID filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters[name]",
+                        "in": "query",
+                        "description": "Name filter",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[id]",
+                        "in": "query",
+                        "description": "ID sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort[name]",
+                        "in": "query",
+                        "description": "Name sorting",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Results to skip",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Field set",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ListAccountMenus"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Create an individual menu",
+                "description": "",
+                "operationId": "create-account-menu",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Menu data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CreateMenuParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+        "/accounts/{account_id}/menus/{menu_id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Show details of an individual menu",
+                "description": "",
+                "operationId": "get-account-menu",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "menu_id",
+                        "in": "path",
+                        "description": "Menu ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Replace an individual menu",
+                "description": "",
+                "operationId": "replace-account-menu",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "menu_id",
+                        "in": "path",
+                        "description": "Menu ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "Menu data",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ReplaceMenuParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Delete an individual menu",
+                "description": "",
+                "operationId": "delete-account-menu",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "account_id",
+                        "in": "path",
+                        "description": "Account ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "menu_id",
+                        "in": "path",
+                        "description": "Menu ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteMenu"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid parameters specified"
+                    },
+                    "404": {
+                        "description": "No accounts found"
+                    }
+                }
+            }
+        },
+
       "/accounts/{account_id}/subaccounts": {
             "get": {
                 "tags": [
@@ -4166,6 +4493,249 @@
                 },
                 "quantity": {
                     "type": "integer"
+                }
+            }
+        },
+
+        "ListAccountMenus": {
+            "type": "object",
+            "properties": {
+                "filters": {
+
+                },
+                "sort": {
+                    "$ref": "#/definitions/SortListAccountMenus"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "items": {
+                    "$ref": "#/definitions/Menus"
+                }
+            }
+        },
+        "SortListAccountMenus": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Menus": {
+            "type": "array",
+            "items" : {
+                "$ref": "#/definitions/Menu"
+		    }
+        },
+        "Menu": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "allow_extension_dial": {
+                    "type": "boolean"
+                },
+                "keypress_wait_time": {
+                    "type": "integer"
+                },
+                "greeting": {
+                    "$ref": "#/definitions/GreetingListAccountMenus"
+                },
+                "keypress_error": {
+                    "$ref": "#/definitions/KeypresssErrorListAccountMenus"
+                },
+                "timeout_handler": {
+                    "$ref": "#/definitions/TimeoutHandlerListAccountMenus"
+                },
+                "options": {
+                    "$ref": "#/definitions/OptionsListAccountMenus"
+                }
+            }
+        },
+        "GreetingListAccountMenus": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "KeypresssErrorListAccountMenus": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "TimeoutHandlerListAccountMenus": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "OptionsListAccountMenus": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Option"
+            }
+        },
+        "Option": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "route": {
+                    "$ref": "#/definitions/Route"
+                }
+            }
+        },
+        "Route": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "extension": {
+                    "$ref": "#/definitions/Extension"
+                },
+                "rules": {
+                    "$ref": "#/definitions/Rules"
+                }
+            }
+        },
+        "Extension": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "extension": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Rules": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Rule"
+            }
+        },
+        "Rule": {
+            "type": "object",
+            "properties": {
+                "actions": {
+                    "$ref": "#/definitions/Actions"
+                }
+            }
+        },
+        "Actions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Action"
+            }
+        },
+        "Action": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string"
+                }
+            }
+        },
+        "ReplaceMenuParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "greeting": {
+                    "type": "object"
+                },
+                "invalid_keypress": {
+                    "type": "object"
+                },
+                "allow_extension_dial": {
+                    "type": "boolean"
+                },
+                "keypress_wait_time": {
+                    "type": "integer"
+                },
+                "timeout_handler": {
+                    "type": "object"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "CreateMenuParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "main_message": {
+                    "type": "object"
+                },
+                "invalid_keypress_message": {
+                    "type": "object"
+                },
+                "allow_extension_dial": {
+                    "type": "boolean"
+                },
+                "keypress_wait_time": {
+                    "type": "integer"
+                },
+                "timeout_handler": {
+                    "type": "object"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "DeleteMenu": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
                 }
             }
         },
