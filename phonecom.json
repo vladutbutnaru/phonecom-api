@@ -3515,8 +3515,8 @@
                     "description": "Addresses"
                 },
                 "group": {
-                    "type": "string",
-                    "description": "Contact Group //type: object"
+                    "type": "object",
+                    "description": "Contact Group"
                 }
             }
         },
@@ -4042,12 +4042,12 @@
                     "description": "Name of queue"
                 },
                 "greeting": {
-                    "type": "string",
-                    "description": "Recording lookup object //type: object"
+                    "type": "object",
+                    "description": "Recording lookup object"
                 },
                 "hold_music": {
-                    "type": "string",
-                    "description": "Recording lookup object //type: object"
+                    "type": "object",
+                    "description": "Recording lookup object"
                 },
                 "max_hold_time": {
                     "type": "integer",
@@ -4064,9 +4064,9 @@
                 "members": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "type": "object"
                     },
-                    "description": "Extensions or phone numbers //type: object"
+                    "description": "Extensions or phone numbers"
                 }
             }
         },
