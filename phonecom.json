@@ -135,7 +135,7 @@
 				],
                  "summary": "Find Account by ID",
                  "description": "Returns a single account",
-                 "operationId": "getAccountById",
+                 "operationId": "get-account",
                  "consumes":[
                "application/json",
                "application/xml"
@@ -181,7 +181,7 @@
 				],
                  "summary": "Get a list of accounts visible to the authenticated user or client",
                  "description": "This service lists the accounts accessible to the authenticated client. In most cases, there will only be one such account",
-                 "operationId": "listAccounts",
+                 "operationId": "list-accounts",
                  "consumes":[
                "application/json"
             ],
@@ -1765,7 +1765,7 @@
                 ],
                 "summary": "Show a list of contact groups belonging to an extension",
                 "description": "",
-                "operationId": "list-contact-groups",
+                "operationId": "list-account-extension-contact-groups",
                 "consumes": [
                     "application/json",
                     "application/xml"
@@ -1871,7 +1871,7 @@
                 ],
                 "summary": "",
                 "description": "",
-                "operationId": "create-contact-group",
+                "operationId": "create-account-extension-contact-group",
                 "consumes": [
                     "application/json",
                     "application/xml"
@@ -1933,7 +1933,7 @@
                 ],
                 "summary": "",
                 "description": "",
-                "operationId": "get-contact-group",
+                "operationId": "get-account-extension-contact-group",
                 "consumes": [
                     "application/json",
                     "application/xml"
@@ -1991,7 +1991,7 @@
                 ],
                 "summary": "",
                 "description": "",
-                "operationId": "replace-contact-group",
+                "operationId": "replace-account-extension-contact-group",
                 "consumes": [
                     "application/json",
                     "application/xml"
@@ -2049,7 +2049,7 @@
                 ],
                 "summary": "Delete an addressbook group",
                 "description": "",
-                "operationId": "delete-contact-group",
+                "operationId": "delete-account-extension-contact-group",
                 "consumes": [
                     "application/json",
                     "application/xml"
@@ -2796,7 +2796,7 @@
 				],
                  "summary": "Get a list of subaccounts for the authenticated user or client",
                  "description": "This service lists the Subaccount of the authenticated client. In most cases, there will not be any.",
-                 "operationId": "listSubAccounts",
+                 "operationId": "list-account-subaccounts",
                  "consumes":[
                "application/json"
             ],
@@ -2896,7 +2896,7 @@
             ],
             "summary":"Add a subaccount for the authenticated user or client",
             "description":"This service shows the details of an individual Subaccount.",
-            "operationId":"createSubaccount",
+            "operationId":"create-account-subaccount",
             "consumes":[
                "application/json"
             ],
@@ -2947,7 +2947,7 @@
 				],
                  "summary": "Get a list of call details associated with your account",
                  "description": "This service lists the call logs for a given account.",
-                 "operationId": "listCallLogs",
+                 "operationId": "list-account-call-logs",
                  "consumes":[
                "application/json"
             ],
@@ -3107,7 +3107,7 @@
 				],
                  "summary": "Show details of an individual schedule",
                  "description": "This service shows the details of an individual schedule.",
-                 "operationId": "getScheduleById",
+                 "operationId": "get-account-schedule",
                  "consumes":[
                "application/json",
                "application/xml"
@@ -3161,7 +3161,7 @@
 				],
                  "summary": "Get a list of schedules for an account",
                  "description": "This service gives access to all Schedules for an Account.",
-                 "operationId": "getSchedules",
+                 "operationId": "list-account-schedules",
                  "consumes":[
                "application/json",
                "application/xml"
