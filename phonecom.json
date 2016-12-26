@@ -21,7 +21,7 @@
       },
          
           {
-            "name": "account",
+            "name": "accounts",
             "description": "This service allows you to interact with your accounts",
             "externalDocs":{
             "description":"Find out more",
@@ -93,7 +93,7 @@
             }
 		  },
           {
-            "name": "subaccount",
+            "name": "subaccounts",
             "description": "These services allows you to interact with your subaccounts.",
             "externalDocs":{
             "description":"Find out more",
@@ -109,7 +109,7 @@
          }
 		},
        		 {
-            "name": "schedule",
+            "name": "schedules",
             "description": "Schedules are used at various places in your Phone.com account.",
             "externalDocs":{
             "description":"Find out more",
@@ -131,7 +131,7 @@
       "/accounts/{account_id}": {
             "get": {
                 "tags": [
-					"account"
+					"accounts"
 				],
                  "summary": "Find Account by ID",
                  "description": "Returns a single account",
@@ -177,7 +177,7 @@
          "/accounts": {
             "get": {
                 "tags": [
-					"account"
+					"accounts"
 				],
                  "summary": "Get a list of accounts visible to the authenticated user or client",
                  "description": "This service lists the accounts accessible to the authenticated client. In most cases, there will only be one such account",
@@ -2792,10 +2792,10 @@
       "/accounts/{account_id}/subaccounts": {
             "get": {
                 "tags": [
-					"subaccount"
+					"subaccounts"
 				],
                  "summary": "Get a list of subaccounts for the authenticated user or client",
-                 "description": "This service lists the Subaccount of the authenticated client. In most cases, there will not be any.",
+                 "description": "This service lists the Subaccounts of the authenticated client. In most cases, there will not be any.",
                  "operationId": "list-account-subaccounts",
                  "consumes":[
                "application/json"
@@ -2892,7 +2892,7 @@
                }
             ],
             "tags":[
-               "subaccount"
+               "subaccounts"
             ],
             "summary":"Add a subaccount for the authenticated user or client",
             "description":"This service shows the details of an individual Subaccount.",
@@ -3103,7 +3103,7 @@
           "/accounts/{account_id}/schedules/{schedule_id}": {
             "get": {
                 "tags": [
-					"schedule"
+					"schedules"
 				],
                  "summary": "Show details of an individual schedule",
                  "description": "This service shows the details of an individual schedule.",
@@ -3157,7 +3157,7 @@
             "/accounts/{account_id}/schedules": {
             "get": {
                 "tags": [
-					"schedule"
+					"schedules"
 				],
                  "summary": "Get a list of schedules for an account",
                  "description": "This service gives access to all Schedules for an Account.",
