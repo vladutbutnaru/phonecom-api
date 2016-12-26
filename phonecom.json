@@ -13,7 +13,7 @@
    "tags":[
       {
          "name":"sms",
-         "description":"Create, list or get SMS",
+         "description":"The Phone.com /sms service lets you send and show history of SMS messages. Phone.com’s standard phone service lets you send and receive SMS messages using your Phone.com numbers. The Phone.com API extends this functionality, letting you send SMS messages from your application (through your phone number and our API server) to your users. You can also use the API to retrieve the history of sms sent from / delivered to your account.",
          "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-sms"
@@ -22,7 +22,7 @@
          
           {
             "name": "accounts",
-            "description": "This service allows you to interact with your accounts",
+            "description": "This page gives an overview of how to interact with your accounts.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/accounts"
@@ -30,7 +30,7 @@
           },
           {
             "name": "extensions",
-            "description": "These services allows you to interact with your account extensions.",
+            "description": "Your Phone.com account will have one or more extensions.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-extensions"
@@ -38,7 +38,7 @@
 		  },
 		  {
             "name": "queues",
-            "description": "These services allows you to interact with your account queues.",
+            "description": "Queues are used when you want to direct calls to a pool of phone numbers and/or extensions. A common utilization of queues is for Customer Service call centers. When a queue is configured on your phone number, Phone.com will route incoming calls to members of the queue. If a queue member is already on another call, our service rings the next phone number or extension in the queue. While your callers are waiting to be connected, you can choose to play Hold Music.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-queues"
@@ -46,7 +46,7 @@
 		  },
 		  {
             "name": "trunks",
-            "description": "These services allows you to interact with your trunks.",
+            "description": "SIP Trunks are used to connect your Phone.com account to your PBX.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-trunks"
@@ -54,7 +54,7 @@
 		  },
 		  {
             "name": "contacts",
-            "description": "These services allows you to interact with your contacts.",
+            "description": "Each extension at Phone.com can have its own address book with any number of contacts. This page gives an overview.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-extension-contacts"
@@ -62,7 +62,7 @@
 		  },
 		  {
             "name": "groups",
-            "description": "These services allows you to interact with your groups.",
+            "description": "The entries in an extension's address book can be divided into any number of groups. This page gives an overview.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-extension-contact-groups"
@@ -70,7 +70,7 @@
 		  },
 		  {
             "name": "menus",
-            "description": "These services allows you to interact with menus.",
+            "description": "We've all been on the consuming side of a phone menu before. You call a company and hear, \"Press '1' for Sales. Press '2' for Support. Press '0' for the operator.\" With Phone.com you can create your own menus!",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-menus"
@@ -78,7 +78,7 @@
 		  },
 		  {
             "name": "available-numbers",
-            "description": "These services allows you to list available phone numbers.",
+            "description": "This service lists phone numbers that are available for purchase through Phone.com.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/available-phone-numbers"
@@ -86,7 +86,7 @@
 		  },
 		  {
             "name": "number-regions",
-            "description": "These services allows you to list available number regions.",
+            "description": "This service shows the quantities of phone numbers available for purchase, using region-based grouping.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/available-phone-number-regions"
@@ -94,7 +94,7 @@
 		  },
           {
             "name": "subaccounts",
-            "description": "These services allows you to interact with your subaccounts.",
+            "description": "This page gives an overview of how to interact with your subaccounts. Subaccounts are the same as master accounts in terms of the functionality Phone.com supports. The main difference is that subaccounts are grouped with their master account for invoicing purposes.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/subaccounts"
@@ -102,7 +102,7 @@
 		},
 		 {
             "name": "call-logs",
-            "description": "The Call Logs API returns a list of call detail records for the account.",
+            "description": "The Call Logs API returns a list of call detail records for the account. The result includes the id, start time, creation time, caller ID, called number, direction of call, and duration in seconds. If applicable, the result may also include final action, final action duration, listen URL, and/or transcription. Since the call logs usually contains many calls, API users may use filters such as start_time, created_at and direction to limit the result set to calls interested. Users may also use the sorting parameters such as start_time and created_at to list result in ascending or descending order.",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-call-logs"
@@ -110,7 +110,7 @@
 		},
        		 {
             "name": "schedules",
-            "description": "Schedules are used at various places in your Phone.com account.",
+            "description": "Schedules are used at various places in your Phone.com account. A schedule can specify a recurring weekly pattern such as \"Monday through Friday\" or a single time period such as \"Thanksgiving Weekend 2015\".",
             "externalDocs":{
             "description":"Find out more",
             "url":"https://apidocs.phone.com/docs/account-schedules"
