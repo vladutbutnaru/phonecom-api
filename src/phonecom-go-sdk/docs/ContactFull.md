@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **Department** | **string** | Name of the contact&#39;s department | [optional] [default to null]
 **JobTitle** | **string** | Contact&#39;s job title | [optional] [default to null]
 **Emails** | [**Emails**](Emails.md) |  | [optional] [default to null]
-**PhoneNumbers** | [**PhoneNumberContact**](PhoneNumberContact.md) |  | [optional] [default to null]
+**PhoneNumbers** | [**[]PhoneNumberContact**](PhoneNumberContact.md) |  | [optional] [default to null]
 **Addresses** | [**Addresses**](Addresses.md) |  | [optional] [default to null]
 **Group** | [**GroupListContacts**](GroupListContacts.md) |  | [optional] [default to null]
 **CreatedAt** | **int32** | Integer UNIX timestamp when the contact was created. Read-only. | [optional] [default to null]

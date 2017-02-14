@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Filters** | [**FilterIdArray**](FilterIdArray.md) |  | [optional] [default to null]
-**Sort** | [**SortId**](SortId.md) |  | [optional] [default to null]
+**Sort** | [**SortIdArray**](SortIdArray.md) |  | [optional] [default to null]
 **Total** | **int32** |  | [optional] [default to null]
 **Offset** | **int32** |  | [optional] [default to null]
 **Limit** | **int32** |  | [optional] [default to null]

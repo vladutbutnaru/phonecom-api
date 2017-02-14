@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**VoicemailGreetingAlternate** | [**Object**](object.md) | Recording lookup object | [optional] [default to null]
-**NameGreeting** | [**Object**](object.md) | Recording lookup object | [optional] [default to null]
+**VoicemailGreetingAlternate** | [**interface{}**](interface{}.md) | Recording lookup object | [optional] [default to null]
+**NameGreeting** | [**interface{}**](interface{}.md) | Recording lookup object | [optional] [default to null]
 **Name** | **string** | Name (required) | [optional] [default to null]
 **Timezone** | **string** | Timezone | [optional] [default to null]
 **IncludeInDirectory** | **bool** | Include in dial-by-name directory | [optional] [default to null]
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **VoicemailPassword** | **int32** | Voicemail password | [optional] [default to null]
 **FullName** | **string** | Contact name | [optional] [default to null]
 **EnableCallWaiting** | **bool** | Enable Call Waiting | [optional] [default to null]
-**VoicemailGreetingStandard** | [**Object**](object.md) | Recording lookup object | [optional] [default to null]
+**VoicemailGreetingStandard** | [**interface{}**](interface{}.md) | Recording lookup object | [optional] [default to null]
 **VoicemailGreetingType** | **string** | Voicemail greeting type | [optional] [default to null]
 **CallerId** | **string** | Caller ID | [optional] [default to null]
 **LocalAreaCode** | **int32** | Local area code | [optional] [default to null]
