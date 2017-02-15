@@ -207,7 +207,7 @@ func (a DevicesApi) ListAccountDevices(accountId int32, filtersId []string, filt
 	var collectionFormat = "multi"
 	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
 
-	var collectionFormat = "multi"
+	/*var */collectionFormat = "multi"
 	localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
 
 	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
