@@ -22,11 +22,15 @@ func main() {
   app.Action = func(c *cli.Context) error {
    
   
-    if c.String("command") == "list-media" {
-        var mediaApi swagger.MediaApi
+    if c.String("command") == "list-extensions" {
+        var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
         mySlice1 := make([]string, 0)
-        x,response,error := mediaApi.ListAccountMedia(1145, mySlice1, mySlice1, "", "", 3, 1, "")
-        fmt.Println(x, response, error)
+        x,response,error := extensionsApi.ListAccountExtensions(1315091, mySlice1, mySlice1, mySlice1, "", "", "", 3, 1, "")
+        fmt.Printf("%+v\n",x)
+        fmt.Println("")
+        fmt.Println("Response:")
+        fmt.Printf("%+v\n", response)
+        fmt.Println(error)
         
       
     } else {
