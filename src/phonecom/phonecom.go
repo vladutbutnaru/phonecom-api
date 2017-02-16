@@ -184,30 +184,185 @@ func main() {
            _ = response
       fmt.Printf("%+v\n",x)
           
-           case "list-available-phone-numbers":
-           var availableNumbersApi swagger.AvailablenumbersApi = *swagger.NewAvailablenumbersApi()
-           mySlice1 := make([]string, 0)
-        x,response,error := availableNumbersApi.ListAvailablePhoneNumbers(mySlice1, mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,"", "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
-        if error!=nil {
-            panic(error)
-            return nil
+           //~ case "list-available-phone-numbers":
+           //~ var availableNumbersApi swagger.AvailablenumbersApi = *swagger.NewAvailablenumbersApi()
+           //~ mySlice1 := make([]string, 0)
+        //~ x,response,error := availableNumbersApi.ListAvailablePhoneNumbers(mySlice1, mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,"", "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
+        //~ if error!=nil {
+            //~ panic(error)
+            //~ return nil
             
-        }
-           _ = response
-      fmt.Printf("%+v\n",x)
+        //~ }
+           //~ _ = response
+      //~ fmt.Printf("%+v\n",x)
           
-              case "list-subaccounts":
-           var subaccountsApi swagger.SubaccountsApi = *swagger.NewSubaccountsApi()
-           mySlice1 := make([]string, 0)
-        x,response,error := subaccountsApi.ListAccountSubaccounts(1315091, mySlice1, mySlice1, "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
-        if error!=nil {
-            panic(error)
-            return nil
+              //~ case "list-subaccounts":
+           //~ var subaccountsApi swagger.SubaccountsApi = *swagger.NewSubaccountsApi()
+           //~ mySlice1 := make([]string, 0)
+        //~ x,response,error := subaccountsApi.ListAccountSubaccounts(1315091, mySlice1, mySlice1, "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
+        //~ if error!=nil {
+            //~ panic(error)
+            //~ return nil
             
-        }
-           _ = response
-      fmt.Printf("%+v\n",x)
+        //~ }
+           //~ _ = response
+      //~ fmt.Printf("%+v\n",x)
           
+          
+		case "list-accounts":
+			var accountsApi swagger.AccountsApi = *swagger.NewAccountsApi()
+			mySlice1 := make([]string, 0) 
+			x,response,error := accountsApi.ListAccounts(mySlice1, "", int32(c.Int("limit")), int32( c.Int("offset")), "") 
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-account":
+			var accountsApi swagger.AccountsApi = *swagger.NewAccountsApi()
+			x,response,error := accountsApi.GetAccount(1315091)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-applications":
+			var applicationsApi swagger.ApplicationsApi = *swagger.NewApplicationsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := applicationsApi.ListAccountApplications(1315091, mySlice1, mySlice1, "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-application":
+			var applicationsApi swagger.ApplicationsApi = *swagger.NewApplicationsApi()
+			x,response,error := applicationsApi.GetAccountApplication(1315091, 1356077)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-call-logs":
+			var calllogsApi swagger.CalllogsApi = *swagger.NewCalllogsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := calllogsApi.ListAccountCallLogs(1315091, mySlice1, mySlice1, "", "", "", "", mySlice1, "", "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-devices":
+			var devicesApi swagger.DevicesApi = *swagger.NewDevicesApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := devicesApi.ListAccountDevices(1315091, mySlice1, mySlice1, "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-device":
+			var devicesApi swagger.DevicesApi = *swagger.NewDevicesApi()
+			x,response,error := devicesApi.GetAccountDevice(1315091, 142315)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-express-service-codes":
+			var expressservicecodesApi swagger.ExpressservicecodesApi = *swagger.NewExpressservicecodesApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := expressservicecodesApi.ListAccountExpressSrvCodes(1315091, mySlice1)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-express-service-code":
+			var expressservicecodesApi swagger.ExpressservicecodesApi = *swagger.NewExpressservicecodesApi()
+			x,response,error := expressservicecodesApi.GetAccountExpressSrvCode(1315091, 324202)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-extensions":
+			var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := extensionsApi.ListAccountExtensions(1315091, mySlice1, mySlice1, mySlice1, "", "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-extension":
+			var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
+			x,response,error := extensionsApi.GetAccountExtension(1315091, 1764590)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-caller-id":
+			var calleridsApi swagger.CalleridsApi = *swagger.NewCalleridsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := calleridsApi.GetCallerIds(1315091, 1764590, mySlice1, mySlice1, "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-contacts":
+			var contactsApi swagger.ContactsApi = *swagger.NewContactsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := contactsApi.ListAccountExtensionContacts(1315091, 1764590, mySlice1, mySlice1, mySlice1, "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-contact":
+			var contactsApi swagger.ContactsApi = *swagger.NewContactsApi()
+			x,response,error := contactsApi.GetAccountExtensionContact(1315091, 1764590, 2072091)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-groups":
+			var groupsApi swagger.GroupsApi = *swagger.NewGroupsApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := groupsApi.ListAccountExtensionContactGroups(1315091, 1764590, mySlice1, mySlice1, "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-group":
+			var groupsApi swagger.GroupsApi = *swagger.NewGroupsApi()
+			x,response,error := groupsApi.GetAccountExtensionContactGroup(1315091, 1764590, 331026)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "list-phone-numbers":
+			var phonenumbersApi swagger.PhonenumbersApi = *swagger.NewPhonenumbersApi()
+			mySlice1 := make([]string, 0)
+			x,response,error := phonenumbersApi.ListAccountPhoneNumbers(1315091, mySlice1, mySlice1, mySlice1, "", "", "", int32(c.Int("limit")), int32( c.Int("offset")), "")
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
+		case "get-phone-number":
+			var phonenumbersApi swagger.PhonenumbersApi = *swagger.NewPhonenumbersApi()
+			x,response,error := phonenumbersApi.GetAccountPhoneNumber(1315091, 2116986)
+			fmt.Printf("%+v\n",x)
+			fmt.Println("")
+			fmt.Println("Response:")
+			fmt.Printf("%+v\n", response)
+			fmt.Println(error)
           
       default:
           fmt.Println("Command not valid")
