@@ -184,29 +184,30 @@ func main() {
            _ = response
       fmt.Printf("%+v\n",x)
           
-           //~ case "list-available-phone-numbers":
-           //~ var availableNumbersApi swagger.AvailablenumbersApi = *swagger.NewAvailablenumbersApi()
-           //~ mySlice1 := make([]string, 0)
-        //~ x,response,error := availableNumbersApi.ListAvailablePhoneNumbers(mySlice1, mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,"", "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
-        //~ if error!=nil {
-            //~ panic(error)
-            //~ return nil
+           case "list-available-phone-numbers":
+           var availableNumbersApi swagger.AvailablenumbersApi = *swagger.NewAvailablenumbersApi()
+           mySlice1 := make([]string, 0)
+        x,response,error := availableNumbersApi.ListAvailablePhoneNumbers(mySlice1, mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,mySlice1,"", "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
+        if error!=nil {
+            panic(error)
+            return nil
             
-        //~ }
-           //~ _ = response
-      //~ fmt.Printf("%+v\n",x)
+        }
+           _ = response
+      fmt.Printf("%+v\n",x)
           
-              //~ case "list-subaccounts":
-           //~ var subaccountsApi swagger.SubaccountsApi = *swagger.NewSubaccountsApi()
-           //~ mySlice1 := make([]string, 0)
-        //~ x,response,error := subaccountsApi.ListAccountSubaccounts(1315091, mySlice1, mySlice1, "", "", int32( c.Int("limit")), int32( c.Int("offset")), "")
-        //~ if error!=nil {
-            //~ panic(error)
-            //~ return nil
+              case "list-subaccounts":
+           var subaccountsApi swagger.SubaccountsApi = *swagger.NewSubaccountsApi()
+           mySlice1 := make([]string, 0)
+        x,response,error := subaccountsApi.ListAccountSubaccounts(1315091, mySlice1, "", int32( c.Int("limit")), int32( c.Int("offset")), "")
+        if error!=nil {
+            panic(error)
+            return nil
             
-        //~ }
-           //~ _ = response
-      //~ fmt.Printf("%+v\n",x)
+        }
+           _ = response
+      fmt.Printf("%+v\n",x)
+          
           
           
 		case "list-accounts":
