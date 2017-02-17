@@ -281,7 +281,7 @@ func main() {
 			fmt.Println(error)
 		case "get-device":
 			var devicesApi swagger.DevicesApi = *swagger.NewDevicesApi()
-			x,response,error := devicesApi.GetAccountDevice(1315091, 142315)
+			x,response,error := devicesApi.GetAccountDevice(1315091, 144510)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
 			fmt.Println("Response:")
@@ -291,7 +291,11 @@ func main() {
 			var devicesApi swagger.DevicesApi = *swagger.NewDevicesApi()
 			var deviceParams swagger.CreateDeviceParams
 			deviceParams.Name = "name1"
-			//~ deviceParams.Lines = 
+			//~ var line1 swagger.Line
+			//~ line1.Line = 10
+			//~ var line2 swagger.Line
+			//~ line2.Line = 10
+			//~ deviceParams.Lines = []swagger.Line{line1, line2}
 			x,response,error := devicesApi.CreateAccountDevice(1315091, deviceParams)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
@@ -337,7 +341,7 @@ func main() {
 			fmt.Println(error)
 		case "get-extension":
 			var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
-			x,response,error := extensionsApi.GetAccountExtension(1315091, 1764590)
+			x,response,error := extensionsApi.GetAccountExtension(1315091, 1767129)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
 			fmt.Println("Response:")
@@ -346,14 +350,14 @@ func main() {
 		case "create-extension":
 			var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
 			var extensionParams swagger.CreateExtensionParams
-			extensionParams.CallerId = "extensionCallerId1"
-			extensionParams.UsageType = "extensionUsageType1"
+			extensionParams.CallerId = "private"
+			extensionParams.UsageType = "limited"
 			extensionParams.AllowsCallWaiting = true
-			extensionParams.Extension = 111
+			extensionParams.Extension = 15524
 			extensionParams.IncludeInDirectory = true
 			extensionParams.Name = "extensionName"
 			extensionParams.FullName = "extensionFullName"
-			extensionParams.Timezone = "extensionTimezone"
+			extensionParams.Timezone = "America/Los_Angeles"
 			extensionParams.LocalAreaCode = 111
 			extensionParams.VoicemailGreetingEnableLeaveMessagePrompt = true
 			extensionParams.VoicemailEnabled = true
@@ -375,27 +379,27 @@ func main() {
 		case "replace-extension":
 			var extensionsApi swagger.ExtensionsApi = *swagger.NewExtensionsApi()
 			var extensionParams swagger.ReplaceExtensionParams
-			extensionParams.Name = "extensionName"
-			extensionParams.Timezone = "extensionTimezone"
-			extensionParams.IncludeInDirectory = true
-			extensionParams.Extension = 111
-			extensionParams.EnableOutboundCalls = true
-			extensionParams.UsageType = "extensionUsageType1"
-			extensionParams.VoicemailPassword = 111
-			extensionParams.FullName = "extensionFullName"
-			extensionParams.EnableCallWaiting = true
-			extensionParams.VoicemailGreetingType = "extensionVoicemailGreetingType"
-			extensionParams.CallerId = "extensionCallerId1"
-			extensionParams.LocalAreaCode = 111
-			extensionParams.VoicemailEnabled = true
-			extensionParams.VoicemailGreetingEnableLeaveMessagePrompt = true
-			extensionParams.VoicemailTranscription = "extensionVoicemailTranscription"
-			extensionParams.VoicemailNotificationsEmails = []string{"extensionVoicemailNotificationsEmails1", "extensionVoicemailNotificationsEmails2"}
-			extensionParams.VoicemailNotificationsSms = "extensionVoicemailNotificationsSms"
-			extensionParams.CallNotificationsEmails = []string{"extensionCallNotificationsEmails1", "extensionCallNotificationsEmails2"}
-			extensionParams.CallNotificationsSms = "extensionCallNotificationsSms"
-			extensionParams.Route = []string{"extensionRoute1", "extensionRoute2"}
-			x,response,error := extensionsApi.ReplaceAccountExtension(1315091, 1764590, extensionParams)
+			//~ extensionParams.Name = "extensionName2"
+			//~ extensionParams.Timezone = "Europe/Skopje"
+			//~ extensionParams.IncludeInDirectory = false
+			//~ extensionParams.Extension = 15524
+			//~ extensionParams.EnableOutboundCalls = false
+			//~ extensionParams.UsageType = "extensionUsageType1" ###
+			//~ extensionParams.VoicemailPassword = 222
+			//~ extensionParams.FullName = "extensionFullName2"
+			//~ extensionParams.EnableCallWaiting = false
+			//~ extensionParams.VoicemailGreetingType = "extensionVoicemailGreetingType2"
+			//~ extensionParams.CallerId = "extensionCallerId1" ###
+			//~ extensionParams.LocalAreaCode = 620
+			//~ extensionParams.VoicemailEnabled = false
+			//~ extensionParams.VoicemailGreetingEnableLeaveMessagePrompt = false
+			//~ extensionParams.VoicemailTranscription = "extensionVoicemailTranscription2"
+			//~ extensionParams.VoicemailNotificationsEmails = []string{"extensionVoicemailNotificationsEmails3", "extensionVoicemailNotificationsEmails4"}
+			//~ extensionParams.VoicemailNotificationsSms = "extensionVoicemailNotificationsSms2"
+			//~ extensionParams.CallNotificationsEmails = []string{"extensionCallNotificationsEmails3", "extensionCallNotificationsEmails4"}
+			//~ extensionParams.CallNotificationsSms = "extensionCallNotificationsSms2"
+			//~ extensionParams.Route = []string{"extensionRoute3", "extensionRoute4"}
+			x,response,error := extensionsApi.ReplaceAccountExtension(1315091, 1767129, extensionParams)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
 			fmt.Println("Response:")
@@ -421,7 +425,7 @@ func main() {
 			fmt.Println(error)
 		case "get-contact":
 			var contactsApi swagger.ContactsApi = *swagger.NewContactsApi()
-			x,response,error := contactsApi.GetAccountExtensionContact(1315091, 1764590, 2072968)
+			x,response,error := contactsApi.GetAccountExtensionContact(1315091, 1764590, 2074702)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
 			fmt.Println("Response:")
@@ -452,17 +456,17 @@ func main() {
 			var contactsApi swagger.ContactsApi = *swagger.NewContactsApi()
 			var contactParams swagger.CreateContactParams
 			contactParams.FirstName = "contactFirstName3"
-			contactParams.MiddleName = "contactMiddleName3"
-			contactParams.LastName = "contactLastName3"
-			contactParams.Prefix = "contactPrefix3"
-			contactParams.PhoneticFirstName = "contactPhoneticFirstName3"
-			contactParams.PhoneticMiddleName = "contactPhoneticMiddleName3"
-			contactParams.PhoneticLastName = "contactPhoneticLastName3"
-			contactParams.Suffix = "contactSuffix3"
-			contactParams.Nickname = "contactNickname3"
-			contactParams.Company = "contactCompany3"
-			contactParams.Department = "contactDepartment3"
-			contactParams.JobTitle = "contactJobTitle3"
+			//~ contactParams.MiddleName = "contactMiddleName3"
+			//~ contactParams.LastName = "contactLastName3"
+			//~ contactParams.Prefix = "contactPrefix3"
+			//~ contactParams.PhoneticFirstName = "contactPhoneticFirstName3"
+			//~ contactParams.PhoneticMiddleName = "contactPhoneticMiddleName3"
+			//~ contactParams.PhoneticLastName = "contactPhoneticLastName3"
+			//~ contactParams.Suffix = "contactSuffix3"
+			//~ contactParams.Nickname = "contactNickname3"
+			//~ contactParams.Company = "contactCompany3"
+			//~ contactParams.Department = "contactDepartment3"
+			//~ contactParams.JobTitle = "contactJobTitle3"
 			x,response,error := contactsApi.ReplaceAccountExtensionContact(1315091, 1764590, contactParams)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
@@ -542,14 +546,14 @@ func main() {
 		case "create-phone-number":
 			var phonenumbersApi swagger.PhonenumbersApi = *swagger.NewPhonenumbersApi()
 			var phonenumberParams swagger.CreatePhoneNumberParams
-			phonenumberParams.Name = "phonenumberName"
-			phonenumberParams.BlockIncoming = true
-			phonenumberParams.BlockAnonymous = true
-			phonenumberParams.CallerIdName = "phonenumberCallerIdName"
-			phonenumberParams.CallerIdType = "phonenumberCallerIdType"
-			phonenumberParams.SmsForwardingType = "phonenumberSmsForwardingType"
-			phonenumberParams.CallNotificationsEmails = []string{"phonenumberCallNotificationsEmails1", "phonenumberCallNotificationsEmails2"}
-			phonenumberParams.CallNotificationsSms = "phonenumberCallNotificationsSms"
+			//~ phonenumberParams.Name = "phonenumberName"
+			//~ phonenumberParams.BlockIncoming = true
+			//~ phonenumberParams.BlockAnonymous = true
+			//~ phonenumberParams.CallerIdName = "Caller Id Name"
+			//~ phonenumberParams.CallerIdType = "phonenumberCallerIdType"
+			//~ phonenumberParams.SmsForwardingType = "phonenumberSmsForwardingType"
+			//~ phonenumberParams.CallNotificationsEmails = []string{"phonenumberCallNotificationsEmails1", "phonenumberCallNotificationsEmails2"}
+			//~ phonenumberParams.CallNotificationsSms = "phonenumberCallNotificationsSms"
 			x,response,error := phonenumbersApi.CreateAccountPhoneNumber(1315091, phonenumberParams)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
@@ -559,14 +563,17 @@ func main() {
 		case "replace-phone-number":
 			var phonenumbersApi swagger.PhonenumbersApi = *swagger.NewPhonenumbersApi()
 			var phonenumberParams swagger.ReplacePhoneNumberParams
-			phonenumberParams.Name = "phonenumberName2"
-			phonenumberParams.BlockIncoming = true
-			phonenumberParams.BlockAnonymous = true
-			phonenumberParams.CallerIdName = "phonenumberCallerIdName2"
-			phonenumberParams.CallerIdType = "phonenumberCallerIdType2"
-			phonenumberParams.SmsForwardingType = "phonenumberSmsForwardingType2"
-			phonenumberParams.CallNotificationsEmails = []string{"phonenumberCallNotificationsEmails3", "phonenumberCallNotificationsEmails4"}
-			phonenumberParams.CallNotificationsSms = "phonenumberCallNotificationsSms2"
+			phonenumberParams.Name = "The Name"
+			phonenumberParams.BlockIncoming = false
+			phonenumberParams.BlockAnonymous = false
+			var callerId swagger.CallerIdFull
+			callerId.Name = "The Caller Id Name"
+			callerId.Type_ = "The Caller Id Type"
+			phonenumberParams.CallerIdName = callerId.Name
+			phonenumberParams.CallerIdType = callerId.Type_
+			phonenumberParams.SmsForwardingType = "The Sms Forwarding Type"
+			phonenumberParams.CallNotificationsEmails = []string{"The Call Notifications Emails 1", "The Call Notifications Emails 2"}
+			phonenumberParams.CallNotificationsSms = "The Call Notifications Sms"
 			x,response,error := phonenumbersApi.ReplaceAccountPhoneNumber(1315091, 2116986, phonenumberParams)
 			fmt.Printf("%+v\n",x)
 			fmt.Println("")
