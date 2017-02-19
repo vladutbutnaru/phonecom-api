@@ -49,5 +49,3 @@ const replacePhoneNumber = "replace-phone-number"
 
 const deleteContact = "delete-contact"
 const deleteGroup = "delete-group"
-
-const acountId = 1315091
