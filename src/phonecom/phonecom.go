@@ -328,5 +328,5 @@ func handle(
     panic(error)
   }
 
-  fmt.Printf("%+v\n%+v\n", x, response)
+  fmt.Printf("%+v\n%s\n", x, response)
 }
