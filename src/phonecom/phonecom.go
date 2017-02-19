@@ -6,9 +6,22 @@ import (
 
   "github.com/urfave/cli"
   "phonecom-go-sdk"
+	"encoding/xml"
+	"io/ioutil"
 )
 
 const accountId = 1315091
+
+
+type Query struct {
+	ConfigList []Config `xml:"Config"`
+}
+
+type Config struct {
+	ApiKeyPrefix string
+	ApiKey string
+	Type string
+}
 
 func main() {
 
@@ -39,13 +52,52 @@ func main() {
   }
 
   app.Action = func(c *cli.Context) error {
-		return execute(c)
+
+		var config Config = getConfig()
+		var apiKeyPrefix string = config.ApiKeyPrefix
+		var apiKey string = config.ApiKey
+
+		if (len(apiKeyPrefix) == 0 || len(apiKey) == 0) {
+			return nil
+		}
+
+		return execute(c, apiKeyPrefix, apiKey)
   }
 
   app.Run(os.Args)
 }
 
-func execute(c *cli.Context) error {
+func getConfig() Config {
+
+	xmlFile, err := os.Open("config.xml")
+
+	var noConfig Config;
+
+	if err != nil {
+		fmt.Println("Could not read config.xml", err)
+		return noConfig
+	}
+
+	defer xmlFile.Close()
+
+	content, _ := ioutil.ReadAll(xmlFile)
+
+	var q Query
+	xml.Unmarshal(content, &q)
+
+	for _, config := range q.ConfigList {
+		if (config.Type == "main") {
+			return config
+		}
+	}
+
+	return noConfig
+}
+
+func execute(
+    c *cli.Context,
+    apiKeyPrefix string,
+    apiKey string) error {
 
 	slice := make([]string, 0)
 	limit := int32(c.Int("limit"))
@@ -54,7 +106,7 @@ func execute(c *cli.Context) error {
 
 	command := c.String("command")
 
-	var api interface{} = getApi(command, "Bearer", "FJxqBQcorvEVFPpDVPuZAeYdT5kMrWo1cFxwGE7u")
+	var api interface{} = getApi(command, apiKeyPrefix, apiKey)
 
 	switch api := api.(type) {
 
