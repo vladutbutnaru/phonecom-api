@@ -45,231 +45,216 @@ func main() {
 		offset := int32(c.Int("offset"))
     id := int32(c.Int("id"))
 
-    var mediaApi swagger.MediaApi
-    var menusApi swagger.MenusApi
-    var queuesApi swagger.QueuesApi
-    var routesApi swagger.RoutesApi
-    var schedulesApi swagger.SchedulesApi
-    var smsApi swagger.SmsApi
-    var availableNumbersApi swagger.AvailablenumbersApi
-    var subAccountsApi swagger.SubaccountsApi
-    var accountsApi swagger.AccountsApi
-    var applicationsApi swagger.ApplicationsApi
-    var callsApi swagger.CallsApi
-    var callLogsApi swagger.CalllogsApi
-    var devicesApi swagger.DevicesApi
-    var expressServiceCodesApi swagger.ExpressservicecodesApi
-    var extensionsApi swagger.ExtensionsApi
-    var callerIdsApi swagger.CalleridsApi
-    var contactsApi swagger.ContactsApi
-    var groupsApi swagger.GroupsApi
-    var phoneNumbersApi swagger.PhonenumbersApi
-
     command := c.String("command")
 
-    switch (command) {
+    var api interface{} = getApi(command)
 
-      case listMedia, getRecording:
-        mediaApi = *swagger.NewMediaApi()
-      case listMenus, getMenu:
-        menusApi = *swagger.NewMenusApi()
-      case listQueues, getQueue:
-        queuesApi = *swagger.NewQueuesApi()
-      case listRoutes, getRoute:
-        routesApi = *swagger.NewRoutesApi()
-      case listSchedules, getSchedule:
-        schedulesApi = *swagger.NewSchedulesApi()
-      case listSms, getSms:
-        smsApi = *swagger.NewSmsApi()
-      case listAvailablePhoneNumbers:
-        availableNumbersApi = *swagger.NewAvailablenumbersApi()
-      case listSubaccounts:
-        subAccountsApi = *swagger.NewSubaccountsApi()
-      case listAccounts, getAccount:
-        accountsApi = *swagger.NewAccountsApi()
-      case listApplications, getApplication:
-        applicationsApi = *swagger.NewApplicationsApi()
-      case createCall:
-        callsApi = *swagger.NewCallsApi()
-      case listCallLogs:
-        callLogsApi = *swagger.NewCalllogsApi()
-      case listDevices, getDevice, createDevice, replaceDevice:
-        devicesApi = *swagger.NewDevicesApi()
-      case listExpressServiceCodes, getExpressServiceCode:
-        expressServiceCodesApi = *swagger.NewExpressservicecodesApi()
-      case listExtensions, getExtension, createExtension, replaceExtension:
-        extensionsApi = *swagger.NewExtensionsApi()
-      case getCallerId:
-        callerIdsApi = *swagger.NewCalleridsApi()
-      case listContacts, getContact, createContact, replaceContact, deleteContact:
-        contactsApi = *swagger.NewContactsApi()
-      case listGroups, getGroup, createGroup, replaceGroup, deleteGroup:
-        groupsApi = *swagger.NewGroupsApi()
-      case listPhoneNumbers, getPhoneNumber, createPhoneNumber, replacePhoneNumber:
-        phoneNumbersApi = *swagger.NewPhonenumbersApi()
-      default:
-        fmt.Println("Invalid command:", command)
-        return nil
-    }
+		switch api := api.(type) {
 
-		switch (command) {
+      case swagger.MediaApi:
 
-      case listMedia:
-        handle(mediaApi.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
+          case listMedia:
+            handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
+          case getRecording:
+            handle(api.GetAccountMedia(accountId, id))
+        }
 
-      case getRecording:
-				handle(mediaApi.GetAccountMedia(accountId, id))
+      case swagger.MenusApi:
 
-      case listMenus:
-				handle(menusApi.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
+          case listMenus:
+            handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
+          case getMenu:
+            handle(api.GetAccountMenu(accountId, id))
+        }
 
-      case getMenu:
-				handle(menusApi.GetAccountMenu(accountId, id))
+      case swagger.QueuesApi:
 
-      case listQueues:
-				handle(queuesApi.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
+          case listQueues:
+            handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
+          case getQueue:
+            handle(api.GetAccountQueue(accountId, id))
+        }
 
-      case getQueue:
-				handle(queuesApi.GetAccountQueue(accountId, id))
+      case swagger.RoutesApi:
 
-      case listRoutes:
-				handle(routesApi.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
+          case listRoutes:
+            handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
+          case getRoute:
+            handle(api.GetAccountRoute(accountId, id))
+        }
 
-      case getRoute:
-				handle(routesApi.GetAccountRoute(accountId, id))
+      case swagger.SchedulesApi:
 
-      case listSchedules:
-				handle(schedulesApi.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
+          case listSchedules:
+            handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
+          case getSchedule:
+            handle(api.GetAccountSchedule(accountId, id))
+        }
 
-      case getSchedule:
-				handle(schedulesApi.GetAccountSchedule(accountId, id))
+      case swagger.SmsApi:
 
-      case listSms:
-				handle(smsApi.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
+        switch (command) {
+          case listSms:
+            handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
+          case getSms:
+            handle(api.GetAccountSms(accountId, id))
+        }
 
-      case getSms:
-				handle(smsApi.GetAccountSms(accountId, id))
+      case swagger.AvailablenumbersApi:
 
-      case listAvailablePhoneNumbers:
-				handle(availableNumbersApi.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+        switch (command) {
+          case listAvailablePhoneNumbers:
+            handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+        }
 
-      case listSubaccounts:
-				handle(subAccountsApi.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
+      case swagger.SubaccountsApi:
 
-      case listAccounts:
-				handle(accountsApi.ListAccounts(slice, "", limit, offset, ""))
+        switch (command) {
+          case listSubaccounts:
+            handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
+        }
 
-      case getAccount:
-				handle(accountsApi.GetAccount(accountId))
+      case swagger.AccountsApi:
 
-      case listApplications:
-				handle(applicationsApi.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
 
-      case getApplication:
-				handle(applicationsApi.GetAccountApplication(accountId, 1356077))
+          case listAccounts:
+            handle(api.ListAccounts(slice, "", limit, offset, ""))
+          case getAccount:
+            handle(api.GetAccount(accountId))
+        }
 
-      case createCall:
+      case swagger.ApplicationsApi:
 
-        var params = createCallParams()
-				handle(callsApi.CreateAccountCalls(accountId, params))
+        switch (command) {
 
-      case listCallLogs:
-				handle(callLogsApi.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
+          case listApplications:
+            handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
+          case getApplication:
+            handle(api.GetAccountApplication(accountId, 1356077))
+        }
 
-      case listDevices:
-				handle(devicesApi.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
+      case swagger.CallsApi:
 
-      case getDevice:
-				handle(devicesApi.GetAccountDevice(accountId, 144510))
+        switch (command) {
+        case createCall:
+          var params = createCallParams()
+          handle(api.CreateAccountCalls(accountId, params))
+        }
 
-      case createDevice:
+      case swagger.CalllogsApi:
 
-        var params = createDeviceParams();
-				handle(devicesApi.CreateAccountDevice(accountId, params))
+        switch (command) {
+          case listCallLogs:
+            handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
+        }
 
-      case replaceDevice:
+      case swagger.DevicesApi:
 
-        var params = createDeviceParams();
-				handle(devicesApi.ReplaceAccountDevice(accountId, 142315, params))
+        switch (command) {
 
-      case listExpressServiceCodes:
-				handle(expressServiceCodesApi.ListAccountExpressSrvCodes(accountId, slice))
+          case listDevices:
+            handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
+          case getDevice:
+            handle(api.GetAccountDevice(accountId, 144510))
+          case createDevice:
+            var params = createDeviceParams()
+            handle(api.CreateAccountDevice(accountId, params))
+          case replaceDevice:
+            var params = createDeviceParams()
+            handle(api.ReplaceAccountDevice(accountId, 142315, params))
+        }
 
-      case getExpressServiceCode:
-				handle(expressServiceCodesApi.GetAccountExpressSrvCode(accountId, 324202))
+      case swagger.ExpressservicecodesApi:
 
-      case listExtensions:
-				handle(extensionsApi.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+        switch (command) {
 
-      case getExtension:
-        handle(extensionsApi.GetAccountExtension(accountId, 1767129))
+          case listExpressServiceCodes:
+            handle(api.ListAccountExpressSrvCodes(accountId, slice))
+          case getExpressServiceCode:
+            handle(api.GetAccountExpressSrvCode(accountId, 324202))
+        }
 
-      case createExtension:
+      case swagger.ExtensionsApi:
 
-        var params = createExtensionsParams()
-				handle(extensionsApi.CreateAccountExtension(accountId, params))
+        switch (command) {
 
-      case replaceExtension:
+          case listExtensions:
+            handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+          case getExtension:
+            handle(api.GetAccountExtension(accountId, 1767129))
+          case createExtension:
+            var params = createExtensionsParams()
+            handle(api.CreateAccountExtension(accountId, params))
+          case replaceExtension:
+            var params = replaceExtensionParams()
+            handle(api.ReplaceAccountExtension(accountId, 1767129, params))
+        }
 
-        var params = replaceExtensionParams()
-        handle(extensionsApi.ReplaceAccountExtension(accountId, 1767129, params))
+      case swagger.CalleridsApi:
 
-      case getCallerId:
-        handle(callerIdsApi.GetCallerIds(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
+        switch (command) {
 
-      case listContacts:
-        handle(contactsApi.ListAccountExtensionContacts(accountId, 1764590, slice, slice, slice, "", "", limit, offset, ""))
-        
-      case getContact:
-        handle(contactsApi.GetAccountExtensionContact(accountId, 1764590, 2074702))
+          case getCallerId:
+            handle(api.GetCallerIds(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
+        }
 
-      case createContact:
+      case swagger.ContactsApi:
 
-        var params = createContactParams()
-        handle(contactsApi.CreateAccountExtensionContact(accountId, 1764590, params))
+        switch (command) {
 
-      case replaceContact:
-        var params = createContactParams();
-        handle(contactsApi.ReplaceAccountExtensionContact(accountId, 1764590, params))
-        
-      case deleteContact:
-        handle(contactsApi.DeleteAccountExtensionContact(accountId, 1764590, 2072969))
-        
-      case listGroups:
-        handle(groupsApi.ListAccountExtensionContactGroups(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
-        
-      case getGroup:
-        handle(groupsApi.GetAccountExtensionContactGroup(accountId, 1764590, 331026))
-        
-      case createGroup:
+          case listContacts:
+            handle(api.ListAccountExtensionContacts(accountId, 1764590, slice, slice, slice, "", "", limit, offset, ""))
+          case getContact:
+            handle(api.GetAccountExtensionContact(accountId, 1764590, 2074702))
+          case createContact:
+            var params = createContactParams()
+            handle(api.CreateAccountExtensionContact(accountId, 1764590, params))
+          case replaceContact:
+            var params = createContactParams()
+            handle(api.ReplaceAccountExtensionContact(accountId, 1764590, params))
+          case deleteContact:
+            handle(api.DeleteAccountExtensionContact(accountId, 1764590, 2072969))
+        }
 
-        var params = createGroupParams()
-        handle(groupsApi.CreateAccountExtensionContactGroup(accountId, 1764590, params))
-        
-      case replaceGroup:
+      case swagger.GroupsApi:
 
-        var groupParams swagger.CreateGroupParams
-        groupParams.Name = "groupName2"
-        handle(groupsApi.ReplaceAccountExtensionContactGroup(accountId, 1764590, 331978))
-        
-      case deleteGroup:
-        handle(groupsApi.DeleteAccountExtensionContactGroup(accountId, 1764590, 331978))
-        
-      case listPhoneNumbers:
-        handle(phoneNumbersApi.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+        switch (command) {
 
-      case getPhoneNumber:
-        handle(phoneNumbersApi.GetAccountPhoneNumber(accountId, 2116986))
-        
-      case createPhoneNumber:
+          case listGroups:
+            handle(api.ListAccountExtensionContactGroups(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
+          case getGroup:
+            handle(api.GetAccountExtensionContactGroup(accountId, 1764590, 331026))
+          case createGroup:
+            var params = createGroupParams()
+            handle(api.CreateAccountExtensionContactGroup(accountId, 1764590, params))
+          case replaceGroup:
+            //var params = createGroupParams()
+            handle(api.ReplaceAccountExtensionContactGroup(accountId, 1764590, 331978))
+          case deleteGroup:
+            handle(api.DeleteAccountExtensionContactGroup(accountId, 1764590, 331978))
+        }
 
-        var params = createPhoneNumberParams()
-        handle(phoneNumbersApi.CreateAccountPhoneNumber(accountId, params))
-        
-      case replacePhoneNumber:
+      case swagger.PhonenumbersApi:
 
-        var params = replacePhoneNumberParams()
-        handle(phoneNumbersApi.ReplaceAccountPhoneNumber(accountId, 2116986, params))
+        switch (command) {
+
+          case listPhoneNumbers:
+            handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+          case getPhoneNumber:
+            handle(api.GetAccountPhoneNumber(accountId, 2116986))
+          case createPhoneNumber:
+            var params = createPhoneNumberParams()
+            handle(api.CreateAccountPhoneNumber(accountId, params))
+          case replacePhoneNumber:
+            var params = replacePhoneNumberParams()
+            handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
+        }
 
       default:
 
@@ -280,6 +265,58 @@ func main() {
   }
 
   app.Run(os.Args)
+}
+
+func getApi(command string) interface{} {
+
+  var api interface{}
+
+  switch (command) {
+
+    case listMedia, getRecording:
+      api = *swagger.NewMediaApi()
+    case listMenus, getMenu:
+      api = *swagger.NewMenusApi()
+    case listQueues, getQueue:
+      api = *swagger.NewQueuesApi()
+    case listRoutes, getRoute:
+      api = *swagger.NewRoutesApi()
+    case listSchedules, getSchedule:
+      api = *swagger.NewSchedulesApi()
+    case listSms, getSms:
+      api = *swagger.NewSmsApi()
+    case listAvailablePhoneNumbers:
+      api = *swagger.NewAvailablenumbersApi()
+    case listSubaccounts:
+      api = *swagger.NewSubaccountsApi()
+    case listAccounts, getAccount:
+      api = *swagger.NewAccountsApi()
+    case listApplications, getApplication:
+      api = *swagger.NewApplicationsApi()
+    case createCall:
+      api = *swagger.NewCallsApi()
+    case listCallLogs:
+      api = *swagger.NewCalllogsApi()
+    case listDevices, getDevice, createDevice, replaceDevice:
+      api = *swagger.NewDevicesApi()
+    case listExpressServiceCodes, getExpressServiceCode:
+      api = *swagger.NewExpressservicecodesApi()
+    case listExtensions, getExtension, createExtension, replaceExtension:
+      api = *swagger.NewExtensionsApi()
+    case getCallerId:
+      api = *swagger.NewCalleridsApi()
+    case listContacts, getContact, createContact, replaceContact, deleteContact:
+      api = *swagger.NewContactsApi()
+    case listGroups, getGroup, createGroup, replaceGroup, deleteGroup:
+      api = *swagger.NewGroupsApi()
+    case listPhoneNumbers, getPhoneNumber, createPhoneNumber, replacePhoneNumber:
+      api = *swagger.NewPhonenumbersApi()
+    default:
+      fmt.Println("Invalid command:", command)
+      return nil
+  }
+
+  return api
 }
 
 func handle(
