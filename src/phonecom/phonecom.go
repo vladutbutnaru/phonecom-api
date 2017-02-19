@@ -18,6 +18,7 @@ type Query struct {
 }
 
 type Config struct {
+	BaseApiPath string
 	ApiKeyPrefix string
 	ApiKey string
 	Type string
@@ -54,6 +55,7 @@ func main() {
   app.Action = func(c *cli.Context) error {
 
 		var config Config = getConfig()
+		var baseApiPath string = config.BaseApiPath
 		var apiKeyPrefix string = config.ApiKeyPrefix
 		var apiKey string = config.ApiKey
 
@@ -61,7 +63,7 @@ func main() {
 			return nil
 		}
 
-		return execute(c, apiKeyPrefix, apiKey)
+		return execute(c, baseApiPath, apiKeyPrefix, apiKey)
   }
 
   app.Run(os.Args)
@@ -96,6 +98,7 @@ func getConfig() Config {
 
 func execute(
     c *cli.Context,
+    baseApiPath string,
     apiKeyPrefix string,
     apiKey string) error {
 
@@ -106,7 +109,7 @@ func execute(
 
 	command := c.String("command")
 
-	var api interface{} = getApi(command, apiKeyPrefix, apiKey)
+	var api interface{} = getApi(command, baseApiPath, apiKeyPrefix, apiKey)
 
 	switch api := api.(type) {
 
@@ -324,11 +327,16 @@ func execute(
 
 func getApi(
     command string,
+    baseApiPath string,
     apiKeyPrefix string,
     apiKey string) interface{} {
 
   var api interface{}
   var config = swagger.NewConfiguration()
+
+	if (len(baseApiPath) > 0) {
+		config.BasePath = baseApiPath
+	}
 
   config.APIKeyPrefix["Authorization"] = apiKeyPrefix
   config.APIKey["Authorization"] = apiKey
