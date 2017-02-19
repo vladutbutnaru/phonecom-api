@@ -47,7 +47,7 @@ func main() {
 
     command := c.String("command")
 
-    var api interface{} = getApi(command)
+    var api interface{} = getApi(command, "Bearer", "FJxqBQcorvEVFPpDVPuZAeYdT5kMrWo1cFxwGE7u")
 
 		switch api := api.(type) {
 
@@ -267,50 +267,133 @@ func main() {
   app.Run(os.Args)
 }
 
-func getApi(command string) interface{} {
+func getApi(
+    command string,
+    apiKeyPrefix string,
+    apiKey string) interface{} {
 
   var api interface{}
+  var config = swagger.NewConfiguration()
+
+  config.APIKeyPrefix["Authorization"] = apiKeyPrefix
+  config.APIKey["Authorization"] = apiKey
 
   switch (command) {
 
     case listMedia, getRecording:
-      api = *swagger.NewMediaApi()
+
+      mediaApi := *swagger.NewMediaApi()
+      mediaApi.Configuration = config
+      api = mediaApi
+
     case listMenus, getMenu:
-      api = *swagger.NewMenusApi()
+
+      menusApi := *swagger.NewMenusApi()
+      menusApi.Configuration = config
+      api = menusApi
+
     case listQueues, getQueue:
-      api = *swagger.NewQueuesApi()
+
+      queuesApi := *swagger.NewQueuesApi()
+      queuesApi.Configuration = config
+      api = queuesApi
+
     case listRoutes, getRoute:
-      api = *swagger.NewRoutesApi()
+
+      routesApi := *swagger.NewRoutesApi()
+      routesApi.Configuration = config
+      api = routesApi
+
     case listSchedules, getSchedule:
-      api = *swagger.NewSchedulesApi()
+
+      schedulesApi := *swagger.NewSchedulesApi()
+      schedulesApi.Configuration = config
+      api = schedulesApi
+
     case listSms, getSms:
-      api = *swagger.NewSmsApi()
+
+      smsApi := *swagger.NewSmsApi()
+      smsApi.Configuration = config
+      api = smsApi
+
     case listAvailablePhoneNumbers:
-      api = *swagger.NewAvailablenumbersApi()
+
+      availablenumbersApi := *swagger.NewAvailablenumbersApi()
+      availablenumbersApi.Configuration = config
+      api = availablenumbersApi
+
     case listSubaccounts:
-      api = *swagger.NewSubaccountsApi()
+
+      subaccountsApi := *swagger.NewSubaccountsApi()
+      subaccountsApi.Configuration = config
+      api = subaccountsApi
+
     case listAccounts, getAccount:
-      api = *swagger.NewAccountsApi()
+
+      accountsApi := *swagger.NewAccountsApi()
+      accountsApi.Configuration = config
+      api = accountsApi
+
     case listApplications, getApplication:
-      api = *swagger.NewApplicationsApi()
+
+      applicationsApi := *swagger.NewApplicationsApi()
+      applicationsApi.Configuration = config
+      api = applicationsApi
+
     case createCall:
-      api = *swagger.NewCallsApi()
+
+      callsApi := *swagger.NewCallsApi()
+      callsApi.Configuration = config
+      api = callsApi
+
     case listCallLogs:
-      api = *swagger.NewCalllogsApi()
+
+      calllogsApi := *swagger.NewCalllogsApi()
+      calllogsApi.Configuration = config
+      api = calllogsApi
+
     case listDevices, getDevice, createDevice, replaceDevice:
-      api = *swagger.NewDevicesApi()
+
+      devicesApi := *swagger.NewDevicesApi()
+      devicesApi.Configuration = config
+      api = devicesApi
+
     case listExpressServiceCodes, getExpressServiceCode:
-      api = *swagger.NewExpressservicecodesApi()
+
+      expressservicecodesApi := *swagger.NewExpressservicecodesApi()
+      expressservicecodesApi.Configuration = config
+      api = expressservicecodesApi
+
     case listExtensions, getExtension, createExtension, replaceExtension:
-      api = *swagger.NewExtensionsApi()
+
+      extensionsApi := *swagger.NewExtensionsApi()
+      extensionsApi.Configuration = config
+      api = extensionsApi
+
     case getCallerId:
-      api = *swagger.NewCalleridsApi()
+
+      calleridsApi := *swagger.NewCalleridsApi()
+      calleridsApi.Configuration = config
+      api = calleridsApi
+
     case listContacts, getContact, createContact, replaceContact, deleteContact:
-      api = *swagger.NewContactsApi()
+
+      contactsApi := *swagger.NewContactsApi()
+      contactsApi.Configuration = config
+      api = contactsApi
+
     case listGroups, getGroup, createGroup, replaceGroup, deleteGroup:
-      api = *swagger.NewGroupsApi()
+
+      groupsApi := *swagger.NewGroupsApi()
+      groupsApi.Configuration = config
+      api = groupsApi
+
     case listPhoneNumbers, getPhoneNumber, createPhoneNumber, replacePhoneNumber:
-      api = *swagger.NewPhonenumbersApi()
+
+      phonenumbersApi := *swagger.NewPhonenumbersApi()
+      phonenumbersApi.Configuration = config
+      api = phonenumbersApi
+
     default:
       fmt.Println("Invalid command:", command)
       return nil
