@@ -53,17 +53,7 @@ func main() {
   }
 
   app.Action = func(c *cli.Context) error {
-
-		var config Config = getConfig()
-		var baseApiPath string = config.BaseApiPath
-		var apiKeyPrefix string = config.ApiKeyPrefix
-		var apiKey string = config.ApiKey
-
-		if (len(apiKeyPrefix) == 0 || len(apiKey) == 0) {
-			return nil
-		}
-
-		return execute(c, baseApiPath, apiKeyPrefix, apiKey)
+		return execute(c)
   }
 
   app.Run(os.Args)
@@ -97,10 +87,7 @@ func getConfig() Config {
 }
 
 func execute(
-    c *cli.Context,
-    baseApiPath string,
-    apiKeyPrefix string,
-    apiKey string) error {
+    c *cli.Context) error {
 
 	slice := make([]string, 0)
 	limit := int32(c.Int("limit"))
@@ -109,7 +96,10 @@ func execute(
 
 	command := c.String("command")
 
-	var api interface{} = getApi(command, baseApiPath, apiKeyPrefix, apiKey)
+	var api interface{} = getApi(command)
+	if (api == nil) {
+		return nil
+	}
 
 	switch api := api.(type) {
 
@@ -326,13 +316,19 @@ func execute(
 }
 
 func getApi(
-    command string,
-    baseApiPath string,
-    apiKeyPrefix string,
-    apiKey string) interface{} {
+    command string) interface{} {
 
   var api interface{}
   var config = swagger.NewConfiguration()
+
+	var xmlConfig Config = getConfig()
+	var baseApiPath string = xmlConfig.BaseApiPath
+	var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
+	var apiKey string = xmlConfig.ApiKey
+
+	if (len(apiKeyPrefix) == 0 || len(apiKey) == 0) {
+		return nil
+	}
 
 	if (len(baseApiPath) > 0) {
 		config.BasePath = baseApiPath
@@ -381,15 +377,15 @@ func getApi(
 
     case listAvailablePhoneNumbers:
 
-      availablenumbersApi := *swagger.NewAvailablenumbersApi()
-      availablenumbersApi.Configuration = config
-      api = availablenumbersApi
+      availableNumbersApi := *swagger.NewAvailablenumbersApi()
+      availableNumbersApi.Configuration = config
+      api = availableNumbersApi
 
     case listSubaccounts:
 
-      subaccountsApi := *swagger.NewSubaccountsApi()
-      subaccountsApi.Configuration = config
-      api = subaccountsApi
+      subAccountsApi := *swagger.NewSubaccountsApi()
+      subAccountsApi.Configuration = config
+      api = subAccountsApi
 
     case listAccounts, getAccount:
 
@@ -411,9 +407,9 @@ func getApi(
 
     case listCallLogs:
 
-      calllogsApi := *swagger.NewCalllogsApi()
-      calllogsApi.Configuration = config
-      api = calllogsApi
+      callLogsApi := *swagger.NewCalllogsApi()
+      callLogsApi.Configuration = config
+      api = callLogsApi
 
     case listDevices, getDevice, createDevice, replaceDevice:
 
@@ -423,9 +419,9 @@ func getApi(
 
     case listExpressServiceCodes, getExpressServiceCode:
 
-      expressservicecodesApi := *swagger.NewExpressservicecodesApi()
-      expressservicecodesApi.Configuration = config
-      api = expressservicecodesApi
+      serviceCodesApi := *swagger.NewExpressservicecodesApi()
+      serviceCodesApi.Configuration = config
+      api = serviceCodesApi
 
     case listExtensions, getExtension, createExtension, replaceExtension:
 
@@ -435,9 +431,9 @@ func getApi(
 
     case getCallerId:
 
-      calleridsApi := *swagger.NewCalleridsApi()
-      calleridsApi.Configuration = config
-      api = calleridsApi
+      callerIdsApi := *swagger.NewCalleridsApi()
+      callerIdsApi.Configuration = config
+      api = callerIdsApi
 
     case listContacts, getContact, createContact, replaceContact, deleteContact:
 
@@ -453,9 +449,9 @@ func getApi(
 
     case listPhoneNumbers, getPhoneNumber, createPhoneNumber, replacePhoneNumber:
 
-      phonenumbersApi := *swagger.NewPhonenumbersApi()
-      phonenumbersApi.Configuration = config
-      api = phonenumbersApi
+      phoneNumbersApi := *swagger.NewPhonenumbersApi()
+      phoneNumbersApi.Configuration = config
+      api = phoneNumbersApi
 
     default:
       fmt.Println("Invalid command:", command)
