@@ -36,9 +36,9 @@ func main() {
       Value: 0,
       Usage: "Offset of results you want to fetch",
     },
-    cli.IntFlag{
+    cli.StringFlag{
       Name: "dryrun",
-      Value: nil,
+      Value: "",
       Usage: "Print the expected action without executing the API command",
     },
   }
@@ -57,7 +57,7 @@ func execute(
 	limit := int32(c.Int("limit"))
 	offset := int32(c.Int("offset"))
 	id := int32(c.Int("id"))
-    dryrun := c.Int("dryrun")
+    dryrun := c.String("dryrun")
 
 	command := c.String("command")
 
@@ -73,14 +73,14 @@ func execute(
 			switch (command) {
               
 				case listMedia:
-                  if(dryrun != nil){
+                  if(dryrun != ""){
                     fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of media in JSON format")
                           
                     return nil
                 }
 					handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
 				case getRecording:
-                  if(dryrun != nil){
+                  if(dryrun != ""){
                       fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of recording ", id, " expecting a recording in JSON format")
                           
                     return nil
@@ -92,14 +92,14 @@ func execute(
 
 			switch (command) {
 				case listMenus:
-                 if(dryrun != nil){
+                 if(dryrun != ""){
                     fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of menus in JSON format")
                           
                     return nil
                 }
 					handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
 				case getMenu:
-                if(dryrun != nil){
+                if(dryrun != ""){
                       fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
                           
                     return nil
@@ -111,14 +111,14 @@ func execute(
 
 			switch (command) {
 				case listQueues:
-                if(dryrun != nil){
+                if(dryrun != ""){
                     fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of queues in JSON format")
                           
                     return nil
                 }
 					handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
 				case getQueue:
-                  if(dryrun != nil){
+                  if(dryrun != ""){
                       fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
                           
                     return nil
@@ -336,7 +336,7 @@ func execute(
 					handle(api.CreateAccountTrunk(accountId, params))
 				case replaceTrunk:
 					var params = createTrunkParams()
-					handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
+					handle(api.ReplaceAccountTrunk(accountId, 2116986, params))
                 case deleteTrunk:
                     handle(api.DeleteAccountTrunk(accountId, 2116986))
 			}
