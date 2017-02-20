@@ -57,7 +57,7 @@ func execute(
 	limit := int32(c.Int("limit"))
 	offset := int32(c.Int("offset"))
 	id := int32(c.Int("id"))
-    
+    dryrun := c.Int("dryrun")
 
 	command := c.String("command")
 

@@ -126,7 +126,7 @@ func createSubaccountParams() swagger.CreateSubaccountParams{
 }
 
 func createTrunkParams() swagger.CreateTrunkParams{
-    var params swagger.CreateSubaccountParams
+    var params swagger.CreateTrunkParams
     
     params.Name = "Test Trrunk"
     params.Url = "SIP/1234@phone.com:5060"
