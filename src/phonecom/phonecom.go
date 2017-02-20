@@ -105,7 +105,16 @@ func execute(
                     return nil
                 }
 					handle(api.GetAccountMenu(accountId, id))
-			}
+                case createMenu:
+                    var params = createMenuParams()
+                    handle(api.CreateAccountMenu(accountId,params))
+                case replaceMenu:
+                    var params = replaceMenuParams()
+                    handle(api.ReplaceAccountMenu(accountId,10225,params))
+                case deleteMenu:
+                    handle(api.DeleteAccountMenu(accountId,10225))
+                    
+			}    
 
 		case swagger.QueuesApi:
 
@@ -378,7 +387,7 @@ func getApi(
       mediaApi.Configuration = config
       api = mediaApi
 
-    case listMenus, getMenu:
+    case listMenus, getMenu, createMenu, replaceMenu, deleteMenu:
 
       menusApi := *swagger.NewMenusApi()
       menusApi.Configuration = config

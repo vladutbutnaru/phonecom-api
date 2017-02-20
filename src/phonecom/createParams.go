@@ -32,7 +32,35 @@ func createDeviceParams() swagger.CreateDeviceParams {
 
 	return params
 }
+func createMenuParams() swagger.CreateMenuParams {
+    var params swagger.CreateMenuParams
+    
+    params.Name = "Menu Test"
+    params.MainMessage = "Message test"
+    params.InvalidKeypressMessage = "invalid press"
+    params.AllowExtensionDial = false
+    params.KeypressWaitTime = 3
+    
+    return params
+    
+    
+}
 
+func replaceMenuParams() swagger.ReplaceMenuParams{
+    var params swagger.ReplaceMenuParams
+    
+    params.Name = "Teset Menu"
+    params.Greeting = "Hello There"
+    params.AllowExtensionDial = false
+    params.KeypressWaitTime = 4
+    
+    return params
+    
+    
+    
+    
+    
+}
 func createExtensionsParams() swagger.CreateExtensionParams {
 
 	var params swagger.CreateExtensionParams
