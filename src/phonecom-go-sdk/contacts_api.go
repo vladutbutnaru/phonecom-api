@@ -280,19 +280,29 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var collectionFormat = "multi"
-	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+	if len(filtersId) > 0 {
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+	}
 
-	/*var */ collectionFormat = "multi"
-	localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, collectionFormat))
+	if len(filtersGroupId) > 0 {
+		localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, collectionFormat))
+	}
 
-	/*var */ collectionFormat = "multi"
-	localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, collectionFormat))
+	if len(filtersUpdatedAt) > 0 {
+		localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, collectionFormat))
+	}
 
-	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	localVarQueryParams.Add("sort[updated_at]", a.Configuration.APIClient.ParameterToString(sortUpdatedAt, ""))
+	if sortId != "" {
+		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
+	}
+	if sortUpdatedAt != "" {
+		localVarQueryParams.Add("sort[updated_at]", a.Configuration.APIClient.ParameterToString(sortUpdatedAt, ""))
+	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+	if fields != "" {
+		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

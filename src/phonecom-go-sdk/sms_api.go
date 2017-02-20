@@ -206,15 +206,27 @@ func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirec
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var collectionFormat = "multi"
-	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+	if len(filtersId) > 0 {
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+	}
 
-	localVarQueryParams.Add("filters[direction]", a.Configuration.APIClient.ParameterToString(filtersDirection, ""))
-	localVarQueryParams.Add("filters[from]", a.Configuration.APIClient.ParameterToString(filtersFrom, ""))
-	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	localVarQueryParams.Add("sort[created_at]", a.Configuration.APIClient.ParameterToString(sortCreatedAt, ""))
+	if filtersDirection != "" {
+		localVarQueryParams.Add("filters[direction]", a.Configuration.APIClient.ParameterToString(filtersDirection, ""))
+	}
+	if filtersFrom != "" {
+		localVarQueryParams.Add("filters[from]", a.Configuration.APIClient.ParameterToString(filtersFrom, ""))
+	}
+	if sortId != "" {
+		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
+	}
+	if sortCreatedAt != "" {
+		localVarQueryParams.Add("sort[created_at]", a.Configuration.APIClient.ParameterToString(sortCreatedAt, ""))
+	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+	if fields != "" {
+		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
