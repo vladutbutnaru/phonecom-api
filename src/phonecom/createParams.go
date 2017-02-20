@@ -60,6 +60,83 @@ func createExtensionsParams() swagger.CreateExtensionParams {
 
 	return params
 }
+func createQueueParams() swagger.CreateQueueParams {
+    var params swagger.CreateQueueParams
+    
+    params.Name = "Queue New"
+    params.MaxHoldTime = 60
+    params.RingTime = 10
+    params.Greeting = "Barge landing"
+    params.HoldMusic = "electronic"
+    params.CallerIdType = "called_number"
+    
+    return params
+    
+}
+
+func createRouteParams() swagger.CreateRouteParams {
+    var params swagger.CreateRouteParams
+    
+    params.Name = "New route"
+    
+    return params
+    
+    
+}
+
+func createSmsParams() swagger.CreateSmsParams {
+    var params swagger.CreateSmsParams
+    
+    params.From = "+12015880100"
+    params.To = "+17324840911"
+    params.Text = "Test SMS CLI"
+    
+    return params
+}
+
+func createSubaccountParams() swagger.CreateSubaccountParams{
+    var params swagger.CreateSubaccountParams
+    
+    params.Username = "testUsername"
+    params.Password = "testPassword"
+    
+    var contact swagger.ContactSubaccount
+    contact.Name = "testName"
+    contact.PrimaryEmail = "gigel@gigel.com"
+    contact.Company = "FeelITServices"
+    contact.Phone = "+12015880100"
+    
+    var address swagger.Address
+    address.Line1 = "Line1 address"
+    address.Line2 = "Line 2 address"
+    address.City = "Paris"
+    address.Province = "Paris"
+    address.PostalCode = "700134"
+    address.Country = "France"
+    contact.Address = address
+    
+    params.Contact = contact
+    params.BillingContact = contact
+    
+   
+    
+    return params
+    
+    
+}
+
+func createTrunkParams() swagger.CreateTrunkParams{
+    var params swagger.CreateSubaccountParams
+    
+    params.Name = "Test Trrunk"
+    params.Url = "SIP/1234@phone.com:5060"
+
+    
+    return params
+    
+    
+}
+
 
 func replaceExtensionParams() swagger.ReplaceExtensionParams {
 	var params swagger.ReplaceExtensionParams

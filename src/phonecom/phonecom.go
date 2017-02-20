@@ -36,6 +36,11 @@ func main() {
       Value: 0,
       Usage: "Offset of results you want to fetch",
     },
+    cli.IntFlag{
+      Name: "dryrun",
+      Value: nil,
+      Usage: "Print the expected action without executing the API command",
+    },
   }
 
   app.Action = func(c *cli.Context) error {
@@ -52,6 +57,7 @@ func execute(
 	limit := int32(c.Int("limit"))
 	offset := int32(c.Int("offset"))
 	id := int32(c.Int("id"))
+    
 
 	command := c.String("command")
 
@@ -65,18 +71,39 @@ func execute(
 		case swagger.MediaApi:
 
 			switch (command) {
+              
 				case listMedia:
+                  if(dryrun != nil){
+                    fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of media in JSON format")
+                          
+                    return nil
+                }
 					handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
 				case getRecording:
-					handle(api.GetAccountMedia(accountId, id))
+                  if(dryrun != nil){
+                      fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of recording ", id, " expecting a recording in JSON format")
+                          
+                    return nil
+                }
+					handle(api.GetAccountMedia(accountId, id))               
 			}
 
 		case swagger.MenusApi:
 
 			switch (command) {
 				case listMenus:
+                 if(dryrun != nil){
+                    fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of menus in JSON format")
+                          
+                    return nil
+                }
 					handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
 				case getMenu:
+                if(dryrun != nil){
+                      fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
+                          
+                    return nil
+                }
 					handle(api.GetAccountMenu(accountId, id))
 			}
 
@@ -84,9 +111,27 @@ func execute(
 
 			switch (command) {
 				case listQueues:
+                if(dryrun != nil){
+                    fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of queues in JSON format")
+                          
+                    return nil
+                }
 					handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
 				case getQueue:
+                  if(dryrun != nil){
+                      fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
+                          
+                    return nil
+                }
 					handle(api.GetAccountQueue(accountId, id))
+                case createQueue:
+                    var params = createQueueParams()
+                    handle(api.CreateAccountQueue(accountId, params))
+                case replaceQueue:
+                    var params = createQueueParams()
+                    handle(api.ReplaceAccountQueue(accountId, 141494, params))
+                case deleteQueue:
+                    handle(api.DeleteAccountQueue(accountId, 141494))
 			}
 
 		case swagger.RoutesApi:
@@ -96,6 +141,11 @@ func execute(
 					handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
 				case getRoute:
 					handle(api.GetAccountRoute(accountId, id))
+                case createRoute:
+                    var params = createRouteParams()
+                    handle(api.CreateRoute(accountId, params))
+                case deleteRoute:
+                    handle(api.DeleteAccountRoute(accountId, 14987))
 			}
 
 		case swagger.SchedulesApi:
@@ -114,6 +164,9 @@ func execute(
 					handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
 				case getSms:
 					handle(api.GetAccountSms(accountId, id))
+                case createSms:
+                    var params = createSmsParams()
+                    handle(api.CreateAccountSms(accountId, params))
 			}
 
 		case swagger.AvailablenumbersApi:
@@ -128,6 +181,9 @@ func execute(
 			switch (command) {
 				case listSubaccounts:
 					handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
+                case createSubaccount:
+                    var params = createSubaccountParams()
+                    handle(api.CreateAccountSubaccount(accountId, params))
 			}
 
 		case swagger.AccountsApi:
@@ -266,6 +322,24 @@ func execute(
 					var params = replacePhoneNumberParams()
 					handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
 			}
+        
+        case swagger.TrunksApi:
+
+			switch (command) {
+
+				case listTrunks:
+					handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, ""))
+				case getTrunk:
+					handle(api.GetAccountTrunk(accountId, 2116986))
+				case createTrunk:
+					var params = createTrunkParams()
+					handle(api.CreateAccountTrunk(accountId, params))
+				case replaceTrunk:
+					var params = createTrunkParams()
+					handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
+                case deleteTrunk:
+                    handle(api.DeleteAccountTrunk(accountId, 2116986))
+			}
 
 		default:
 			return nil
@@ -310,13 +384,13 @@ func getApi(
       menusApi.Configuration = config
       api = menusApi
 
-    case listQueues, getQueue:
+    case listQueues, getQueue, createQueue, replaceQueue, deleteQueue:
 
       queuesApi := *swagger.NewQueuesApi()
       queuesApi.Configuration = config
       api = queuesApi
 
-    case listRoutes, getRoute:
+    case listRoutes, getRoute, createRoute, replaceRoute, deleteRoute:
 
       routesApi := *swagger.NewRoutesApi()
       routesApi.Configuration = config
@@ -328,7 +402,7 @@ func getApi(
       schedulesApi.Configuration = config
       api = schedulesApi
 
-    case listSms, getSms:
+    case listSms, getSms, createSms:
 
       smsApi := *swagger.NewSmsApi()
       smsApi.Configuration = config
@@ -340,7 +414,7 @@ func getApi(
       availableNumbersApi.Configuration = config
       api = availableNumbersApi
 
-    case listSubaccounts:
+    case listSubaccounts, createSubaccount:
 
       subAccountsApi := *swagger.NewSubaccountsApi()
       subAccountsApi.Configuration = config
@@ -411,7 +485,13 @@ func getApi(
       phoneNumbersApi := *swagger.NewPhonenumbersApi()
       phoneNumbersApi.Configuration = config
       api = phoneNumbersApi
-
+      
+    case listTrunks, getTrunk, createTrunk, deleteTrunk, replaceTrunk:
+        
+      trunksApi := *swagger.NewTrunksApi()
+      trunksApi.Configuration = config
+      api = trunksApi
+      
     default:
       fmt.Println("Invalid command:", command)
       return nil
