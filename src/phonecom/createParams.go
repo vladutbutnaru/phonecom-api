@@ -6,13 +6,13 @@ func createCallParams() swagger.CreateCallParams {
 
 	var params swagger.CreateCallParams
 
-	params.CallerPhoneNumber = "callCallerPhoneNumber"
-	params.CallerExtension = 222
-	params.CallerCallerId = "callCallerCallerId"
+	params.CallerPhoneNumber = "+17324568888"
+	params.CallerExtension = 1749841
+	params.CallerCallerId = "+17329980138"
 	params.CallerPrivate = true
-	params.CalleePhoneNumber = "callCalleePhoneNumber"
-	params.CalleeExtension = 222
-	params.CalleeCallerId = "callCalleeCallerId"
+	params.CalleePhoneNumber = "+17329980138"
+	params.CalleeExtension = 1749842
+	params.CalleeCallerId = "+17324568888"
 	params.CalleePrivate = true
 
 	return params
@@ -22,7 +22,7 @@ func createDeviceParams() swagger.CreateDeviceParams {
 
 	var params swagger.CreateDeviceParams
 
-	params.Name = "name1"
+	params.Name = "Name Name3"
 
 	//~ var line1 swagger.Line
 	//~ line1.Line = 10
@@ -33,33 +33,32 @@ func createDeviceParams() swagger.CreateDeviceParams {
 	return params
 }
 func createMenuParams() swagger.CreateMenuParams {
-    var params swagger.CreateMenuParams
-    
-    params.Name = "Menu Test"
-    params.MainMessage = "Message test"
-    params.InvalidKeypressMessage = "invalid press"
-    params.AllowExtensionDial = false
-    params.KeypressWaitTime = 3
-    
-    return params
-    
-    
+	var params swagger.CreateMenuParams
+
+	params.Name = "Menu Test 2"
+	params.MainMessage = "Message test 2"
+	params.InvalidKeypressMessage = "invalid press 2"
+	params.AllowExtensionDial = true
+	params.KeypressWaitTime = 4
+
+	return params
+
+
 }
 
 func replaceMenuParams() swagger.ReplaceMenuParams{
-    var params swagger.ReplaceMenuParams
-    
-    params.Name = "Teset Menu"
-    params.Greeting = "Hello There"
-    params.AllowExtensionDial = false
-    params.KeypressWaitTime = 4
-    
-    return params
-    
-    
-    
-    
-    
+	var params swagger.ReplaceMenuParams
+
+	params.Name = "Menu Test 3"
+	params.AllowExtensionDial = false
+	params.KeypressWaitTime = 5
+
+	return params
+
+
+
+
+
 }
 func createExtensionsParams() swagger.CreateExtensionParams {
 
@@ -68,7 +67,7 @@ func createExtensionsParams() swagger.CreateExtensionParams {
 	params.CallerId = "private"
 	params.UsageType = "limited"
 	params.AllowsCallWaiting = true
-	params.Extension = 15524
+	params.Extension = 15625
 	params.IncludeInDirectory = true
 	params.Name = "extensionName"
 	params.FullName = "extensionFullName"
@@ -89,80 +88,80 @@ func createExtensionsParams() swagger.CreateExtensionParams {
 	return params
 }
 func createQueueParams() swagger.CreateQueueParams {
-    var params swagger.CreateQueueParams
-    
-    params.Name = "Queue New"
-    params.MaxHoldTime = 60
-    params.RingTime = 10
-    params.Greeting = "Barge landing"
-    params.HoldMusic = "electronic"
-    params.CallerIdType = "called_number"
-    
-    return params
-    
+	var params swagger.CreateQueueParams
+
+	params.Name = "Queue Name 1"
+	params.MaxHoldTime = 60
+	params.RingTime = 15
+	//~ params.Greeting = "Barge landing"
+	//~ params.HoldMusic = "electronic"
+	params.CallerIdType = "called_number"
+
+	return params
+
 }
 
 func createRouteParams() swagger.CreateRouteParams {
-    var params swagger.CreateRouteParams
-    
-    params.Name = "New route"
-    
-    return params
-    
-    
+	var params swagger.CreateRouteParams
+
+	params.Name = "New route"
+
+	return params
+
+
 }
 
 func createSmsParams() swagger.CreateSmsParams {
-    var params swagger.CreateSmsParams
-    
-    params.From = "+12015880100"
-    params.To = "+17324840911"
-    params.Text = "Test SMS CLI"
-    
-    return params
+	var params swagger.CreateSmsParams
+
+	params.From = "+12015880100"
+	params.To = "+17328810138"
+	params.Text = "SMS can be sent to multiple recipients"
+
+	return params
 }
 
 func createSubaccountParams() swagger.CreateSubaccountParams{
-    var params swagger.CreateSubaccountParams
-    
-    params.Username = "testUsername"
-    params.Password = "testPassword"
-    
-    var contact swagger.ContactSubaccount
-    contact.Name = "testName"
-    contact.PrimaryEmail = "gigel@gigel.com"
-    contact.Company = "FeelITServices"
-    contact.Phone = "+12015880100"
-    
-    var address swagger.Address
-    address.Line1 = "Line1 address"
-    address.Line2 = "Line 2 address"
-    address.City = "Paris"
-    address.Province = "Paris"
-    address.PostalCode = "700134"
-    address.Country = "France"
-    contact.Address = address
-    
-    params.Contact = contact
-    params.BillingContact = contact
-    
-   
-    
-    return params
-    
-    
+	var params swagger.CreateSubaccountParams
+
+	params.Username = "testUsername"
+	params.Password = "testPassword"
+
+	var contact swagger.ContactSubaccount
+	contact.Name = "testName"
+	contact.PrimaryEmail = "gigel@gigel.com"
+	contact.Company = "FeelITServices"
+	contact.Phone = "+12015880100"
+
+	var address swagger.Address
+	address.Line1 = "Line1 address"
+	address.Line2 = "Line 2 address"
+	address.City = "Paris"
+	address.Province = "Paris"
+	address.PostalCode = "700134"
+	address.Country = "France"
+	contact.Address = address
+
+	params.Contact = contact
+	params.BillingContact = contact
+
+
+
+	return params
+
+
 }
 
 func createTrunkParams() swagger.CreateTrunkParams{
-    var params swagger.CreateTrunkParams
-    
-    params.Name = "Test Trrunk"
-    params.Url = "SIP/1234@phone.com:5060"
+	var params swagger.CreateTrunkParams
 
-    
-    return params
-    
-    
+	params.Name = "Test Trrunk"
+	params.Url = "SIP/1234@phone.com:5060"
+
+
+	return params
+
+
 }
 
 
@@ -214,7 +213,7 @@ func createContactParams() swagger.CreateContactParams {
 func createGroupParams() swagger.CreateGroupParams {
 
 	var params swagger.CreateGroupParams
-	params.Name = "groupName"
+	params.Name = "Name of group"
 
 	return params
 }
