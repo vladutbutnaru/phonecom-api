@@ -34,5 +34,6 @@ type MenuFull struct {
 	// Route that will be entered when the caller fails to choose a menu option within the allotted time. Output is a Route Summary Object if the route is named, otherwise the Full Route Object will be shown. Input must be a Route Lookup Object pointing to a named route.
 	TimeoutHandler RouteSummary `json:"timeout_handler,omitempty"`
 
-	Options OptionsListMenus `json:"options,omitempty"`
+	// Array of menu option objects. See below for details.
+	Options []Option `json:"options,omitempty"`
 }
