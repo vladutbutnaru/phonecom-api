@@ -113,7 +113,6 @@ func execute(
 			handle(api.ReplaceAccountMenu(accountId,88295,params))
 		case deleteMenu:
 			handle(api.DeleteAccountMenu(accountId,88295))
-
 		}
 
 	case swagger.QueuesApi:
@@ -176,9 +175,9 @@ func execute(
 					handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
 				case getSms:
 					handle(api.GetAccountSms(accountId, id))
-                case createSms:
-                    var params = createSmsParams()
-                    handle(api.CreateAccountSms(accountId, params))
+				case createSms:
+					var params = createSmsParams()
+					handle(api.CreateAccountSms(accountId, params))
 			}
 
 		case swagger.AvailablenumbersApi:
