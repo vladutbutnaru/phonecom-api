@@ -41,6 +41,11 @@ func main() {
 			Value: "",
 			Usage: "Print the expected action without executing the API command",
 		},
+        cli.StringFlag{
+			Name: "input",
+			Value: "",
+			Usage: "Specify the path to the JSON file for making the API call",
+		},
 	}
 
 	app.Action = func(c *cli.Context) error {
@@ -58,7 +63,7 @@ func execute(
 	offset := int32(c.Int("offset"))
 	id := int32(c.Int("id"))
 	dryrun := c.String("dryrun")
-
+    input :=c.String("input")
 	command := c.String("command")
 
 	var api interface{} = getApi(command)
@@ -106,10 +111,10 @@ func execute(
 			}
 			handle(api.GetAccountMenu(accountId, id))
 		case createMenu:
-			var params = createMenuParams()
+			var params = createMenuParams(input)
 			handle(api.CreateAccountMenu(accountId,params))
 		case replaceMenu:
-			var params = replaceMenuParams()
+			var params = replaceMenuParams(input)
 			handle(api.ReplaceAccountMenu(accountId,88295,params))
 		case deleteMenu:
 			handle(api.DeleteAccountMenu(accountId,88295))
@@ -133,10 +138,10 @@ func execute(
 			}
 			handle(api.GetAccountQueue(accountId, id))
 		case createQueue:
-			var params = createQueueParams()
+			var params = createQueueParams(input)
 			handle(api.CreateAccountQueue(accountId, params))
 		case replaceQueue:
-			var params = createQueueParams()
+			var params = createQueueParams(input)
 			handle(api.ReplaceAccountQueue(accountId, 141494, params))
 		case deleteQueue:
 			handle(api.DeleteAccountQueue(accountId, 141494))
@@ -150,10 +155,10 @@ func execute(
 			case getRoute:
 				handle(api.GetAccountRoute(accountId, id))
 			case createRoute:
-				var params = createRouteParams()
+				var params = createRouteParams(input)
 				handle(api.CreateRoute(accountId, params))
 			case replaceRoute:
-				var params = createRouteParams()
+				var params = createRouteParams(input)
 				handle(api.ReplaceAccountRoute(accountId, id, params))
 			case deleteRoute:
 				handle(api.DeleteAccountRoute(accountId, 14987))
@@ -176,7 +181,7 @@ func execute(
 				case getSms:
 					handle(api.GetAccountSms(accountId, id))
 				case createSms:
-					var params = createSmsParams()
+					var params = createSmsParams(input)
 					handle(api.CreateAccountSms(accountId, params))
 			}
 
@@ -193,7 +198,7 @@ func execute(
 				case listSubaccounts:
 					handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
                 case createSubaccount:
-                    var params = createSubaccountParams()
+                    var params = createSubaccountParams(input)
                     handle(api.CreateAccountSubaccount(accountId, params))
 			}
 
@@ -221,7 +226,7 @@ func execute(
 
 			switch (command) {
 				case createCall:
-					var params = createCallParams()
+					var params = createCallParams(input)
 					handle(api.CreateAccountCalls(accountId, params))
 			}
 
@@ -243,10 +248,10 @@ func execute(
 				case getDevice:
 					handle(api.GetAccountDevice(accountId, id))
 				case createDevice:
-					var params = createDeviceParams()
+					var params = createDeviceParams(input)
 					handle(api.CreateAccountDevice(accountId, params))
 				case replaceDevice:
-					var params = createDeviceParams()
+					var params = createDeviceParams(input)
 					handle(api.ReplaceAccountDevice(accountId, id, params))
 			}
 
@@ -269,10 +274,10 @@ func execute(
 				case getExtension:
 					handle(api.GetAccountExtension(accountId, 1767129))
 				case createExtension:
-					var params = createExtensionsParams()
+					var params = createExtensionsParams(input)
 					handle(api.CreateAccountExtension(accountId, params))
 				case replaceExtension:
-					var params = replaceExtensionParams()
+					var params = replaceExtensionParams(input)
 					handle(api.ReplaceAccountExtension(accountId, 1767129, params))
 			}
 
@@ -293,10 +298,10 @@ func execute(
 				case getContact:
 					handle(api.GetAccountExtensionContact(accountId, 1764590, 2074702))
 				case createContact:
-					var params = createContactParams()
+					var params = createContactParams(input)
 					handle(api.CreateAccountExtensionContact(accountId, 1764590, params))
 				case replaceContact:
-					var params = createContactParams()
+					var params = createContactParams(input)
 					handle(api.ReplaceAccountExtensionContact(accountId, 1764590, params))
 				case deleteContact:
 					handle(api.DeleteAccountExtensionContact(accountId, 1764590, 2072969))
@@ -311,7 +316,7 @@ func execute(
 				case getGroup:
 					handle(api.GetAccountExtensionContactGroup(accountId, 1764590, 331026))
 				case createGroup:
-					var params = createGroupParams()
+					var params = createGroupParams(input)
 					handle(api.CreateAccountExtensionContactGroup(accountId, 1764590, params))
 				case replaceGroup:
 					//var params = createGroupParams()
@@ -329,10 +334,10 @@ func execute(
 				case getPhoneNumber:
 					handle(api.GetAccountPhoneNumber(accountId, 2116986))
 				case createPhoneNumber:
-					var params = createPhoneNumberParams()
+					var params = createPhoneNumberParams(input)
 					handle(api.CreateAccountPhoneNumber(accountId, params))
 				case replacePhoneNumber:
-					var params = replacePhoneNumberParams()
+					var params = replacePhoneNumberParams(input)
 					handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
 			}
 
@@ -345,10 +350,10 @@ func execute(
 				case getTrunk:
 					handle(api.GetAccountTrunk(accountId, 2116986))
 				case createTrunk:
-					var params = createTrunkParams()
+					var params = createTrunkParams(input)
 					handle(api.CreateAccountTrunk(accountId, params))
 				case replaceTrunk:
-					var params = createTrunkParams()
+					var params = createTrunkParams(input)
 					handle(api.ReplaceAccountTrunk(accountId, 2116986, params))
 		    case deleteTrunk:
           handle(api.DeleteAccountTrunk(accountId, 2116986))

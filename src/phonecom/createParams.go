@@ -1,9 +1,16 @@
 package main
 
-import "phonecom-go-sdk"
+import (
+    "fmt"
+    "os"
+    "encoding/json"
+    "io/ioutil"
+    "phonecom-go-sdk"
+)
 
-func createCallParams() swagger.CreateCallParams {
+func createCallParams(inputFile string) swagger.CreateCallParams {
 
+/*
 	var params swagger.CreateCallParams
 
 	params.CallerPhoneNumber = "+17324568888"
@@ -14,150 +21,160 @@ func createCallParams() swagger.CreateCallParams {
 	params.CalleeExtension = 1749842
 	params.CalleeCallerId = "+17324568888"
 	params.CalleePrivate = true
+*/
+    
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateCallParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
 
-func createDeviceParams() swagger.CreateDeviceParams {
+func createDeviceParams(inputFile string) swagger.CreateDeviceParams {
 
-	var params swagger.CreateDeviceParams
+	
 
-	params.Name = "Name Name3"
-
-	//~ var line1 swagger.Line
-	//~ line1.Line = 10
-	//~ var line2 swagger.Line
-	//~ line2.Line = 10
-	//~ params.Lines = []swagger.Line{line1, line2}
-
-	return params
-}
-func createMenuParams() swagger.CreateMenuParams {
-	var params swagger.CreateMenuParams
-
-	params.Name = "Menu Test 2"
-	params.MainMessage = "Message test 2"
-	params.InvalidKeypressMessage = "invalid press 2"
-	params.AllowExtensionDial = true
-	params.KeypressWaitTime = 4
-
-	return params
-
-
-}
-
-func replaceMenuParams() swagger.ReplaceMenuParams{
-	var params swagger.ReplaceMenuParams
-
-	params.Name = "Menu Test 3"
-	params.AllowExtensionDial = false
-	params.KeypressWaitTime = 5
-
-	return params
-
-
-
-
-
-}
-func createExtensionsParams() swagger.CreateExtensionParams {
-
-	var params swagger.CreateExtensionParams
-
-	params.CallerId = "private"
-	params.UsageType = "limited"
-	params.AllowsCallWaiting = true
-	params.Extension = 15625
-	params.IncludeInDirectory = true
-	params.Name = "extensionName"
-	params.FullName = "extensionFullName"
-	params.Timezone = "America/Los_Angeles"
-	params.LocalAreaCode = 111
-	params.VoicemailGreetingEnableLeaveMessagePrompt = true
-	params.VoicemailEnabled = true
-	params.EnableOutboundCalls = true
-	params.EnableCallWaiting = true
-	params.VoicemailPassword = 111
-	params.VoicemailGreetingType = "extensionVoicemailGreetingType"
-	params.VoicemailTranscription = "extensionVoicemailTranscription"
-	params.VoicemailNotificationsEmails = []string{"extensionVoicemailNotificationsEmails1", "extensionVoicemailNotificationsEmails2"}
-	params.VoicemailNotificationsSms = "extensionVoicemailNotificationsSms"
-	params.CallNotificationsEmails = []string{"extensionCallNotificationsEmails1", "extensionCallNotificationsEmails2"}
-	params.CallNotificationsSms = "extensionCallNotificationsSms"
+	
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateDeviceParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
-func createQueueParams() swagger.CreateQueueParams {
-	var params swagger.CreateQueueParams
-
-	params.Name = "Queue Name 1"
-	params.MaxHoldTime = 60
-	params.RingTime = 15
-	//~ params.Greeting = "Barge landing"
-	//~ params.HoldMusic = "electronic"
-	params.CallerIdType = "called_number"
-
-	return params
-
-}
-
-func createRouteParams() swagger.CreateRouteParams {
-	var params swagger.CreateRouteParams
-
-	params.Name = "New route"
+func createMenuParams(inputFile string) swagger.CreateMenuParams {
+    
+    file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateMenuParams
+    json.Unmarshal(file, &params)
 
 	return params
 
 
 }
 
-func createSmsParams() swagger.CreateSmsParams {
-	var params swagger.CreateSmsParams
-
-	params.From = "+12015880100"
-	params.To = "+17328810138"
-	params.Text = "SMS can be sent to multiple recipients"
-
-	return params
-}
-
-func createSubaccountParams() swagger.CreateSubaccountParams{
-	var params swagger.CreateSubaccountParams
-
-	params.Username = "testUsername"
-	params.Password = "testPassword"
-
-	var contact swagger.ContactSubaccount
-	contact.Name = "testName"
-	contact.PrimaryEmail = "gigel@gigel.com"
-	contact.Company = "FeelITServices"
-	contact.Phone = "+12015880100"
-
-	var address swagger.Address
-	address.Line1 = "Line1 address"
-	address.Line2 = "Line 2 address"
-	address.City = "Paris"
-	address.Province = "Paris"
-	address.PostalCode = "700134"
-	address.Country = "France"
-	contact.Address = address
-
-	params.Contact = contact
-	params.BillingContact = contact
-
-
+func replaceMenuParams(inputFile string) swagger.ReplaceMenuParams{
+    
+	 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.ReplaceMenuParams
+    json.Unmarshal(file, &params)
 
 	return params
 
 
+
+
+
+}
+func createExtensionsParams(inputFile string) swagger.CreateExtensionParams {
+
+	 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateExtensionParams
+    json.Unmarshal(file, &params)
+
+	return params
+}
+func createQueueParams(inputFile string) swagger.CreateQueueParams {
+	 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateQueueParams
+    json.Unmarshal(file, &params)
+
+	return params
+
 }
 
-func createTrunkParams() swagger.CreateTrunkParams{
-	var params swagger.CreateTrunkParams
+func createRouteParams(inputFile string) swagger.CreateRouteParams {
+	 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateRouteParams
+    json.Unmarshal(file, &params)
 
-	params.Name = "Test Trrunk"
-	params.Url = "SIP/1234@phone.com:5060"
+	return params
 
+
+}
+
+func createSmsParams(inputFile string) swagger.CreateSmsParams {
+		 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateSmsParams
+    json.Unmarshal(file, &params)
+
+	return params
+}
+
+func createSubaccountParams(inputFile string) swagger.CreateSubaccountParams{
+		 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateSubaccountParams
+    json.Unmarshal(file, &params)
+
+	return params
+
+
+}
+
+func createTrunkParams(inputFile string) swagger.CreateTrunkParams{
+		 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateTrunkParams
+    json.Unmarshal(file, &params)
 
 	return params
 
@@ -165,88 +182,76 @@ func createTrunkParams() swagger.CreateTrunkParams{
 }
 
 
-func replaceExtensionParams() swagger.ReplaceExtensionParams {
-	var params swagger.ReplaceExtensionParams
-	//~ params.Name = "extensionName2"
-	//~ params.Timezone = "Europe/Skopje"
-	//~ params.IncludeInDirectory = false
-	//~ params.Extension = 15524
-	//~ params.EnableOutboundCalls = false
-	//~ params.UsageType = "extensionUsageType1" ###
-	//~ params.VoicemailPassword = 222
-	//~ params.FullName = "extensionFullName2"
-	//~ params.EnableCallWaiting = false
-	//~ params.VoicemailGreetingType = "extensionVoicemailGreetingType2"
-	//~ params.CallerId = "extensionCallerId1" ###
-	//~ params.LocalAreaCode = 620
-	//~ params.VoicemailEnabled = false
-	//~ params.VoicemailGreetingEnableLeaveMessagePrompt = false
-	//~ params.VoicemailTranscription = "extensionVoicemailTranscription2"
-	//~ params.VoicemailNotificationsEmails = []string{"extensionVoicemailNotificationsEmails3", "extensionVoicemailNotificationsEmails4"}
-	//~ params.VoicemailNotificationsSms = "extensionVoicemailNotificationsSms2"
-	//~ params.CallNotificationsEmails = []string{"extensionCallNotificationsEmails3", "extensionCallNotificationsEmails4"}
-	//~ params.CallNotificationsSms = "extensionCallNotificationsSms2"
-	//~ params.Route = []string{"extensionRoute3", "extensionRoute4"}
+func replaceExtensionParams(inputFile string) swagger.ReplaceExtensionParams {
+	 file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.ReplaceExtensionParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
 
-func createContactParams() swagger.CreateContactParams {
+func createContactParams(inputFile string) swagger.CreateContactParams {
 
-	var params swagger.CreateContactParams
-	params.FirstName = "contactFirstName"
-	params.MiddleName = "contactMiddleName"
-	params.LastName = "contactLastName"
-	params.Prefix = "contactPrefix"
-	params.PhoneticFirstName = "contactPhoneticFirstName"
-	params.PhoneticMiddleName = "contactPhoneticMiddleName"
-	params.PhoneticLastName = "contactPhoneticLastName"
-	params.Suffix = "contactSuffix"
-	params.Nickname = "contactNickname"
-	params.Company = "contactCompany"
-	params.Department = "contactDepartment"
-	params.JobTitle = "contactJobTitle"
+ file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateContactParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
 
-func createGroupParams() swagger.CreateGroupParams {
+func createGroupParams(inputFile string) swagger.CreateGroupParams {
 
-	var params swagger.CreateGroupParams
-	params.Name = "Name of group"
-
-	return params
-}
-
-func createPhoneNumberParams() swagger.CreatePhoneNumberParams {
-
-	var params swagger.CreatePhoneNumberParams
-	//~ params.Name = "phonenumberName"
-	//~ params.BlockIncoming = true
-	//~ params.BlockAnonymous = true
-	//~ params.CallerIdName = "Caller Id Name"
-	//~ params.CallerIdType = "phonenumberCallerIdType"
-	//~ params.SmsForwardingType = "phonenumberSmsForwardingType"
-	//~ params.CallNotificationsEmails = []string{"phonenumberCallNotificationsEmails1", "phonenumberCallNotificationsEmails2"}
-	//~ params.CallNotificationsSms = "phonenumberCallNotificationsSms"
+	file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreateGroupParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
 
-func replacePhoneNumberParams() swagger.ReplacePhoneNumberParams {
+func createPhoneNumberParams(inputFile string) swagger.CreatePhoneNumberParams {
 
-	var params swagger.ReplacePhoneNumberParams
-	params.Name = "The Name"
-	params.BlockIncoming = false
-	params.BlockAnonymous = false
-	var callerId swagger.CallerIdFull
-	callerId.Name = "The Caller Id Name"
-	callerId.Type_ = "The Caller Id Type"
-	params.CallerIdName = callerId.Name
-	params.CallerIdType = callerId.Type_
-	params.SmsForwardingType = "The Sms Forwarding Type"
-	params.CallNotificationsEmails = []string{"The Call Notifications Emails 1", "The Call Notifications Emails 2"}
-	params.CallNotificationsSms = "The Call Notifications Sms"
+	file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.CreatePhoneNumberParams
+    json.Unmarshal(file, &params)
+
+	return params
+}
+
+func replacePhoneNumberParams(inputFile string) swagger.ReplacePhoneNumberParams {
+
+	file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+    fmt.Printf("%s\n", string(file))
+    
+    var params  swagger.ReplacePhoneNumberParams
+    json.Unmarshal(file, &params)
 
 	return params
 }
