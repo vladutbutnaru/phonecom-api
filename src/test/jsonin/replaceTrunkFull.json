@@ -8,7 +8,7 @@
 	"greeting": {
 		/*Recording lookup object*/
 	},
-	"error_message" {
+	"error_message": {
 		/*Recording lookup object*/
 	},
 	"codecs": [

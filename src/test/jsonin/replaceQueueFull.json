@@ -5,7 +5,7 @@
 	"greeting": {
 		/*Recording lookup object*/
 	},
-	"hold_music" {
+	"hold_music": {
 		/*Recording lookup object*/
 	},
 	"max_hold_time": 600,

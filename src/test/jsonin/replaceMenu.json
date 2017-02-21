@@ -1,7 +1,7 @@
 {
 	"account_id": 1315091,
 	"menu_id": 456,
-	"name": "Secondary Menu"
+	"name": "Secondary Menu",
 	"allow_extension_dial": false,
 	"keypress_wait_time": 5
 }
