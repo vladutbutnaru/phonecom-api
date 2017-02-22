@@ -378,7 +378,7 @@ c *cli.Context) error {
       }
       handle(api.ListAccounts(slice, "", limit, offset, ""))
     case getAccount:
-      handle(api.GetAccount(accountId))
+      handle(api.GetAccount(id))
     }
 
   case swagger.NumberregionsApi:
