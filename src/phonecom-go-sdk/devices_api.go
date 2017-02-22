@@ -116,7 +116,7 @@ func (a DevicesApi) GetAccountDevice(accountId int32, deviceId int32) (*DeviceFu
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/device/{device_id}"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/devices/{device_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"device_id"+"}", fmt.Sprintf("%v", deviceId), -1)
 
@@ -274,7 +274,7 @@ func (a DevicesApi) ReplaceAccountDevice(accountId int32, deviceId int32, data C
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/device/{device_id}"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/devices/{device_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"device_id"+"}", fmt.Sprintf("%v", deviceId), -1)
 
