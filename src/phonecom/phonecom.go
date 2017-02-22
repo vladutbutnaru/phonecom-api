@@ -8,7 +8,7 @@ import (
 	"phonecom-go-sdk"
 )
 
-const accountId = 1315091
+
 
 func main() {
 
@@ -17,7 +17,7 @@ func main() {
 	app.Flags = []cli.Flag{
 
 		cli.StringFlag{
-			Name: "command",
+			Name: "command, c",
 			Value: listAccounts,
 			Usage: "Phone.com API command that you want to execute",
 		},
@@ -26,26 +26,42 @@ func main() {
 			Value: 0,
 			Usage: "ID of entity you want to operate",
 		},
+        cli.IntFlag{
+			Name: "id-secondary, is",
+			Value: 0,
+			Usage: "Secondary ID of entity you want to operate",
+		},
 		cli.IntFlag{
-			Name: "limit",
+			Name: "limit, l",
 			Value: 5,
 			Usage: "Upper limit of results you want to fetch",
 		},
 		cli.IntFlag{
-			Name: "offset",
+			Name: "offset, o",
 			Value: 0,
 			Usage: "Offset of results you want to fetch",
 		},
+        cli.IntFlag{
+			Name: "account, a",
+			Value: 1315091,
+			Usage: "Phone.com API account to use in API calls",
+		},
 		cli.StringFlag{
-			Name: "dryrun",
+			Name: "dryrun, d",
 			Value: "",
 			Usage: "Print the expected action without executing the API command",
 		},
         cli.StringFlag{
-			Name: "input",
+			Name: "input, i",
 			Value: "",
 			Usage: "Specify the path to the JSON file for making the API call",
 		},
+         cli.StringFlag{
+			Name: "verbose, v",
+			Value: "",
+			Usage: "Activate verbose mode",
+		},
+        
 	}
 
 	app.Action = func(c *cli.Context) error {
@@ -63,9 +79,13 @@ func execute(
 	offset := int32(c.Int("offset"))
 	id := int32(c.Int("id"))
 	dryrun := c.String("dryrun")
+    verbose := c.String("verbose")
     input :=c.String("input")
 	command := c.String("command")
-
+    idSecondary := int32(c.Int("id-secondary"))
+    accountId := int32(c.Int("account"))
+    
+    
 	var api interface{} = getApi(command)
 	if (api == nil) {
 		return nil
@@ -78,17 +98,17 @@ func execute(
 		switch (command) {
 
 		case listMedia:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of media in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
 		case getRecording:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of recording ", id, " expecting a recording in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.GetAccountMedia(accountId, id))
 		}
@@ -97,79 +117,144 @@ func execute(
 
 		switch (command) {
 		case listMenus:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of menus in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
 		case getMenu:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.GetAccountMenu(accountId, id))
 		case createMenu:
+            if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " with the parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 			var params = createMenuParams(input)
 			handle(api.CreateAccountMenu(accountId,params))
 		case replaceMenu:
+            if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " replacing the menu with the parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 			var params = replaceMenuParams(input)
-			handle(api.ReplaceAccountMenu(accountId,88295,params))
+			handle(api.ReplaceAccountMenu(accountId,id,params))
 		case deleteMenu:
-			handle(api.DeleteAccountMenu(accountId,88295))
+            if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to delete menu with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+			handle(api.DeleteAccountMenu(accountId,id))
 		}
 
 	case swagger.QueuesApi:
 
 		switch (command) {
 		case listQueues:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: limit ", limit, " offset ", offset, " account ID ", accountId, " expecting a list of queues in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
 		case getQueue:
-			if(dryrun != ""){
+			if(dryrun != "" || verbose !=""){
 				fmt.Println("Calling ", command, " with parameters: account ID ", accountId,  " id of media ", id, " expecting a recording in JSON format")
 
-				return nil
+				 if(verbose=="") { return nil }
 			}
 			handle(api.GetAccountQueue(accountId, id))
 		case createQueue:
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a queue with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 			var params = createQueueParams(input)
 			handle(api.CreateAccountQueue(accountId, params))
 		case replaceQueue:
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a queue with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 			var params = createQueueParams(input)
-			handle(api.ReplaceAccountQueue(accountId, 141494, params))
+			handle(api.ReplaceAccountQueue(accountId, id, params))
 		case deleteQueue:
-			handle(api.DeleteAccountQueue(accountId, 141494))
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to delete queue with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+			handle(api.DeleteAccountQueue(accountId, id))
 		}
 
 	case swagger.RoutesApi:
 
 		switch (command) {
 			case listRoutes:
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of routes ")
+
+				 if(verbose=="") { return nil }
+			}
 				handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
 			case getRoute:
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a route with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
 				handle(api.GetAccountRoute(accountId, id))
 			case createRoute:
+             if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a route with parameters from ", input)
+
+				 if(verbose=="") { return nil }
+			}
 				var params = createRouteParams(input)
 				handle(api.CreateRoute(accountId, params))
 			case replaceRoute:
+              if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a route with parameters from ", input)
+
+				 if(verbose=="") { return nil }
+			}
 				var params = createRouteParams(input)
 				handle(api.ReplaceAccountRoute(accountId, id, params))
 			case deleteRoute:
-				handle(api.DeleteAccountRoute(accountId, 14987))
+              if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to delete a route with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+				handle(api.DeleteAccountRoute(accountId, id))
 		}
 
 		case swagger.SchedulesApi:
 
 			switch (command) {
 				case listSchedules:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a list of schedules in JSON format ")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
 				case getSchedule:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON schedule with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.GetAccountSchedule(accountId, id))
 			}
 
@@ -177,10 +262,25 @@ func execute(
 
 			switch (command) {
 				case listSms:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of sms objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
 				case getSms:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON sms object with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.GetAccountSms(accountId, id))
 				case createSms:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create an sms object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createSmsParams(input)
 					handle(api.CreateAccountSms(accountId, params))
 			}
@@ -189,22 +289,30 @@ func execute(
 
 			switch (command) {
 				case listAvailablePhoneNumbers:
-					handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of phone number objects")
+
+				 if(verbose=="") { return nil }
 			}
-
-		case swagger.NumberregionsApi:
-
-			switch (command) {
-				case listAvailablePhoneNumberRegions:
-					handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
-				}
+					handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+			}
 
 		case swagger.SubaccountsApi:
 
 			switch (command) {
 				case listSubaccounts:
+                    if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of subaccount objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
                 case createSubaccount:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a subaccount object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
                     var params = createSubaccountParams(input)
                     handle(api.CreateAccountSubaccount(accountId, params))
 			}
@@ -214,33 +322,65 @@ func execute(
 			switch (command) {
 
 				case listAccounts:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of account objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccounts(slice, "", limit, offset, ""))
 				case getAccount:
 					handle(api.GetAccount(accountId))
 			}
+        
+        case swagger.NumberregionsApi:
+
+			switch (command) {
+				case listAvailablePhoneNumberRegions:
+                 if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of phone number region objects")
+
+				 if(verbose=="") { return nil }
+			}
+					handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
+				}
 
 		case swagger.ApplicationsApi:
 
 			switch (command) {
 
 				case listApplications:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of application objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
 				case getApplication:
-					handle(api.GetAccountApplication(accountId, 1356077))
+					handle(api.GetAccountApplication(accountId, id))
 			}
 
-		//case swagger.CallsApi:
-		//
-		//	switch (command) {
-		//		case createCall:
-		//			var params = createCallParams(input)
-		//			handle(api.CreateAccountCalls(accountId, params))
-		//	}
+		case swagger.CallsApi:
+
+			switch (command) {
+				case createCall:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create an call object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
+					var params = createCallParams(input)
+					handle(api.CreateAccountCalls(accountId, params))
+			}
 
 		case swagger.CalllogsApi:
 
 		switch (command) {
 			case listCallLogs:
+                  if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of call logs objects")
+
+				 if(verbose=="") { return nil }
+			}
 				handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
 				//~ case getCallLog:
 				//~ handle(api.GetAccountCallLog(accountId, id))
@@ -251,13 +391,28 @@ func execute(
 			switch (command) {
 
 				case listDevices:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of device objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
 				case getDevice:
 					handle(api.GetAccountDevice(accountId, id))
 				case createDevice:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a device object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createDeviceParams(input)
 					handle(api.CreateAccountDevice(accountId, params))
 				case replaceDevice:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a device with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createDeviceParams(input)
 					handle(api.ReplaceAccountDevice(accountId, id, params))
 			}
@@ -267,9 +422,14 @@ func execute(
 			switch (command) {
 
 				case listExpressServiceCodes:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of express service code objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountExpressSrvCodes(accountId, slice))
 				case getExpressServiceCode:
-					handle(api.GetAccountExpressSrvCode(accountId, 324202))
+					handle(api.GetAccountExpressSrvCode(accountId, id))
 			}
 
 		case swagger.ExtensionsApi:
@@ -277,15 +437,30 @@ func execute(
 			switch (command) {
 
 				case listExtensions:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of extension objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
 				case getExtension:
-					handle(api.GetAccountExtension(accountId, 1767129))
+					handle(api.GetAccountExtension(accountId, id))
 				case createExtension:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create an extension object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createExtensionsParams(input)
 					handle(api.CreateAccountExtension(accountId, params))
 				case replaceExtension:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace an extension with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = replaceExtensionParams(input)
-					handle(api.ReplaceAccountExtension(accountId, 1767129, params))
+					handle(api.ReplaceAccountExtension(accountId, id, params))
 			}
 
 		case swagger.CalleridsApi:
@@ -293,7 +468,7 @@ func execute(
 			switch (command) {
 
 				case getCallerId:
-					handle(api.GetCallerIds(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
+					handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, ""))
 			}
 
 		case swagger.ContactsApi:
@@ -301,17 +476,37 @@ func execute(
 			switch (command) {
 
 				case listContacts:
-					handle(api.ListAccountExtensionContacts(accountId, 1764590, slice, slice, slice, "", "", limit, offset, ""))
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of contact objects")
+
+				 if(verbose=="") { return nil }
+			}
+					handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, ""))
 				case getContact:
-					handle(api.GetAccountExtensionContact(accountId, 1764590, 2074702))
+					handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 				case createContact:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create an account extension contact object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createContactParams(input)
-					handle(api.CreateAccountExtensionContact(accountId, 1764590, params))
+					handle(api.CreateAccountExtensionContact(accountId, id, params))
 				case replaceContact:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a contact with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createContactParams(input)
-					handle(api.ReplaceAccountExtensionContact(accountId, 1764590, params))
+					handle(api.ReplaceAccountExtensionContact(accountId, id, params))
 				case deleteContact:
-					handle(api.DeleteAccountExtensionContact(accountId, 1764590, 2072969))
+                   if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a to delete an Account Extension object with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+					handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
 			}
 
 		case swagger.GroupsApi:
@@ -319,17 +514,37 @@ func execute(
 			switch (command) {
 
 				case listGroups:
-					handle(api.ListAccountExtensionContactGroups(accountId, 1764590, slice, slice, "", "", limit, offset, ""))
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of group objects")
+
+				 if(verbose=="") { return nil }
+			}
+					handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, ""))
 				case getGroup:
-					handle(api.GetAccountExtensionContactGroup(accountId, 1764590, 331026))
+					handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 				case createGroup:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a group object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createGroupParams(input)
-					handle(api.CreateAccountExtensionContactGroup(accountId, 1764590, params))
+					handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
 				case replaceGroup:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a group with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					//var params = createGroupParams()
-					handle(api.ReplaceAccountExtensionContactGroup(accountId, 1764590, 331978))
+					handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
 				case deleteGroup:
-					handle(api.DeleteAccountExtensionContactGroup(accountId, 1764590, 331978))
+                    if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a to delete a Group object with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+					handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
 			}
 
 		case swagger.PhonenumbersApi:
@@ -337,15 +552,30 @@ func execute(
 			switch (command) {
 
 				case listPhoneNumbers:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of phone number objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
 				case getPhoneNumber:
-					handle(api.GetAccountPhoneNumber(accountId, 2116986))
+					handle(api.GetAccountPhoneNumber(accountId, id))
 				case createPhoneNumber:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a phone number object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createPhoneNumberParams(input)
 					handle(api.CreateAccountPhoneNumber(accountId, params))
 				case replacePhoneNumber:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a phone number with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = replacePhoneNumberParams(input)
-					handle(api.ReplaceAccountPhoneNumber(accountId, 2116986, params))
+					handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
 			}
 
         case swagger.TrunksApi:
@@ -353,17 +583,37 @@ func execute(
 			switch (command) {
 
 				case listTrunks:
+                      if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a JSON list of trunk objects")
+
+				 if(verbose=="") { return nil }
+			}
 					handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, ""))
 				case getTrunk:
-					handle(api.GetAccountTrunk(accountId, 2116986))
+					handle(api.GetAccountTrunk(accountId, id))
 				case createTrunk:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to create a trunk object with parameters from file ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createTrunkParams(input)
 					handle(api.CreateAccountTrunk(accountId, params))
 				case replaceTrunk:
+                if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting to replace a trunk with parameters found in ", input)
+
+				 if(verbose=="") { return nil }
+			}
 					var params = createTrunkParams(input)
-					handle(api.ReplaceAccountTrunk(accountId, 2116986, params))
+					handle(api.ReplaceAccountTrunk(accountId, id, params))
 		    case deleteTrunk:
-          handle(api.DeleteAccountTrunk(accountId, 2116986))
+                    if(dryrun != "" || verbose !=""){
+				fmt.Println("Calling ", command, " expecting a to delete a Trunk object with id ", id)
+
+				 if(verbose=="") { return nil }
+			}
+          handle(api.DeleteAccountTrunk(accountId, id))
 			}
 
 		default:
@@ -438,13 +688,13 @@ func getApi(
       availableNumbersApi := *swagger.NewAvailablenumbersApi()
       availableNumbersApi.Configuration = config
       api = availableNumbersApi
-
-		case listAvailablePhoneNumberRegions:
+      
+case listAvailablePhoneNumberRegions:
 
 			availableNumbersApi := *swagger.NewNumberregionsApi()
 			availableNumbersApi.Configuration = config
 			api = availableNumbersApi
-
+      
     case listSubaccounts, createSubaccount:
 
       subAccountsApi := *swagger.NewSubaccountsApi()
@@ -463,11 +713,11 @@ func getApi(
       applicationsApi.Configuration = config
       api = applicationsApi
 
-    //case createCall:
-		//
-    //  callsApi := *swagger.NewCallsApi()
-    //  callsApi.Configuration = config
-    //  api = callsApi
+    case createCall:
+
+      callsApi := *swagger.NewCallsApi()
+      callsApi.Configuration = config
+      api = callsApi
 
     case listCallLogs:
 
