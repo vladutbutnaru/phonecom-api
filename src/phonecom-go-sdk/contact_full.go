@@ -52,12 +52,14 @@ type ContactFull struct {
 	// Contact's job title
 	JobTitle string `json:"job_title,omitempty"`
 
-	Emails Emails `json:"emails,omitempty"`
+	// Array of Contact Email Objects. See below for details.
+	Emails []Email `json:"emails,omitempty"`
 
 	// Array of Contact Phone Number Objects. See below for details.
 	PhoneNumbers []PhoneNumberContact `json:"phone_numbers,omitempty"`
 
-	Addresses Addresses `json:"addresses,omitempty"`
+	// Array of Contact Address Objects. See below for details.
+	Addresses []AddressListContacts `json:"addresses,omitempty"`
 
 	Group GroupListContacts `json:"group,omitempty"`
 
