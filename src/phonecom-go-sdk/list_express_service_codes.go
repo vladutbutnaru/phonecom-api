@@ -14,7 +14,7 @@ type ListExpressServiceCodes struct {
 
 	Filters FilterIdArray `json:"filters,omitempty"`
 
-	Sort SortId `json:"sort,omitempty"`
+	Sort []SortId `json:"sort,omitempty"`
 
 	Total int32 `json:"total,omitempty"`
 
