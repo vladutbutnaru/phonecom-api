@@ -12,7 +12,7 @@ package swagger
 
 type ListPhoneNumbersRegions struct {
 
-	GroupBy GroupByListPhoneNumbersRegions `json:"group_by,omitempty"`
+	GroupBy []string `json:"group_by,omitempty"`
 
 	Filters FilterListPhoneNumbersRegions `json:"filters,omitempty"`
 

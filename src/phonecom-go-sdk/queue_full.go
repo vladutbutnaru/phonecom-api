@@ -33,5 +33,6 @@ type QueueFull struct {
 	// Number of seconds to ring a member before cycling to the next member. If provided, must equal one of: 5, 10, 15, 20, 25, 30. Default is 5.
 	RingTime int32 `json:"ring_time,omitempty"`
 
-	Members Members `json:"members,omitempty"`
+	// Array of Member Objects. Non-virtual account extensions or phone numbers. See below for details.
+	Members []Member `json:"members,omitempty"`
 }

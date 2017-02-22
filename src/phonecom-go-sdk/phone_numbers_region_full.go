@@ -17,10 +17,10 @@ type PhoneNumbersRegionFull struct {
 	CountryCode string `json:"country_code,omitempty"`
 
 	// Optional. Area Code, for North American phone numbers.
-	Npa string `json:"npa,omitempty"`
+	Npa int32 `json:"npa,omitempty"`
 
 	// Optional. Second set of 3 digits, for North American phone numbers.
-	Nxx string `json:"nxx,omitempty"`
+	Nxx int32 `json:"nxx,omitempty"`
 
 	// Optional. Boolean describing whether the phone numbers in this group are toll free.
 	IsTollFree int32 `json:"is_toll_free,omitempty"`
