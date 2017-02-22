@@ -1,6 +1,6 @@
 {
 	"account_id": 1315091,
-	"extension_id": "1764590",
+	"extension_id": 1764590,
 	"voicemail[greeting][alternate]": {
 		/*Recording lookup object*/
 	},
@@ -25,9 +25,15 @@
 	"voicemail[enabled]": true,
 	"voicemail[greeting][enable_leave_message_prompt]": true,
 	"voicemail[transcription]": "automated",
-	"voicemail[notifications][emails]": /*type mixed*/,
+	"voicemail[notifications][emails]": [
+		""
+	],
 	"voicemail[notifications][sms]": "+18587741111",
-	"call_notifications[emails]": /*type mixed*/,
+	"call_notifications[emails]": [
+		""
+	],
 	"call_notifications[sms]": "+18587748888",
-	"route": /*type mixed*/
+	"route": [
+		""
+	]
 }

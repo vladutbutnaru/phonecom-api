@@ -1,30 +1,23 @@
 {	
 	"filters[country_code]": [
-		"",
 		""
 	],
 	"filters[npa]": [
-		"",
 		""
 	],
 	"filters[nxx]": [
-		"",
 		""
 	],
 	"filters[is_toll_free]": [
-		"",
 		""
 	],
 	"filters[city]": [
-		"",
 		""
 	],
 	"filters[province_postal_code]": [
-		"",
 		""
 	],
 	"filters[country_postal_code]": [
-		"",
 		""
 	],
 	"sort[country_code]": "",
@@ -38,7 +31,6 @@
 	"offset": 0,
 	"fields": "",
 	"group_by": [
-		"",
 		""
 	]
 }

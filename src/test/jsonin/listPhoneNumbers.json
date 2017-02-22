@@ -1,15 +1,12 @@
 {
 	"account_id": 1315091,
 	"filters[id]": [
-		"",
 		""
 	],
 	"filters[name]": [
-		"",
 		""
 	],
 	"filters[phone_number]": [
-		"",
 		""
 	],
 	"sort[id]": "",

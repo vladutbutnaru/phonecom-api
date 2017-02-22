@@ -4,7 +4,9 @@
 		""
 	],
 	"filters[from]": "",
+	"filters[to]": "",
 	"filters[direction]": "",
+	"filters[extension]": "",
 	"filters[created_at]": "",
 	"sort[id]": "",
 	"sort[created_at]": "",
@@ -12,3 +14,4 @@
 	"offset": 0,
 	"fields": ""
 }
+// This is as it is now with the new version of apidocs

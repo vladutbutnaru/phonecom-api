@@ -19,6 +19,8 @@
 	"pool_item": {
 		/*Pool lookup object*/
 	},
-	"call_notifications[emails]": /*type mixed*/,
+	"call_notifications[emails]": [
+		""
+	],
 	"call_notifications[sms]": "+18587740222"
 }

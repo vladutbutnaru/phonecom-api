@@ -12,12 +12,15 @@
 	"caller_id[name]": "Robert M",
 	"caller_id[type]": "business",
 	"sms_forwarding[type]": "extension",
-	"sms_forwarding[application]": 
+	"sms_forwarding[application]": {
 		/*Application lookup object*/
 	},
-	"sms_forwarding[extension]": 
+	"sms_forwarding[extension]": {
 		/*Extension lookup object*/
 	},
-	"call_notifications[emails]": /*type mixed*/,
+	"call_notifications[emails]": [
+        "",
+        ""
+	],
 	"call_notifications[sms]": "+18587740222"
 }

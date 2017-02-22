@@ -1,42 +1,35 @@
 {
 	"filters[phone_number]": [
-		"",
 		""
 	],
 	"filters[country_code]": [
-		"",
 		""
 	],
 	"filters[npa]": [
-		"",
 		""
 	],
 	"filters[nxx]": [
-		"",
 		""
 	],
 	"filters[xxxx]": [
-		"",
 		""
 	],
 	"filters[city]": [
-		"",
 		""
 	],
 	"filters[province]": [
-		"",
 		""
 	],
 	"filters[country]": [
-		"",
 		""
 	],
 	"filters[price]": [
-		"",
 		""
 	],
 	"filters[category]": [
-		"",
+		""
+	],
+	"filters[is_toll_free]": [
 		""
 	],
 	"sort[internal]": "",
