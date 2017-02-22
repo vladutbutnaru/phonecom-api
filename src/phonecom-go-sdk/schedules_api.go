@@ -115,9 +115,9 @@ func (a SchedulesApi) GetAccountSchedule(accountId int32, scheduleId int32) (*Sc
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListSchedulesFull
+ * @return *ListSchedules
  */
-func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListSchedulesFull, *APIResponse, error) {
+func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListSchedules, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -176,7 +176,7 @@ func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, 
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListSchedulesFull)
+	var successPayload = new(ListSchedules)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

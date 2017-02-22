@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountExtensions**
-> ListExtensionsFull ListAccountExtensions($accountId, $filtersId, $filtersExtension, $filtersName, $sortId, $sortExtension, $sortName, $limit, $offset, $fields)
+> ListExtensions ListAccountExtensions($accountId, $filtersId, $filtersExtension, $filtersName, $sortId, $sortExtension, $sortName, $limit, $offset, $fields)
 
 Get a list of extensions visible to the authenticated user or client
 
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListExtensionsFull**](ListExtensionsFull.md)
+[**ListExtensions**](ListExtensions.md)
 
 ### Authorization
 

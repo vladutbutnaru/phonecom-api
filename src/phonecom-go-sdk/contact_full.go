@@ -54,6 +54,7 @@ type ContactFull struct {
 
 	Emails Emails `json:"emails,omitempty"`
 
+	// Array of Contact Phone Number Objects. See below for details.
 	PhoneNumbers []PhoneNumberContact `json:"phone_numbers,omitempty"`
 
 	Addresses Addresses `json:"addresses,omitempty"`

@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountTrunks**
-> ListTrunksFull ListAccountTrunks($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListTrunks ListAccountTrunks($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Get a list of trunks for an account
 
@@ -124,7 +124,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListTrunksFull**](ListTrunksFull.md)
+[**ListTrunks**](ListTrunks.md)
 
 ### Authorization
 

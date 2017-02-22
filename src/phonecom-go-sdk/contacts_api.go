@@ -256,9 +256,9 @@ func (a ContactsApi) GetAccountExtensionContact(accountId int32, extensionId int
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListContactsFull
+ * @return *ListContacts
  */
-func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId int32, filtersId []string, filtersGroupId []string, filtersUpdatedAt []string, sortId string, sortUpdatedAt string, limit int32, offset int32, fields string) (*ListContactsFull, *APIResponse, error) {
+func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId int32, filtersId []string, filtersGroupId []string, filtersUpdatedAt []string, sortId string, sortUpdatedAt string, limit int32, offset int32, fields string) (*ListContacts, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -322,7 +322,7 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListContactsFull)
+	var successPayload = new(ListContacts)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

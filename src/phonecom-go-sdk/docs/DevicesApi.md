@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountDevices**
-> ListDevicesFull ListAccountDevices($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListDevices ListAccountDevices($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Get a list of VoIP devices associated with your account
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListDevicesFull**](ListDevicesFull.md)
+[**ListDevices**](ListDevices.md)
 
 ### Authorization
 

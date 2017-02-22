@@ -50,9 +50,9 @@ func NewCalleridsApiWithBasePath(basePath string) *CalleridsApi {
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListCallerIdsFull
+ * @return *ListCallerIds
  */
-func (a CalleridsApi) GetCallerIds(accountId int32, extensionId int32, filtersNumber []string, filtersName []string, sortNumber string, sortName string, limit int32, offset int32, fields string) (*ListCallerIdsFull, *APIResponse, error) {
+func (a CalleridsApi) GetCallerIds(accountId int32, extensionId int32, filtersNumber []string, filtersName []string, sortNumber string, sortName string, limit int32, offset int32, fields string) (*ListCallerIds, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -112,7 +112,7 @@ func (a CalleridsApi) GetCallerIds(accountId int32, extensionId int32, filtersNu
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListCallerIdsFull)
+	var successPayload = new(ListCallerIds)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

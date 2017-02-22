@@ -39,7 +39,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountSchedules**
-> ListSchedulesFull ListAccountSchedules($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListSchedules ListAccountSchedules($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Get a list of schedules for an account
 
@@ -61,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListSchedulesFull**](ListSchedulesFull.md)
+[**ListSchedules**](ListSchedules.md)
 
 ### Authorization
 

@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **GetCallerIds**
-> ListCallerIdsFull GetCallerIds($accountId, $extensionId, $filtersNumber, $filtersName, $sortNumber, $sortName, $limit, $offset, $fields)
+> ListCallerIds GetCallerIds($accountId, $extensionId, $filtersNumber, $filtersName, $sortNumber, $sortName, $limit, $offset, $fields)
 
 Show the Caller ID options a given extension can use
 
@@ -31,7 +31,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListCallerIdsFull**](ListCallerIdsFull.md)
+[**ListCallerIds**](ListCallerIds.md)
 
 ### Authorization
 

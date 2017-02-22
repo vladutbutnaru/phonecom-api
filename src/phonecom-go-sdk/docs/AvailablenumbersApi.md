@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **ListAvailablePhoneNumbers**
-> ListAvailableNumbersFull ListAvailablePhoneNumbers($filtersPhoneNumber, $filtersCountryCode, $filtersNpa, $filtersNxx, $filtersXxxx, $filtersCity, $filtersProvince, $filtersCountry, $filtersPrice, $filtersCategory, $filtersIsTollFree, $sortInternal, $sortPrice, $sortPhoneNumber, $limit, $offset, $fields)
+> ListAvailableNumbers ListAvailablePhoneNumbers($filtersPhoneNumber, $filtersCountryCode, $filtersNpa, $filtersNxx, $filtersXxxx, $filtersCity, $filtersProvince, $filtersCountry, $filtersPrice, $filtersCategory, $sortInternal, $sortPrice, $sortPhoneNumber, $limit, $offset, $fields)
 
 
 
@@ -29,7 +29,6 @@ Name | Type | Description  | Notes
  **filtersCountry** | [**[]string**](string.md)| Country (postal code) filter | [optional] 
  **filtersPrice** | [**[]string**](string.md)| Price filter | [optional] 
  **filtersCategory** | [**[]string**](string.md)| Category filter | [optional] 
- **filtersIsTollFree** | [**[]string**](string.md)| Toll-free status filter | [optional] 
  **sortInternal** | **string**| Internal (quasi-random) sorting | [optional] 
  **sortPrice** | **string**| Price sorting | [optional] 
  **sortPhoneNumber** | **string**| Phone number sorting | [optional] 
@@ -39,7 +38,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListAvailableNumbersFull**](ListAvailableNumbersFull.md)
+[**ListAvailableNumbers**](ListAvailableNumbers.md)
 
 ### Authorization
 

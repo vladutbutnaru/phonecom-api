@@ -248,9 +248,9 @@ func (a QueuesApi) GetAccountQueue(accountId int32, queueId int32) (*QueueFull, 
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListQueuesFull
+ * @return *ListQueues
  */
-func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListQueuesFull, *APIResponse, error) {
+func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListQueues, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -309,7 +309,7 @@ func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filter
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListQueuesFull)
+	var successPayload = new(ListQueues)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

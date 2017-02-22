@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountRoutes**
-> ListRoutesFull ListAccountRoutes($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListRoutes ListAccountRoutes($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Get a list of routes for an account
 
@@ -124,7 +124,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListRoutesFull**](ListRoutesFull.md)
+[**ListRoutes**](ListRoutes.md)
 
 ### Authorization
 

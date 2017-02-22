@@ -115,9 +115,9 @@ func (a MediaApi) GetAccountMedia(accountId int32, recordingId int32) (*MediaFul
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListMediaFull
+ * @return *ListMedia
  */
-func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListMediaFull, *APIResponse, error) {
+func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListMedia, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -176,7 +176,7 @@ func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersN
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListMediaFull)
+	var successPayload = new(ListMedia)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

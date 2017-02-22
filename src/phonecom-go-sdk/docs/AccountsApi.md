@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccounts**
-> ListAccountsFull ListAccounts($filtersId, $sortId, $limit, $offset, $fields)
+> ListAccounts ListAccounts($filtersId, $sortId, $limit, $offset, $fields)
 
 Get a list of accounts visible to the authenticated user or client
 
@@ -57,7 +57,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListAccountsFull**](ListAccountsFull.md)
+[**ListAccounts**](ListAccounts.md)
 
 ### Authorization
 

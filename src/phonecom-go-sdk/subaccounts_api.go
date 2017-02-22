@@ -114,9 +114,9 @@ func (a SubaccountsApi) CreateAccountSubaccount(accountId int32, data CreateSuba
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListAccountsFull
+ * @return *ListAccounts
  */
-func (a SubaccountsApi) ListAccountSubaccounts(accountId int32, filtersId []string, sortId string, limit int32, offset int32, fields string) (*ListAccountsFull, *APIResponse, error) {
+func (a SubaccountsApi) ListAccountSubaccounts(accountId int32, filtersId []string, sortId string, limit int32, offset int32, fields string) (*ListAccounts, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -168,7 +168,7 @@ func (a SubaccountsApi) ListAccountSubaccounts(accountId int32, filtersId []stri
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListAccountsFull)
+	var successPayload = new(ListAccounts)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

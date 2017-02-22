@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountPhoneNumbers**
-> ListPhoneNumbersFull ListAccountPhoneNumbers($accountId, $filtersId, $filtersName, $filtersPhoneNumber, $sortId, $sortName, $sortPhoneNumber, $limit, $offset, $fields)
+> ListPhoneNumbers ListAccountPhoneNumbers($accountId, $filtersId, $filtersName, $filtersPhoneNumber, $sortId, $sortName, $sortPhoneNumber, $limit, $offset, $fields)
 
 Get a list of phone numbers registered to an account
 
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListPhoneNumbersFull**](ListPhoneNumbersFull.md)
+[**ListPhoneNumbers**](ListPhoneNumbers.md)
 
 ### Authorization
 

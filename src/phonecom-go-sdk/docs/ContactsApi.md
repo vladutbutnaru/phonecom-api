@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountExtensionContacts**
-> ListContactsFull ListAccountExtensionContacts($accountId, $extensionId, $filtersId, $filtersGroupId, $filtersUpdatedAt, $sortId, $sortUpdatedAt, $limit, $offset, $fields)
+> ListContacts ListAccountExtensionContacts($accountId, $extensionId, $filtersId, $filtersGroupId, $filtersUpdatedAt, $sortId, $sortUpdatedAt, $limit, $offset, $fields)
 
 Show a list of address book contacts
 
@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListContactsFull**](ListContactsFull.md)
+[**ListContacts**](ListContacts.md)
 
 ### Authorization
 

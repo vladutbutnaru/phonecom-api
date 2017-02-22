@@ -50,16 +50,15 @@ func NewAvailablenumbersApiWithBasePath(basePath string) *AvailablenumbersApi {
  * @param filtersCountry Country (postal code) filter
  * @param filtersPrice Price filter
  * @param filtersCategory Category filter
- * @param filtersIsTollFree Toll-free status filter
  * @param sortInternal Internal (quasi-random) sorting
  * @param sortPrice Price sorting
  * @param sortPhoneNumber Phone number sorting
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListAvailableNumbersFull
+ * @return *ListAvailableNumbers
  */
-func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string, filtersIsTollFree []string, sortInternal string, sortPrice string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListAvailableNumbersFull, *APIResponse, error) {
+func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string, sortInternal string, sortPrice string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListAvailableNumbers, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -119,10 +118,6 @@ func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []stri
 		localVarQueryParams.Add("filters[category]", a.Configuration.APIClient.ParameterToString(filtersCategory, collectionFormat))
 	}
 
-	if len(filtersIsTollFree) > 0 {
-		localVarQueryParams.Add("filters[is_toll_free]", a.Configuration.APIClient.ParameterToString(filtersIsTollFree, collectionFormat))
-	}
-
 	if sortInternal != "" {
 		localVarQueryParams.Add("sort[internal]", a.Configuration.APIClient.ParameterToString(sortInternal, ""))
 	}
@@ -156,7 +151,7 @@ func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []stri
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListAvailableNumbersFull)
+	var successPayload = new(ListAvailableNumbers)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

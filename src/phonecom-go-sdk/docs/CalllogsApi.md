@@ -4,46 +4,15 @@ All URIs are relative to *https://api.phone.com/v4*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetAccountCallLog**](CalllogsApi.md#GetAccountCallLog) | **Get** /accounts/{account_id}/call-logs/{callLog_id} | Show details of an individual Call Log entry
 [**ListAccountCallLogs**](CalllogsApi.md#ListAccountCallLogs) | **Get** /accounts/{account_id}/call-logs | Get a list of call details associated with your account
 
 
-# **GetAccountCallLog**
-> CallLogFull GetAccountCallLog($accountId, $callLogId)
-
-Show details of an individual Call Log entry
-
-This service shows the details of an individual Call Logs entry.
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **accountId** | **int32**| Account ID | 
- **callLogId** | **int32**| Call Log ID | 
-
-### Return type
-
-[**CallLogFull**](CallLogFull.md)
-
-### Authorization
-
-[apiKey](../README.md#apiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **ListAccountCallLogs**
-> ListCallLogsFull ListAccountCallLogs($accountId, $filtersId, $filtersStartTime, $filtersCreatedAt, $filtersDirection, $filtersCalledNumber, $filtersType, $filtersExtension, $sortId, $sortStartTime, $sortCreatedAt, $limit, $offset, $fields)
+> ListCallLogs ListAccountCallLogs($accountId, $filtersId, $filtersStartTime, $filtersCreatedAt, $filtersDirection, $filtersCalledNumber, $filtersType, $sortId, $sortStartTime, $sortCreatedAt, $limit, $offset, $fields)
 
 Get a list of call details associated with your account
 
-Fetch a list of call logs associated with your account.
+See Call Logs for more detail.
 
 
 ### Parameters
@@ -57,7 +26,6 @@ Name | Type | Description  | Notes
  **filtersDirection** | **string**| Call direction filter: in or out | [optional] 
  **filtersCalledNumber** | **string**| Called number | [optional] 
  **filtersType** | **string**| Call type, such as &#39;call&#39;, &#39;fax&#39;, &#39;audiogram&#39; | [optional] 
- **filtersExtension** | [**[]string**](string.md)| Extension filter | [optional] 
  **sortId** | **string**| ID sorting | [optional] 
  **sortStartTime** | **string**| Sorting by call start time: asc or desc | [optional] 
  **sortCreatedAt** | **string**| Sorting by call log creation time: asc or desc | [optional] 
@@ -67,7 +35,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListCallLogsFull**](ListCallLogsFull.md)
+[**ListCallLogs**](ListCallLogs.md)
 
 ### Authorization
 

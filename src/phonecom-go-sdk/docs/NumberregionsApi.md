@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **ListAvailablePhoneNumberRegions**
-> ListPhoneNumbersRegionsFull ListAvailablePhoneNumberRegions($filtersCountryCode, $filtersNpa, $filtersNxx, $filtersIsTollFree, $filtersCity, $filtersProvincePostalCode, $filtersCountryPostalCode, $sortCountryCode, $sortNpa, $sortNxx, $sortIsTollFree, $sortCity, $sortProvincePostalCode, $sortCountryPostalCode, $limit, $offset, $fields, $groupBy)
+> ListPhoneNumbersRegions ListAvailablePhoneNumberRegions($filtersCountryCode, $filtersNpa, $filtersNxx, $filtersIsTollFree, $filtersCity, $filtersProvincePostalCode, $filtersCountryPostalCode, $sortCountryCode, $sortNpa, $sortNxx, $sortIsTollFree, $sortCity, $sortProvincePostalCode, $sortCountryPostalCode, $limit, $offset, $fields, $groupBy)
 
 
 
@@ -40,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListPhoneNumbersRegionsFull**](ListPhoneNumbersRegionsFull.md)
+[**ListPhoneNumbersRegions**](ListPhoneNumbersRegions.md)
 
 ### Authorization
 

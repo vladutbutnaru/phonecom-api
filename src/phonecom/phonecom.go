@@ -189,8 +189,15 @@ func execute(
 
 			switch (command) {
 				case listAvailablePhoneNumbers:
-					handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+					handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
 			}
+
+		case swagger.NumberregionsApi:
+
+			switch (command) {
+				case listAvailablePhoneNumberRegions:
+					handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
+				}
 
 		case swagger.SubaccountsApi:
 
@@ -222,13 +229,13 @@ func execute(
 					handle(api.GetAccountApplication(accountId, 1356077))
 			}
 
-		case swagger.CallsApi:
-
-			switch (command) {
-				case createCall:
-					var params = createCallParams(input)
-					handle(api.CreateAccountCalls(accountId, params))
-			}
+		//case swagger.CallsApi:
+		//
+		//	switch (command) {
+		//		case createCall:
+		//			var params = createCallParams(input)
+		//			handle(api.CreateAccountCalls(accountId, params))
+		//	}
 
 		case swagger.CalllogsApi:
 
@@ -432,6 +439,12 @@ func getApi(
       availableNumbersApi.Configuration = config
       api = availableNumbersApi
 
+		case listAvailablePhoneNumberRegions:
+
+			availableNumbersApi := *swagger.NewNumberregionsApi()
+			availableNumbersApi.Configuration = config
+			api = availableNumbersApi
+
     case listSubaccounts, createSubaccount:
 
       subAccountsApi := *swagger.NewSubaccountsApi()
@@ -450,11 +463,11 @@ func getApi(
       applicationsApi.Configuration = config
       api = applicationsApi
 
-    case createCall:
-
-      callsApi := *swagger.NewCallsApi()
-      callsApi.Configuration = config
-      api = callsApi
+    //case createCall:
+		//
+    //  callsApi := *swagger.NewCallsApi()
+    //  callsApi.Configuration = config
+    //  api = callsApi
 
     case listCallLogs:
 

@@ -184,9 +184,9 @@ func (a PhonenumbersApi) GetAccountPhoneNumber(accountId int32, numberId int32) 
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListPhoneNumbersFull
+ * @return *ListPhoneNumbers
  */
-func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []string, filtersName []string, filtersPhoneNumber []string, sortId string, sortName string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListPhoneNumbersFull, *APIResponse, error) {
+func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []string, filtersName []string, filtersPhoneNumber []string, sortId string, sortName string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListPhoneNumbers, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -252,7 +252,7 @@ func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []st
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListPhoneNumbersFull)
+	var successPayload = new(ListPhoneNumbers)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

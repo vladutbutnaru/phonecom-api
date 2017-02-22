@@ -248,9 +248,9 @@ func (a RoutesApi) GetAccountRoute(accountId int32, routeId int32) (*RouteFull, 
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListRoutesFull
+ * @return *ListRoutes
  */
-func (a RoutesApi) ListAccountRoutes(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListRoutesFull, *APIResponse, error) {
+func (a RoutesApi) ListAccountRoutes(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListRoutes, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -309,7 +309,7 @@ func (a RoutesApi) ListAccountRoutes(accountId int32, filtersId []string, filter
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListRoutesFull)
+	var successPayload = new(ListRoutes)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

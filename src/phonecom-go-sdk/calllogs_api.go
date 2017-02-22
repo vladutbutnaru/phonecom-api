@@ -105,7 +105,7 @@ func (a CalllogsApi) GetAccountCallLog(accountId int32, callLogId int32) (*CallL
 
 /**
  * Get a list of call details associated with your account
- * Fetch a list of call logs associated with your account.
+ * See Call Logs for more detail.
  *
  * @param accountId Account ID
  * @param filtersId ID filter
@@ -121,9 +121,9 @@ func (a CalllogsApi) GetAccountCallLog(accountId int32, callLogId int32) (*CallL
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListCallLogsFull
+ * @return *ListCallLogs
  */
-func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListCallLogsFull, *APIResponse, error) {
+func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListCallLogs, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -201,7 +201,7 @@ func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, fi
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListCallLogsFull)
+	var successPayload = new(ListCallLogs)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

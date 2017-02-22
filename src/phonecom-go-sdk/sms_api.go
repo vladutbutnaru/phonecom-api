@@ -183,9 +183,9 @@ func (a SmsApi) GetAccountSms(accountId int32, smsId int32) (*SmsFull, *APIRespo
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListSmsFull
+ * @return *ListSms
  */
-func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListSmsFull, *APIResponse, error) {
+func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListSms, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -246,7 +246,7 @@ func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirec
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListSmsFull)
+	var successPayload = new(ListSms)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountExtensionContactGroups**
-> ListGroupsFull ListAccountExtensionContactGroups($accountId, $extensionId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListGroups ListAccountExtensionContactGroups($accountId, $extensionId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Show a list of contact groups belonging to an extension
 
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListGroupsFull**](ListGroupsFull.md)
+[**ListGroups**](ListGroups.md)
 
 ### Authorization
 

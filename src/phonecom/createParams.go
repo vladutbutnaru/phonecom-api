@@ -8,34 +8,34 @@ import (
     "phonecom-go-sdk"
 )
 
-func createCallParams(inputFile string) swagger.CreateCallParams {
-
-/*
-	var params swagger.CreateCallParams
-
-	params.CallerPhoneNumber = "+17324568888"
-	params.CallerExtension = 1749841
-	params.CallerCallerId = "+17329980138"
-	params.CallerPrivate = true
-	params.CalleePhoneNumber = "+17329980138"
-	params.CalleeExtension = 1749842
-	params.CalleeCallerId = "+17324568888"
-	params.CalleePrivate = true
-*/
-    
-    
-     file, e := ioutil.ReadFile(inputFile)
-    if e != nil {
-        fmt.Printf("File error: %v\n", e)
-        os.Exit(1)
-    }
-    fmt.Printf("%s\n", string(file))
-    
-    var params  swagger.CreateCallParams
-    json.Unmarshal(file, &params)
-
-	return params
-}
+//func createCallParams(inputFile string) swagger.CreateCallParams {
+//
+///*
+//	var params swagger.CreateCallParams
+//
+//	params.CallerPhoneNumber = "+17324568888"
+//	params.CallerExtension = 1749841
+//	params.CallerCallerId = "+17329980138"
+//	params.CallerPrivate = true
+//	params.CalleePhoneNumber = "+17329980138"
+//	params.CalleeExtension = 1749842
+//	params.CalleeCallerId = "+17324568888"
+//	params.CalleePrivate = true
+//*/
+//
+//
+//     file, e := ioutil.ReadFile(inputFile)
+//    if e != nil {
+//        fmt.Printf("File error: %v\n", e)
+//        os.Exit(1)
+//    }
+//    fmt.Printf("%s\n", string(file))
+//
+//    var params  swagger.CreateCallParams
+//    json.Unmarshal(file, &params)
+//
+//	return params
+//}
 
 func createDeviceParams(inputFile string) swagger.CreateDeviceParams {
 

@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// The Full SMS Object includes all of the properties in the SMS Summary Object, along with several more.
+// The Full SMS Object is identical to the SMS Summary Object. See above for details.
 type SmsFull struct {
 
 	// Unique SMS ID. Read-only.

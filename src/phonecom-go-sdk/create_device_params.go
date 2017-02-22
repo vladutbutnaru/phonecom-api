@@ -16,5 +16,5 @@ type CreateDeviceParams struct {
 	Name string `json:"name,omitempty"`
 
 	// List of line objects
-	Lines []Line `json:"lines,omitempty"`
+	Lines []interface{} `json:"lines,omitempty"`
 }

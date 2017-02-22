@@ -255,9 +255,9 @@ func (a GroupsApi) GetAccountExtensionContactGroup(accountId int32, extensionId 
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListGroupsFull
+ * @return *ListGroups
  */
-func (a GroupsApi) ListAccountExtensionContactGroups(accountId int32, extensionId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListGroupsFull, *APIResponse, error) {
+func (a GroupsApi) ListAccountExtensionContactGroups(accountId int32, extensionId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListGroups, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -317,7 +317,7 @@ func (a GroupsApi) ListAccountExtensionContactGroups(accountId int32, extensionI
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListGroupsFull)
+	var successPayload = new(ListGroups)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

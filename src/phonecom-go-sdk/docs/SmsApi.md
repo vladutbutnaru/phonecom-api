@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountSms**
-> ListSmsFull ListAccountSms($accountId, $filtersId, $filtersDirection, $filtersFrom, $sortId, $sortCreatedAt, $limit, $offset, $fields)
+> ListSms ListAccountSms($accountId, $filtersId, $filtersDirection, $filtersFrom, $sortId, $sortCreatedAt, $limit, $offset, $fields)
 
 Get a list of SMS messages for an account
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListSmsFull**](ListSmsFull.md)
+[**ListSms**](ListSms.md)
 
 ### Authorization
 

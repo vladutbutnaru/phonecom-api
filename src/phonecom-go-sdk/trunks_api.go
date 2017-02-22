@@ -248,9 +248,9 @@ func (a TrunksApi) GetAccountTrunk(accountId int32, trunkId int32) (*TrunkFull, 
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListTrunksFull
+ * @return *ListTrunks
  */
-func (a TrunksApi) ListAccountTrunks(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListTrunksFull, *APIResponse, error) {
+func (a TrunksApi) ListAccountTrunks(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListTrunks, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -271,25 +271,15 @@ func (a TrunksApi) ListAccountTrunks(accountId int32, filtersId []string, filter
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var collectionFormat = "multi"
-	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
-	}
+	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
 
-	if len(filtersName) > 0 {
-		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
-	}
+	localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
 
-	if sortId != "" {
-		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	}
-	if sortName != "" {
-		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
-	}
+	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
+	localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	if fields != "" {
-		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
-	}
+	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -309,7 +299,7 @@ func (a TrunksApi) ListAccountTrunks(accountId int32, filtersId []string, filter
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListTrunksFull)
+	var successPayload = new(ListTrunks)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

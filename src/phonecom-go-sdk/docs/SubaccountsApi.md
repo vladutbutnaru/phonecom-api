@@ -39,7 +39,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountSubaccounts**
-> ListAccountsFull ListAccountSubaccounts($accountId, $filtersId, $sortId, $limit, $offset, $fields)
+> ListAccounts ListAccountSubaccounts($accountId, $filtersId, $sortId, $limit, $offset, $fields)
 
 Get a list of subaccounts for the authenticated user or client
 
@@ -59,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListAccountsFull**](ListAccountsFull.md)
+[**ListAccounts**](ListAccounts.md)
 
 ### Authorization
 

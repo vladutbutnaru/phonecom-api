@@ -10,7 +10,7 @@
 
 package swagger
 
-// The Full Extension Object has the same properties as the Extension Summary Object, along with the following:
+// The Extension Summary Object is used to briefly represent an extension. It can be seen in several places throughout this API. Here are the properties:
 type ExtensionSummary struct {
 
 	// ID of the extension. This is the internal Phone.com ID, not the extension number callers may dial.

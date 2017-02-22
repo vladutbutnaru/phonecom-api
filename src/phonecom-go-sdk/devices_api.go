@@ -116,7 +116,7 @@ func (a DevicesApi) GetAccountDevice(accountId int32, deviceId int32) (*DeviceFu
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/devices/{device_id}"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/device/{device_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"device_id"+"}", fmt.Sprintf("%v", deviceId), -1)
 
@@ -182,9 +182,9 @@ func (a DevicesApi) GetAccountDevice(accountId int32, deviceId int32) (*DeviceFu
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListDevicesFull
+ * @return *ListDevices
  */
-func (a DevicesApi) ListAccountDevices(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListDevicesFull, *APIResponse, error) {
+func (a DevicesApi) ListAccountDevices(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListDevices, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -243,7 +243,7 @@ func (a DevicesApi) ListAccountDevices(accountId int32, filtersId []string, filt
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListDevicesFull)
+	var successPayload = new(ListDevices)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
@@ -274,7 +274,7 @@ func (a DevicesApi) ReplaceAccountDevice(accountId int32, deviceId int32, data C
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/devices/{device_id}"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/device/{device_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"device_id"+"}", fmt.Sprintf("%v", deviceId), -1)
 

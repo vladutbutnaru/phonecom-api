@@ -109,9 +109,9 @@ func (a ExpressservicecodesApi) GetAccountExpressSrvCode(accountId int32, codeId
  *
  * @param accountId Account ID
  * @param filtersId ID filter
- * @return *ListExpressServiceCodesFull
+ * @return *ListExpressServiceCodes
  */
-func (a ExpressservicecodesApi) ListAccountExpressSrvCodes(accountId int32, filtersId []string) (*ListExpressServiceCodesFull, *APIResponse, error) {
+func (a ExpressservicecodesApi) ListAccountExpressSrvCodes(accountId int32, filtersId []string) (*ListExpressServiceCodes, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -155,7 +155,7 @@ func (a ExpressservicecodesApi) ListAccountExpressSrvCodes(accountId int32, filt
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListExpressServiceCodesFull)
+	var successPayload = new(ListExpressServiceCodes)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

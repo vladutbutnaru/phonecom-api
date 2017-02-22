@@ -39,7 +39,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountExpressSrvCodes**
-> ListExpressServiceCodesFull ListAccountExpressSrvCodes($accountId, $filtersId)
+> ListExpressServiceCodes ListAccountExpressSrvCodes($accountId, $filtersId)
 
 Get the Express Service Code associated with your account in list format
 
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListExpressServiceCodesFull**](ListExpressServiceCodesFull.md)
+[**ListExpressServiceCodes**](ListExpressServiceCodes.md)
 
 ### Authorization
 

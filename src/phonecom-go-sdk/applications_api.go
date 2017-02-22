@@ -115,9 +115,9 @@ func (a ApplicationsApi) GetAccountApplication(accountId int32, applicationId in
  * @param limit Max results
  * @param offset Results to skip
  * @param fields Field set
- * @return *ListApplicationsFull
+ * @return *ListApplications
  */
-func (a ApplicationsApi) ListAccountApplications(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListApplicationsFull, *APIResponse, error) {
+func (a ApplicationsApi) ListAccountApplications(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListApplications, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -176,7 +176,7 @@ func (a ApplicationsApi) ListAccountApplications(accountId int32, filtersId []st
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(ListApplicationsFull)
+	var successPayload = new(ListApplications)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
