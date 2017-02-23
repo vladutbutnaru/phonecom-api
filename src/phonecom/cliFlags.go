@@ -3,6 +3,7 @@ package main
 import "github.com/urfave/cli"
 
 var defaultCommand = listAccounts
+var defaultId = 0
 
 func getCliFlags() []cli.Flag {
 
@@ -15,7 +16,7 @@ func getCliFlags() []cli.Flag {
     },
     cli.IntFlag{
       Name: "id",
-      Value: 0,
+      Value: defaultId,
       Usage: "ID of entity you want to operate",
     },
     cli.IntFlag{

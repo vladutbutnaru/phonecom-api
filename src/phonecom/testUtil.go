@@ -29,9 +29,48 @@ func createCli(endpoint string) (error, map[string] interface{}) {
   return err, json
 }
 
+func createGetCli(endpoint string, id int) (error, map[string] interface{}) {
+
+  if (id <= 0) {
+    return nil, nil
+  }
+
+  var json (map[string] interface{})
+  var err error
+
+  app := cli.NewApp()
+
+  defaultCommand = endpoint
+  defaultId = id
+
+  app.Flags = getCliFlags()
+  configPath = "../../config.xml"
+
+  app.Action = func(c *cli.Context) error {
+    err, json = execute(c)
+    return err
+  }
+
+  app.Run([]string{commandFlag, endpoint})
+
+  return err, json
+}
+
 func assertErrorNotNull(t *testing.T, err error) {
 
   if err != nil {
     t.Fatalf(errorNotNullMessage, err)
   }
+}
+
+func getFirstId(json map[string] interface{}) int {
+
+  items := json["items"].([]interface{})
+  if (len(items) > 0) {
+    firstItem := items[0].(map[string] interface{})
+    firstId := firstItem["id"].(float64)
+    return int(firstId)
+  }
+
+  return 0
 }

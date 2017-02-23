@@ -235,7 +235,7 @@ func execute(
 
 			case listAvailablePhoneNumbers:
 
-				//return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
 			}
 
   case swagger.SubaccountsApi:
