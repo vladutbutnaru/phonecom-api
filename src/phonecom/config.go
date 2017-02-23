@@ -20,7 +20,7 @@ type Config struct {
 
 func getConfig() Config {
 
-	xmlFile, err := os.Open("config.xml")
+	xmlFile, err := os.Open(configPath)
 
 	var noConfig Config;
 

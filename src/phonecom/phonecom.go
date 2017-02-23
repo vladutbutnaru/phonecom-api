@@ -8,6 +8,8 @@ import (
   "phonecom-go-sdk"
 )
 
+var configPath = "config.xml"
+
 func main() {
 
   app := cli.NewApp()
@@ -458,12 +460,12 @@ func execute(
 }
 
 func getApi(
-command string) interface{} {
+    command string) interface{} {
 
   var api interface{}
   var config = swagger.NewConfiguration()
 
-  var xmlConfig Config = getConfig()
+  var xmlConfig Config = getConfig(configPath)
   var baseApiPath string = xmlConfig.BaseApiPath
   var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
   var apiKey string = xmlConfig.ApiKey
