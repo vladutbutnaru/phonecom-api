@@ -14,7 +14,7 @@ func main() {
 
   app := cli.NewApp()
 
-  app.Flags = cliFlags
+  app.Flags = getCliFlags()
 
   app.Action = func(c *cli.Context) error {
     return execute(c)

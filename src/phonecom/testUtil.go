@@ -1,17 +1,34 @@
 package main
 
-import "github.com/urfave/cli"
+import (
+  "github.com/urfave/cli"
+  "testing"
+)
 
-func createCli() *cli.App {
+var commandFlag = "-command"
+var errorNotNullMessage = "expected no error from Run, got %s"
+
+func createCli(endpoint string) error {
 
   app := cli.NewApp()
 
-  app.Flags = cliFlags
+  defaultCommand = endpoint
+
+  app.Flags = getCliFlags()
   configPath = "../../config.xml"
 
   app.Action = func(c *cli.Context) error {
     return execute(c)
   }
 
-  return app
+  app.Run([]string{commandFlag, endpoint})
+
+  return nil
+}
+
+func assertErrorNotNull(t *testing.T, err error) {
+
+  if err != nil {
+    t.Fatalf(errorNotNullMessage, err)
+  }
 }
