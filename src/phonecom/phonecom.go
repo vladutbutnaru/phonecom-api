@@ -630,7 +630,7 @@ func handle(
   fmt.Printf("%+v\n%s\n", x, response)
 
   if (validateJson(string(response.Payload)) == nil) {
-    return errors.New("Invalid json")
+    return errors.New("Phone.com API Error: Invalid JSON")
   }
 
   return nil
