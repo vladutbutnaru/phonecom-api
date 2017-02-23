@@ -212,8 +212,8 @@ func TestListSms(t *testing.T) {
   err, json = createCli(listSms)
   assertErrorNotNull(t, err)
 
-  firstId := getFirstId(json)
-  err, json = createGetCli(getSms, int(firstId))
+  firstId := getFirstIdString(json)
+  err, json = createGetCliStringId(getSms, firstId)
 
   assertErrorNotNull(t, err)
 }

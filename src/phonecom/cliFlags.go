@@ -3,7 +3,7 @@ package main
 import "github.com/urfave/cli"
 
 var defaultCommand = listAccounts
-var defaultId = 0
+var defaultId = ""
 var defaultInput = ""
 
 func getCliFlags() []cli.Flag {
@@ -15,7 +15,7 @@ func getCliFlags() []cli.Flag {
       Value: defaultCommand,
       Usage: "Phone.com API command that you want to execute",
     },
-    cli.IntFlag{
+    cli.StringFlag{
       Name: "id",
       Value: defaultId,
       Usage: "ID of entity you want to operate",

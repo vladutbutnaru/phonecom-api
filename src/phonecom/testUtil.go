@@ -3,6 +3,7 @@ package main
 import (
   "github.com/urfave/cli"
   "testing"
+	"strconv"
 )
 
 var commandFlag = "-command"
@@ -51,6 +52,33 @@ func createCli(endpoint string) (error, map[string] interface{}) {
   return err, json
 }
 
+func createGetCliStringId(endpoint string, id string) (error, map[string] interface{}) {
+
+	if (id == "") {
+		return nil, nil
+	}
+
+	var json (map[string] interface{})
+	var err error
+
+	app := cli.NewApp()
+
+	defaultCommand = endpoint
+	defaultId = id
+
+	app.Flags = getCliFlags()
+	configPath = "../../config.xml"
+
+	app.Action = func(c *cli.Context) error {
+		err, json = execute(c)
+		return err
+	}
+
+	app.Run([]string{commandFlag, endpoint})
+
+	return err, json
+}
+
 func createGetCli(endpoint string, id int) (error, map[string] interface{}) {
 
   if (id <= 0) {
@@ -63,7 +91,7 @@ func createGetCli(endpoint string, id int) (error, map[string] interface{}) {
   app := cli.NewApp()
 
   defaultCommand = endpoint
-  defaultId = id
+  defaultId = strconv.Itoa(id)
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
@@ -83,6 +111,18 @@ func assertErrorNotNull(t *testing.T, err error) {
   if err != nil {
     t.Fatalf(errorNotNullMessage, err)
   }
+}
+
+func getFirstIdString(json map[string] interface{}) string {
+
+	items := json["items"].([]interface{})
+	if (len(items) > 0) {
+		firstItem := items[0].(map[string] interface{})
+		firstId := firstItem["id"].(string)
+		return firstId
+	}
+
+	return ""
 }
 
 func getFirstId(json map[string] interface{}) int {
