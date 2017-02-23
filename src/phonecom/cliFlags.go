@@ -4,6 +4,7 @@ import "github.com/urfave/cli"
 
 var defaultCommand = listAccounts
 var defaultId = 0
+var defaultInput = ""
 
 func getCliFlags() []cli.Flag {
 
@@ -46,7 +47,7 @@ func getCliFlags() []cli.Flag {
     },
     cli.StringFlag{
       Name: "input, i",
-      Value: "",
+      Value: defaultInput,
       Usage: "Specify the path to the JSON file for making the API call",
     },
     cli.StringFlag{

@@ -8,6 +8,28 @@ import (
 var commandFlag = "-command"
 var errorNotNullMessage = "expected no error from Run, got %s"
 
+func createCliWithJsonIn(endpoint string, path string) (error, map[string] interface{}) {
+
+  app := cli.NewApp()
+
+  defaultCommand = endpoint
+  defaultInput = path
+
+  app.Flags = getCliFlags()
+  configPath = "../../config.xml"
+  var json (map[string] interface{})
+  var err error
+
+  app.Action = func(c *cli.Context) error {
+    err, json = execute(c)
+    return err
+  }
+
+  app.Run([]string{commandFlag, endpoint})
+
+  return err, json
+}
+
 func createCli(endpoint string) (error, map[string] interface{}) {
 
   app := cli.NewApp()
@@ -73,4 +95,10 @@ func getFirstId(json map[string] interface{}) int {
   }
 
   return 0
+}
+
+func getId(json map[string] interface{}) int {
+
+  id := json["id"].(float64)
+  return int(id)
 }
