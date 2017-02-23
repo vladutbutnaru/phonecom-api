@@ -70,7 +70,11 @@ func execute(
   var filtersId []string
 
 	if (input != "") {
-		_, accountId, limit, offset, fields, filtersId = getListParams(input)
+		var err error
+		err, accountId, limit, offset, fields, filtersId = getListParams(input)
+		if (err != nil) {
+			return err, nil
+		}
 	}
 
 	param.slice = slice

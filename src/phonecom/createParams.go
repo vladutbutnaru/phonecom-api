@@ -31,6 +31,10 @@ func getField(field interface {}) int32 {
 
 func getFilterId(json map[string]interface {}) []string {
 
+	if (json == nil) {
+		return nil
+	}
+
 	filterIdRaw := json["filters[id]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
