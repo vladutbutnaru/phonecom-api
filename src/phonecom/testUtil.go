@@ -8,7 +8,7 @@ import (
 var commandFlag = "-command"
 var errorNotNullMessage = "expected no error from Run, got %s"
 
-func createCli(endpoint string) error {
+func createCli(endpoint string) (error, map[string] interface{}) {
 
   app := cli.NewApp()
 
@@ -16,14 +16,17 @@ func createCli(endpoint string) error {
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
+  var json (map[string] interface{})
+  var err error
 
   app.Action = func(c *cli.Context) error {
-    return execute(c)
+    err, json = execute(c)
+    return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return nil
+  return err, json
 }
 
 func assertErrorNotNull(t *testing.T, err error) {

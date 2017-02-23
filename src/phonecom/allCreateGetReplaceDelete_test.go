@@ -4,12 +4,7 @@ package main
 //
 //func TestCreateGetReplaceDevice(t *testing.T) {
 //
-//  var app = createCli()
+//  var err = createCli(getDevice)
 //
-//  err := app.Run([]string{"-command", listAccounts})
-//
-//  if err != nil {
-//    t.Fatalf("expected no error from Run, got %s", err)
-//  }
-//
+//  assertErrorNotNull(t, err)
 //}
