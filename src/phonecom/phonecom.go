@@ -52,7 +52,14 @@ func execute(
   var command = c.String("command")
   var idSecondary = int32(c.Int("id-secondary"))
   var accountId = int32(c.Int("account"))
-
+    
+  if getAccountIdFromFile(input) > 0 {
+        accountId = getAccountIdFromFile(input)
+        param.accountId = accountId
+        }
+    limit = getLimitFromFile(input)
+    offset = getOffsetFromFile(input)
+    slice = getFieldsFromFile(input)
 	param.slice = slice
 	param.limit = limit
 	param.offset = offset
@@ -63,6 +70,7 @@ func execute(
 	param.command = command
 	param.idSecondary = idSecondary
 	param.accountId = accountId
+    
 
 	var api interface{} = getApi(command)
   if (api == nil) {
@@ -73,15 +81,16 @@ func execute(
     return nil;
   }
 
+   
   switch api := api.(type) {
-
+ 
   case swagger.MediaApi:
 
     switch (command) {
 
 			case listMedia:
-
-				return handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
+       
+            return handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getRecording:
 
@@ -206,7 +215,7 @@ func execute(
 
 			case listAvailablePhoneNumbers:
 
-				return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+				//return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
 			}
 
   case swagger.SubaccountsApi:
@@ -630,7 +639,7 @@ func handle(
   fmt.Printf("%+v\n%s\n", x, response)
 
   if (validateJson(string(response.Payload)) == nil) {
-    return errors.New("Phone.com API Error: Invalid JSON")
+    return errors.New("Invalid json")
   }
 
   return nil
