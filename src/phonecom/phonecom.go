@@ -465,7 +465,7 @@ func getApi(
   var api interface{}
   var config = swagger.NewConfiguration()
 
-  var xmlConfig Config = getConfig(configPath)
+  var xmlConfig Config = getConfig()
   var baseApiPath string = xmlConfig.BaseApiPath
   var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
   var apiKey string = xmlConfig.ApiKey
