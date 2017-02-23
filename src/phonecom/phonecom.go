@@ -9,7 +9,7 @@ import (
   "errors"
 )
 
-var configPath = "config.xml"
+var configPath = "config.xml" // Used as a variable. To be changed in tests.
 
 func main() {
 
@@ -632,15 +632,23 @@ func handle(
     response *swagger.APIResponse,
     error error) error {
 
-  if (error != nil) {
-    panic(error)
-  }
+	if (error != nil) {
+		return error
+	}
 
-  fmt.Printf("%+v\n%s\n", x, response)
+	json := validateJson(string(response.Payload))
 
-  if (validateJson(string(response.Payload)) == nil) {
-    return errors.New("Invalid json")
-  }
+	if (json == nil) {
+		return errors.New(msgInvalidJson)
+	}
 
-  return nil
+	message := validateResponse(json)
+
+	if (message != "") {
+		return errors.New(message)
+	} else {
+		fmt.Printf("%+v\n%s\n", x, response)
+	}
+
+	return nil
 }

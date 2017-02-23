@@ -65,3 +65,11 @@ const replacePhoneNumber = "replace-phone-number"
 
 const deleteContact = "delete-contact"
 const deleteGroup = "delete-group"
+
+
+const responseError = "@error"
+const responseHttpStatusCode = "@httpStatusCode"
+const responseMessage = "@message"
+
+const msgInvalidJson = "Phone.com API Error: Invalid JSON"
+const msgHttpError = "Phone.com API HTTP Error: %v %v"
