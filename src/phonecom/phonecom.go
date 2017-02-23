@@ -69,26 +69,10 @@ func execute(
   fields := ""
   var filtersId []string
 
-  //if getAccountIdFromFile(input) > 0 {
-  //      accountId = getAccountIdFromFile(input)
-  //      param.accountId = accountId
-  //      }
-  //  if getLimitFromFile(input) > 0 {
-  //      limit = getLimitFromFile(input)
-	//
-  //  }
-  //  if getOffsetFromFile(input) > 0 {
-  //        offset = getOffsetFromFile(input)
-	//
-  //  }
-	//
-  //  if  getFieldsFromFile(input) != "" {
-  //        fields = getFieldsFromFile(input)
-	//
-  //  }
-	//
-  //  filtersId = getFiltersIdFromFile(input)
-    
+	if (input != "") {
+		_, accountId, limit, offset, fields, filtersId = getListParams(input)
+	}
+
 	param.slice = slice
 	param.limit = limit
 	param.offset = offset

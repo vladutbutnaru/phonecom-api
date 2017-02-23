@@ -6,357 +6,363 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"phonecom-go-sdk"
+	"errors"
 )
 
-func getAccountIdFromFile(inputFile string) int32 {
+func getListParams(inputFile string) (error, int32, int32, int32, string, []string) {
 
-	dat := readAndUnmarshal(inputFile)
-	return int32(dat["account_id"].(float64))
+	err, data := readAndUnmarshal(inputFile)
+	return err,
+		getField(data["account_id"]),
+		getField(data["limit"]),
+		getField(data["offset"]),
+		getFieldString(data["fields"]),
+		getFilterId(data);
 }
 
-func readAndUnmarshal(inputFile string) map[string]interface {} {
+func getField(field interface {}) int32 {
+
+	if (field == nil) {
+		return -1
+	}
+
+	return int32(field.(float64))
+}
+
+func getFilterId(json map[string]interface {}) []string {
+
+	filterIdRaw := json["filters[id]"].([]interface{})
+
+	str1 := filterIdRaw[0].(string)
+
+	return []string{str1}
+}
+
+func readAndUnmarshal(inputFile string) (error, map[string]interface {}) {
 
 	file, e := ioutil.ReadFile(inputFile)
-	if e != nil {
-		fmt.Printf("File error: %v\n", e)
-		os.Exit(1)
+
+	if (e != nil) {
+		return errors.New("Could not read input file: " + inputFile), nil
 	}
 
 	var dat map[string]interface{}
 
 	if err := json.Unmarshal(file, &dat); err != nil {
-		panic(err)
+		return errors.New("Could not unmarshal input file: " + inputFile), nil
 	}
 
-	return dat;
+	return nil, dat;
 }
 
-func getLimitFromFile(inputFile string) int32 {
+func getFieldString(field interface {}) string {
 
-	dat := readAndUnmarshal(inputFile)
-	return int32(dat["limit"].(float64))
+	if (field == nil) {
+		return ""
+	}
+
+	return field.(string)
 }
 
-func getOffsetFromFile(inputFile string) int32 {
+func getExtensionIdFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
-	return int32(dat["offset"].(float64))
+	err, dat := readAndUnmarshal(inputFile)
+	return err, getFieldString(dat["extension_id"])
 }
 
-func getFieldsFromFile(inputFile string) string {
 
-	dat := readAndUnmarshal(inputFile)
-	return dat["fields"].(string)
-}
 
-func getExtensionIdFromFile(inputFile string) string {
+func getFiltersExtensionFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
-	return dat["extension_id"].(string)
-}
-
-func getFiltersIdFromFile(inputFile string) []string {
-
-	dat := readAndUnmarshal(inputFile)
-
-	filterIdRaw := dat["filters[id]"].([]interface{})
-
-	str1 := filterIdRaw[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersExtensionFromFile(inputFile string) []string {
-
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[extension]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersGroupIdFromFile(inputFile string) []string {
+func getFiltersGroupIdFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[group_id]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersUpdatedAtFromFile(inputFile string) []string {
+func getFiltersUpdatedAtFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[updated_at]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 
 }
 
-func getFiltersPhoneNumberFromFile(inputFile string) []string {
+func getFiltersPhoneNumberFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[phone_number]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 
 }
 
-func getFiltersNameFromFile(inputFile string) []string {
+func getFiltersNameFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[name]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 
 }
 
-func getFiltersNumberFromFile(inputFile string) []string {
+func getFiltersNumberFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[number]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersDirectionFromFile(inputFile string) []string {
+func getFiltersDirectionFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[direction]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersCalledNumberFromFile(inputFile string) []string {
+func getFiltersCalledNumberFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[called_number]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersTypeFromFile(inputFile string) []string {
+func getFiltersTypeFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[type]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersCountryCodeFromFile(inputFile string) []string {
+func getFiltersCountryCodeFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[country_code]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersCountryFromFile(inputFile string) []string {
+func getFiltersCountryFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[countries]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersNpaFromFile(inputFile string) []string {
+func getFiltersNpaFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[npa]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersNxxFromFile(inputFile string) []string {
+func getFiltersNxxFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[nxx]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersXxxxFromFile(inputFile string) []string {
+func getFiltersXxxxFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[xxxx]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersCityFromFile(inputFile string) []string {
+func getFiltersCityFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[city]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersProvinceFromFile(inputFile string) []string {
+func getFiltersProvinceFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[province]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersPriceFromFile(inputFile string) []string {
+func getFiltersPriceFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[price]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersCategoryFromFile(inputFile string) []string {
+func getFiltersCategoryFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[category]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersFromFromFile(inputFile string) []string {
+func getFiltersFromFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[from]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getFiltersToFromFile(inputFile string) []string {
+func getFiltersToFromFile(inputFile string) (error, []string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
 	filterIdRaw := dat["filters[to]"].([]interface{})
 
 	str1 := filterIdRaw[0].(string)
 
-	return []string{str1}
+	return err, []string{str1}
 }
 
-func getSortIdFromFile(inputFile string) string {
+func getSortIdFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[id]"].(string)
+	return err, getFieldString(dat["sort[id]"])
 }
 
-func getSortPhoneNumberFromFile(inputFile string) string {
+func getSortPhoneNumberFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[phone_number]"].(string)
+	return err, getFieldString(dat["sort[phone_number]"])
 }
 
-func getSortNumberFromFile(inputFile string) string {
+func getSortNumberFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[number]"].(string)
+	return err, getFieldString(dat["sort[number]"])
 }
 
-func getSortNameFromFile(inputFile string) string {
+func getSortNameFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[name]"].(string)
-
-}
-
-func getSortInternalFromFile(inputFile string) string {
-
-	dat := readAndUnmarshal(inputFile)
-
-	return dat["sort[internal]"].(string)
+	return err, getFieldString(dat["sort[name]"])
 
 }
-func getSortPriceFromFile(inputFile string) string {
 
-	dat := readAndUnmarshal(inputFile)
+func getSortInternalFromFile(inputFile string) (error, string) {
 
-	return dat["sort[price]"].(string)
+	err, dat := readAndUnmarshal(inputFile)
+
+	return err, getFieldString(dat["sort[internal]"])
+
+}
+func getSortPriceFromFile(inputFile string) (error, string) {
+
+	err, dat := readAndUnmarshal(inputFile)
+
+	return err, getFieldString(dat["sort[price]"])
 }
 
-func getSortExtensionFromFile(inputFile string) string {
+func getSortExtensionFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[extension]"].(string)
+	return err, getFieldString(dat["sort[extension]"])
 }
 
-func getSortUpdatedAtFromFile(inputFile string) string {
+func getSortUpdatedAtFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[updated_at]"].(string)
+	return err, getFieldString(dat["sort[updated_at]"])
 }
 
-func getSortCreatedAtFromFile(inputFile string) string {
+func getSortCreatedAtFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
-	return dat["sort[created_at]"].(string)
+	err, dat := readAndUnmarshal(inputFile)
+	return err, getFieldString(dat["sort[created_at]"])
 }
 
-func getSortStartTimeFromFile(inputFile string) string {
+func getSortStartTimeFromFile(inputFile string) (error, string) {
 
-	dat := readAndUnmarshal(inputFile)
+	err, dat := readAndUnmarshal(inputFile)
 
-	return dat["sort[start_time]"].(string)
+	return err, getFieldString(dat["sort[start_time]"])
 }
 
 func createDeviceParams(inputFile string) swagger.CreateDeviceParams {
