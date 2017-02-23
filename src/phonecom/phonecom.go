@@ -115,7 +115,7 @@ func execute(
     return nil
   }
 
-  if (showDryrunVerbose(param) != "continue") {
+  if (showDryRunVerbose(param) != "continue") {
     return nil;
   }
 

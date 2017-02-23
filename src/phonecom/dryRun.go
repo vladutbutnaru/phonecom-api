@@ -4,14 +4,17 @@ import (
 	"fmt"
 )
 
-func showDryrunVerbose(cli CliParams) string {
+func showDryRunVerbose(cli CliParams) string {
 
 	if (cli.dryRun != "" || cli.verbose != "") {
+
+		var baseMessage string = "Calling '%+v' with parameters: limit: %+v, offset: %+v, "
+		var endMessage string = ", expecting JSON response\n"
 
 		if (cli.id != 0 && cli.accountId != 0 && cli.idSecondary != 0 && cli.input != "") {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, account ID: %+v, id: %+v, second id: %+v, input json: %+v, expecting JSON response\n",
+				baseMessage + "account ID: %+v, id: %+v, second id: %+v, input json: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -23,7 +26,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else if (cli.id != 0 && cli.accountId != 0 && cli.input != "") {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, account ID: %+v, id: %+v, input json: %+v, expecting JSON response\n",
+				baseMessage +  "account ID: %+v, id: %+v, input json: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -34,7 +37,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else if (cli.accountId != 0 && cli.input != "") {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, account ID: %+v, input json: %+v, expecting JSON response\n",
+				baseMessage + "account ID: %+v, input json: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -44,7 +47,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else if (cli.id != 0 && cli.accountId != 0 && cli.idSecondary != 0) {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, account ID: %+v, id: %+v, second id: %+v, expecting JSON response\n",
+				baseMessage + "account ID: %+v, id: %+v, second id: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -55,7 +58,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else if (cli.id != 0 && cli.accountId != 0) {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, account ID: %+v, id: %+v, expecting JSON response\n",
+				baseMessage + "account ID: %+v, id: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -65,7 +68,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else if (cli.id != 0) {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, ID: %+v, expecting JSON response\n",
+				baseMessage + "ID: %+v" + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset,
@@ -74,7 +77,7 @@ func showDryrunVerbose(cli CliParams) string {
 		} else {
 
 			fmt.Printf(
-				"Calling '%+v' with parameters: limit: %+v, offset: %+v, expecting JSON response\n",
+				baseMessage + endMessage,
 				cli.command,
 				cli.limit,
 				cli.offset)
