@@ -129,6 +129,28 @@ func getFieldsFromFile(inputFile string) string {
     
 }
 
+func getExtensionIdFromFile(inputFile string) string {
+      var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["extension_id"].(string)
+    
+    return params
+    
+    
+}
+
 
 func getFiltersIdFromFile(inputFile string) []string {
       //var params []string
@@ -152,6 +174,753 @@ func getFiltersIdFromFile(inputFile string) []string {
 
     
     return []string{str1}
+    
+    
+}
+
+
+func getFiltersExtensionFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[extension]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+
+func getFiltersGroupIdFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[group_id]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersUpdatedAtFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[updated_at]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersPhoneNumberFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[phone_number]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+
+func getFiltersNameFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[name]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersNumberFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[number]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+
+func getFiltersDirectionFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[direction]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersCalledNumberFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[called_number]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersTypeFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[type]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersCountryCodeFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[country_code]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersCountryFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[countries]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+func getFiltersNpaFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[npa]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersNxxFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[nxx]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersXxxxFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[xxxx]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersCityFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[city]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersProvinceFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[province]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersPriceFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[price]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersCategoryFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[category]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersFromFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[from]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getFiltersToFromFile(inputFile string) []string {
+      //var params []string
+    var dat map[string]interface{}
+
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        fmt.Printf("File error: %v\n", e)
+        os.Exit(1)
+    }
+
+
+
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+
+	  filterIdRaw := dat["filters[to]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
+    
+    return []string{str1}
+    
+    
+}
+
+func getSortIdFromFile(inputFile string) string {
+      var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[id]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortPhoneNumberFromFile(inputFile string) string {
+      var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[phone_number]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortNumberFromFile(inputFile string) string {
+      var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[number]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortNameFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[name]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortInternalFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[internal]"].(string)
+    
+    return params
+    
+    
+}
+func getSortPriceFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[price]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortExtensionFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[extension]"].(string)
+    
+    return params
+    
+    
+}
+
+func getSortUpdatedAtFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[updated_at]"].(string)
+    
+    return params
+    
+    
+    
+    
+}
+
+func getSortCreatedAtFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[created_at]"].(string)
+    
+    return params
+    
+    
+    
+    
+}
+
+
+func getSortStartTimeFromFile(inputFile string) string {
+        var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["sort[start_time]"].(string)
+    
+    return params
     
     
 }
