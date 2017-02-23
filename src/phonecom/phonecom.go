@@ -9,7 +9,7 @@ import (
   "errors"
 )
 
-var configPath = "config.xml" // Used as a variable. To be changed in tests.
+var configPath = "config.xml"
 
 func main() {
 
@@ -18,9 +18,7 @@ func main() {
   app.Flags = getCliFlags()
 
   app.Action = func(c *cli.Context) error {
-    var err error
-    err, _ = execute(c)
-    return err
+    return execute(c)
   }
 
   app.Run(os.Args)
@@ -28,6 +26,7 @@ func main() {
 
 type CliParams struct {
 	slice       []string
+    filtersId   []string
 	limit       int32
 	offset      int32
 	id          int32
@@ -37,10 +36,11 @@ type CliParams struct {
 	command     string
 	idSecondary int32
 	accountId   int32
+    fields      string
 }
 
 func execute(
-    c *cli.Context) (error, map[string] interface{}) {
+    c *cli.Context) error {
 
   var param CliParams
 
@@ -54,14 +54,29 @@ func execute(
   var command = c.String("command")
   var idSecondary = int32(c.Int("id-secondary"))
   var accountId = int32(c.Int("account"))
+  var fields string = ""
+    var filtersId []string
     
   if getAccountIdFromFile(input) > 0 {
         accountId = getAccountIdFromFile(input)
         param.accountId = accountId
         }
-    limit = getLimitFromFile(input)
-    offset = getOffsetFromFile(input)
-    slice = getFieldsFromFile(input)
+    if getLimitFromFile(input) > 0 {
+        limit = getLimitFromFile(input)
+        
+    }
+    if getOffsetFromFile(input) > 0 {
+          offset = getOffsetFromFile(input)
+        
+    }
+  
+    if  getFieldsFromFile(input) != "" {
+          fields = getFieldsFromFile(input)
+        
+    }
+    
+    filtersId = getFiltersIdFromFile(input)
+    
 	param.slice = slice
 	param.limit = limit
 	param.offset = offset
@@ -72,17 +87,19 @@ func execute(
 	param.command = command
 	param.idSecondary = idSecondary
 	param.accountId = accountId
+    param.fields = fields
     
 
 	var api interface{} = getApi(command)
   if (api == nil) {
-    return nil, nil
+    return nil
   }
 
   if (showDryRunVerbose(param) != "continue") {
-    return nil, nil;
+    return nil;
   }
 
+   
   switch api := api.(type) {
  
   case swagger.MediaApi:
@@ -91,7 +108,7 @@ func execute(
 
 			case listMedia:
        
-            return handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
+            return handle(api.ListAccountMedia(accountId,filtersId , slice, "", "", limit, offset, fields))
 
 			case getRecording:
 
@@ -104,7 +121,7 @@ func execute(
 
 			case listMenus:
 
-        return handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
+        return handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getMenu:
 
@@ -131,7 +148,7 @@ func execute(
 
 			case listQueues:
 
-				return handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getQueue:
 
@@ -158,7 +175,7 @@ func execute(
 
 			case listRoutes:
 
-				return handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getRoute:
 
@@ -185,7 +202,7 @@ func execute(
 
 			case listSchedules:
 
-				return handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getSchedule:
 
@@ -198,7 +215,7 @@ func execute(
 
 			case listSms:
 
-				return handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
+				return handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, fields))
 
 			case getSms:
 
@@ -225,7 +242,7 @@ func execute(
 
 			case listSubaccounts:
 
-				return handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
+				return handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, fields))
 
 			case createSubaccount:
 
@@ -239,7 +256,7 @@ func execute(
 
 			case listAccounts:
 
-				return handle(api.ListAccounts(slice, "", limit, offset, ""))
+				return handle(api.ListAccounts(slice, "", limit, offset, fields))
 
 			case getAccount:
 
@@ -252,7 +269,7 @@ func execute(
 
 			case listAvailablePhoneNumberRegions:
 
-				return handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
+				return handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, fields, slice))
     }
 
   case swagger.ApplicationsApi:
@@ -261,7 +278,7 @@ func execute(
 
 			case listApplications:
 
-				return handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getApplication:
 
@@ -287,7 +304,7 @@ func execute(
 
 			case listCallLogs:
 
-				return handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, fields))
 			//~ case getCallLog:
 			//~ return handle(api.GetAccountCallLog(accountId, id))
     }
@@ -298,7 +315,7 @@ func execute(
 
 			case listDevices:
 
-				return handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, fields))
 
 			case getDevice:
 
@@ -334,7 +351,7 @@ func execute(
 
 			case listExtensions:
 
-				return handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, fields))
 
 			case getExtension:
 
@@ -357,7 +374,7 @@ func execute(
     switch (command) {
 
 			case getCallerId:
-				return handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, ""))
+				return handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, fields))
     }
 
   case swagger.ContactsApi:
@@ -366,7 +383,7 @@ func execute(
 
 			case listContacts:
 
-				return handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, fields))
 
 			case getContact:
 
@@ -393,7 +410,7 @@ func execute(
 
 			case listGroups:
 
-				return handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, fields))
 
 			case getGroup:
 
@@ -419,7 +436,7 @@ func execute(
 
 			case listPhoneNumbers:
 
-				return handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, fields))
 
 			case getPhoneNumber:
 
@@ -442,7 +459,7 @@ func execute(
 
     case listTrunks:
 
-      return handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, ""))
+      return handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, fields))
 
     case getTrunk:
 
@@ -464,10 +481,10 @@ func execute(
     }
 
   default:
-    return nil, nil
+    return nil
   }
 
-  return nil, nil
+  return nil
 }
 
 func getApi(
@@ -631,25 +648,17 @@ func getApi(
 func handle(
     x interface{},
     response *swagger.APIResponse,
-    error error) (error, map[string] interface{}) {
+    error error) error {
 
-	if (error != nil) {
-		return error, nil
-	}
+  if (error != nil) {
+    panic(error)
+  }
 
-	json := validateJson(string(response.Payload))
+  fmt.Printf("%+v\n%s\n", x, response)
 
-	if (json == nil) {
-		return errors.New(msgInvalidJson), nil
-	}
+  if (validateJson(string(response.Payload)) == nil) {
+    return errors.New("Invalid json")
+  }
 
-	message := validateResponse(json)
-
-	if (message != "") {
-		return errors.New(message), nil
-	} else {
-		fmt.Printf("%+v\n%s\n", x, response)
-	}
-
-	return nil, json
+  return nil
 }

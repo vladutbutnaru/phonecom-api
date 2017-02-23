@@ -107,7 +107,30 @@ func getOffsetFromFile(inputFile string) int32 {
     
 }
 
-func getFieldsFromFile(inputFile string) []string {
+func getFieldsFromFile(inputFile string) string {
+      var params string
+    var dat map[string]interface{}
+    
+     file, e := ioutil.ReadFile(inputFile)
+    if e != nil {
+        return ""
+    }
+    
+
+    
+    if err := json.Unmarshal(file, &dat); err != nil {
+        panic(err)
+    }
+    
+    params  = dat["fields"].(string)
+    
+    return params
+    
+    
+}
+
+
+func getFiltersIdFromFile(inputFile string) []string {
       var params []string
     var dat map[string]interface{}
     
@@ -123,7 +146,7 @@ func getFieldsFromFile(inputFile string) []string {
         panic(err)
     }
     
-    params  = dat["fields"].([]string)
+    params  = dat["filters[id]"].([]interface{})
     
     return params
     
