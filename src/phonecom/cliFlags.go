@@ -40,9 +40,8 @@ func getCliFlags() []cli.Flag {
       Value: 1315091,
       Usage: "Phone.com API account to use in API calls",
     },
-    cli.StringFlag{
+    cli.BoolFlag{
       Name: "dryrun, d",
-      Value: "",
       Usage: "Print the expected action without executing the API command",
     },
     cli.StringFlag{
@@ -50,9 +49,8 @@ func getCliFlags() []cli.Flag {
       Value: defaultInput,
       Usage: "Specify the path to the JSON file for making the API call",
     },
-    cli.StringFlag{
+    cli.BoolFlag{
       Name: "verbose, vr",
-      Value: "",
       Usage: "Activate verbose mode",
     },
 

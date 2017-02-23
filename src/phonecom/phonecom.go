@@ -34,13 +34,13 @@ type CliParams struct {
 	offset      int32
 	id          int32
 	idString    string
-	dryRun      string
-	verbose     string
+	dryRun      bool
+	verbose     bool
 	input       string
 	command     string
 	idSecondary int32
 	accountId   int32
-    fields      string
+  fields      string
 }
 
 func execute(
@@ -60,8 +60,8 @@ func execute(
 		id = int32(idInt);
 	}
 
-	verbose := c.String("verbose")
-	dryRun := c.String("dryrun")
+	verbose := c.Bool("verbose")
+	dryRun := c.Bool("dryrun")
   input := c.String("input")
   command := c.String("command")
   idSecondary := int32(c.Int("id-secondary"))
@@ -647,9 +647,9 @@ func getApi(
 }
 
 func handle(
-x interface{},
-response *swagger.APIResponse,
-error error) (error, map[string] interface{}) {
+    x interface{},
+    response *swagger.APIResponse,
+    error error) (error, map[string] interface{}) {
 
 	if (error != nil) {
 		return error, nil
