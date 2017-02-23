@@ -131,24 +131,27 @@ func getFieldsFromFile(inputFile string) string {
 
 
 func getFiltersIdFromFile(inputFile string) []string {
-      var params []string
+      //var params []string
     var dat map[string]interface{}
-    
+
      file, e := ioutil.ReadFile(inputFile)
     if e != nil {
         fmt.Printf("File error: %v\n", e)
         os.Exit(1)
     }
-    
 
-    
+
+
     if err := json.Unmarshal(file, &dat); err != nil {
         panic(err)
     }
+
+	  filterIdRaw := dat["filters[id]"].([]interface{})
+
+	  str1 := filterIdRaw[0].(string)
+
     
-    params  = dat["filters[id]"].([]interface{})
-    
-    return params
+    return []string{str1}
     
     
 }

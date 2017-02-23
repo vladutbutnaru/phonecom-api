@@ -9,19 +9,21 @@ import (
   "errors"
 )
 
-var configPath = "config.xml"
+var configPath = "config.xml" // Used as a variable. To be changed in tests.
 
 func main() {
 
-  app := cli.NewApp()
+	app := cli.NewApp()
 
-  app.Flags = getCliFlags()
+	app.Flags = getCliFlags()
 
-  app.Action = func(c *cli.Context) error {
-    return execute(c)
-  }
+	app.Action = func(c *cli.Context) error {
+		var err error
+		err, _ = execute(c)
+		return err
+	}
 
-  app.Run(os.Args)
+	app.Run(os.Args)
 }
 
 type CliParams struct {
@@ -40,7 +42,7 @@ type CliParams struct {
 }
 
 func execute(
-    c *cli.Context) error {
+    c *cli.Context) (error, map[string] interface{}) {
 
   var param CliParams
 
@@ -63,18 +65,18 @@ func execute(
         }
     if getLimitFromFile(input) > 0 {
         limit = getLimitFromFile(input)
-        
+
     }
     if getOffsetFromFile(input) > 0 {
           offset = getOffsetFromFile(input)
-        
+
     }
-  
+
     if  getFieldsFromFile(input) != "" {
           fields = getFieldsFromFile(input)
-        
+
     }
-    
+
     filtersId = getFiltersIdFromFile(input)
     
 	param.slice = slice
@@ -92,11 +94,11 @@ func execute(
 
 	var api interface{} = getApi(command)
   if (api == nil) {
-    return nil
+    return nil, nil
   }
 
   if (showDryRunVerbose(param) != "continue") {
-    return nil;
+    return nil, nil
   }
 
    
@@ -481,10 +483,10 @@ func execute(
     }
 
   default:
-    return nil
+    return nil, nil
   }
 
-  return nil
+  return nil, nil
 }
 
 func getApi(
@@ -646,19 +648,27 @@ func getApi(
 }
 
 func handle(
-    x interface{},
-    response *swagger.APIResponse,
-    error error) error {
+x interface{},
+response *swagger.APIResponse,
+error error) (error, map[string] interface{}) {
 
-  if (error != nil) {
-    panic(error)
-  }
+	if (error != nil) {
+		return error, nil
+	}
 
-  fmt.Printf("%+v\n%s\n", x, response)
+	json := validateJson(string(response.Payload))
 
-  if (validateJson(string(response.Payload)) == nil) {
-    return errors.New("Invalid json")
-  }
+	if (json == nil) {
+		return errors.New(msgInvalidJson), nil
+	}
 
-  return nil
+	message := validateResponse(json)
+
+	if (message != "") {
+		return errors.New(message), nil
+	} else {
+		fmt.Printf("%+v\n%s\n", x, response)
+	}
+
+	return nil, json
 }
