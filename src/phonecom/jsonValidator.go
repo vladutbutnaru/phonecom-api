@@ -5,22 +5,20 @@ import (
 	"encoding/json"
 )
 
-func validateJson(jsonString string) {
+func validateJson(jsonString string) map[string] interface{} {
 
 	fmt.Println();
 
 	var message string = "JSON validator: Invalid JSON";
 
-	if isJSON(string(jsonString)) {
+	var js map[string] interface{}
+	json.Unmarshal([]byte(jsonString), &js)
+
+	if (js != nil) {
 		message = "JSON validator: Valid JSON";
+		return js
 	}
 
 	fmt.Println(message);
-}
-
-func isJSON(jsonString string) bool {
-
-	var js map[string] interface{}
-
-	return json.Unmarshal([]byte(jsonString), &js) == nil
+	return nil
 }

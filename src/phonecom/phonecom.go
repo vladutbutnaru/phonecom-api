@@ -6,6 +6,7 @@ import (
 
   "github.com/urfave/cli"
   "phonecom-go-sdk"
+  "errors"
 )
 
 var configPath = "config.xml"
@@ -80,11 +81,11 @@ func execute(
 
 			case listMedia:
 
-				handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountMedia(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getRecording:
 
-				handle(api.GetAccountMedia(accountId, id))
+        return handle(api.GetAccountMedia(accountId, id))
     }
 
   case swagger.MenusApi:
@@ -93,25 +94,25 @@ func execute(
 
 			case listMenus:
 
-				handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
+        return handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getMenu:
 
-				handle(api.GetAccountMenu(accountId, id))
+				return handle(api.GetAccountMenu(accountId, id))
 
 			case createMenu:
 
 				var params = createMenuParams(input)
-				handle(api.CreateAccountMenu(accountId, params))
+				return handle(api.CreateAccountMenu(accountId, params))
 
 			case replaceMenu:
 
 				var params = replaceMenuParams(input)
-				handle(api.ReplaceAccountMenu(accountId, id, params))
+				return handle(api.ReplaceAccountMenu(accountId, id, params))
 
 			case deleteMenu:
 
-				handle(api.DeleteAccountMenu(accountId, id))
+				return handle(api.DeleteAccountMenu(accountId, id))
 		}
 
   case swagger.QueuesApi:
@@ -120,25 +121,25 @@ func execute(
 
 			case listQueues:
 
-				handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getQueue:
 
-				handle(api.GetAccountQueue(accountId, id))
+				return handle(api.GetAccountQueue(accountId, id))
 
 			case createQueue:
 
 				var params = createQueueParams(input)
-				handle(api.CreateAccountQueue(accountId, params))
+				return handle(api.CreateAccountQueue(accountId, params))
 
 			case replaceQueue:
 
 				var params = createQueueParams(input)
-				handle(api.ReplaceAccountQueue(accountId, id, params))
+				return handle(api.ReplaceAccountQueue(accountId, id, params))
 
 			case deleteQueue:
 
-				handle(api.DeleteAccountQueue(accountId, id))
+				return handle(api.DeleteAccountQueue(accountId, id))
 			}
 
   case swagger.RoutesApi:
@@ -147,25 +148,25 @@ func execute(
 
 			case listRoutes:
 
-				handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getRoute:
 
-				handle(api.GetAccountRoute(accountId, id))
+				return handle(api.GetAccountRoute(accountId, id))
 
 			case createRoute:
 
 				var params = createRouteParams(input)
-				handle(api.CreateRoute(accountId, params))
+				return handle(api.CreateRoute(accountId, params))
 
 			case replaceRoute:
 
 				var params = createRouteParams(input)
-				handle(api.ReplaceAccountRoute(accountId, id, params))
+				return handle(api.ReplaceAccountRoute(accountId, id, params))
 
 			case deleteRoute:
 
-				handle(api.DeleteAccountRoute(accountId, id))
+				return handle(api.DeleteAccountRoute(accountId, id))
     }
 
   case swagger.SchedulesApi:
@@ -174,11 +175,11 @@ func execute(
 
 			case listSchedules:
 
-				handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getSchedule:
 
-				handle(api.GetAccountSchedule(accountId, id))
+				return handle(api.GetAccountSchedule(accountId, id))
     }
 
   case swagger.SmsApi:
@@ -187,16 +188,16 @@ func execute(
 
 			case listSms:
 
-				handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
+				return handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, ""))
 
 			case getSms:
 
-				handle(api.GetAccountSms(accountId, id))
+				return handle(api.GetAccountSms(accountId, id))
 
 			case createSms:
 
 				var params = createSmsParams(input)
-				handle(api.CreateAccountSms(accountId, params))
+				return handle(api.CreateAccountSms(accountId, params))
     }
 
   case swagger.AvailablenumbersApi:
@@ -205,7 +206,7 @@ func execute(
 
 			case listAvailablePhoneNumbers:
 
-				handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
 			}
 
   case swagger.SubaccountsApi:
@@ -214,12 +215,12 @@ func execute(
 
 			case listSubaccounts:
 
-				handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
+				return handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, ""))
 
 			case createSubaccount:
 
 				var params = createSubaccountParams(input)
-				handle(api.CreateAccountSubaccount(accountId, params))
+				return handle(api.CreateAccountSubaccount(accountId, params))
     }
 
   case swagger.AccountsApi:
@@ -228,11 +229,11 @@ func execute(
 
 			case listAccounts:
 
-				handle(api.ListAccounts(slice, "", limit, offset, ""))
+				return handle(api.ListAccounts(slice, "", limit, offset, ""))
 
 			case getAccount:
 
-				handle(api.GetAccount(id))
+				return handle(api.GetAccount(id))
     }
 
   case swagger.NumberregionsApi:
@@ -241,7 +242,7 @@ func execute(
 
 			case listAvailablePhoneNumberRegions:
 
-				handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
+				return handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, "", slice))
     }
 
   case swagger.ApplicationsApi:
@@ -250,11 +251,11 @@ func execute(
 
 			case listApplications:
 
-				handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getApplication:
 
-				handle(api.GetAccountApplication(accountId, id))
+				return handle(api.GetAccountApplication(accountId, id))
     }
 
   //case swagger.CallsApi:
@@ -267,7 +268,7 @@ func execute(
   //		 if(verbose=="") { return nil }
   //	}
   //			var params = createCallParams(input)
-  //			handle(api.CreateAccountCalls(accountId, params))
+  //			return handle(api.CreateAccountCalls(accountId, params))
   //	}
 
   case swagger.CalllogsApi:
@@ -276,9 +277,9 @@ func execute(
 
 			case listCallLogs:
 
-				handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, ""))
 			//~ case getCallLog:
-			//~ handle(api.GetAccountCallLog(accountId, id))
+			//~ return handle(api.GetAccountCallLog(accountId, id))
     }
 
   case swagger.DevicesApi:
@@ -287,21 +288,21 @@ func execute(
 
 			case listDevices:
 
-				handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, ""))
 
 			case getDevice:
 
-				handle(api.GetAccountDevice(accountId, id))
+				return handle(api.GetAccountDevice(accountId, id))
 
 			case createDevice:
 
 				var params = createDeviceParams(input)
-				handle(api.CreateAccountDevice(accountId, params))
+				return handle(api.CreateAccountDevice(accountId, params))
 
 			case replaceDevice:
 
 				var params = createDeviceParams(input)
-				handle(api.ReplaceAccountDevice(accountId, id, params))
+				return handle(api.ReplaceAccountDevice(accountId, id, params))
     }
 
   case swagger.ExpressservicecodesApi:
@@ -310,11 +311,11 @@ func execute(
 
 			case listExpressServiceCodes:
 
-				handle(api.ListAccountExpressSrvCodes(accountId, slice))
+				return handle(api.ListAccountExpressSrvCodes(accountId, slice))
 
 			case getExpressServiceCode:
 
-				handle(api.GetAccountExpressSrvCode(accountId, id))
+				return handle(api.GetAccountExpressSrvCode(accountId, id))
     }
 
   case swagger.ExtensionsApi:
@@ -323,21 +324,21 @@ func execute(
 
 			case listExtensions:
 
-				handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
 
 			case getExtension:
 
-				handle(api.GetAccountExtension(accountId, id))
+				return handle(api.GetAccountExtension(accountId, id))
 
 			case createExtension:
 
 				var params = createExtensionsParams(input)
-				handle(api.CreateAccountExtension(accountId, params))
+				return handle(api.CreateAccountExtension(accountId, params))
 
 			case replaceExtension:
 
 				var params = replaceExtensionParams(input)
-				handle(api.ReplaceAccountExtension(accountId, id, params))
+				return handle(api.ReplaceAccountExtension(accountId, id, params))
 
     }
 
@@ -346,7 +347,7 @@ func execute(
     switch (command) {
 
 			case getCallerId:
-				handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, ""))
+				return handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, ""))
     }
 
   case swagger.ContactsApi:
@@ -355,25 +356,25 @@ func execute(
 
 			case listContacts:
 
-				handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, ""))
 
 			case getContact:
 
-				handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
+				return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 
 			case createContact:
 
 				var params = createContactParams(input)
-				handle(api.CreateAccountExtensionContact(accountId, id, params))
+				return handle(api.CreateAccountExtensionContact(accountId, id, params))
 
 			case replaceContact:
 
 				var params = createContactParams(input)
-				handle(api.ReplaceAccountExtensionContact(accountId, id, params))
+				return handle(api.ReplaceAccountExtensionContact(accountId, id, params))
 
 			case deleteContact:
 
-				handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
+				return handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
     }
 
   case swagger.GroupsApi:
@@ -382,24 +383,24 @@ func execute(
 
 			case listGroups:
 
-				handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, ""))
+				return handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, ""))
 
 			case getGroup:
 
-				handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
+				return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 
 			case createGroup:
 
 				var params = createGroupParams(input)
-				handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
+				return handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
 
 			case replaceGroup:
 
 				//var params = createGroupParams()
-				handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
+				return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
 			case deleteGroup:
 
-				handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
+				return handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
     }
 
   case swagger.PhonenumbersApi:
@@ -408,21 +409,21 @@ func execute(
 
 			case listPhoneNumbers:
 
-				handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, ""))
 
 			case getPhoneNumber:
 
-				handle(api.GetAccountPhoneNumber(accountId, id))
+				return handle(api.GetAccountPhoneNumber(accountId, id))
 
 			case createPhoneNumber:
 
 				var params = createPhoneNumberParams(input)
-				handle(api.CreateAccountPhoneNumber(accountId, params))
+				return handle(api.CreateAccountPhoneNumber(accountId, params))
 
 			case replacePhoneNumber:
 
 				var params = replacePhoneNumberParams(input)
-				handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
+				return handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
     }
 
   case swagger.TrunksApi:
@@ -431,25 +432,25 @@ func execute(
 
     case listTrunks:
 
-      handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, ""))
+      return handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, ""))
 
     case getTrunk:
 
-      handle(api.GetAccountTrunk(accountId, id))
+      return handle(api.GetAccountTrunk(accountId, id))
 
     case createTrunk:
 
       var params = createTrunkParams(input)
-      handle(api.CreateAccountTrunk(accountId, params))
+      return handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
       var params = createTrunkParams(input)
-      handle(api.ReplaceAccountTrunk(accountId, id, params))
+      return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:
 
-      handle(api.DeleteAccountTrunk(accountId, id))
+      return handle(api.DeleteAccountTrunk(accountId, id))
     }
 
   default:
@@ -620,7 +621,7 @@ func getApi(
 func handle(
     x interface{},
     response *swagger.APIResponse,
-    error error) {
+    error error) error {
 
   if (error != nil) {
     panic(error)
@@ -628,5 +629,9 @@ func handle(
 
   fmt.Printf("%+v\n%s\n", x, response)
 
-  validateJson(string(response.Payload))
+  if (validateJson(string(response.Payload)) == nil) {
+    return errors.New("Invalid json")
+  }
+
+  return nil
 }
