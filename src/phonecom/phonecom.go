@@ -6,7 +6,6 @@ import (
 
   "github.com/urfave/cli"
   "phonecom-go-sdk"
-  "encoding/json"
 )
 
 func main() {
