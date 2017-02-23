@@ -7,6 +7,7 @@ import (
   "github.com/urfave/cli"
   "phonecom-go-sdk"
   "errors"
+	"strconv"
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
@@ -28,10 +29,11 @@ func main() {
 
 type CliParams struct {
 	slice       []string
-    filtersId   []string
+  filtersId   []string
 	limit       int32
 	offset      int32
 	id          int32
+	idString    string
 	dryRun      string
 	verbose     string
 	input       string
@@ -46,18 +48,26 @@ func execute(
 
   var param CliParams
 
-  var slice = make([]string, 0)
-  var limit = int32(c.Int("limit"))
-  var offset = int32(c.Int("offset"))
-  var id = int32(c.Int("id"))
-	var verbose = c.String("verbose")
-	var dryRun = c.String("dryrun")
-  var input = c.String("input")
-  var command = c.String("command")
-  var idSecondary = int32(c.Int("id-secondary"))
-  var accountId = int32(c.Int("account"))
-  var fields string = ""
-    var filtersId []string
+  slice := make([]string, 0)
+  limit := int32(c.Int("limit"))
+  offset := int32(c.Int("offset"))
+  idString := c.String("id")
+	var id int32 = 0
+
+	if _, err := strconv.Atoi(idString); err == nil {
+		idInt := 0
+		idInt, err = strconv.Atoi(idString);
+		id = int32(idInt);
+	}
+
+	verbose := c.String("verbose")
+	dryRun := c.String("dryrun")
+  input := c.String("input")
+  command := c.String("command")
+  idSecondary := int32(c.Int("id-secondary"))
+  accountId := int32(c.Int("account"))
+  fields := ""
+  var filtersId []string
 
   //if getAccountIdFromFile(input) > 0 {
   //      accountId = getAccountIdFromFile(input)
@@ -83,13 +93,14 @@ func execute(
 	param.limit = limit
 	param.offset = offset
 	param.id = id
+	param.idString = idString
 	param.dryRun = dryRun
 	param.verbose = verbose
 	param.input = input
 	param.command = command
 	param.idSecondary = idSecondary
 	param.accountId = accountId
-    param.fields = fields
+  param.fields = fields
     
 
 	var api interface{} = getApi(command)
@@ -109,8 +120,8 @@ func execute(
     switch (command) {
 
 			case listMedia:
-       
-            return handle(api.ListAccountMedia(accountId,filtersId , slice, "", "", limit, offset, fields))
+
+        return handle(api.ListAccountMedia(accountId,filtersId , slice, "", "", limit, offset, fields))
 
 			case getRecording:
 
@@ -221,7 +232,7 @@ func execute(
 
 			case getSms:
 
-				return handle(api.GetAccountSms(accountId, id))
+				return handle(api.GetAccountSms(accountId, idString))
 
 			case createSms:
 

@@ -39,7 +39,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ListAccountApplications**
-> ListApplicationsFull ListAccountApplications($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
+> ListApplications ListAccountApplications($accountId, $filtersId, $filtersName, $sortId, $sortName, $limit, $offset, $fields)
 
 Get a list of applications you have defined
 
@@ -61,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListApplicationsFull**](ListApplicationsFull.md)
+[**ListApplications**](ListApplications.md)
 
 ### Authorization
 

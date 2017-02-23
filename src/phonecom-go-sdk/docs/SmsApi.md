@@ -52,7 +52,7 @@ This service shows the details of an individual sms. See Intro to SMS for more i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **int32**| Account ID | 
- **smsId** | **int32**| SMS ID | 
+ **smsId** | **string**| SMS ID | 
 
 ### Return type
 

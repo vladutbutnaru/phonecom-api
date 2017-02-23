@@ -112,7 +112,7 @@ func (a SmsApi) CreateAccountSms(accountId int32, data CreateSmsParams) (*SmsFul
  * @param smsId SMS ID
  * @return *SmsFull
  */
-func (a SmsApi) GetAccountSms(accountId int32, smsId int32) (*SmsFull, *APIResponse, error) {
+func (a SmsApi) GetAccountSms(accountId int32, smsId string) (*SmsFull, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
