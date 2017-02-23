@@ -11,6 +11,7 @@ import (
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
+var param CliParams
 
 func main() {
 
@@ -45,8 +46,6 @@ type CliParams struct {
 
 func execute(
     c *cli.Context) (error, map[string] interface{}) {
-
-  var param CliParams
 
   slice := make([]string, 0)
   limit := int32(c.Int("limit"))
@@ -90,17 +89,16 @@ func execute(
 	param.accountId = accountId
   param.fields = fields
     
+  showDryRunVerbose(param)
+  if (param.dryRun) {
+    return nil, nil
+  }
 
-	var api interface{} = getApi(command)
+  var api interface{} = getApi(command)
   if (api == nil) {
-    return nil, nil
+    return errors.New(msgCouldNotGetResponse), nil
   }
 
-  if (showDryRunVerbose(param) != "continue") {
-    return nil, nil
-  }
-
-   
   switch api := api.(type) {
  
   case swagger.MediaApi:
@@ -639,7 +637,7 @@ func getApi(
     api = trunksApi
 
   default:
-    fmt.Println("Invalid command:", command)
+    fmt.Printf("Invalid command: %v\n", command)
     return nil
   }
 
@@ -652,18 +650,44 @@ func handle(
     error error) (error, map[string] interface{}) {
 
 	if (error != nil) {
+
+    if (param.verbose) {
+      fmt.Println("Error while getting response")
+    }
+
 		return error, nil
 	}
 
-	json := validateJson(string(response.Payload))
+  payload := response.Payload
+
+  if (payload == nil) {
+
+    if (param.verbose) {
+      fmt.Println("Null response payload")
+    }
+
+    return errors.New(msgCouldNotGetResponse), nil
+  }
+
+	json := validateJson(string(payload))
 
 	if (json == nil) {
+
+    if (param.verbose) {
+      fmt.Println("Could not unmarshal API json response")
+    }
+
 		return errors.New(msgInvalidJson), nil
 	}
 
 	message := validateResponse(json)
 
 	if (message != "") {
+
+    if (param.verbose) {
+      fmt.Printf("%+v\n%s\n", x, response)
+    }
+
 		return errors.New(message), nil
 	} else {
 		fmt.Printf("%+v\n%s\n", x, response)

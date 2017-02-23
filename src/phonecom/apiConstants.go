@@ -71,5 +71,7 @@ const responseError = "@error"
 const responseHttpStatusCode = "@httpStatusCode"
 const responseMessage = "@message"
 
+const msgCouldNotGetResponse = "Could not get response from API"
 const msgInvalidJson = "Phone.com API Error: Invalid JSON"
 const msgHttpError = "Phone.com API HTTP Error: %v %v"
+const msgCallingApi = "Calling '%+v' with parameters: %+v, expecting JSON response\n"
