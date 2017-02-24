@@ -67,90 +67,40 @@ func execute(
   accountId := int32(c.Int("account"))
   fields := ""
   var filtersId []string
+  var groupBy []string
+  var extensionId string
+
+  var filterParams FilterParams
+  var sortParams SortParams
 
 	if (input != "") {
 		var err error
-		err, accountId, limit, offset, fields, filtersId = getListParams(input)
+    var listParams ListParams
+		err, listParams = getListParams(input)
 		if (err != nil) {
 			return err, nil
 		}
 
-    err,
-    filtersExtension,
-    filtersGroupId,
-    filtersUpdatedAt,
-    filtersPhoneNumber,
-    filtersName,
-    filtersNumber,
-    filtersDirection,
-    filtersCalledNumber,
-    filtersType,
-    filtersCountryCode,
-    filtersCountry,
-    filtersNpa,
-    filtersNxx,
-    filtersXxxx,
-    filtersCity,
-    filtersProvince,
-    filtersPrice,
-    filtersCategory,
-    filtersFrom,
-    filtersTo := getFiltersParams(input)
+    accountId = listParams.accountId
+    limit = listParams.limit
+    offset = listParams.offset
+    fields = listParams.fields
 
-    _ = filtersExtension
-    _ = filtersGroupId
-    _ = filtersUpdatedAt
-    _ = filtersPhoneNumber
-    _ = filtersName
-    _ = filtersNumber
-    _ = filtersDirection
-    _ = filtersCalledNumber
-    _ = filtersType
-    _ = filtersCountryCode
-    _ = filtersCountry
-    _ = filtersNpa
-    _ = filtersNxx
-    _ = filtersXxxx
-    _ = filtersCity
-    _ = filtersProvince
-    _ = filtersPrice
-    _ = filtersCategory
-    _ = filtersFrom
-    _ = filtersTo
+    err, filterParams = getFiltersParams(input)
 
     if (err != nil) {
       return err, nil
     }
 
-    err,
-    sortId,
-    sortPhoneNumber,
-    sortNumber,
-    sortName,
-    sortInternal,
-    sortPrice,
-    sortExtension,
-    sortUpdatedAt,
-    sortCreatedAt,
-    sortStartTime := getSortParams(input)
+    filtersId = filterParams.filtersId
 
-    _ = sortId
-    _ = sortPhoneNumber
-    _ = sortNumber
-    _ = sortName
-    _ = sortInternal
-    _ = sortPrice
-    _ = sortExtension
-    _ = sortUpdatedAt
-    _ = sortCreatedAt
-    _ = sortStartTime
+    err, sortParams = getSortParams(input)
 
     if (err != nil) {
       return err, nil
     }
 
-    err, extensionId := getOtherParams(input)
-
+    err, extensionId, groupBy = getOtherParams(input)
     _ = extensionId
 
     if (err != nil) {
@@ -189,7 +139,7 @@ func execute(
 
 			case listMedia:
 
-        return handle(api.ListAccountMedia(accountId,filtersId , slice, "", "", limit, offset, fields))
+        return handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getRecording:
 
@@ -202,7 +152,7 @@ func execute(
 
 			case listMenus:
 
-        return handle(api.ListAccountMenus(accountId, slice, slice, "", "", limit, offset, fields))
+        return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getMenu:
 
@@ -229,7 +179,7 @@ func execute(
 
 			case listQueues:
 
-				return handle(api.ListAccountQueues(accountId, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getQueue:
 
@@ -256,7 +206,7 @@ func execute(
 
 			case listRoutes:
 
-				return handle(api.ListAccountRoutes(accountId, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getRoute:
 
@@ -283,7 +233,7 @@ func execute(
 
 			case listSchedules:
 
-				return handle(api.ListAccountSchedules(accountId, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getSchedule:
 
@@ -296,7 +246,7 @@ func execute(
 
 			case listSms:
 
-				return handle(api.ListAccountSms(accountId, slice, "", "", "", "", limit, offset, fields))
+				return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
 
 			case getSms:
 
@@ -314,7 +264,7 @@ func execute(
 
 			case listAvailablePhoneNumbers:
 
-				return handle(api.ListAvailablePhoneNumbers(slice, slice, slice, slice, slice, slice, slice, slice, slice, slice, "", "", "", limit, offset, ""))
+				return handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
 			}
 
   case swagger.SubaccountsApi:
@@ -323,7 +273,7 @@ func execute(
 
 			case listSubaccounts:
 
-				return handle(api.ListAccountSubaccounts(accountId, slice, "", limit, offset, fields))
+				return handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
 
 			case createSubaccount:
 
@@ -337,7 +287,7 @@ func execute(
 
 			case listAccounts:
 
-				return handle(api.ListAccounts(slice, "", limit, offset, fields))
+				return handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
 
 			case getAccount:
 
@@ -350,7 +300,7 @@ func execute(
 
 			case listAvailablePhoneNumberRegions:
 
-				return handle(api.ListAvailablePhoneNumberRegions(slice, slice, slice, slice, slice, slice, slice, "", "", "", "", "", "", "", limit, offset, fields, slice))
+				return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, groupBy))
     }
 
   case swagger.ApplicationsApi:
@@ -359,7 +309,7 @@ func execute(
 
 			case listApplications:
 
-				return handle(api.ListAccountApplications(accountId, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getApplication:
 
@@ -372,7 +322,7 @@ func execute(
 
 			case listCallLogs:
 
-				return handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, fields))
+				return handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
     }
 
   case swagger.DevicesApi:
@@ -381,7 +331,7 @@ func execute(
 
 			case listDevices:
 
-				return handle(api.ListAccountDevices(accountId, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getDevice:
 
@@ -417,7 +367,7 @@ func execute(
 
 			case listExtensions:
 
-				return handle(api.ListAccountExtensions(accountId, slice, slice, slice, "", "", "", limit, offset, fields))
+				return handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
 
 			case getExtension:
 
@@ -440,7 +390,7 @@ func execute(
     switch (command) {
 
 			case getCallerId:
-				return handle(api.GetCallerIds(accountId, id, slice, slice, "", "", limit, offset, fields))
+				return handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields))
     }
 
   case swagger.ContactsApi:
@@ -449,7 +399,7 @@ func execute(
 
 			case listContacts:
 
-				return handle(api.ListAccountExtensionContacts(accountId, id, slice, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
 
 			case getContact:
 
@@ -476,7 +426,7 @@ func execute(
 
 			case listGroups:
 
-				return handle(api.ListAccountExtensionContactGroups(accountId, id, slice, slice, "", "", limit, offset, fields))
+				return handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getGroup:
 
@@ -502,7 +452,7 @@ func execute(
 
 			case listPhoneNumbers:
 
-				return handle(api.ListAccountPhoneNumbers(accountId, slice, slice, slice, "", "", "", limit, offset, fields))
+				return handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
 
 			case getPhoneNumber:
 
@@ -525,7 +475,7 @@ func execute(
 
     case listTrunks:
 
-      return handle(api.ListAccountTrunks(accountId, slice, slice, "", "", limit, offset, fields))
+      return handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getTrunk:
 

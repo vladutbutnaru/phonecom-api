@@ -8,15 +8,30 @@ import (
 	"errors"
 )
 
-func getListParams(inputFile string) (error, int32, int32, int32, string, []string) {
+type ListParams struct {
+
+  accountId int32
+  limit int32
+  offset int32
+  fields string
+}
+
+func getListParams(inputFile string) (error, ListParams) {
 
 	err, data := readAndUnmarshal(inputFile)
-	return err,
-		getField(data["account_id"]),
-		getField(data["limit"]),
-		getField(data["offset"]),
-		getFieldString(data["fields"]),
-		getFilterId(data);
+
+  var params ListParams
+
+  if (err != nil || data == nil) {
+    return err, params
+  }
+
+  params.accountId = getField(data["account_id"])
+  params.limit = getField(data["limit"])
+  params.offset = getField(data["offset"])
+  params.fields = getFieldString(data["fields"])
+
+	return err, params
 }
 
 func getField(field interface {}) int32 {
@@ -26,19 +41,6 @@ func getField(field interface {}) int32 {
 	}
 
 	return int32(field.(float64))
-}
-
-func getFilterId(json map[string]interface {}) []string {
-
-	if (json == nil || json["filters[id]"] == nil) {
-		return nil
-	}
-
-	filterIdRaw := json["filters[id]"].([]interface{})
-
-	str1 := filterIdRaw[0].(string)
-
-	return []string{str1}
 }
 
 func readAndUnmarshal(inputFile string) (error, map[string]interface {}) {
@@ -67,56 +69,76 @@ func getFieldString(field interface {}) string {
 	return field.(string)
 }
 
+type FilterParams struct {
+
+  filtersId []string
+  filtersExtension []string
+  filtersGroupId []string
+  filtersUpdatedAt []string
+  filtersPhoneNumber []string
+  filtersName []string
+  filtersNumber []string
+  filtersDirection string
+  filtersCalledNumber string
+  filtersType string
+  filtersCountryCode []string
+  filtersCountry []string
+  filtersNpa []string
+  filtersNxx []string
+  filtersXxxx []string
+  filtersCity []string
+  filtersProvince []string
+  filtersPrice []string
+  filtersCategory []string
+  filtersFrom string
+  filtersTo []string
+  filtersIsTollFree []string
+  filtersProvincePostalCode []string
+  filtersCountryPostalCode []string
+  filtersStartTime []string
+  filtersCreatedAt string
+}
+
 func getFiltersParams(inputFile string) (
     error,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string,
-    []string) {
+    FilterParams) {
 
-	err, dat := readAndUnmarshal(inputFile)
+	err, data := readAndUnmarshal(inputFile)
 
-  if (err != nil || dat == nil) {
-    return err, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
+  var params FilterParams
+
+  if (err != nil || data == nil) {
+    return err, params
   }
 
-	return err,
-    createStringArray(dat["filters[extension]"]),
-    createStringArray(dat["filters[group_id]"]),
-    createStringArray(dat["filters[updated_at]"]),
-    createStringArray(dat["filters[phone_number]"]),
-    createStringArray(dat["filters[name]"]),
-    createStringArray(dat["filters[number]"]),
-    createStringArray(dat["filters[direction]"]),
-    createStringArray(dat["filters[called_number]"]),
-    createStringArray(dat["filters[type]"]),
-    createStringArray(dat["filters[country_code]"]),
-    createStringArray(dat["filters[countries]"]),
-    createStringArray(dat["filters[npa]"]),
-    createStringArray(dat["filters[nxx]"]),
-    createStringArray(dat["filters[xxxx]"]),
-    createStringArray(dat["filters[city]"]),
-    createStringArray(dat["filters[province]"]),
-    createStringArray(dat["filters[price]"]),
-    createStringArray(dat["filters[category]"]),
-    createStringArray(dat["filters[from]"]),
-    createStringArray(dat["filters[to]"])
+  params.filtersId = createStringArray(data["filters[id]"])
+  params.filtersExtension = createStringArray(data["filters[extension]"])
+  params.filtersGroupId = createStringArray(data["filters[group_id]"])
+  params.filtersUpdatedAt = createStringArray(data["filters[updated_at]"])
+  params.filtersPhoneNumber = createStringArray(data["filters[phone_number]"])
+  params.filtersName = createStringArray(data["filters[name]"])
+  params.filtersNumber = createStringArray(data["filters[number]"])
+  params.filtersDirection = getFieldString(data["filters[direction]"])
+  params.filtersCalledNumber = getFieldString(data["filters[called_number]"])
+  params.filtersType = getFieldString(data["filters[type]"])
+  params.filtersCountryCode = createStringArray(data["filters[country_code]"])
+  params.filtersCountry = createStringArray(data["filters[countries]"])
+  params.filtersNpa = createStringArray(data["filters[npa]"])
+  params.filtersNxx = createStringArray(data["filters[nxx]"])
+  params.filtersXxxx = createStringArray(data["filters[xxxx]"])
+  params.filtersCity = createStringArray(data["filters[city]"])
+  params.filtersProvince = createStringArray(data["filters[province]"])
+  params.filtersPrice = createStringArray(data["filters[price]"])
+  params.filtersCategory = createStringArray(data["filters[category]"])
+  params.filtersFrom = getFieldString(data["filters[from]"])
+  params.filtersTo = createStringArray(data["filters[to]"])
+  params.filtersIsTollFree = createStringArray(data["filters[is_toll_free]"])
+  params.filtersProvincePostalCode = createStringArray(data["filters[province_postal_code]"])
+  params.filtersCountryPostalCode = createStringArray(data["filters[country_postal_code]"])
+  params.filtersStartTime = createStringArray(data["filters[start_time]"])
+  params.filtersCreatedAt = getFieldString(data["filters[created_at]"])
+
+	return err, params
 }
 
 func createStringArray(filter interface{}) []string {
@@ -133,48 +155,70 @@ func createStringArray(filter interface{}) []string {
 
 func getOtherParams(inputFile string) (
     error,
-    string) {
+    string,
+    []string) {
 
-  err, dat := readAndUnmarshal(inputFile)
+  err, data := readAndUnmarshal(inputFile)
 
-  if (err != nil || dat == nil) {
-    return err, ""
+  if (err != nil || data == nil) {
+    return err, "", nil
   }
 
   return err,
-    getFieldString(dat["extension_id"])
+    getFieldString(data["extension_id"]),
+    createStringArray(data["group_by"])
+}
+
+type SortParams struct {
+  sortId string
+  sortPhoneNumber string
+  sortNumber string
+  sortName string
+  sortInternal string
+  sortPrice string
+  sortExtension string
+  sortUpdatedAt string
+  sortCreatedAt string
+  sortStartTime string
+  sortCountryCode string
+  sortNpa string
+  sortNxx string
+  sortIsTollFree string
+  sortCity string
+  sortProvincePostalCode string
+  sortCountryPostalCode string
 }
 
 func getSortParams(inputFile string) (
     error,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string) {
+    SortParams) {
 
-  err, dat := readAndUnmarshal(inputFile)
+  err, data := readAndUnmarshal(inputFile)
+  var params SortParams
 
-  if (err != nil || dat == nil) {
-    return err, "", "", "", "", "", "", "", "", "", ""
+  if (err != nil || data == nil) {
+    return err, params
   }
 
-  return err,
-    getFieldString(dat["sort[id]"]),
-    getFieldString(dat["sort[phone_number]"]),
-    getFieldString(dat["sort[number]"]),
-    getFieldString(dat["sort[name]"]),
-    getFieldString(dat["sort[internal]"]),
-    getFieldString(dat["sort[price]"]),
-    getFieldString(dat["sort[extension]"]),
-    getFieldString(dat["sort[updated_at]"]),
-    getFieldString(dat["sort[created_at]"]),
-    getFieldString(dat["sort[start_time]"])
+  params.sortId = getFieldString(data["sort[id]"])
+  params.sortPhoneNumber = getFieldString(data["sort[phone_number]"])
+  params.sortNumber = getFieldString(data["sort[number]"])
+  params.sortName = getFieldString(data["sort[name]"])
+  params.sortInternal = getFieldString(data["sort[internal]"])
+  params.sortPrice = getFieldString(data["sort[price]"])
+  params.sortExtension = getFieldString(data["sort[extension]"])
+  params.sortUpdatedAt = getFieldString(data["sort[updated_at]"])
+  params.sortCreatedAt = getFieldString(data["sort[created_at]"])
+  params.sortStartTime = getFieldString(data["sort[start_time]"])
+  params.sortCountryCode = getFieldString(data["sort[country_code]"])
+  params.sortNpa = getFieldString(data["sort[npa]"])
+  params.sortNxx = getFieldString(data["sort[nxx]"])
+  params.sortIsTollFree = getFieldString(data["sort[is_toll_free]"])
+  params.sortCity = getFieldString(data["sort[city]"])
+  params.sortProvincePostalCode = getFieldString(data["sort[province_postal_code]"])
+  params.sortCountryPostalCode = getFieldString(data["sort[country_postal_code]"])
+
+  return err, params
 }
 
 func createDeviceParams(inputFile string) swagger.CreateDeviceParams {
