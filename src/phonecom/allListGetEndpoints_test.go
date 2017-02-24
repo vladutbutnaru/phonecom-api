@@ -13,7 +13,7 @@ func TestListAccounts(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getAccount, int(firstId))
+  err, json = createGetOrRemoveCli(getAccount, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -27,7 +27,7 @@ func TestListApplications(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getApplication, int(firstId))
+  err, json = createGetOrRemoveCli(getApplication, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -49,7 +49,7 @@ func TestListDevices(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getDevice, int(firstId))
+  err, json = createGetOrRemoveCli(getDevice, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -63,7 +63,7 @@ func TestExpressServiceCodes(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getExpressServiceCode, int(firstId))
+  err, json = createGetOrRemoveCli(getExpressServiceCode, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -77,7 +77,7 @@ func TestListExtensions(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getExtension, int(firstId))
+  err, json = createGetOrRemoveCli(getExtension, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -101,7 +101,7 @@ func TestListContacts(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getContact, int(firstId))
+  err, json = createGetOrRemoveCli(getContact, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -115,7 +115,7 @@ func TestListGroups(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getGroup, int(firstId))
+  err, json = createGetOrRemoveCli(getGroup, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -129,7 +129,7 @@ func TestListMedia(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getRecording, int(firstId))
+  err, json = createGetOrRemoveCli(getRecording, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -143,7 +143,7 @@ func TestListMenus(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getMenu, int(firstId))
+  err, json = createGetOrRemoveCli(getMenu, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -157,7 +157,7 @@ func TestListPhoneNumbers(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getPhoneNumber, int(firstId))
+  err, json = createGetOrRemoveCli(getPhoneNumber, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -171,7 +171,7 @@ func TestListQueues(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getQueue, int(firstId))
+  err, json = createGetOrRemoveCli(getQueue, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -185,7 +185,7 @@ func TestListRoutes(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getRoute, int(firstId))
+  err, json = createGetOrRemoveCli(getRoute, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -199,7 +199,7 @@ func TestListSchedules(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getSchedule, int(firstId))
+  err, json = createGetOrRemoveCli(getSchedule, int(firstId))
 
   assertErrorNotNull(t, err)
 }
@@ -237,7 +237,7 @@ func TestListTrunks(t *testing.T) {
   assertErrorNotNull(t, err)
 
   firstId := getFirstId(json)
-  err, json = createGetCli(getTrunk, int(firstId))
+  err, json = createGetOrRemoveCli(getTrunk, int(firstId))
 
   assertErrorNotNull(t, err)
 }
