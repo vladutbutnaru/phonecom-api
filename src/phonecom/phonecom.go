@@ -86,18 +86,18 @@ func execute(
   var scheduleId int32
   var smsId string
   var trunkId int32
-    
-    var from string
-    var to string
-    var text string
-    from = c.String("from")
-    to = c.String("to")
-    text = c.String("text")
-    
-    var trunkName = c.String("name")
-    var trunkUri = c.String("uri")
-    var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
-    var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
+
+	var from string
+	var to string
+	var text string
+	from = c.String("from")
+	to = c.String("to")
+	text = c.String("text")
+
+	var trunkName = c.String("name")
+	var trunkUri = c.String("uri")
+	var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
+	var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
     
   var filterParams FilterParams
   var sortParams SortParams
@@ -165,14 +165,16 @@ func execute(
 	param.accountId = accountId
   param.fields = fields
   param.contact = contact
-    param.billingContact = billingContact
+  param.billingContact = billingContact
     
   showDryRunVerbose(param)
   if (param.dryRun) {
     return nil, nil
   }
 
-  var api interface{} = getApi(command)
+  api, config := getApi(command)
+  accountId = config.AccountId
+
   if (api == nil) {
     return errors.New(msgCouldNotGetResponse), nil
   }
@@ -605,7 +607,7 @@ func execute(
 }
 
 func getApi(
-    command string) interface{} {
+    command string) (interface{}, Config) {
 
   var api interface{}
   var config = swagger.NewConfiguration()
@@ -616,7 +618,7 @@ func getApi(
   var apiKey string = xmlConfig.ApiKey
 
   if (len(apiKeyPrefix) == 0 || len(apiKey) == 0) {
-    return nil
+    return nil, xmlConfig
   }
 
   if (len(baseApiPath) > 0) {
@@ -750,10 +752,10 @@ func getApi(
 
   default:
     fmt.Printf("Invalid command: %v\n", command)
-    return nil
+    return nil, xmlConfig
   }
 
-  return api
+  return api, xmlConfig
 }
 
 func handle(

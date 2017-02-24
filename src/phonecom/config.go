@@ -16,6 +16,7 @@ type Config struct {
 	ApiKeyPrefix string
 	ApiKey string
 	Type string
+	AccountId int32
 }
 
 func getConfig() Config {

@@ -61,32 +61,32 @@ func getCliFlags() []cli.Flag {
       Name: "billing-contact",
       Usage: "Path to the local JSON descriptor to a billing contact object",
     },
-       cli.StringFlag{
+    cli.StringFlag{
       Name: "from",
       Usage: "The phone number of the SMS sender",
     },
-       cli.StringFlag{
+    cli.StringFlag{
       Name: "to",
       Usage: "The phone number of the SMS receiver",
     },
-       cli.StringFlag{
+    cli.StringFlag{
       Name: "text",
       Usage: "SMS body",
     },
-         cli.StringFlag{
+		cli.StringFlag{
       Name: "name",
       Usage: "Trunk name",
     },
-        cli.StringFlag{
+		cli.StringFlag{
       Name: "uri",
       Usage: "Trunk uri",
     },
-        cli.IntFlag{
+		cli.IntFlag{
       Name: "max-concurrent-calls",
       Value: 60,
       Usage: "Maximum concurrent calls for the trunk",
     },
-         cli.IntFlag{
+    cli.IntFlag{
       Name: "max-minutes-per-month",
       Value: 800,
       Usage: "Maximum of minutes per month for the trunk",
