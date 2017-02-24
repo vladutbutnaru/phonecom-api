@@ -53,6 +53,14 @@ func getCliFlags() []cli.Flag {
       Name: "verbose, vr",
       Usage: "Activate verbose mode",
     },
+    cli.StringFlag{
+      Name: "contact",
+      Usage: "Path to the local JSON descriptor to a contact object",
+    },
+    cli.StringFlag{
+      Name: "billing-contact",
+      Usage: "Path to the local JSON descriptor to a billing contact object",
+    },
 
   }
 }

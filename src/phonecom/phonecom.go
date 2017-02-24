@@ -42,6 +42,8 @@ type CliParams struct {
 	idSecondary int32
 	accountId   int32
   fields      string
+    contact string
+    billingContact string
 }
 
 func execute(
@@ -65,6 +67,8 @@ func execute(
   command := c.String("command")
   idSecondary := int32(c.Int("id-secondary"))
   accountId := int32(c.Int("account"))
+    contact := c.String("contact")
+    billingContact := c.String("billing-contact")
   fields := ""
   var filtersId []string
   var groupBy []string
@@ -120,6 +124,8 @@ func execute(
 	param.idSecondary = idSecondary
 	param.accountId = accountId
   param.fields = fields
+  param.contact = contact
+    param.billingContact = billingContact
     
   showDryRunVerbose(param)
   if (param.dryRun) {
@@ -277,7 +283,7 @@ func execute(
 
 			case createSubaccount:
 
-				params := createSubaccountParams(input)
+				params := createSubaccountParams(input, contact, billingContact)
 				return handle(api.CreateAccountSubaccount(accountId, params))
     }
 
