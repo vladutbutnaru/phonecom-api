@@ -74,6 +74,88 @@ func execute(
 		if (err != nil) {
 			return err, nil
 		}
+
+    err,
+    filtersExtension,
+    filtersGroupId,
+    filtersUpdatedAt,
+    filtersPhoneNumber,
+    filtersName,
+    filtersNumber,
+    filtersDirection,
+    filtersCalledNumber,
+    filtersType,
+    filtersCountryCode,
+    filtersCountry,
+    filtersNpa,
+    filtersNxx,
+    filtersXxxx,
+    filtersCity,
+    filtersProvince,
+    filtersPrice,
+    filtersCategory,
+    filtersFrom,
+    filtersTo := getFiltersParams(input)
+
+    _ = filtersExtension
+    _ = filtersGroupId
+    _ = filtersUpdatedAt
+    _ = filtersPhoneNumber
+    _ = filtersName
+    _ = filtersNumber
+    _ = filtersDirection
+    _ = filtersCalledNumber
+    _ = filtersType
+    _ = filtersCountryCode
+    _ = filtersCountry
+    _ = filtersNpa
+    _ = filtersNxx
+    _ = filtersXxxx
+    _ = filtersCity
+    _ = filtersProvince
+    _ = filtersPrice
+    _ = filtersCategory
+    _ = filtersFrom
+    _ = filtersTo
+
+    if (err != nil) {
+      return err, nil
+    }
+
+    err,
+    sortId,
+    sortPhoneNumber,
+    sortNumber,
+    sortName,
+    sortInternal,
+    sortPrice,
+    sortExtension,
+    sortUpdatedAt,
+    sortCreatedAt,
+    sortStartTime := getSortParams(input)
+
+    _ = sortId
+    _ = sortPhoneNumber
+    _ = sortNumber
+    _ = sortName
+    _ = sortInternal
+    _ = sortPrice
+    _ = sortExtension
+    _ = sortUpdatedAt
+    _ = sortCreatedAt
+    _ = sortStartTime
+
+    if (err != nil) {
+      return err, nil
+    }
+
+    err, extensionId := getOtherParams(input)
+
+    _ = extensionId
+
+    if (err != nil) {
+      return err, nil
+    }
 	}
 
 	param.slice = slice
