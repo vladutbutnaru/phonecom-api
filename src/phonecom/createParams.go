@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"encoding/json"
 	"io/ioutil"
 	"phonecom-go-sdk"
@@ -31,7 +30,7 @@ func getField(field interface {}) int32 {
 
 func getFilterId(json map[string]interface {}) []string {
 
-	if (json == nil) {
+	if (json == nil || json["filters[id]"] == nil) {
 		return nil
 	}
 
@@ -171,29 +170,30 @@ func getSortParams(inputFile string) (
 func createDeviceParams(inputFile string) swagger.CreateDeviceParams {
 
 	var params swagger.CreateDeviceParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
 
-func readFile(inputFile string) []byte {
+func readAndUnmarshalFile(inputFile string, params interface{}) error {
 
 	file, e := ioutil.ReadFile(inputFile)
 
 	if e != nil {
-		fmt.Printf("File error: %v\n", e)
-		os.Exit(1)
+		return e
 	}
 
 	fmt.Printf("%s\n", string(file))
 
-	return file
+  json.Unmarshal(file, params)
+
+	return nil
 }
 
 func createMenuParams(inputFile string) swagger.CreateMenuParams {
 
 	var params swagger.CreateMenuParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -201,7 +201,7 @@ func createMenuParams(inputFile string) swagger.CreateMenuParams {
 func replaceMenuParams(inputFile string) swagger.ReplaceMenuParams {
 
 	var params swagger.ReplaceMenuParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -209,7 +209,7 @@ func replaceMenuParams(inputFile string) swagger.ReplaceMenuParams {
 func createExtensionsParams(inputFile string) swagger.CreateExtensionParams {
 
 	var params swagger.CreateExtensionParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -217,7 +217,7 @@ func createExtensionsParams(inputFile string) swagger.CreateExtensionParams {
 func createQueueParams(inputFile string) swagger.CreateQueueParams {
 
 	var params swagger.CreateQueueParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -225,7 +225,7 @@ func createQueueParams(inputFile string) swagger.CreateQueueParams {
 func createRouteParams(inputFile string) swagger.CreateRouteParams {
 
 	var params swagger.CreateRouteParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -233,7 +233,7 @@ func createRouteParams(inputFile string) swagger.CreateRouteParams {
 func createSmsParams(inputFile string) swagger.CreateSmsParams {
 
 	var params swagger.CreateSmsParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -241,7 +241,7 @@ func createSmsParams(inputFile string) swagger.CreateSmsParams {
 func createSubaccountParams(inputFile string) swagger.CreateSubaccountParams {
 
 	var params swagger.CreateSubaccountParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -249,7 +249,7 @@ func createSubaccountParams(inputFile string) swagger.CreateSubaccountParams {
 func createTrunkParams(inputFile string) swagger.CreateTrunkParams {
 
 	var params swagger.CreateTrunkParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -257,7 +257,7 @@ func createTrunkParams(inputFile string) swagger.CreateTrunkParams {
 func replaceExtensionParams(inputFile string) swagger.ReplaceExtensionParams {
 
 	var params swagger.ReplaceExtensionParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -265,7 +265,7 @@ func replaceExtensionParams(inputFile string) swagger.ReplaceExtensionParams {
 func createContactParams(inputFile string) swagger.CreateContactParams {
 
 	var params swagger.CreateContactParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -273,7 +273,7 @@ func createContactParams(inputFile string) swagger.CreateContactParams {
 func createGroupParams(inputFile string) swagger.CreateGroupParams {
 
 	var params swagger.CreateGroupParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -281,7 +281,7 @@ func createGroupParams(inputFile string) swagger.CreateGroupParams {
 func createPhoneNumberParams(inputFile string) swagger.CreatePhoneNumberParams {
 
 	var params swagger.CreatePhoneNumberParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
@@ -289,7 +289,7 @@ func createPhoneNumberParams(inputFile string) swagger.CreatePhoneNumberParams {
 func replacePhoneNumberParams(inputFile string) swagger.ReplacePhoneNumberParams {
 
 	var params swagger.ReplacePhoneNumberParams
-	json.Unmarshal(readFile(inputFile), &params)
+	readAndUnmarshalFile(inputFile, &params)
 
 	return params
 }
