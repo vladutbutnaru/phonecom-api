@@ -86,7 +86,13 @@ func execute(
   var scheduleId int32
   var smsId string
   var trunkId int32
-
+    
+    var from string
+    var to string
+    var text string
+    from = c.String("from")
+    to = c.String("to")
+    text = c.String("text")
   var filterParams FilterParams
   var sortParams SortParams
   var otherParams OtherParams
@@ -312,7 +318,7 @@ func execute(
 
 			case createSms:
 
-				params := createSmsParams(input)
+				params := createSmsParams(from,to,text)
 				return handle(api.CreateAccountSms(accountId, params))
     }
 

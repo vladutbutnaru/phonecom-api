@@ -61,6 +61,18 @@ func getCliFlags() []cli.Flag {
       Name: "billing-contact",
       Usage: "Path to the local JSON descriptor to a billing contact object",
     },
+       cli.StringFlag{
+      Name: "from",
+      Usage: "The phone number of the SMS sender",
+    },
+       cli.StringFlag{
+      Name: "to",
+      Usage: "The phone number of the SMS receiver",
+    },
+       cli.StringFlag{
+      Name: "text",
+      Usage: "SMS body",
+    },
 
   }
 }

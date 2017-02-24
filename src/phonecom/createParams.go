@@ -318,11 +318,13 @@ func createRouteParams(inputFile string) swagger.CreateRouteParams {
 	return params
 }
 
-func createSmsParams(inputFile string) swagger.CreateSmsParams {
+func createSmsParams(from string, to string, text string) swagger.CreateSmsParams {
 
 	var params swagger.CreateSmsParams
-	readAndUnmarshalFile(inputFile, &params)
-
+	//readAndUnmarshalFile(inputFile, &params)
+    params.From = from
+    params.To = to
+    params.Text = text
 	return params
 }
 
