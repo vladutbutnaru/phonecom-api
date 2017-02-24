@@ -79,7 +79,7 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 	return err, json
 }
 
-func createGetCli(endpoint string, id int) (error, map[string] interface{}) {
+func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface{}) {
 
   if (id <= 0) {
     return nil, nil
