@@ -92,289 +92,45 @@ func getFiltersParams(inputFile string) (
     []string) {
 
 	err, dat := readAndUnmarshal(inputFile)
+
+  if (dat == nil) {
+    return err, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
+  }
+
 	return err,
-    getFiltersExtension(dat),
-    getFiltersGroupId(dat),
-    getFiltersUpdatedAt(dat),
-    getFiltersPhoneNumber(dat),
-    getFiltersName(dat),
-    getFiltersNumber(dat),
-    getFiltersDirection(dat),
-    getFiltersCalledNumber(dat),
-    getFiltersType(dat),
-    getFiltersCountryCode(dat),
-    getFiltersCountry(dat),
-    getFiltersNpa(dat),
-    getFiltersNxx(dat),
-    getFiltersXxxx(dat),
-    getFiltersCity(dat),
-    getFiltersProvince(dat),
-    getFiltersPrice(dat),
-    getFiltersCategory(dat),
-    getFiltersFrom(dat),
-    getFiltersTo(dat)
+    createStringArray(dat["filters[extension]"]),
+    createStringArray(dat["filters[group_id]"]),
+    createStringArray(dat["filters[updated_at]"]),
+    createStringArray(dat["filters[phone_number]"]),
+    createStringArray(dat["filters[name]"]),
+    createStringArray(dat["filters[number]"]),
+    createStringArray(dat["filters[direction]"]),
+    createStringArray(dat["filters[called_number]"]),
+    createStringArray(dat["filters[type]"]),
+    createStringArray(dat["filters[country_code]"]),
+    createStringArray(dat["filters[countries]"]),
+    createStringArray(dat["filters[npa]"]),
+    createStringArray(dat["filters[nxx]"]),
+    createStringArray(dat["filters[xxxx]"]),
+    createStringArray(dat["filters[city]"]),
+    createStringArray(dat["filters[province]"]),
+    createStringArray(dat["filters[price]"]),
+    createStringArray(dat["filters[category]"]),
+    createStringArray(dat["filters[from]"]),
+    createStringArray(dat["filters[to]"])
 }
 
-func getFiltersExtension(dat map[string]interface {}) []string {
+func createStringArray(filter interface{}) []string {
 
-  if (dat == nil || dat["filters[extension]"] == nil) {
+  if (filter == nil) {
     return nil
   }
 
-	filter := dat["filters[extension]"].([]interface{})
+  filterArray := filter.([] interface{})
+  str1 := filterArray[0].(string)
 
-	str1 := filter[0].(string)
-
-	return []string{str1}
+  return []string{str1}
 }
-
-func getFiltersGroupId(dat map[string]interface {}) []string {
-
-  if (dat == nil || dat["filters[group_id]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[group_id]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersUpdatedAt(dat map[string]interface {}) []string {
-
-  if (dat == nil || dat["filters[updated_at]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[updated_at]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersPhoneNumber(dat map[string]interface {}) []string {
-
-  if (dat == nil || dat["filters[phone_number]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[phone_number]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersName(dat map[string]interface {}) []string {
-
-  if (dat == nil || dat["filters[name]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[name]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersNumber(dat map[string]interface {}) []string {
-
-  if (dat == nil || dat["filters[number]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[number]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersDirection(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[direction]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[direction]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersCalledNumber(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[called_number]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[called_number]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersType(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[type]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[type]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersCountryCode(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[country_code]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[country_code]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersCountry(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[countries]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[countries]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersNpa(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[npa]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[npa]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersNxx(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[nxx]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[nxx]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersXxxx(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[xxxx]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[xxxx]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersCity(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[city]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[city]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersProvince(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[province]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[province]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersPrice(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[price]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[price]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersCategory(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[category]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[category]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersFrom(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[from]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[from]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
-func getFiltersTo(dat map[string]interface {}) []string{
-
-  if (dat == nil || dat["filters[to]"] == nil) {
-    return nil
-  }
-
-	filter := dat["filters[to]"].([]interface{})
-
-	str1 := filter[0].(string)
-
-	return []string{str1}
-}
-
 
 func getOtherParams(inputFile string) (
     error,
