@@ -248,9 +248,21 @@ func createSmsParams(inputFile string) swagger.CreateSmsParams {
 	return params
 }
 
-func createSubaccountParams(inputFile string) swagger.CreateSubaccountParams {
+func createSubaccountParams(inputFile string, contact string, billingContact string) swagger.CreateSubaccountParams {
 
 	var params swagger.CreateSubaccountParams
+    if contact != "" {
+        readAndUnmarshalFile(inputFile, &params)
+        var contactObject swagger.ContactSubaccount
+        var billingContactObject swagger.ContactSubaccount
+        readAndUnmarshalFile(contact, &contactObject)
+        readAndUnmarshalFile(billingContact, &billingContactObject)
+        params.Contact = contactObject
+        params.BillingContact = billingContactObject
+        return params
+        
+        
+    }
 	readAndUnmarshalFile(inputFile, &params)
 
 	return params
