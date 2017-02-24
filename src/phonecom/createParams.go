@@ -143,14 +143,18 @@ func getFiltersParams(inputFile string) (
 
 func createStringArray(filter interface{}) []string {
 
-  if (filter == nil) {
-    return nil
-  }
+	if (filter == nil) {
+		return nil
+	}
 
-  filterArray := filter.([] interface{})
-  str1 := filterArray[0].(string)
+	filterArray := filter.([] interface{})
+	str1 := filterArray[0].(string)
 
-  return []string{str1}
+	if (len(filterArray) == 1 && filterArray[0] == "") {
+		return make([]string, 0)
+	}
+
+	return []string{str1}
 }
 
 type OtherParams struct {
