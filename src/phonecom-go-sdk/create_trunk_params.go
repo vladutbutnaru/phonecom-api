@@ -11,12 +11,15 @@
 package swagger
 
 type CreateTrunkParams struct {
+    
 
+    
+    
 	// Name of Trunk
 	Name string `json:"name,omitempty"`
 
 	// URI of Trunk (in the form of SIP/user@host.com:port)
-	Url string `json:"url,omitempty"`
+	Url string `json:"uri,omitempty"`
 
 	// Max concurrent calls
 	MaxConcurrentCalls int32 `json:"max_concurrent_calls,omitempty"`

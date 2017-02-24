@@ -73,6 +73,24 @@ func getCliFlags() []cli.Flag {
       Name: "text",
       Usage: "SMS body",
     },
+         cli.StringFlag{
+      Name: "name",
+      Usage: "Trunk name",
+    },
+        cli.StringFlag{
+      Name: "uri",
+      Usage: "Trunk uri",
+    },
+        cli.IntFlag{
+      Name: "max-concurrent-calls",
+      Value: 60,
+      Usage: "Maximum concurrent calls for the trunk",
+    },
+         cli.IntFlag{
+      Name: "max-minutes-per-month",
+      Value: 800,
+      Usage: "Maximum of minutes per month for the trunk",
+    },
 
   }
 }

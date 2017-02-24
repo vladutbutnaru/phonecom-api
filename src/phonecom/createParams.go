@@ -348,10 +348,15 @@ func createSubaccountParams(inputFile string, contact string, billingContact str
 	return params
 }
 
-func createTrunkParams(inputFile string) swagger.CreateTrunkParams {
+func createTrunkParams(name string, uri string, max_concurrent_calls int32, max_minutes_per_month int32) swagger.CreateTrunkParams {
 
 	var params swagger.CreateTrunkParams
-	readAndUnmarshalFile(inputFile, &params)
+    
+	params.Name = name
+    params.Url = uri
+    params.MaxConcurrentCalls = max_concurrent_calls
+    params.MaxMinutesPerMonth = max_minutes_per_month
+    
 
 	return params
 }

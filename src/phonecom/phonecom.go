@@ -93,6 +93,12 @@ func execute(
     from = c.String("from")
     to = c.String("to")
     text = c.String("text")
+    
+    var trunkName = c.String("name")
+    var trunkUri = c.String("uri")
+    var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
+    var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
+    
   var filterParams FilterParams
   var sortParams SortParams
   var otherParams OtherParams
@@ -578,13 +584,12 @@ func execute(
       return handle(api.GetAccountTrunk(accountId, id))
 
     case createTrunk:
-
-      params := createTrunkParams(input)
+      params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
       return handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
-      params := createTrunkParams(input)
+        params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
       return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:
