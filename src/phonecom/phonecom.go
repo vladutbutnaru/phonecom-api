@@ -210,12 +210,12 @@ func execute(
 
 			case createMenu:
 
-				var params = createMenuParams(input)
+				params := createMenuParams(input)
 				return handle(api.CreateAccountMenu(accountId, params))
 
 			case replaceMenu:
 
-				var params = replaceMenuParams(input)
+				params := replaceMenuParams(input)
 				return handle(api.ReplaceAccountMenu(accountId, id, params))
 
 			case deleteMenu:
@@ -237,12 +237,12 @@ func execute(
 
 			case createQueue:
 
-				var params = createQueueParams(input)
+				params := createQueueParams(input)
 				return handle(api.CreateAccountQueue(accountId, params))
 
 			case replaceQueue:
 
-				var params = createQueueParams(input)
+				params := createQueueParams(input)
 				return handle(api.ReplaceAccountQueue(accountId, id, params))
 
 			case deleteQueue:
@@ -264,12 +264,12 @@ func execute(
 
 			case createRoute:
 
-				var params = createRouteParams(input)
+				params := createRouteParams(input)
 				return handle(api.CreateRoute(accountId, params))
 
 			case replaceRoute:
 
-				var params = createRouteParams(input)
+				params := createRouteParams(input)
 				return handle(api.ReplaceAccountRoute(accountId, id, params))
 
 			case deleteRoute:
@@ -304,7 +304,7 @@ func execute(
 
 			case createSms:
 
-				var params = createSmsParams(input)
+				params := createSmsParams(input)
 				return handle(api.CreateAccountSms(accountId, params))
     }
 
@@ -327,7 +327,7 @@ func execute(
 
 			case createSubaccount:
 
-				var params = createSubaccountParams(input)
+				params := createSubaccountParams(input)
 				return handle(api.CreateAccountSubaccount(accountId, params))
     }
 
@@ -366,19 +366,6 @@ func execute(
 				return handle(api.GetAccountApplication(accountId, id))
     }
 
-  //case swagger.CallsApi:
-  //
-  //	switch (command) {
-  //		case createCall:
-  //           if(dryrun != "" || verbose !=""){
-  //		fmt.Println("Calling ", command, " expecting to create an call object with parameters from file ", input)
-  //
-  //		 if(verbose=="") { return nil }
-  //	}
-  //			var params = createCallParams(input)
-  //			return handle(api.CreateAccountCalls(accountId, params))
-  //	}
-
   case swagger.CalllogsApi:
 
     switch (command) {
@@ -386,8 +373,6 @@ func execute(
 			case listCallLogs:
 
 				return handle(api.ListAccountCallLogs(accountId, slice, slice, "", "", "", "", slice, "", "", "", limit, offset, fields))
-			//~ case getCallLog:
-			//~ return handle(api.GetAccountCallLog(accountId, id))
     }
 
   case swagger.DevicesApi:
@@ -404,12 +389,12 @@ func execute(
 
 			case createDevice:
 
-				var params = createDeviceParams(input)
+				params := createDeviceParams(input)
 				return handle(api.CreateAccountDevice(accountId, params))
 
 			case replaceDevice:
 
-				var params = createDeviceParams(input)
+				params := createDeviceParams(input)
 				return handle(api.ReplaceAccountDevice(accountId, id, params))
     }
 
@@ -440,12 +425,12 @@ func execute(
 
 			case createExtension:
 
-				var params = createExtensionsParams(input)
+				params := createExtensionsParams(input)
 				return handle(api.CreateAccountExtension(accountId, params))
 
 			case replaceExtension:
 
-				var params = replaceExtensionParams(input)
+				params := replaceExtensionParams(input)
 				return handle(api.ReplaceAccountExtension(accountId, id, params))
 
     }
@@ -472,12 +457,12 @@ func execute(
 
 			case createContact:
 
-				var params = createContactParams(input)
+				params := createContactParams(input)
 				return handle(api.CreateAccountExtensionContact(accountId, id, params))
 
 			case replaceContact:
 
-				var params = createContactParams(input)
+				params := createContactParams(input)
 				return handle(api.ReplaceAccountExtensionContact(accountId, id, params))
 
 			case deleteContact:
@@ -499,12 +484,12 @@ func execute(
 
 			case createGroup:
 
-				var params = createGroupParams(input)
+				params := createGroupParams(input)
 				return handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
 
 			case replaceGroup:
 
-				//var params = createGroupParams()
+				//params := createGroupParams()
 				return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
 			case deleteGroup:
 
@@ -525,12 +510,12 @@ func execute(
 
 			case createPhoneNumber:
 
-				var params = createPhoneNumberParams(input)
+				params := createPhoneNumberParams(input)
 				return handle(api.CreateAccountPhoneNumber(accountId, params))
 
 			case replacePhoneNumber:
 
-				var params = replacePhoneNumberParams(input)
+				params := replacePhoneNumberParams(input)
 				return handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
     }
 
@@ -548,12 +533,12 @@ func execute(
 
     case createTrunk:
 
-      var params = createTrunkParams(input)
+      params := createTrunkParams(input)
       return handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
-      var params = createTrunkParams(input)
+      params := createTrunkParams(input)
       return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:
@@ -657,12 +642,6 @@ func getApi(
     applicationsApi := *swagger.NewApplicationsApi()
     applicationsApi.Configuration = config
     api = applicationsApi
-
-  //case createCall:
-  //
-  //  callsApi := *swagger.NewCallsApi()
-  //  callsApi.Configuration = config
-  //  api = callsApi
 
   case listCallLogs:
 
