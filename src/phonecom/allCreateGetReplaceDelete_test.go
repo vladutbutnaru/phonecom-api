@@ -16,7 +16,7 @@ func TestCreateDevice(t *testing.T) {
 
   randomName := randomString(12)
   fileName := "../test/jsonin/createDevice" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\":1310591,\n\t\"name\":\""+ randomName +"\"\n}")
+  d1 := []byte("{\n\t\"account_id\":1315091,\n\t\"name\":\""+ randomName +"\"\n}")
   err = ioutil.WriteFile(fileName, d1, 0644)
 
   err, res = createCliWithJsonIn(createDevice, fileName)
@@ -64,7 +64,7 @@ func TestListReplaceDevice(t *testing.T) {
 
   randomName := randomString(12)
   fileName := "../test/jsonin/replaceDevice" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\":1310591,\n\t\"device_id\":111,\n\t\"name\":\""+ randomName +"\"\n}")
+  d1 := []byte("{\n\t\"account_id\":1315091,\n\t\"device_id\":111,\n\t\"name\":\""+ randomName +"\"\n}")
   err = ioutil.WriteFile(fileName, d1, 0644)
 
   err, res = createCliWithJsonIn(createDevice, fileName)
