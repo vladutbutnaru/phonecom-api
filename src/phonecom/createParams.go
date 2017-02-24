@@ -92,7 +92,7 @@ func getFiltersParams(inputFile string) (
 
 	err, dat := readAndUnmarshal(inputFile)
 
-  if (dat == nil) {
+  if (err != nil || dat == nil) {
     return err, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
   }
 
@@ -136,6 +136,11 @@ func getOtherParams(inputFile string) (
     string) {
 
   err, dat := readAndUnmarshal(inputFile)
+
+  if (err != nil || dat == nil) {
+    return err, ""
+  }
+
   return err,
     getFieldString(dat["extension_id"])
 }
@@ -154,6 +159,11 @@ func getSortParams(inputFile string) (
     string) {
 
   err, dat := readAndUnmarshal(inputFile)
+
+  if (err != nil || dat == nil) {
+    return err, "", "", "", "", "", "", "", "", "", ""
+  }
+
   return err,
     getFieldString(dat["sort[id]"]),
     getFieldString(dat["sort[phone_number]"]),
