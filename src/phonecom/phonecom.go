@@ -42,8 +42,8 @@ type CliParams struct {
 	idSecondary int32
 	accountId   int32
   fields      string
-    contact string
-    billingContact string
+  contact     string
+  billingContact string
 }
 
 func execute(
@@ -67,15 +67,30 @@ func execute(
   command := c.String("command")
   idSecondary := int32(c.Int("id-secondary"))
   accountId := int32(c.Int("account"))
-    contact := c.String("contact")
-    billingContact := c.String("billing-contact")
+  contact := c.String("contact")
+  billingContact := c.String("billing-contact")
   fields := ""
+
   var filtersId []string
   var groupBy []string
-  var extensionId string
+  var extensionId int32
+  var deviceId int32
+  var codeId int32
+  var contactId int32
+  var groupId int32
+  var recordingId int32
+  var menuId int32
+  var numberId int32
+  var queueId int32
+  var routeId int32
+  var scheduleId int32
+  var smsId string
+  var trunkId int32
 
   var filterParams FilterParams
   var sortParams SortParams
+  var otherParams OtherParams
+
 
 	if (input != "") {
 		var err error
@@ -104,8 +119,21 @@ func execute(
       return err, nil
     }
 
-    err, extensionId, groupBy = getOtherParams(input)
-    _ = extensionId
+    err, otherParams = getOtherParams(input)
+    groupBy = otherParams.groupBy
+    extensionId = otherParams.extensionId
+    deviceId = otherParams.deviceId
+    codeId = otherParams.codeId
+    contactId = otherParams.contactId
+    groupId = otherParams.groupId
+    recordingId = otherParams.recordingId
+    menuId = otherParams.menuId
+    numberId = otherParams.numberId
+    queueId = otherParams.queueId
+    routeId = otherParams.routeId
+    scheduleId = otherParams.scheduleId
+    smsId = otherParams.smsId
+    trunkId = otherParams.trunkId
 
     if (err != nil) {
       return err, nil
@@ -149,6 +177,10 @@ func execute(
 
 			case getRecording:
 
+        if (recordingId != 0) {
+          id = recordingId
+        }
+
         return handle(api.GetAccountMedia(accountId, id))
     }
 
@@ -161,6 +193,10 @@ func execute(
         return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getMenu:
+
+        if (menuId != 0) {
+          id = menuId
+        }
 
 				return handle(api.GetAccountMenu(accountId, id))
 
@@ -189,6 +225,10 @@ func execute(
 
 			case getQueue:
 
+        if (queueId != 0) {
+          id = queueId
+        }
+
 				return handle(api.GetAccountQueue(accountId, id))
 
 			case createQueue:
@@ -215,6 +255,10 @@ func execute(
 				return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getRoute:
+
+        if (routeId != 0) {
+          id = routeId
+        }
 
 				return handle(api.GetAccountRoute(accountId, id))
 
@@ -243,6 +287,10 @@ func execute(
 
 			case getSchedule:
 
+        if (scheduleId != 0) {
+          id = scheduleId
+        }
+
 				return handle(api.GetAccountSchedule(accountId, id))
     }
 
@@ -255,6 +303,10 @@ func execute(
 				return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
 
 			case getSms:
+
+        if (smsId != "") {
+          idString = smsId
+        }
 
 				return handle(api.GetAccountSms(accountId, idString))
 
@@ -341,7 +393,11 @@ func execute(
 
 			case getDevice:
 
-				return handle(api.GetAccountDevice(accountId, id))
+        if (deviceId != 0) {
+          id = deviceId
+        }
+
+        return handle(api.GetAccountDevice(accountId, id))
 
 			case createDevice:
 
@@ -363,6 +419,10 @@ func execute(
 				return handle(api.ListAccountExpressSrvCodes(accountId, slice))
 
 			case getExpressServiceCode:
+
+        if (codeId != 0) {
+          id = codeId
+        }
 
 				return handle(api.GetAccountExpressSrvCode(accountId, id))
     }
@@ -409,6 +469,14 @@ func execute(
 
 			case getContact:
 
+        if (extensionId != 0) {
+          id = extensionId
+        }
+
+        if (contactId != 0) {
+          idSecondary = contactId
+        }
+
 				return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 
 			case createContact:
@@ -436,6 +504,14 @@ func execute(
 
 			case getGroup:
 
+        if (extensionId != 0) {
+          id = extensionId
+        }
+
+        if (groupId != 0) {
+          idSecondary = groupId
+        }
+
 				return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 
 			case createGroup:
@@ -462,6 +538,10 @@ func execute(
 
 			case getPhoneNumber:
 
+        if (numberId != 0) {
+          id = numberId
+        }
+
 				return handle(api.GetAccountPhoneNumber(accountId, id))
 
 			case createPhoneNumber:
@@ -484,6 +564,10 @@ func execute(
       return handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getTrunk:
+
+      if (trunkId != 0) {
+        id = trunkId
+      }
 
       return handle(api.GetAccountTrunk(accountId, id))
 

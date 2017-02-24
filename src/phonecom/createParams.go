@@ -153,20 +153,54 @@ func createStringArray(filter interface{}) []string {
   return []string{str1}
 }
 
+type OtherParams struct {
+
+  groupBy []string
+  extensionId int32
+  callId string
+  deviceId int32
+  codeId int32
+  contactId int32
+  groupId int32
+  recordingId int32
+  menuId int32
+  numberId int32
+  queueId int32
+  routeId int32
+  scheduleId int32
+  smsId string
+  trunkId int32
+}
+
 func getOtherParams(inputFile string) (
     error,
-    string,
-    []string) {
+    OtherParams) {
 
   err, data := readAndUnmarshal(inputFile)
 
+  var params OtherParams
+
   if (err != nil || data == nil) {
-    return err, "", nil
+    return err, params
   }
 
-  return err,
-    getFieldString(data["extension_id"]),
-    createStringArray(data["group_by"])
+  params.groupBy = createStringArray(data["group_by"])
+  params.extensionId = getField(data["extension_id"])
+  params.callId = getFieldString(data["call_id"])
+  params.deviceId = getField(data["device_id"])
+  params.codeId = getField(data["code_id"])
+  params.contactId = getField(data["contact_id"])
+  params.groupId = getField(data["group_id"])
+  params.recordingId = getField(data["recording_id"])
+  params.menuId = getField(data["menu_id"])
+  params.numberId = getField(data["number_id"])
+  params.queueId = getField(data["queue_id"])
+  params.routeId = getField(data["route_id"])
+  params.scheduleId = getField(data["schedule_id"])
+  params.smsId = getFieldString(data["sms_id"])
+  params.trunkId = getField(data["trunk_id"])
+
+  return err, params
 }
 
 type SortParams struct {
