@@ -31,6 +31,28 @@ func createCliWithJsonIn(endpoint string, path string) (error, map[string] inter
   return err, json
 }
 
+func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, map[string] interface{}) {
+  app := cli.NewApp()
+
+  defaultCommand = endpoint
+  defaultInput = path
+  defaultId = strconv.Itoa(id)
+
+  app.Flags = getCliFlags()
+  configPath = "../../config.xml"
+  var json (map[string] interface{})
+  var err error
+
+  app.Action = func(c *cli.Context) error {
+    err, json = execute(c)
+    return err
+  }
+
+  app.Run([]string{commandFlag, endpoint})
+
+  return err, json
+}
+
 func createCli(endpoint string) (error, map[string] interface{}) {
 
   app := cli.NewApp()

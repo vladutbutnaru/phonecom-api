@@ -9,21 +9,27 @@ import (
   "os"
 )
 
+type CreateDeviceJson struct {
+  AccountId int32 `json:"account_id"`
+  Name string `json:"name"`
+}
+
 func TestCreateDevice(t *testing.T) {
 
-  var res map[string] interface{}
+  var result map[string] interface{}
   var err error
 
   randomName := randomString(12)
+  DeviceParamsJson := CreateDeviceJson{1315091, randomName}
   fileName := "../test/jsonin/createDevice" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\":1315091,\n\t\"name\":\""+ randomName +"\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(DeviceParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, res = createCliWithJsonIn(createDevice, fileName)
+  err, result = createCliWithJsonIn(createDevice, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(res)
+  id := getId(result)
 
   if (id == 0) {
     t.FailNow()
@@ -42,107 +48,172 @@ func randomString(strlen int) string {
   return string(result)
 }
 
-type Device struct {
-  accountId int `json:"account_id"`
-  name string `json:"name"`
+func randomNumber(min int, max int) int {
+
+  rand.Seed(time.Now().UTC().UnixNano())
+  return int(rand.Float64()*(float64(max) - float64(min)) + float64(min))
 }
 
-func (d *Device) marshalDevice() ([]byte, error) {
-  return json.Marshal(&struct {
-    accountId     int `json:"account_id"`
-    name          string `json:"name"`}{
-
-    accountId: d.accountId,
-    name:      d.name,
-  })
+type ReplaceDeviceJson struct {
+  AccountId int32 `json:"account_id"`
+  DeviceId int32 `json:"device_id"`
+  Name string `json:"name"`
 }
 
 func TestListReplaceDevice(t *testing.T) {
 
-  var res map[string] interface{}
+  var result map[string] interface{}
   var err error
 
-  randomName := randomString(12)
-  fileName := "../test/jsonin/replaceDevice" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\":1315091,\n\t\"device_id\":111,\n\t\"name\":\""+ randomName +"\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  err, result = createCli(listDevices)
+  assertErrorNotNull(t, err)
 
-  err, res = createCliWithJsonIn(createDevice, fileName)
+  firstId := getFirstId(result)
+
+
+  assertErrorNotNull(t, err)
+
+  randomName := randomString(12)
+  DeviceParamsJson := ReplaceDeviceJson{1315091, int32(firstId), randomName}
+  fileName := "../test/jsonin/replaceDevice" + randomName + ".json"
+  b, err := json.Marshal(DeviceParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  t.Log(firstId)
+  err, result = createReplaceCliWithJsonIn(replaceDevice, fileName, firstId)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(res)
-  if (id == 0) {
-    t.FailNow()
-  }
+}
 
+type CreateExtensionJson struct {
+  AccountId int32 `json:"account_id"`
+  CallerId string `json:"caller_id"`
+  UsageType string `json:"usage_type"`
+  AllowsCallWaiting bool `json:"allows_call_waiting"`
+  Extension int32 `json:extension`
+  IncludeInDirectory bool `json:"include_in_directory"`
+  Name string `json:"name"`
+  FullName string `json:"full_name"`
+  Timezone string `json:"timezone"`
+  LocalAreaCode int32 `json:"local_area_code"`
+  VoicemailGreetingEnableLeaveMessagePrompt bool `json:"voicemail[greeting][enable_leave_message_prompt]"`
+  VoicemailEnabled bool `json:"voicemail[enabled]"`
+  EnableOutboundCalls bool `json:"enable_outbound_calls"`
+  EnableCallWaiting bool `json:"enable_call_waiting"`
+  VoicemailPassword int32 `json:"voicemail[password]"`
+  VoicemailGreetingType string `json:"voicemail[greeting][type]"`
+  VoicemailTranscription string `json:"voicemail[transcription]"`
+  VoicemailNotificationsSms string `json:"voicemail[notifications][sms]"`
+  CallNotificationsSms string `json:"call_notifications[sms]"`
 }
 
 func TestCreateExtension(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
   randomName := randomString(12)
+  randomNum := randomNumber(10, 9999999)
+  ExtensionParamsJson := CreateExtensionJson{1315091, "+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"}
   fileName := "../test/jsonin/createExtension" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"caller_id\": \"+12019570328\",\n\t\"usage_type\": \"unlimited\",\n\t\"allows_call_waiting\": true,\n\t\"extension\": 12340,\n\t\"include_in_directory\": true,\n\t\"name\": \"The name\",\n\t\"full_name\": \"The full name\",\n\t\"timezone\": \"America/Los_Angeles\",\n\t\"local_area_code\": 619,\n\t\"voicemail[greeting][enable_leave_message_prompt]\": true,\n\t\"voicemail[enabled]\": false,\n\t\"enable_outbound_calls\": true,\n\t\"enable_call_waiting\": false,\n\t\"voicemail[password]\": 12345,\n\t\"voicemail[greeting][type]\": \"standard\",\n\t\"voicemail[transcription]\": \"automated\",\n\t\"voicemail[notifications][sms]\": \"+18587741111\",\n\t\"call_notifications[sms]\": \"+18587748888\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(ExtensionParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, json = createCliWithJsonIn(createExtension, fileName)
+  err, result = createCliWithJsonIn(createExtension, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
 
+}
+
+type ReplaceExtensionJson struct {
+  AccountId int32 `json:"account_id"`
+  ExtensionId int32 `json:"extension_id"`
+  Name string `json:"name"`
+  Timezone string `json:"timezone"`
+  IncludeInDirectory bool `json:"include_in_directory"`
+  Extension int32 `json:"extension"`
+  EnableOutboundCalls bool `json:"enable_outbound_calls"`
+  UsageType string `json:"usage_type"`
+  VoicemailPassword int32 `json:"voicemail[password]"`
+  FullName string `json:"full_name"`
+  EnableCallWaiting bool `json:"enable_call_waiting"`
+  VoicemailGreetingType string `json:"voicemail[greeting][type]"`
+  CallerId string `json:"caller_id"`
+  LocalAreaCode int32 `json:"local_area_code"`
+  VoicemailEnabled bool `json:"voicemail[enabled]"`
+  VoicemailGreetingEnableLeaveMessagePrompt bool `json:"voicemail[greeting][enable_leave_message_prompt]"`
+  VoicemailTranscription string `json:"voicemail[transcription]"`
+  VoicemailNotificationsSms string `json:"voicemail[notifications][sms]"`
+  CallNotificationsSms string `json:"call_notifications[sms]"`
 }
 
 func TestListReplaceExtension(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
+  err, result = createCli(listExtensions)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
 
 
   randomName := randomString(12)
+  ExtensionParamsJson := ReplaceExtensionJson{1315091, int32(firstId), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"}
   fileName := "../test/jsonin/replaceExtension" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"extension_id\": 1767963,\n\t\"name\": \"new bobby\",\n\t\"timezone\": \"America/Los_Angeles\",\n\t\"include_in_directory\": true,\n\t\"extension\": 111,\n\t\"enable_outbound_calls\": true,\n\t\"usage_type\": \"unlimited\",\n\t\"voicemail[password]\": \"000000\",\n\t\"full_name\": \"bobby McFerrin\",\n\t\"enable_call_waiting\": true,\n\t\"voicemail[greeting][type]\": \"standard\",\n\t\"caller_id\": \"private\",\n\t\"local_area_code\": 619,\n\t\"voicemail[enabled]\": true,\n\t\"voicemail[greeting][enable_leave_message_prompt]\": true,\n\t\"voicemail[transcription]\": \"automated\",\n\t\"voicemail[notifications][sms]\": \"+18587741111\",\n\t\"call_notifications[sms]\": \"+18587748888\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(ExtensionParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
 
-  err, json = createCliWithJsonIn(createExtension, fileName)
+  err, result = createReplaceCliWithJsonIn(replaceExtension, fileName, firstId)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
+}
 
-  id := getId(json)
-  if (id == 0) {
-    t.FailNow()
-  }
-
+type CreateContactJson struct {
+  AccountId int32 `json:"account_id"`
+  ExtensionId int32 `json:"extension_id"`
+  FirstName string `json:"first_name"`
+  MiddleName string `json:"middle_name"`
+  LastName string `json:"last_name"`
+  Prefix string `json:"prefix"`
+  PhoneticFirstName string `json:"phonetic_first_name"`
+  PhoneticMiddleName string `json:"phonetic_middle_name"`
+  PhoneticLastName string `json:"phonetic_last_name"`
+  Suffix string `json:"suffix"`
+  Nickname string `json:"nickname"`
+  Company string `json:"company"`
+  Department string `json:"department"`
+  JobTitle string `json:"job_title"`
 }
 
 func TestCreateDeleteContact(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
 
   randomName := randomString(12)
+  ContactParamsJson := CreateContactJson{1315091, 1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
   fileName := "../test/jsonin/createContact" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"extension_id\": 1764590,\n\t\"first_name\": \"Geordi\",\n\t\"middle_name\": \"middle name\",\n\t\"last_name\": \"last name\",\n\t\"prefix\": \"prefix\",\n\t\"phonetic_first_name\": \"phoneticFirstName\",\n\t\"phonetic_middle_name\": \"phoneticMiddleName\",\n\t\"phonetic_last_name\": \"phoneticLastName\",\n\t\"suffix\": \"suffix\",\n\t\"nickname\": \"nickname\",\n\t\"company\": \"company\",\n\t\"department\": \"department\",\n\t\"job_title\": \"jobTitle\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(ContactParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
 
-  err, json = createCliWithJsonIn(createContact, fileName)
+  err, result = createCliWithJsonIn(createContact, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -150,25 +221,31 @@ func TestCreateDeleteContact(t *testing.T) {
   createGetOrRemoveCli(deleteContact, id);
 }
 
+type CreateGroupJson struct {
+  AccountId int32 `json:"account_id"`
+  ExtensionId int32 `json:"extension_id"`
+  Name string `json:"name"`
+}
+
 func TestCreateDeleteGroup(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
-
 
 
   randomName := randomString(12)
   fileName := "../test/jsonin/createGroup" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"extension_id\": 1764590,\n\t\"name\": \"Ferengi Traders\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  GroupParamsJson := CreateGroupJson{1315091, 1764590, "Ferengi Traders"}
+  b, err := json.Marshal(GroupParamsJson)
+  //d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"extension_id\": 1764590,\n\t\"name\": \"Ferengi Traders\"\n}")
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
-
-  err, json = createCliWithJsonIn(createGroup, fileName)
+  err, result = createCliWithJsonIn(createGroup, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -177,25 +254,31 @@ func TestCreateDeleteGroup(t *testing.T) {
 
 }
 
+type CreateMenuJson struct {
+  AccountId int32 `json:"account_id"`
+  Name string `json:"name"`
+  AllowExtensionDial bool `json:"allow_extension_dial"`
+  KeypressWaitTime int32 `json:"keypress_wait_time"`
+}
+
 func TestCreateDeleteMenu(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
-
   randomName := randomString(12)
+  MenuParamsJson := CreateMenuJson{1315091, randomName, true, 3}
   fileName := "../test/jsonin/createMenu" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"name\": \"the menu Name\",\n\t\"allow_extension_dial\": true,\n\t\"keypress_wait_time\": 3\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(MenuParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
-
-  err, json = createCliWithJsonIn(createMenu, fileName)
+  err, result = createCliWithJsonIn(createMenu, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -204,100 +287,137 @@ func TestCreateDeleteMenu(t *testing.T) {
 
 }
 
+type ReplaceMenuJson struct {
+  AccountId int32 `json:"account_id"`
+  MenuId int32 `json:"menu_id"`
+  Name string `json:"name"`
+  AllowExtensionDial bool `json:"allow_extension_dial"`
+  KeypressWaitTime int32 `json:"keypress_wait_time"`
+}
+
 func TestListReplaceMenu(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
+  err, result = createCli(listMenus)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
 
 
   randomName := randomString(12)
+  MenuParamsJson := ReplaceMenuJson{1315091, int32(firstId), randomName, false, 5}
   fileName := "../test/jsonin/replaceMenu" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"menu_id\":123123,\n\t\"name\": \"the menu Name\",\n\t\"allow_extension_dial\": true,\n\t\"keypress_wait_time\": 3\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(MenuParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
-
-  err, json = createCliWithJsonIn(createMenu, fileName)
+  err, result = createReplaceCliWithJsonIn(replaceMenu, fileName, firstId)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
+}
 
-  id := getId(json)
-  if (id == 0) {
-    t.FailNow()
-  }
-
+type CreatePhoneNumberJson struct {
+  AccountId int32 `json:"account_id"`
+  PhoneNumber string `json:"phone_number"`
+  Name string `json:"name"`
+  BlockIncoming bool `json:"block_incoming"`
+  BlockAnonymous bool `json:"block_anonymous"`
+  CallerIdName string `json:"caller_id[name]"`
+  CallerIdType string `json:"caller_id[type]"`
+  SmsForwardingType string `json:"sms_forwarding[type]"`
+  CallNotificationsSms string `json:"call_notifications[sms]"`
 }
 
 func TestCreatePhoneNumber(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
-
   randomName := randomString(12)
+  PhoneNumberParamsJson := CreatePhoneNumberJson{1315091, "+12019570329", "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"}
   fileName := "../test/jsonin/createPhoneNumber" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"phone_number\": \"+12019570329\",\n\t\"name\": \"Phone Name Now\",\n\t\"block_incoming\": true,\n\t\"block_anonymous\": true,\n\t\"caller_id[name]\": \"Phone N\",\n\t\"caller_id[type]\": \"business\",\n\t\"sms_forwarding[type]\": \"extension\",\n\t\"call_notifications[sms]\": \"+18587740222\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(PhoneNumberParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
-
-  err, json = createCliWithJsonIn(createPhoneNumber, fileName)
+  err, result = createCliWithJsonIn(createPhoneNumber, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
 
+}
+
+type ReplacePhoneNumberJson struct {
+  AccountId int32 `json:"account_id"`
+  NumberId int32 `json:"number_id"`
+  Name string `json:"name"`
+  BlockIncoming bool `json:"block_incoming"`
+  BlockAnonymous bool `json:"block_anonymous"`
+  CallerIdName string `json:"caller_id[name]"`
+  CallerIdType string `json:"caller_id[type]"`
+  SmsForwardingType string `json:"sms_forwarding[type]"`
+  CallNotificationsSms string `json:"call_notifications[sms]"`
 }
 
 func TestListReplacePhoneNumber(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
+  err, result = createCli(listPhoneNumbers)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
 
 
   randomName := randomString(12)
+  PhoneNumberParamsJson := ReplacePhoneNumberJson{1315091, int32(firstId), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}
   fileName := "../test/jsonin/replacePhoneNumber" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"number_id\": \"+12019570329\",\n\t\"name\": \"Phone Name Now\",\n\t\"block_incoming\": true,\n\t\"block_anonymous\": true,\n\t\"caller_id[name]\": \"Phone N\",\n\t\"caller_id[type]\": \"business\",\n\t\"sms_forwarding[type]\": \"extension\",\n\t\"call_notifications[sms]\": \"+18587740222\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(PhoneNumberParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
 
-  err, json = createCliWithJsonIn(createPhoneNumber, fileName)
+  err, result = createReplaceCliWithJsonIn(replacePhoneNumber, fileName, firstId)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
+}
 
-  id := getId(json)
-  if (id == 0) {
-    t.FailNow()
-  }
-
+type CreateQueueJson struct {
+  AccountId int32 `json:"account_id"`
+  Name string `json:"name"`
+  MaxHoldTime int32 `json:"max_hold_time"`
+  CallerIdType string `json:"caller_id_type"`
+  RingTime int32 `json:"ring_time"`
 }
 
 func TestCreateDeleteQueue(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
 
   randomName := randomString(12)
+  QueueParamsJson := CreateQueueJson{1315091, randomName, 60, "called_number", 10}
   fileName := "../test/jsonin/createQueue" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"name\": \"sample queue\",\n\t\"max_hold_time\": 60,\n\t\"caller_id_type\": \"called_number\",\n\t\"ring_time\": 10\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(QueueParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
 
-  err, json = createCliWithJsonIn(createQueue, fileName)
+  err, result = createCliWithJsonIn(createQueue, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -306,34 +426,47 @@ func TestCreateDeleteQueue(t *testing.T) {
 
 }
 
+type ReplaceQueueJson struct {
+  AccountId int32 `json:"account_id"`
+  QueueId int32 `json:"queue_id"`
+  Name string `json:"name"`
+  MaxHoldTime int32 `json:"max_hold_time"`
+  CallerIdType string `json:"caller_id_type"`
+  RingTime int32 `json:"ring_time"`
+}
+
 func TestListReplaceQueue(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
+
+  err, result = createCli(listQueues)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
 
 
 
   randomName := randomString(12)
+  QueueParamsJson := ReplaceQueueJson{1315091, int32(firstId), randomName, 60, "called_number", 10}
   fileName := "../test/jsonin/replaceQueue" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"queue_id\":123213,\n\t\"name\": \"sample queue\",\n\t\"max_hold_time\": 60,\n\t\"caller_id_type\": \"called_number\",\n\t\"ring_time\": 10\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(QueueParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
 
-  err, json = createCliWithJsonIn(createQueue, fileName)
+  err, result = createReplaceCliWithJsonIn(replaceQueue, fileName, firstId)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
-
-  id := getId(json)
-  if (id == 0) {
-    t.FailNow()
-  }
-
 }
+
+//type CreateRouteJson struct {
+//  TODO
+//}
 
 func TestCreateDeleteRoute(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
@@ -345,11 +478,11 @@ func TestCreateDeleteRoute(t *testing.T) {
 
 
 
-  err, json = createCliWithJsonIn(createRoute, fileName)
+  err, result = createCliWithJsonIn(createRoute, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -358,9 +491,13 @@ func TestCreateDeleteRoute(t *testing.T) {
 
 }
 
+//type ReplaceRouteJson struct {
+//  TODO
+//}
+
 func TestListReplaceRoute(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
@@ -372,80 +509,104 @@ func TestListReplaceRoute(t *testing.T) {
 
 
 
-  err, json = createCliWithJsonIn(createRoute, fileName)
+  err, result = createCliWithJsonIn(createRoute, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
 
+}
+
+type CreateSmsJson struct {
+  AccountId int32 `json:"account_id"`
+  From string `json:"from"`
+  To string `json:"to"`
+  Text string `json:"text"`
+  ExtensionId int32 `json:"extension_id"`
 }
 
 func TestCreateSms(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
   randomName := randomString(12)
+  SmsParamsJson := CreateSmsJson{1315091, "+16309624775", "+12019570328", "Sms work too", 1764595}
   fileName := "../test/jsonin/createSms" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"from\": \"+16309624775\",\n\t\"to\": \"+12019570328\",\n\t\"text\": \"Sms work too\",\n\t\"extension_id\": 1764595\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(SmsParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, json = createCliWithJsonIn(createSms, fileName)
+  err, result = createCliWithJsonIn(createSms, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
 
+}
+
+type CreateSubaccountJson struct {
+  AccountId int32 `json:"account_id"`
+  Username string `json:"username"`
+  Password string `json:"password"`
 }
 
 func TestCreateSubaccount(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
-
   randomName := randomString(12)
+  randomPassword := randomString(12)
+  SubaccountParamsJson := CreateSubaccountJson{1315091, randomName, randomPassword}
   fileName := "../test/jsonin/createSubaccount" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"username\": \"\",\n\t\"password\": \"\"\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(SubaccountParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
 
-
-  err, json = createCliWithJsonIn(createSubaccount, fileName)
+  err, result = createCliWithJsonIn(createSubaccount, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
 
 }
 
+type CreateTrunkJson struct {
+  AccountId int32 `json:"account_id"`
+  Name string `json:"name"`
+  Uri string `json:"uri"`
+  MaxConcurrentCalls int32 `json:"max_concurrent_calls"`
+  MaxMinutesPerMonth int32 `json:"max_minutes_per_month"`
+}
+
 func TestCreateDeleteTrunk(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
 
-
   randomName := randomString(12)
+  TrunkParamsJson := CreateTrunkJson{1315091, "The trunk name", "SIP/1234@phone.com:5060", 60, 800}
   fileName := "../test/jsonin/createTrunk" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"name\": \"The trunk name\",\n\t\"uri\": \"SIP/1234@phone.com:5060\",\n\t\"max_concurrent_calls\": 60,\n\t\"max_minutes_per_month\": 800\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
+  b, err := json.Marshal(TrunkParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, json = createCliWithJsonIn(createTrunk, fileName)
+
+  err, result = createCliWithJsonIn(createTrunk, fileName)
   os.Remove(fileName)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
+  id := getId(result)
   if (id == 0) {
     t.FailNow()
   }
@@ -454,23 +615,32 @@ func TestCreateDeleteTrunk(t *testing.T) {
 
 }
 
+type ReplaceTrunkJson struct {
+  AccountId int32 `json:"account_id"`
+  TrunkId int32 `json:"trunk_id"`
+  Name string `json:"name"`
+  Uri string `json:"uri"`
+  MaxConcurrentCalls int32 `json:"max_concurrent_calls"`
+  MaxMinutesPerMonth int32 `json:"max_minutes_per_month"`
+}
+
 func TestListReplaceTrunk(t *testing.T) {
 
-  var json map[string] interface{}
+  var result map[string] interface{}
   var err error
 
-  randomName := randomString(12)
-  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
-  d1 := []byte("{\n\t\"account_id\": 1315091,\n\t\"trunk_id\":123213,\n\t\"name\": \"The trunk name\",\n\t\"uri\": \"SIP/1234@phone.com:5060\",\n\t\"max_concurrent_calls\": 60,\n\t\"max_minutes_per_month\": 800\n}")
-  err = ioutil.WriteFile(fileName, d1, 0644)
-
-  err, json = createCliWithJsonIn(createTrunk, fileName)
-  os.Remove(fileName)
+  err, result = createCli(listTrunks)
   assertErrorNotNull(t, err)
 
-  id := getId(json)
-  if (id == 0) {
-    t.FailNow()
-  }
+  firstId := getFirstId(result)
 
+  randomName := randomString(12)
+  TrunkParamsJson := ReplaceTrunkJson{1315091, int32(firstId), randomName, "SIP/1234@phone.com:5060", 60, 800}
+  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
+  b, err := json.Marshal(TrunkParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createReplaceCliWithJsonIn(replaceTrunk, fileName, firstId)
+  os.Remove(fileName)
+  assertErrorNotNull(t, err)
 }
