@@ -322,14 +322,15 @@ func createRouteParams(inputFile string) swagger.CreateRouteParams {
 	return params
 }
 
-func createSmsParams(from string, to string, text string) swagger.CreateSmsParams {
+func createSmsParams(from string, to string, text string, extension int32) swagger.CreateSmsParams {
 
-	var params swagger.CreateSmsParams
+	var par swagger.CreateSmsParams
 	//readAndUnmarshalFile(inputFile, &params)
-    params.From = from
-    params.To = to
-    params.Text = text
-	return params
+    par.From = defaultFrom
+    par.To = defaultTo
+    par.Text = defaultText
+    par.Extension = extension
+	return par
 }
 
 func createSubaccountParams(inputFile string, contact string, billingContact string) swagger.CreateSubaccountParams {
