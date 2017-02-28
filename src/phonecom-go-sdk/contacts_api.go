@@ -346,16 +346,18 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
  *
  * @param accountId Account ID
  * @param extensionId Extension ID
+ * @param contactId Contact ID
  * @param data Contact data
  * @return *ContactFull
  */
-func (a ContactsApi) ReplaceAccountExtensionContact(accountId int32, extensionId int32, data CreateContactParams) (*ContactFull, *APIResponse, error) {
+func (a ContactsApi) ReplaceAccountExtensionContact(accountId int32, extensionId int32, contactId int32, data CreateContactParams) (*ContactFull, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/extensions/{extension_id}/contacts"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/extensions/{extension_id}/contacts/{contact_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"extension_id"+"}", fmt.Sprintf("%v", extensionId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"contact_id"+"}", fmt.Sprintf("%v", contactId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

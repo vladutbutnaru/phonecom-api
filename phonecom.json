@@ -570,7 +570,7 @@
         }
       }
     },
-    "/accounts/{account_id}/device/{device_id}": {
+    "/accounts/{account_id}/devices/{device_id}": {
       "get": {
         "security": [
           {
@@ -1166,59 +1166,6 @@
             "$ref": "#/responses/response422"
           }
         }
-      },
-      "put": {
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "tags": [
-          "contacts"
-        ],
-        "summary": "",
-        "description": "For more on the input fields, see Account Contacts.",
-        "operationId": "replace-account-extension-contact",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/accountIdParam"
-          },
-          {
-            "$ref": "#/parameters/extensionIdParam"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "Contact data",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/CreateContactParams"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ContactFull"
-            }
-          },
-          "401": {
-            "$ref": "#/responses/response401"
-          },
-          "403": {
-            "$ref": "#/responses/response403"
-          },
-          "422": {
-            "$ref": "#/responses/response422"
-          }
-        }
       }
     },
     "/accounts/{account_id}/extensions/{extension_id}/contacts/{contact_id}": {
@@ -1266,6 +1213,62 @@
           },
           "404": {
             "$ref": "#/responses/response404"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ],
+        "summary": "",
+        "description": "For more on the input fields, see Account Contacts.",
+        "operationId": "replace-account-extension-contact",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accountIdParam"
+          },
+          {
+            "$ref": "#/parameters/extensionIdParam"
+          },
+          {
+            "$ref": "#/parameters/contactIdParam"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Contact data",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CreateContactParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ContactFull"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/response401"
+          },
+          "403": {
+            "$ref": "#/responses/response403"
+          },
+          "422": {
+            "$ref": "#/responses/response422"
           }
         }
       },
@@ -4637,16 +4640,12 @@
     },
     "CreateTrunkParams": {
       "type": "object",
-      "required": [
-        "name",
-        "url"
-      ],
       "properties": {
         "name": {
           "type": "string",
           "description": "Name of Trunk"
         },
-        "url": {
+        "uri": {
           "type": "string",
           "description": "URI of Trunk (in the form of SIP/user@host.com:port)"
         },
@@ -4786,10 +4785,10 @@
           "$ref": "#/definitions/FilterIdArray"
         },
         "sort": {
-		  "type": "array",
+          "type": "array",
           "items": {
             "$ref": "#/definitions/SortId"
-	      }
+          }
         },
         "total": {
           "type": "integer"
@@ -6858,64 +6857,34 @@
       "type": "object",
       "properties": {
         "phone_number": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "country_code": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "npa": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
+          "type": "integer"
         },
         "nxx": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "xxxx": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "city": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "province": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "country": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "price": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "category": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -6923,46 +6892,25 @@
       "type": "object",
       "properties": {
         "country_code": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "npa": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
+          "type": "integer"
         },
         "nxx": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "is_toll_free": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "city": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "province_postal_code": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "country_postal_code": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -6970,10 +6918,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "direction": {
           "type": "string"
@@ -6987,22 +6932,13 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "group_id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "updated_at": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -7010,16 +6946,10 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "start_time": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "created_at": {
           "type": "string"
@@ -7039,22 +6969,13 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "name": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "phone_number": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -7062,16 +6983,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "number": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -7079,22 +6994,13 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "extension": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "name": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -7102,16 +7008,10 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "name": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },
@@ -7119,10 +7019,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     }
