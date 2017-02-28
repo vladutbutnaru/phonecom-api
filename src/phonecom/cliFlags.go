@@ -100,6 +100,23 @@ func getCliFlags() []cli.Flag {
       Value: 800,
       Usage: "Maximum of minutes per month for the trunk",
     },
-
+    cli.StringFlag{
+      Name: "filtersType",
+      //Value: "id, name, start_time, created_at, direction, called_number, type, extension, number, group_id, updated_at, phone_number, from, to, country_code, npa, nxx, xxxx, city, province, country, price, category, is_toll_free, province_postal_code, country_postal_code",
+      Usage: "Type of filter",
+    },
+    cli.StringFlag{
+      Name: "filtersValue",
+      Usage: "Type of filter",
+    },
+    cli.StringFlag{
+      Name: "sortType",
+      //Value: "id, name, start_time, created_at, extension, number, updated_at, phone_number, internal, price, npa, nxx, is_toll_free, city, province_postal_code, country_postal_code",
+      Usage: "Type of filter",
+    },
+    cli.StringFlag{
+      Name: "sortValue",
+      Usage: "Type of filter",
+    },
   }
 }
