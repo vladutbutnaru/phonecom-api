@@ -192,6 +192,10 @@ func execute(
  
   case swagger.MediaApi:
 
+		if (recordingId != 0) {
+			id = recordingId
+		}
+
     switch (command) {
 
 			case listMedia:
@@ -200,14 +204,14 @@ func execute(
 
 			case getRecording:
 
-        if (recordingId != 0) {
-          id = recordingId
-        }
-
         return handle(api.GetAccountMedia(accountId, id))
     }
 
   case swagger.MenusApi:
+
+		if (menuId != 0) {
+			id = menuId
+		}
 
     switch (command) {
 
@@ -216,10 +220,6 @@ func execute(
         return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getMenu:
-
-        if (menuId != 0) {
-          id = menuId
-        }
 
 				return handle(api.GetAccountMenu(accountId, id))
 
@@ -240,6 +240,10 @@ func execute(
 
   case swagger.QueuesApi:
 
+		if (queueId != 0) {
+			id = queueId
+		}
+
     switch (command) {
 
 			case listQueues:
@@ -247,10 +251,6 @@ func execute(
 				return handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getQueue:
-
-        if (queueId != 0) {
-          id = queueId
-        }
 
 				return handle(api.GetAccountQueue(accountId, id))
 
@@ -271,6 +271,10 @@ func execute(
 
   case swagger.RoutesApi:
 
+		if (routeId != 0) {
+			id = routeId
+		}
+
     switch (command) {
 
 			case listRoutes:
@@ -278,10 +282,6 @@ func execute(
 				return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getRoute:
-
-        if (routeId != 0) {
-          id = routeId
-        }
 
 				return handle(api.GetAccountRoute(accountId, id))
 
@@ -302,6 +302,10 @@ func execute(
 
   case swagger.SchedulesApi:
 
+		if (scheduleId != 0) {
+			id = scheduleId
+		}
+
     switch (command) {
 
 			case listSchedules:
@@ -310,14 +314,14 @@ func execute(
 
 			case getSchedule:
 
-        if (scheduleId != 0) {
-          id = scheduleId
-        }
-
 				return handle(api.GetAccountSchedule(accountId, id))
     }
 
   case swagger.SmsApi:
+
+		if (smsId != "") {
+			idString = smsId
+		}
 
     switch (command) {
 
@@ -326,10 +330,6 @@ func execute(
 				return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
 
 			case getSms:
-
-        if (smsId != "") {
-          idString = smsId
-        }
 
 				return handle(api.GetAccountSms(accountId, idString))
 
@@ -408,17 +408,17 @@ func execute(
 
   case swagger.DevicesApi:
 
-    switch (command) {
+		if (deviceId != 0) {
+			id = deviceId
+		}
+
+		switch (command) {
 
 			case listDevices:
 
 				return handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getDevice:
-
-        if (deviceId != 0) {
-          id = deviceId
-        }
 
         return handle(api.GetAccountDevice(accountId, id))
 
@@ -435,6 +435,10 @@ func execute(
 
   case swagger.ExpressservicecodesApi:
 
+		if (codeId != 0) {
+			id = codeId
+		}
+
     switch (command) {
 
 			case listExpressServiceCodes:
@@ -442,10 +446,6 @@ func execute(
 				return handle(api.ListAccountExpressSrvCodes(accountId, slice))
 
 			case getExpressServiceCode:
-
-        if (codeId != 0) {
-          id = codeId
-        }
 
 				return handle(api.GetAccountExpressSrvCode(accountId, id))
     }
@@ -484,6 +484,14 @@ func execute(
 
   case swagger.ContactsApi:
 
+		if (extensionId != 0) {
+			id = extensionId
+		}
+
+		if (contactId != 0) {
+			idSecondary = contactId
+		}
+
     switch (command) {
 
 			case listContacts:
@@ -491,14 +499,6 @@ func execute(
 				return handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
 
 			case getContact:
-
-        if (extensionId != 0) {
-          id = extensionId
-        }
-
-        if (contactId != 0) {
-          idSecondary = contactId
-        }
 
 				return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 
@@ -510,7 +510,7 @@ func execute(
 			case replaceContact:
 
 				params := createContactParams(input)
-				return handle(api.ReplaceAccountExtensionContact(accountId, id, params))
+				return handle(api.ReplaceAccountExtensionContact(accountId, id, idSecondary, params))
 
 			case deleteContact:
 
@@ -519,6 +519,14 @@ func execute(
 
   case swagger.GroupsApi:
 
+		if (extensionId != 0) {
+			id = extensionId
+		}
+
+		if (groupId != 0) {
+			idSecondary = groupId
+		}
+
     switch (command) {
 
 			case listGroups:
@@ -526,14 +534,6 @@ func execute(
 				return handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 			case getGroup:
-
-        if (extensionId != 0) {
-          id = extensionId
-        }
-
-        if (groupId != 0) {
-          idSecondary = groupId
-        }
 
 				return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 
@@ -553,6 +553,10 @@ func execute(
 
   case swagger.PhonenumbersApi:
 
+		if (numberId != 0) {
+			id = numberId
+		}
+
     switch (command) {
 
 			case listPhoneNumbers:
@@ -560,10 +564,6 @@ func execute(
 				return handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
 
 			case getPhoneNumber:
-
-        if (numberId != 0) {
-          id = numberId
-        }
 
 				return handle(api.GetAccountPhoneNumber(accountId, id))
 
@@ -580,6 +580,10 @@ func execute(
 
   case swagger.TrunksApi:
 
+		if (trunkId != 0) {
+			id = trunkId
+		}
+
     switch (command) {
 
     case listTrunks:
@@ -588,19 +592,16 @@ func execute(
 
     case getTrunk:
 
-      if (trunkId != 0) {
-        id = trunkId
-      }
-
       return handle(api.GetAccountTrunk(accountId, id))
 
     case createTrunk:
+
       params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
       return handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
-        params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
+      params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
       return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:

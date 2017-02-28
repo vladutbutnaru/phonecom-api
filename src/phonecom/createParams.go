@@ -358,7 +358,7 @@ func createTrunkParams(name string, uri string, max_concurrent_calls int32, max_
 	var params swagger.CreateTrunkParams
     
 	params.Name = name
-    params.Url = uri
+    params.Uri = uri
     params.MaxConcurrentCalls = max_concurrent_calls
     params.MaxMinutesPerMonth = max_minutes_per_month
     
