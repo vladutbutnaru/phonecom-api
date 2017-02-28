@@ -20,4 +20,6 @@ type CreateSmsParams struct {
 
 	// Text body of the outgoing SMS message. Maximum 160 characters per message.
 	Text string `json:"text,omitempty"`
+
+	Extension int32 `json:"extension,omitempty"`
 }

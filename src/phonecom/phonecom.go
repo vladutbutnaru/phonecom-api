@@ -94,10 +94,19 @@ func execute(
 	to = c.String("to")
 	text = c.String("text")
 
+  from = defaultFrom
+	to = defaultTo
+	text = defaultText
+
 	var trunkName = c.String("name")
 	var trunkUri = c.String("uri")
 	var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
 	var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
+
+  trunkName = defaultTrunkName
+  trunkUri = defaultTrunkUri
+  trunkConcurrentCalls = int32(defaultTrunkConcurrentCalls)
+  trunkMaxMinutes = int32(defaultTrunkMaxMinutes)
     
   var filterParams FilterParams
   var sortParams SortParams
@@ -326,7 +335,7 @@ func execute(
 
 			case createSms:
 
-				params := createSmsParams(from,to,text)
+				params := createSmsParams(from,to,text, extensionId)
 				return handle(api.CreateAccountSms(accountId, params))
     }
 

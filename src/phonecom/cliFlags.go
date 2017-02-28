@@ -5,6 +5,15 @@ import "github.com/urfave/cli"
 var defaultCommand = listAccounts
 var defaultId = ""
 var defaultInput = ""
+var defaultFrom = ""
+var defaultTo = ""
+var defaultText = ""
+var defaultTrunkName = ""
+var defaultTrunkUri = ""
+var defaultTrunkConcurrentCalls = -1
+var defaultTrunkMaxMinutes = -1
+const defaultAccountId = 1315091
+
 
 func getCliFlags() []cli.Flag {
 
@@ -37,7 +46,7 @@ func getCliFlags() []cli.Flag {
     },
     cli.IntFlag{
       Name: "account, a",
-      Value: 1315091,
+      Value: defaultAccountId,
       Usage: "Phone.com API account to use in API calls",
     },
     cli.BoolFlag{
