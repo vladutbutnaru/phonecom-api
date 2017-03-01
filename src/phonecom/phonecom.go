@@ -50,6 +50,7 @@ type CliParams struct {
   billingContact string
   filterType  string
   filterValue string
+  fullList    bool
 }
 
 func execute(
@@ -82,6 +83,7 @@ c *cli.Context) (error, map[string] interface{}) {
   sortValue := c.String("sortValue")
   samplein := c.String("samplein")
   sampleout := c.String("sampleout")
+  fullList := c.Bool("fullList")
 
 
   var filtersId []string
@@ -188,6 +190,7 @@ c *cli.Context) (error, map[string] interface{}) {
   param.fields = fields
   param.contact = contact
   param.billingContact = billingContact
+  param.fullList = fullList
 
   showDryRunVerbose(param)
   if (param.dryRun) {
@@ -886,7 +889,7 @@ c *cli.Context) (error, map[string] interface{}) {
 }
 
 func getApi(
-command string) (interface{}, Config) {
+    command string) (interface{}, Config) {
 
   var api interface{}
   var config = swagger.NewConfiguration()
@@ -1038,9 +1041,9 @@ command string) (interface{}, Config) {
 }
 
 func handle(
-x interface{},
-response *swagger.APIResponse,
-error error) (error, map[string] interface{}) {
+    x interface{},
+    response *swagger.APIResponse,
+    error error) (error, map[string] interface{}) {
 
   if (error != nil) {
 
@@ -1062,9 +1065,9 @@ error error) (error, map[string] interface{}) {
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-  json := validateJson(string(payload))
+  validatedJson := validateJson(string(payload))
 
-  if (json == nil) {
+  if (validatedJson == nil) {
 
     if (param.verbose) {
       fmt.Println("Could not unmarshal API json response")
@@ -1073,7 +1076,7 @@ error error) (error, map[string] interface{}) {
     return errors.New(msgInvalidJson), nil
   }
 
-  message := validateResponse(json)
+  message := validateResponse(validatedJson)
 
   if (message != "") {
 
@@ -1083,10 +1086,18 @@ error error) (error, map[string] interface{}) {
 
     return errors.New(message), nil
   } else {
-    fmt.Printf("%+v\n%s\n", x, response)
+
+    var output interface{}
+    if (!param.fullList && validatedJson["items"] != nil) {
+      output, _ = json.MarshalIndent(validatedJson["items"], "", "  ")
+    } else {
+      output, _ = json.MarshalIndent(validatedJson, "", "  ")
+    }
+
+    fmt.Printf("%+v\n%s\n", x, output)
   }
 
-  return nil, json
+  return nil, validatedJson
 }
 
 func marshalJson(param interface{}, fileName string) {

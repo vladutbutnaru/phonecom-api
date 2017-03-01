@@ -124,5 +124,9 @@ func getCliFlags() []cli.Flag {
       Name: "sampleout, so",
       Usage: "Generate sample output json",
     },
+    cli.BoolFlag{
+      Name: "fullList, fl",
+      Usage: "Generate sample output json",
+    },
   }
 }
