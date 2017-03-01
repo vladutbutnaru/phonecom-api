@@ -1,22 +1,19 @@
 package main
 
 type CreateDeviceJson struct {
-  AccountId int32 `json:"account_id"`
   Name string `json:"name"`
 }
 
 type ReplaceDeviceJson struct {
-  AccountId int32 `json:"account_id"`
   DeviceId int32 `json:"device_id"`
   Name string `json:"name"`
 }
 
 type CreateExtensionJson struct {
-  AccountId int32 `json:"account_id"`
   CallerId string `json:"caller_id"`
   UsageType string `json:"usage_type"`
   AllowsCallWaiting bool `json:"allows_call_waiting"`
-  Extension int32 `json:extension`
+  Extension int32 `json:"extension"`
   IncludeInDirectory bool `json:"include_in_directory"`
   Name string `json:"name"`
   FullName string `json:"full_name"`
@@ -34,7 +31,6 @@ type CreateExtensionJson struct {
 }
 
 type ReplaceExtensionJson struct {
-  AccountId int32 `json:"account_id"`
   ExtensionId int32 `json:"extension_id"`
   Name string `json:"name"`
   Timezone string `json:"timezone"`
@@ -56,7 +52,6 @@ type ReplaceExtensionJson struct {
 }
 
 type CreateContactJson struct {
-  AccountId int32 `json:"account_id"`
   ExtensionId int32 `json:"extension_id"`
   FirstName string `json:"first_name"`
   MiddleName string `json:"middle_name"`
@@ -73,20 +68,17 @@ type CreateContactJson struct {
 }
 
 type CreateGroupJson struct {
-  AccountId int32 `json:"account_id"`
   ExtensionId int32 `json:"extension_id"`
   Name string `json:"name"`
 }
 
 type CreateMenuJson struct {
-  AccountId int32 `json:"account_id"`
   Name string `json:"name"`
   AllowExtensionDial bool `json:"allow_extension_dial"`
   KeypressWaitTime int32 `json:"keypress_wait_time"`
 }
 
 type ReplaceMenuJson struct {
-  AccountId int32 `json:"account_id"`
   MenuId int32 `json:"menu_id"`
   Name string `json:"name"`
   AllowExtensionDial bool `json:"allow_extension_dial"`
@@ -94,7 +86,6 @@ type ReplaceMenuJson struct {
 }
 
 type CreatePhoneNumberJson struct {
-  AccountId int32 `json:"account_id"`
   PhoneNumber string `json:"phone_number"`
   Name string `json:"name"`
   BlockIncoming bool `json:"block_incoming"`
@@ -106,7 +97,6 @@ type CreatePhoneNumberJson struct {
 }
 
 type ReplacePhoneNumberJson struct {
-  AccountId int32 `json:"account_id"`
   NumberId int32 `json:"number_id"`
   Name string `json:"name"`
   BlockIncoming bool `json:"block_incoming"`
@@ -118,7 +108,6 @@ type ReplacePhoneNumberJson struct {
 }
 
 type CreateQueueJson struct {
-  AccountId int32 `json:"account_id"`
   Name string `json:"name"`
   MaxHoldTime int32 `json:"max_hold_time"`
   CallerIdType string `json:"caller_id_type"`
@@ -126,7 +115,6 @@ type CreateQueueJson struct {
 }
 
 type ReplaceQueueJson struct {
-  AccountId int32 `json:"account_id"`
   QueueId int32 `json:"queue_id"`
   Name string `json:"name"`
   MaxHoldTime int32 `json:"max_hold_time"`
@@ -135,7 +123,6 @@ type ReplaceQueueJson struct {
 }
 
 type CreateRouteJson struct {
-  AccountId int32 `json:"account_id"`
   Name string `json:"name"`
   Rules []RulesJson `json:"rules"`
 }
@@ -155,14 +142,12 @@ type QueueJson struct {
 }
 
 type ReplaceRouteJson struct {
-  AccountId int32 `json:"account_id"`
   RouteId int32 `json:"route_id"`
   Name string `json:"name"`
   Rules []RulesJson `json:"rules"`
 }
 
 type CreateSmsJson struct {
-  AccountId int32 `json:"account_id"`
   From string `json:"from"`
   To string `json:"to"`
   Text string `json:"text"`
@@ -170,7 +155,6 @@ type CreateSmsJson struct {
 }
 
 type CreateSubaccountJson struct {
-  AccountId int32 `json:"account_id"`
   Username string `json:"username"`
   Password string `json:"password"`
   Contact ContactJson `json:"contact"`
@@ -193,7 +177,6 @@ type AddressJson struct {
 }
 
 type CreateTrunkJson struct {
-  AccountId int32 `json:"account_id"`
   Name string `json:"name"`
   Uri string `json:"uri"`
   MaxConcurrentCalls int32 `json:"max_concurrent_calls"`
@@ -201,7 +184,6 @@ type CreateTrunkJson struct {
 }
 
 type ReplaceTrunkJson struct {
-  AccountId int32 `json:"account_id"`
   TrunkId int32 `json:"trunk_id"`
   Name string `json:"name"`
   Uri string `json:"uri"`

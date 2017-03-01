@@ -78,7 +78,8 @@ c *cli.Context) (error, map[string] interface{}) {
   filtersValue := c.String("filtersValue")
   sortType := c.String("sortType")
   sortValue := c.String("sortValue")
-  sample := c.String("sample")
+  samplein := c.String("samplein")
+  //sampleout := c.String("sampleout")
 
 
   var filtersId []string
@@ -293,75 +294,85 @@ c *cli.Context) (error, map[string] interface{}) {
     }
   }
 
-  if sample != "" {
+  if samplein != "" {
     randomName := randomString(12)
     randomPassword := randomString(12)
     randomNum := randomNumber(10, 9999999)
-    switch sample {
+    switch samplein {
       case createDevice:
-        marshalJson(CreateDeviceJson{defaultAccountId, randomName}, "createDevice.json")
+        marshalJson(CreateDeviceJson{randomName}, "createDevice.json")
 
       case createExtension:
         marshalJson(
-          CreateExtensionJson{defaultAccountId, "+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"},
+          CreateExtensionJson{"+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"},
           "createExtension.json")
 
       case createContact:
-        marshalJson(CreateContactJson{defaultAccountId, 1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"},
+        marshalJson(CreateContactJson{1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"},
           "createContact.json")
 
       case createGroup:
-        marshalJson(CreateGroupJson{defaultAccountId, 1764590, "Ferengi Traders"}, "createGroup.json")
+        marshalJson(CreateGroupJson{1764590, "Ferengi Traders"}, "createGroup.json")
 
       case createMenu:
-        marshalJson(CreateMenuJson{defaultAccountId, randomName, true, 3}, "createMenu.json")
+        marshalJson(CreateMenuJson{randomName, true, 3}, "createMenu.json")
 
       case createPhoneNumber:
-        marshalJson(CreatePhoneNumberJson{defaultAccountId, "+12546551377", "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"},
+        marshalJson(CreatePhoneNumberJson{"+12546551377", "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"},
           "createPhoneNumber.json")
       case createQueue:
-        marshalJson(CreateQueueJson{defaultAccountId, randomName, 60, "called_number", 10}, "createQueue.json")
+        marshalJson(CreateQueueJson{randomName, 60, "called_number", 10}, "createQueue.json")
 
       case createRoute:
-        marshalJson(CreateRouteJson{defaultAccountId, randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}},
+        marshalJson(CreateRouteJson{randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}},
           "createRoute.json")
 
       case createSms:
-        marshalJson(CreateSmsJson{defaultAccountId, "+16309624775", "+12019570328", "Another message for create", 1767963}, "createSms.json")
+        marshalJson(CreateSmsJson{"+16309624775", "+12019570328", "Another message for create", 1767963}, "createSms.json")
 
       case createSubaccount:
-        marshalJson(CreateSubaccountJson{defaultAccountId, randomName, randomPassword, ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
+        marshalJson(CreateSubaccountJson{randomName, randomPassword, ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
           ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"}},
           "createSubaccount.json")
 
       case createTrunk:
-        marshalJson(CreateTrunkJson{defaultAccountId, randomName, "SIP/1234@phone.com:5060", int32(60), int32(800)}, "createTrunk.json")
+        marshalJson(CreateTrunkJson{randomName, "SIP/1234@phone.com:5060", int32(60), int32(800)}, "createTrunk.json")
 
       case replaceDevice:
-        marshalJson(ReplaceDeviceJson{defaultAccountId, int32(145392), randomName}, "replaceDevice.json")
+        marshalJson(ReplaceDeviceJson{int32(145392), randomName}, "replaceDevice.json")
 
       case replaceExtension:
-        marshalJson(ReplaceExtensionJson{defaultAccountId, int32(1767963), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"},
+        marshalJson(ReplaceExtensionJson{int32(1767963), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"},
           "replaceExtension.json")
 
       case replaceMenu:
-        marshalJson(ReplaceMenuJson{defaultAccountId, int32(88519), randomName, false, 5}, "replaceMenu.json")
+        marshalJson(ReplaceMenuJson{int32(88519), randomName, false, 5}, "replaceMenu.json")
 
       case replacePhoneNumber:
-        marshalJson(ReplacePhoneNumberJson{defaultAccountId, int32(2131572), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}, "replacePhoneNumber.json")
+        marshalJson(ReplacePhoneNumberJson{int32(2131572), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}, "replacePhoneNumber.json")
 
       case replaceQueue:
-        marshalJson(ReplaceQueueJson{defaultAccountId, int32(22035), randomName, 60, "called_number", 10}, "replaceQueue.json")
+        marshalJson(ReplaceQueueJson{int32(22035), randomName, 60, "called_number", 10}, "replaceQueue.json")
 
       case replaceRoute:
-        marshalJson(ReplaceRouteJson{defaultAccountId, int32(4705073), randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}},
+        marshalJson(ReplaceRouteJson{int32(4705073), randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}},
           "replaceRoute.json")
 
       case replaceTrunk:
-        marshalJson(ReplaceTrunkJson{defaultAccountId, int32(1515), randomName, "SIP/1234@phone.com:5060", int32(80), int32(800)}, "createTrunk.json")
+        marshalJson(ReplaceTrunkJson{int32(1515), randomName, "SIP/1234@phone.com:5060", int32(80), int32(800)}, "createTrunk.json")
 
     }
+
+    return nil, nil
   }
+
+  //if (sampleout != "") {
+  //  switch sampleout {
+  //    case getAccount:
+  //      marshalJson(swagger.AccountFull{})
+  //
+  //  }
+  //}
 
   switch api := api.(type) {
 
@@ -998,5 +1009,10 @@ func marshalJson(param interface{}, fileName string) {
 
   b, err := json.Marshal(param)
   err = ioutil.WriteFile(fileName, b, 0644)
-  _ = err
+
+  if (err != nil) {
+    fmt.Println("Could not create sample json")
+  } else {
+    fmt.Println("Sample json created successfully")
+  }
 }

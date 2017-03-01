@@ -117,8 +117,12 @@ func getCliFlags() []cli.Flag {
       Usage: "Type of filter",
     },
     cli.StringFlag{
-      Name: "sample, s",
-      Usage: "Generate input json",
+      Name: "samplein, si",
+      Usage: "Generate sample input json",
+    },
+    cli.StringFlag{
+      Name: "sampleout, so",
+      Usage: "Generate sample output json",
     },
   }
 }

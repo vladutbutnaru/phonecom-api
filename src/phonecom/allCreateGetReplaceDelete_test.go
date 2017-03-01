@@ -13,7 +13,7 @@ func TestCreateDevice(t *testing.T) {
   var err error
 
   randomName := randomString(12)
-  DeviceParamsJson := CreateDeviceJson{defaultAccountId, randomName}
+  DeviceParamsJson := CreateDeviceJson{randomName}
   fileName := "../test/jsonin/createDevice" + randomName + ".json"
   b, err := json.Marshal(DeviceParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -43,7 +43,7 @@ func TestListReplaceDevice(t *testing.T) {
   assertErrorNotNull(t, err)
 
   randomName := randomString(12)
-  DeviceParamsJson := ReplaceDeviceJson{defaultAccountId, int32(firstId), randomName}
+  DeviceParamsJson := ReplaceDeviceJson{int32(firstId), randomName}
   fileName := "../test/jsonin/replaceDevice" + randomName + ".json"
   b, err := json.Marshal(DeviceParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -61,7 +61,7 @@ func TestCreateExtension(t *testing.T) {
 
   randomName := randomString(12)
   randomNum := randomNumber(10, 9999999)
-  ExtensionParamsJson := CreateExtensionJson{defaultAccountId, "+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"}
+  ExtensionParamsJson := CreateExtensionJson{"+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"}
   fileName := "../test/jsonin/createExtension" + randomName + ".json"
   b, err := json.Marshal(ExtensionParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -87,7 +87,7 @@ func TestListReplaceExtension(t *testing.T) {
   firstId := getFirstId(result)
 
   randomName := randomString(12)
-  ExtensionParamsJson := ReplaceExtensionJson{defaultAccountId, int32(firstId), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"}
+  ExtensionParamsJson := ReplaceExtensionJson{int32(firstId), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"}
   fileName := "../test/jsonin/replaceExtension" + randomName + ".json"
   b, err := json.Marshal(ExtensionParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -103,7 +103,7 @@ func TestCreateDeleteContact(t *testing.T) {
   var err error
 
   randomName := randomString(12)
-  ContactParamsJson := CreateContactJson{defaultAccountId, 1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
+  ContactParamsJson := CreateContactJson{1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
   fileName := "../test/jsonin/createContact" + randomName + ".json"
   b, err := json.Marshal(ContactParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -127,7 +127,7 @@ func TestCreateDeleteGroup(t *testing.T) {
 
   randomName := randomString(12)
   fileName := "../test/jsonin/createGroup" + randomName + ".json"
-  GroupParamsJson := CreateGroupJson{defaultAccountId, 1764590, "Ferengi Traders"}
+  GroupParamsJson := CreateGroupJson{1764590, "Ferengi Traders"}
   b, err := json.Marshal(GroupParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 
@@ -150,7 +150,7 @@ func TestCreateDeleteMenu(t *testing.T) {
 
 
   randomName := randomString(12)
-  MenuParamsJson := CreateMenuJson{defaultAccountId, randomName, true, 3}
+  MenuParamsJson := CreateMenuJson{randomName, true, 3}
   fileName := "../test/jsonin/createMenu" + randomName + ".json"
   b, err := json.Marshal(MenuParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -179,7 +179,7 @@ func TestListReplaceMenu(t *testing.T) {
   firstId := getFirstId(result)
 
   randomName := randomString(12)
-  MenuParamsJson := ReplaceMenuJson{defaultAccountId, int32(firstId), randomName, false, 5}
+  MenuParamsJson := ReplaceMenuJson{int32(firstId), randomName, false, 5}
   fileName := "../test/jsonin/replaceMenu" + randomName + ".json"
   b, err := json.Marshal(MenuParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -200,7 +200,7 @@ func TestCreatePhoneNumber(t *testing.T) {
   firstId := getFirstAvailablePhoneNumber(result)
 
   randomName := randomString(12)
-  PhoneNumberParamsJson := CreatePhoneNumberJson{defaultAccountId, firstId, "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"}
+  PhoneNumberParamsJson := CreatePhoneNumberJson{firstId, "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"}
   fileName := "../test/jsonin/createPhoneNumber" + randomName + ".json"
   b, err := json.Marshal(PhoneNumberParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -226,7 +226,7 @@ func TestListReplacePhoneNumber(t *testing.T) {
   firstId := getFirstId(result)
 
   randomName := randomString(12)
-  PhoneNumberParamsJson := ReplacePhoneNumberJson{defaultAccountId, int32(firstId), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}
+  PhoneNumberParamsJson := ReplacePhoneNumberJson{int32(firstId), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}
   fileName := "../test/jsonin/replacePhoneNumber" + randomName + ".json"
   b, err := json.Marshal(PhoneNumberParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -242,7 +242,7 @@ func TestCreateDeleteQueue(t *testing.T) {
   var err error
 
   randomName := randomString(12)
-  QueueParamsJson := CreateQueueJson{defaultAccountId, randomName, 60, "called_number", 10}
+  QueueParamsJson := CreateQueueJson{randomName, 60, "called_number", 10}
   fileName := "../test/jsonin/createQueue" + randomName + ".json"
   b, err := json.Marshal(QueueParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -270,7 +270,7 @@ func TestListReplaceQueue(t *testing.T) {
   firstId := getFirstId(result)
 
   randomName := randomString(12)
-  QueueParamsJson := ReplaceQueueJson{defaultAccountId, int32(firstId), randomName, 60, "called_number", 10}
+  QueueParamsJson := ReplaceQueueJson{int32(firstId), randomName, 60, "called_number", 10}
   fileName := "../test/jsonin/replaceQueue" + randomName + ".json"
   b, err := json.Marshal(QueueParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -286,7 +286,7 @@ func TestCreateDeleteRoute(t *testing.T) {
   var err error
 
   randomNameQ := randomString(12)
-  QueueParamsJson := CreateQueueJson{defaultAccountId, randomNameQ, 60, "called_number", 10}
+  QueueParamsJson := CreateQueueJson{randomNameQ, 60, "called_number", 10}
   fileNameQ := "../test/jsonin/createQueue" + randomNameQ + ".json"
   bQ, errQ := json.Marshal(QueueParamsJson)
   err = ioutil.WriteFile(fileNameQ, bQ, 0644)
@@ -307,7 +307,7 @@ func TestCreateDeleteRoute(t *testing.T) {
   ruleJson := RulesJson{[]ActionsJson{actionParam}}
   rulesParam := []RulesJson{ruleJson}
   randomName := randomString(12)
-  RouteParamsJson := CreateRouteJson{defaultAccountId, randomName, rulesParam}
+  RouteParamsJson := CreateRouteJson{randomName, rulesParam}
   fileName := "../test/jsonin/createRoute" + randomName + ".json"
   b, err := json.Marshal(RouteParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -344,7 +344,7 @@ func TestListReplaceRoute(t *testing.T) {
   ruleJson := RulesJson{[]ActionsJson{actionParam}}
   rulesParam := []RulesJson{ruleJson}
   randomName := randomString(12)
-  RouteParamsJson := ReplaceRouteJson{defaultAccountId, int32(firstId), randomName, rulesParam}
+  RouteParamsJson := ReplaceRouteJson{int32(firstId), randomName, rulesParam}
   fileName := "../test/jsonin/replaceRoute" + randomName + ".json"
   b, err := json.Marshal(RouteParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -362,7 +362,7 @@ func TestCreateSms(t *testing.T) {
   to := "+12019570328"
   text := "Another message for create"
   randomName := randomString(12)
-  SmsParamsJson := CreateSmsJson{defaultAccountId, from, to, text, 1767963}
+  SmsParamsJson := CreateSmsJson{from, to, text, 1767963}
   fileName := "../test/jsonin/createSms" + randomName + ".json"
   b, err := json.Marshal(SmsParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -388,7 +388,7 @@ func TestCreateSubaccount(t *testing.T) {
   contactObject := ContactJson{"Bobby", AddressObject1, "+18585553333", "asd@sd.co"}
   AddressObject2 := AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}
   billingContactObject := ContactJson{"Bobby", AddressObject2, "+18585553333", "asd@sd.co"}
-  SubaccountParamsJson := CreateSubaccountJson{defaultAccountId, randomName, randomPassword, contactObject, billingContactObject}
+  SubaccountParamsJson := CreateSubaccountJson{randomName, randomPassword, contactObject, billingContactObject}
   fileName := "../test/jsonin/createSubaccount" + randomName + ".json"
   b, err := json.Marshal(SubaccountParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -415,7 +415,7 @@ func TestCreateDeleteTrunk(t *testing.T) {
   trunkUri := "SIP/1234@phone.com:5060"
   trunkConcurrentCalls := 60
   trunkMaxMinutes := 800
-  TrunkParamsJson := CreateTrunkJson{defaultAccountId, trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
+  TrunkParamsJson := CreateTrunkJson{trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
   fileName := "../test/jsonin/createTrunk" + randomName + ".json"
   b, err := json.Marshal(TrunkParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -448,7 +448,7 @@ func TestListReplaceTrunk(t *testing.T) {
   trunkUri := "SIP/1234@phone.com:5060"
   trunkConcurrentCalls := 80
   trunkMaxMinutes := 800
-  TrunkParamsJson := ReplaceTrunkJson{defaultAccountId, int32(firstId), trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
+  TrunkParamsJson := ReplaceTrunkJson{int32(firstId), trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
   fileName := "../test/jsonin/createTrunk" + randomName + ".json"
   b, err := json.Marshal(TrunkParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
