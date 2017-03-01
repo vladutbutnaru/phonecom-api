@@ -10,6 +10,8 @@ import (
   "strconv"
   "encoding/json"
   "io/ioutil"
+  "strings"
+  "time"
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
@@ -79,7 +81,7 @@ c *cli.Context) (error, map[string] interface{}) {
   sortType := c.String("sortType")
   sortValue := c.String("sortValue")
   samplein := c.String("samplein")
-  //sampleout := c.String("sampleout")
+  sampleout := c.String("sampleout")
 
 
   var filtersId []string
@@ -237,14 +239,15 @@ c *cli.Context) (error, map[string] interface{}) {
   }
 
   if filtersType != "" && filtersValue != "" {
-    slice := append(slice, filtersValue)
+    slice1 := make([]string, 0)
+    slice1 = append(slice1, filtersValue)
     switch filtersType {
     case "id":
-      filtersId = slice
+      filtersId = slice1
     case "name":
-      filterParams.filtersName = slice
+      filterParams.filtersName = slice1
     case "start_time":
-      filterParams.filtersStartTime = slice
+      filterParams.filtersStartTime = slice1
     case "created_at":
       filterParams.filtersCreatedAt = filtersValue
     case "direction":
@@ -254,43 +257,43 @@ c *cli.Context) (error, map[string] interface{}) {
     case "type":
       filterParams.filtersType = filtersValue
     case "extension":
-      filterParams.filtersExtension = slice
+      filterParams.filtersExtension = slice1
     case "number":
-      filterParams.filtersNumber = slice
+      filterParams.filtersNumber = slice1
     case "group_id":
-      filterParams.filtersGroupId = slice
+      filterParams.filtersGroupId = slice1
     case "updated_at":
-      filterParams.filtersUpdatedAt = slice
+      filterParams.filtersUpdatedAt = slice1
     case "phone_number":
-      filterParams.filtersPhoneNumber = slice
+      filterParams.filtersPhoneNumber = slice1
     case "from":
       filterParams.filtersFrom = filtersValue
     case "to":
-      filterParams.filtersTo = slice
+      filterParams.filtersTo = slice1
     case "country_code":
-      filterParams.filtersCountryCode = slice
+      filterParams.filtersCountryCode = slice1
     case "npa":
-      filterParams.filtersNpa = slice
+      filterParams.filtersNpa = slice1
     case "nxx":
-      filterParams.filtersNxx = slice
+      filterParams.filtersNxx = slice1
     case "xxxx":
-      filterParams.filtersXxxx = slice
+      filterParams.filtersXxxx = slice1
     case "city":
-      filterParams.filtersCity = slice
+      filterParams.filtersCity = slice1
     case "province":
-      filterParams.filtersProvince = slice
+      filterParams.filtersProvince = slice1
     case "country":
-      filterParams.filtersCountry = slice
+      filterParams.filtersCountry = slice1
     case "price":
-      filterParams.filtersPrice = slice
+      filterParams.filtersPrice = slice1
     case "category":
-      filterParams.filtersCategory = slice
+      filterParams.filtersCategory = slice1
     case "is_toll_free":
-      filterParams.filtersIsTollFree = slice
+      filterParams.filtersIsTollFree = slice1
     case "province_postal_code":
-      filterParams.filtersProvincePostalCode = slice
+      filterParams.filtersProvincePostalCode = slice1
     case "country_postal_code":
-      filterParams.filtersCountryPostalCode = slice
+      filterParams.filtersCountryPostalCode = slice1
     }
   }
 
@@ -300,9 +303,10 @@ c *cli.Context) (error, map[string] interface{}) {
         marshalJson(swagger.CreateDeviceParams{randomString(12), nil}, "createDevice.json")
 
       case createExtension:
-        slice := append(slice, "asd@asd.com")
+        stringEmailSlice := make([]string, 0)
+        stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
         marshalJson(
-          swagger.CreateExtensionParams{"+12019570328", "unlimited", true, int32(randomNumber(10, 9999999)), true, "The name", "The full name", "America/Los_Angeles", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, 619, true, false, true, false, 12345, "standard", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, "automated", slice, "+18587741111", slice, "+18587748888"},
+          swagger.CreateExtensionParams{"+12019570328", "unlimited", true, int32(randomNumber(10, 9999999)), true, "The name", "The full name", "America/Los_Angeles", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, 619, true, false, true, false, 12345, "standard", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, "automated", stringEmailSlice, "+18587741111", stringEmailSlice, "+18587748888"},
           "createExtension.json")
 
       case createContact:
@@ -316,7 +320,9 @@ c *cli.Context) (error, map[string] interface{}) {
         marshalJson(swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}, "createMenu.json")
 
       case createPhoneNumber:
-        marshalJson(swagger.CreatePhoneNumberParams{"+12546551377", swagger.RouteSummary{123,randomString(12)}, "Phone Name Now", true, true, "Phone N", "business", "extension", nil, nil, nil, "+18587740222"},
+        stringEmailSlice := make([]string, 0)
+        stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
+        marshalJson(swagger.CreatePhoneNumberParams{"+12546551377", swagger.RouteSummary{123,randomString(12)}, "Phone Name Now", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, stringEmailSlice, "+18587740222"},
           "createPhoneNumber.json")
       case createQueue:
         marshalJson(swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, 60, "called_number", 10, nil}, "createQueue.json")
@@ -348,7 +354,9 @@ c *cli.Context) (error, map[string] interface{}) {
         marshalJson(swagger.ReplaceMenuParams{randomString(12), nil, nil, false, 5, nil, nil}, "replaceMenu.json")
 
       case replacePhoneNumber:
-        marshalJson(swagger.ReplacePhoneNumberParams{swagger.RouteSummary{123, randomString(12)}, "Robert", true, true, "Phone N", "business", "extension", nil, nil, nil, nil, "+18587740222"},
+        stringCallNotificationsEmailsSlice := make([]string, 0)
+        stringCallNotificationsEmailsSlice = append(stringCallNotificationsEmailsSlice, "asd@asd.com")
+        marshalJson(swagger.ReplacePhoneNumberParams{swagger.RouteSummary{123, randomString(12)}, "Robert", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, nil, stringCallNotificationsEmailsSlice, "+18587740222"},
           "replacePhoneNumber.json")
 
       case replaceQueue:
@@ -367,13 +375,88 @@ c *cli.Context) (error, map[string] interface{}) {
     return nil, nil
   }
 
-  //if (sampleout != "") {
-  //  switch sampleout {
-  //    case getAccount:
-  //      marshalJson(swagger.AccountFull{})
-  //
-  //  }
-  //}
+  if (sampleout != "") {
+    switch sampleout {
+    case getAccount:
+      marshalJson(swagger.AccountFull{int32(randomNumber(10,9999)), randomString(12), randomString(12), randomString(12), swagger.AccountSummary{int32(randomNumber(10,9999)), randomString(12)}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}},
+        "getAccount.json")
+
+    case getApplication:
+      marshalJson(swagger.ApplicationFull{int32(randomNumber(10,9999)), randomString(12)}, "getApplication.json")
+
+    case getDevice:
+      marshalJson(swagger.DeviceFull{int32(randomNumber(10,9999)), randomString(12), swagger.SipAuthentication{randomString(12), int32(randomNumber(10,9999)), randomString(12), randomString(12)}, nil/*[]swagger.Line{int32(randomNumber(1,9999)), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}}*/},
+        "getDevice.json")
+
+    case getExpressServiceCode:
+      marshalJson(swagger.ExpressServiceCodeFull{int32(randomNumber(1,9999)), randomNumericString(8), int32(randomNumber(9999,9999999999))}, "getExpressServiceCode.json")
+
+    case getExtension:
+      stringSlice := make([]string, 0)
+      stringSlice = append(stringSlice, "asd@asd.com")
+      marshalJson(swagger.ExtensionFull{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999)), randomString(12), randomString(12), swagger.DeviceMembership{int32(randomNumber(1,9999)), swagger.DeviceSummary{int32(randomNumber(1,9999)), randomString(12)}}, randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, true, "+454654564534", randomString(12), true, true, swagger.Voicemail{true, randomString(12), swagger.Greeting{randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, true}, randomString(12), swagger.Notification{stringSlice, randomString(12)}, randomString(12)}, swagger.Notification{stringSlice, randomString(12)}, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}},
+        "getExtension.json")
+
+    case getContact:
+      emailSlice := make([]swagger.Email, 0)
+      emailSlice = append(emailSlice, swagger.Email{"primary", "asd@asd.com"})
+      phoneNumberContactslice := make([]swagger.PhoneNumberContact, 0)
+      phoneNumberContactslice = append(phoneNumberContactslice, swagger.PhoneNumberContact{"home", "+45454684545", "+45454684545"})
+      addressListContacts := make([]swagger.AddressListContacts, 0)
+      addressListContacts = append(addressListContacts, swagger.AddressListContacts{"home", randomString(12), randomString(12), randomString(12), randomNumericString(5), strings.ToUpper(randomAlphaString(2))})
+      marshalJson(swagger.ContactFull{int32(randomNumber(1,9999)), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), emailSlice, phoneNumberContactslice, addressListContacts, swagger.GroupListContacts{int32(randomNumber(1,9999)), randomString(12)}, int32(randomNumber(9999,9999999999)), int32(randomNumber(9999,9999999999))},
+        "getContact.json")
+
+    case getGroup:
+      marshalJson(swagger.GroupFull{int32(randomNumber(1,9999)), randomString(12)}, "getGroup.json")
+
+    case getRecording:
+      marshalJson(swagger.MediaFull{int32(randomNumber(1,9999)), randomString(12), "hold_music"}, "getRecording.json")
+
+    case getMenu:
+      optionSlice := make([]swagger.Option, 0)
+      optionSlice = append(optionSlice, swagger.Option{randomNumericString(1), swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}})
+      marshalJson(swagger.MenuFull{int32(randomNumber(1,9999)), randomString(12), true, int32(randomNumber(1,9999)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}, optionSlice},
+        "getMenu.json")
+
+    case getPhoneNumber:
+      stringSlice := make([]string, 0)
+      stringSlice = append(stringSlice, "asd@asd.com")
+      marshalJson(swagger.PhoneNumberFull{int32(randomNumber(1,9999)), randomString(12), "+54654612511", true, true, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.CallerIdPhoneNumber{randomString(12), "bussiness"}, swagger.SmsForwarding{"extension", swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}}, swagger.CallNotifications{stringSlice, "+45456486464"}},
+        "getPhoneNumber.json")
+
+    case getQueue:
+      memberSlice := make([]swagger.Member, 0)
+      memberSlice = append(memberSlice, swagger.Member{swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, randomString(12)})
+      marshalJson(swagger.QueueFull{int32(randomNumber(1,9999)), randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.HoldMusic{int32(randomNumber(1,9999)), randomString(12)}, 300, randomString(12), 20, memberSlice},
+        "getQueue.json")
+
+    case getRoute:
+      ruleSetForwardItemSlice := make([]swagger.RuleSetForwardItem, 0)
+      ruleSetForwardItemSlice = append(ruleSetForwardItemSlice, swagger.RuleSetForwardItem{"+154514214546", swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, "+453484845122", true, "calling_number", randomString(12), "DEFAULT"})
+      ruleSetActionSlice := make([]swagger.RuleSetAction, 0)
+      ruleSetActionSlice = append(ruleSetActionSlice, swagger.RuleSetAction{randomString(12), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, ruleSetForwardItemSlice, int32(randomNumber(5,90)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, int32(randomNumber(1, 60)), swagger.MenuSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.QueueSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.TrunkSummary{int32(randomNumber(1,9999)), randomString(12)}})
+      rulesetSlice := make([]swagger.RuleSet, 0)
+      rulesetSlice = append(rulesetSlice, swagger.RuleSet{swagger.RuleSetFilter{"schedule", swagger.ScheduleSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ContactSummary{int32(randomNumber(1,9999)), "Mr", randomString(12), randomString(12), randomString(12), "Jr", randomString(12), randomString(12)}, swagger.GroupSummary{int32(randomNumber(1,9999)), randomString(12)}}, ruleSetActionSlice})
+      marshalJson(swagger.RouteFull{int32(randomNumber(1,9999)), randomString(12), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, rulesetSlice},
+        "getRoute.json")
+
+    case getSchedule:
+      marshalJson(swagger.ScheduleFull{int32(randomNumber(1,9999)), randomString(12)}, "getSchedule.json")
+
+    case getSms:
+      recipientSlice := make([]swagger.Recipient, 0)
+      recipientSlice = append(recipientSlice, swagger.Recipient{"+12454354513", "sent"})
+      marshalJson(swagger.SmsFull{randomSmsId(), "+5646517686", recipientSlice, "in", int32(randomNumber(9999,9999999999)), time.Time{}, randomString(12)}, "getSms.json")
+
+    case getTrunk:
+      stringSlice := make([]string, 0)
+      stringSlice = append(stringSlice, "g711u 64k")
+      marshalJson(swagger.TrunkFull{int32(randomNumber(1,9999)), randomString(12), "SIP/01%e@243.1.45.52:5060", int32(randomNumber(1,100)), int32(randomNumber(500,2000)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, stringSlice}, "getTrunk.json")
+
+    }
+    return nil, nil
+  }
 
   switch api := api.(type) {
 
