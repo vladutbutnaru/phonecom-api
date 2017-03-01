@@ -1107,7 +1107,7 @@ func handle(
 
 func marshalJson(param interface{}, fileName string) {
 
-  b, err := json.Marshal(param)
+  b, err := json.MarshalIndent(param, "", "  ")
   err = ioutil.WriteFile(fileName, b, 0644)
 
   if (err != nil) {
