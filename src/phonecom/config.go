@@ -19,7 +19,7 @@ type Config struct {
 	AccountId int32
 }
 
-func getConfig() Config {
+func (c * Config) getConfig() Config {
 
 	xmlFile, err := os.Open(configPath)
 

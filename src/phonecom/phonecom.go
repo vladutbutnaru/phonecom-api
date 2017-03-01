@@ -894,7 +894,8 @@ func getApi(
   var api interface{}
   var config = swagger.NewConfiguration()
 
-  var xmlConfig Config = getConfig()
+  mainConfiguration := Config{}
+  var xmlConfig Config = mainConfiguration.getConfig()
   var baseApiPath string = xmlConfig.BaseApiPath
   var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
   var apiKey string = xmlConfig.ApiKey
@@ -1094,7 +1095,11 @@ func handle(
       output, _ = json.MarshalIndent(validatedJson, "", "  ")
     }
 
-    fmt.Printf("%+v\n%s\n", x, output)
+    if (param.verbose) {
+      fmt.Printf("API Response:\n%+v\n%s\n", x, output)
+    } else {
+      fmt.Printf("API Response:\n%s\n", output)
+    }
   }
 
   return nil, validatedJson
