@@ -295,71 +295,72 @@ c *cli.Context) (error, map[string] interface{}) {
   }
 
   if samplein != "" {
-    randomName := randomString(12)
-    randomPassword := randomString(12)
-    randomNum := randomNumber(10, 9999999)
     switch samplein {
       case createDevice:
-        marshalJson(CreateDeviceJson{randomName}, "createDevice.json")
+        marshalJson(swagger.CreateDeviceParams{randomString(12), nil}, "createDevice.json")
 
       case createExtension:
+        slice := append(slice, "asd@asd.com")
         marshalJson(
-          CreateExtensionJson{"+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", 619, true, false, true, false, 12345, "standard", "automated", "+18587741111", "+18587748888"},
+          swagger.CreateExtensionParams{"+12019570328", "unlimited", true, int32(randomNumber(10, 9999999)), true, "The name", "The full name", "America/Los_Angeles", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, 619, true, false, true, false, 12345, "standard", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, "automated", slice, "+18587741111", slice, "+18587748888"},
           "createExtension.json")
 
       case createContact:
-        marshalJson(CreateContactJson{1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"},
+        marshalJson(swagger.CreateContactParams{"Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle", nil, nil, nil, nil},
           "createContact.json")
 
       case createGroup:
-        marshalJson(CreateGroupJson{1764590, "Ferengi Traders"}, "createGroup.json")
+        marshalJson(swagger.CreateGroupParams{"Ferengi Traders"}, "createGroup.json")
 
       case createMenu:
-        marshalJson(CreateMenuJson{randomName, true, 3}, "createMenu.json")
+        marshalJson(swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}, "createMenu.json")
 
       case createPhoneNumber:
-        marshalJson(CreatePhoneNumberJson{"+12546551377", "Phone Name Now", true, true, "Phone N", "business", "extension", "+18587740222"},
+        marshalJson(swagger.CreatePhoneNumberParams{"+12546551377", swagger.RouteSummary{123,randomString(12)}, "Phone Name Now", true, true, "Phone N", "business", "extension", nil, nil, nil, "+18587740222"},
           "createPhoneNumber.json")
       case createQueue:
-        marshalJson(CreateQueueJson{randomName, 60, "called_number", 10}, "createQueue.json")
+        marshalJson(swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, 60, "called_number", 10, nil}, "createQueue.json")
 
       case createRoute:
-        marshalJson(CreateRouteJson{randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}},
+        marshalJson(CreateRouteJson{randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}},
           "createRoute.json")
 
       case createSms:
-        marshalJson(CreateSmsJson{"+16309624775", "+12019570328", "Another message for create", 1767963}, "createSms.json")
+        marshalJson(swagger.CreateSmsParams{"+16309624775", "+12019570328", "Another message for create", 1767963}, "createSms.json")
 
       case createSubaccount:
-        marshalJson(CreateSubaccountJson{randomName, randomPassword, ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
+        marshalJson(CreateSubaccountJson{randomString(12), randomString(12), ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
           ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"}},
           "createSubaccount.json")
 
       case createTrunk:
-        marshalJson(CreateTrunkJson{randomName, "SIP/1234@phone.com:5060", int32(60), int32(800)}, "createTrunk.json")
+        marshalJson(swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(60), int32(800), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, nil},
+          "createTrunk.json")
 
       case replaceDevice:
-        marshalJson(ReplaceDeviceJson{int32(145392), randomName}, "replaceDevice.json")
+        marshalJson(swagger.CreateDeviceParams{randomString(12), nil}, "replaceDevice.json")
 
       case replaceExtension:
-        marshalJson(ReplaceExtensionJson{int32(1767963), randomName, "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, "standard", "private", 619, true, true, "automated", "+18587741111", "+18587748888"},
+        marshalJson(swagger.ReplaceExtensionParams{nil, nil, randomString(12), "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, nil, "standard", "private", 619, true, true, "automated", nil, "+18587741111", nil, "+18587748888", nil},
           "replaceExtension.json")
 
       case replaceMenu:
-        marshalJson(ReplaceMenuJson{int32(88519), randomName, false, 5}, "replaceMenu.json")
+        marshalJson(swagger.ReplaceMenuParams{randomString(12), nil, nil, false, 5, nil, nil}, "replaceMenu.json")
 
       case replacePhoneNumber:
-        marshalJson(ReplacePhoneNumberJson{int32(2131572), "Robert", true, true, "Phone N", "business", "extension", "+18587740222"}, "replacePhoneNumber.json")
+        marshalJson(swagger.ReplacePhoneNumberParams{swagger.RouteSummary{123, randomString(12)}, "Robert", true, true, "Phone N", "business", "extension", nil, nil, nil, nil, "+18587740222"},
+          "replacePhoneNumber.json")
 
       case replaceQueue:
-        marshalJson(ReplaceQueueJson{int32(22035), randomName, 60, "called_number", 10}, "replaceQueue.json")
+        marshalJson(swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, 60, "called_number", 10, nil}, "replaceQueue.json")
 
       case replaceRoute:
-        marshalJson(ReplaceRouteJson{int32(4705073), randomName, []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}},
+        marshalJson(ReplaceRouteJson{int32(4705073), randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}},
           "replaceRoute.json")
 
       case replaceTrunk:
-        marshalJson(ReplaceTrunkJson{int32(1515), randomName, "SIP/1234@phone.com:5060", int32(80), int32(800)}, "createTrunk.json")
+        marshalJson(swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(80), int32(800), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, nil},
+          "replaceTrunk.json")
 
     }
 
