@@ -7,11 +7,7 @@ import (
   "github.com/urfave/cli"
   "phonecom-go-sdk"
   "errors"
-  "strconv"
-  "encoding/json"
-  "io/ioutil"
-  "strings"
-  "time"
+	"strconv"
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
@@ -19,72 +15,64 @@ var param CliParams
 
 func main() {
 
-  app := cli.NewApp()
+	app := cli.NewApp()
 
-  app.Flags = getCliFlags()
+	app.Flags = getCliFlags()
 
-  app.Action = func(c *cli.Context) error {
-    var err error
-    err, _ = execute(c)
-    return err
-  }
+	app.Action = func(c *cli.Context) error {
+		var err error
+		err, _ = execute(c)
+		return err
+	}
 
-  app.Run(os.Args)
+	app.Run(os.Args)
 }
 
 type CliParams struct {
-  slice       []string
+	slice       []string
   filtersId   []string
-  limit       int32
-  offset      int32
-  id          int32
-  idString    string
-  dryRun      bool
-  verbose     bool
-  input       string
-  command     string
-  idSecondary int32
-  accountId   int32
+	limit       int32
+	offset      int32
+	id          int32
+	idString    string
+	dryRun      bool
+	verbose     bool
+	input       string
+	command     string
+	idSecondary int32
+	accountId   int32
   fields      string
   contact     string
   billingContact string
-  filterType  string
-  filterValue string
-  fullList    bool
+    page int32
 }
 
 func execute(
-c *cli.Context) (error, map[string] interface{}) {
+    c *cli.Context) (error, map[string] interface{}) {
 
   slice := make([]string, 0)
   limit := int32(c.Int("limit"))
   offset := int32(c.Int("offset"))
   idString := c.String("id")
-  var id int32 = 0
+	var id int32 = 0
 
-  if _, err := strconv.Atoi(idString); err == nil {
-    idInt := 0
-    idInt, err = strconv.Atoi(idString);
-    id = int32(idInt);
-  }
+	if _, err := strconv.Atoi(idString); err == nil {
+		idInt := 0
+		idInt, err = strconv.Atoi(idString);
+		id = int32(idInt);
+	}
 
-  verbose := c.Bool("verbose")
-  dryRun := c.Bool("dryrun")
+	verbose := c.Bool("verbose")
+	dryRun := c.Bool("dryrun")
   input := c.String("input")
   command := c.String("command")
   idSecondary := int32(c.Int("id-secondary"))
   accountId := int32(c.Int("account"))
   contact := c.String("contact")
   billingContact := c.String("billing-contact")
+    page := int32(c.Int("page"))
+    
   fields := ""
-  filtersType := c.String("filtersType")
-  filtersValue := c.String("filtersValue")
-  sortType := c.String("sortType")
-  sortValue := c.String("sortValue")
-  samplein := c.String("samplein")
-  sampleout := c.String("sampleout")
-  fullList := c.Bool("fullList")
-
 
   var filtersId []string
   var groupBy []string
@@ -102,39 +90,39 @@ c *cli.Context) (error, map[string] interface{}) {
   var smsId string
   var trunkId int32
 
-  var from string
-  var to string
-  var text string
-  from = c.String("from")
-  to = c.String("to")
-  text = c.String("text")
+	var from string
+	var to string
+	var text string
+	from = c.String("from")
+	to = c.String("to")
+	text = c.String("text")
 
   from = defaultFrom
-  to = defaultTo
-  text = defaultText
+	to = defaultTo
+	text = defaultText
 
-  var trunkName = c.String("name")
-  var trunkUri = c.String("uri")
-  var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
-  var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
+	var trunkName = c.String("name")
+	var trunkUri = c.String("uri")
+	var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
+	var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
 
   trunkName = defaultTrunkName
   trunkUri = defaultTrunkUri
   trunkConcurrentCalls = int32(defaultTrunkConcurrentCalls)
   trunkMaxMinutes = int32(defaultTrunkMaxMinutes)
-
+    
   var filterParams FilterParams
   var sortParams SortParams
   var otherParams OtherParams
 
 
-  if (input != "") {
-    var err error
+	if (input != "") {
+		var err error
     var listParams ListParams
-    err, listParams = getListParams(input)
-    if (err != nil) {
-      return err, nil
-    }
+		err, listParams = getListParams(input)
+		if (err != nil) {
+			return err, nil
+		}
 
     accountId = listParams.accountId
     limit = listParams.limit
@@ -174,24 +162,23 @@ c *cli.Context) (error, map[string] interface{}) {
     if (err != nil) {
       return err, nil
     }
-  }
+	}
 
-  param.slice = slice
-  param.limit = limit
-  param.offset = offset
-  param.id = id
-  param.idString = idString
-  param.dryRun = dryRun
-  param.verbose = verbose
-  param.input = input
-  param.command = command
-  param.idSecondary = idSecondary
-  param.accountId = accountId
+	param.slice = slice
+	param.limit = limit
+	param.offset = offset
+	param.id = id
+	param.idString = idString
+	param.dryRun = dryRun
+	param.verbose = verbose
+	param.input = input
+	param.command = command
+	param.idSecondary = idSecondary
+	param.accountId = accountId
   param.fields = fields
   param.contact = contact
   param.billingContact = billingContact
-  param.fullList = fullList
-
+    
   showDryRunVerbose(param)
   if (param.dryRun) {
     return nil, nil
@@ -204,546 +191,289 @@ c *cli.Context) (error, map[string] interface{}) {
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-  if sortType != "" && sortValue != "" {
-    switch sortType {
-    case "id":
-      sortParams.sortId = sortValue
-    case "name":
-      sortParams.sortName = sortValue
-    case "start_time":
-      sortParams.sortStartTime = sortValue
-    case "created_at":
-      sortParams.sortCreatedAt = sortValue
-    case "extension":
-      sortParams.sortExtension = sortValue
-    case "number":
-      sortParams.sortNumber = sortValue
-    case "updated_at":
-      sortParams.sortUpdatedAt = sortValue
-    case "phone_number":
-      sortParams.sortPhoneNumber = sortValue
-    case "internal":
-      sortParams.sortInternal = sortValue
-    case "price":
-      sortParams.sortPrice = sortValue
-    case "npa":
-      sortParams.sortNpa = sortValue
-    case "nxx":
-      sortParams.sortNxx = sortValue
-    case "is_toll_free":
-      sortParams.sortIsTollFree = sortValue
-    case "city":
-      sortParams.sortCity = sortValue
-    case "province_postal_code":
-      sortParams.sortProvincePostalCode = sortValue
-    case "country_postal_code":
-      sortParams.sortCountryPostalCode = sortValue
-    }
-  }
-
-  if filtersType != "" && filtersValue != "" {
-    slice1 := make([]string, 0)
-    slice1 = append(slice1, filtersValue)
-    switch filtersType {
-    case "id":
-      filtersId = slice1
-    case "name":
-      filterParams.filtersName = slice1
-    case "start_time":
-      filterParams.filtersStartTime = slice1
-    case "created_at":
-      filterParams.filtersCreatedAt = filtersValue
-    case "direction":
-      filterParams.filtersDirection = filtersValue
-    case "called_number":
-      filterParams.filtersCalledNumber = filtersValue
-    case "type":
-      filterParams.filtersType = filtersValue
-    case "extension":
-      filterParams.filtersExtension = slice1
-    case "number":
-      filterParams.filtersNumber = slice1
-    case "group_id":
-      filterParams.filtersGroupId = slice1
-    case "updated_at":
-      filterParams.filtersUpdatedAt = slice1
-    case "phone_number":
-      filterParams.filtersPhoneNumber = slice1
-    case "from":
-      filterParams.filtersFrom = filtersValue
-    case "to":
-      filterParams.filtersTo = slice1
-    case "country_code":
-      filterParams.filtersCountryCode = slice1
-    case "npa":
-      filterParams.filtersNpa = slice1
-    case "nxx":
-      filterParams.filtersNxx = slice1
-    case "xxxx":
-      filterParams.filtersXxxx = slice1
-    case "city":
-      filterParams.filtersCity = slice1
-    case "province":
-      filterParams.filtersProvince = slice1
-    case "country":
-      filterParams.filtersCountry = slice1
-    case "price":
-      filterParams.filtersPrice = slice1
-    case "category":
-      filterParams.filtersCategory = slice1
-    case "is_toll_free":
-      filterParams.filtersIsTollFree = slice1
-    case "province_postal_code":
-      filterParams.filtersProvincePostalCode = slice1
-    case "country_postal_code":
-      filterParams.filtersCountryPostalCode = slice1
-    }
-  }
-
-  if samplein != "" {
-    switch samplein {
-      case createDevice:
-        marshalJson(swagger.CreateDeviceParams{randomString(12), nil}, "createDevice.json")
-
-      case createExtension:
-        stringEmailSlice := make([]string, 0)
-        stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
-        marshalJson(
-          swagger.CreateExtensionParams{"+12019570328", "unlimited", true, int32(randomNumber(10, 9999999)), true, "The name", "The full name", "America/Los_Angeles", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, 619, true, false, true, false, 12345, "standard", swagger.MediaSummary{int32(randomNumber(10, 99999)),randomString(12)}, "automated", stringEmailSlice, "+18587741111", stringEmailSlice, "+18587748888"},
-          "createExtension.json")
-
-      case createContact:
-        marshalJson(swagger.CreateContactParams{"Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle", nil, nil, nil, nil},
-          "createContact.json")
-
-      case createGroup:
-        marshalJson(swagger.CreateGroupParams{"Ferengi Traders"}, "createGroup.json")
-
-      case createMenu:
-        marshalJson(swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}, "createMenu.json")
-
-      case createPhoneNumber:
-        stringEmailSlice := make([]string, 0)
-        stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
-        marshalJson(swagger.CreatePhoneNumberParams{"+12546551377", swagger.RouteSummary{123,randomString(12)}, "Phone Name Now", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, stringEmailSlice, "+18587740222"},
-          "createPhoneNumber.json")
-      case createQueue:
-        marshalJson(swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, 60, "called_number", 10, nil}, "createQueue.json")
-
-      case createRoute:
-        marshalJson(CreateRouteJson{randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}},
-          "createRoute.json")
-
-      case createSms:
-        marshalJson(swagger.CreateSmsParams{"+16309624775", "+12019570328", "Another message for create", 1767963}, "createSms.json")
-
-      case createSubaccount:
-        marshalJson(CreateSubaccountJson{randomString(12), randomString(12), ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
-          ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"}},
-          "createSubaccount.json")
-
-      case createTrunk:
-        marshalJson(swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(60), int32(800), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, nil},
-          "createTrunk.json")
-
-      case replaceDevice:
-        marshalJson(swagger.CreateDeviceParams{randomString(12), nil}, "replaceDevice.json")
-
-      case replaceExtension:
-        marshalJson(swagger.ReplaceExtensionParams{nil, nil, randomString(12), "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, nil, "standard", "private", 619, true, true, "automated", nil, "+18587741111", nil, "+18587748888", nil},
-          "replaceExtension.json")
-
-      case replaceMenu:
-        marshalJson(swagger.ReplaceMenuParams{randomString(12), nil, nil, false, 5, nil, nil}, "replaceMenu.json")
-
-      case replacePhoneNumber:
-        stringCallNotificationsEmailsSlice := make([]string, 0)
-        stringCallNotificationsEmailsSlice = append(stringCallNotificationsEmailsSlice, "asd@asd.com")
-        marshalJson(swagger.ReplacePhoneNumberParams{swagger.RouteSummary{123, randomString(12)}, "Robert", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, nil, stringCallNotificationsEmailsSlice, "+18587740222"},
-          "replacePhoneNumber.json")
-
-      case replaceQueue:
-        marshalJson(swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, 60, "called_number", 10, nil}, "replaceQueue.json")
-
-      case replaceRoute:
-        marshalJson(ReplaceRouteJson{int32(4705073), randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}},
-          "replaceRoute.json")
-
-      case replaceTrunk:
-        marshalJson(swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(80), int32(800), swagger.MediaSummary{123,randomString(12)}, swagger.MediaSummary{123,randomString(12)}, nil},
-          "replaceTrunk.json")
-
-    }
-
-    return nil, nil
-  }
-
-  if (sampleout != "") {
-    switch sampleout {
-    case getAccount:
-      marshalJson(swagger.AccountFull{int32(randomNumber(10,9999)), randomString(12), randomString(12), randomString(12), swagger.AccountSummary{int32(randomNumber(10,9999)), randomString(12)}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}},
-        "getAccount.json")
-
-    case getApplication:
-      marshalJson(swagger.ApplicationFull{int32(randomNumber(10,9999)), randomString(12)}, "getApplication.json")
-
-    case getDevice:
-      marshalJson(swagger.DeviceFull{int32(randomNumber(10,9999)), randomString(12), swagger.SipAuthentication{randomString(12), int32(randomNumber(10,9999)), randomString(12), randomString(12)}, nil/*[]swagger.Line{int32(randomNumber(1,9999)), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}}*/},
-        "getDevice.json")
-
-    case getExpressServiceCode:
-      marshalJson(swagger.ExpressServiceCodeFull{int32(randomNumber(1,9999)), randomNumericString(8), int32(randomNumber(9999,9999999999))}, "getExpressServiceCode.json")
-
-    case getExtension:
-      stringSlice := make([]string, 0)
-      stringSlice = append(stringSlice, "asd@asd.com")
-      marshalJson(swagger.ExtensionFull{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999)), randomString(12), randomString(12), swagger.DeviceMembership{int32(randomNumber(1,9999)), swagger.DeviceSummary{int32(randomNumber(1,9999)), randomString(12)}}, randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, true, "+454654564534", randomString(12), true, true, swagger.Voicemail{true, randomString(12), swagger.Greeting{randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, true}, randomString(12), swagger.Notification{stringSlice, randomString(12)}, randomString(12)}, swagger.Notification{stringSlice, randomString(12)}, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}},
-        "getExtension.json")
-
-    case getContact:
-      emailSlice := make([]swagger.Email, 0)
-      emailSlice = append(emailSlice, swagger.Email{"primary", "asd@asd.com"})
-      phoneNumberContactslice := make([]swagger.PhoneNumberContact, 0)
-      phoneNumberContactslice = append(phoneNumberContactslice, swagger.PhoneNumberContact{"home", "+45454684545", "+45454684545"})
-      addressListContacts := make([]swagger.AddressListContacts, 0)
-      addressListContacts = append(addressListContacts, swagger.AddressListContacts{"home", randomString(12), randomString(12), randomString(12), randomNumericString(5), strings.ToUpper(randomAlphaString(2))})
-      marshalJson(swagger.ContactFull{int32(randomNumber(1,9999)), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), emailSlice, phoneNumberContactslice, addressListContacts, swagger.GroupListContacts{int32(randomNumber(1,9999)), randomString(12)}, int32(randomNumber(9999,9999999999)), int32(randomNumber(9999,9999999999))},
-        "getContact.json")
-
-    case getGroup:
-      marshalJson(swagger.GroupFull{int32(randomNumber(1,9999)), randomString(12)}, "getGroup.json")
-
-    case getRecording:
-      marshalJson(swagger.MediaFull{int32(randomNumber(1,9999)), randomString(12), "hold_music"}, "getRecording.json")
-
-    case getMenu:
-      optionSlice := make([]swagger.Option, 0)
-      optionSlice = append(optionSlice, swagger.Option{randomNumericString(1), swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}})
-      marshalJson(swagger.MenuFull{int32(randomNumber(1,9999)), randomString(12), true, int32(randomNumber(1,9999)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}, optionSlice},
-        "getMenu.json")
-
-    case getPhoneNumber:
-      stringSlice := make([]string, 0)
-      stringSlice = append(stringSlice, "asd@asd.com")
-      marshalJson(swagger.PhoneNumberFull{int32(randomNumber(1,9999)), randomString(12), "+54654612511", true, true, swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.CallerIdPhoneNumber{randomString(12), "bussiness"}, swagger.SmsForwarding{"extension", swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, swagger.ApplicationSummary{int32(randomNumber(1,9999)), randomString(12)}}, swagger.CallNotifications{stringSlice, "+45456486464"}},
-        "getPhoneNumber.json")
-
-    case getQueue:
-      memberSlice := make([]swagger.Member, 0)
-      memberSlice = append(memberSlice, swagger.Member{swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, randomString(12)})
-      marshalJson(swagger.QueueFull{int32(randomNumber(1,9999)), randomString(12), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.HoldMusic{int32(randomNumber(1,9999)), randomString(12)}, 300, randomString(12), 20, memberSlice},
-        "getQueue.json")
-
-    case getRoute:
-      ruleSetForwardItemSlice := make([]swagger.RuleSetForwardItem, 0)
-      ruleSetForwardItemSlice = append(ruleSetForwardItemSlice, swagger.RuleSetForwardItem{"+154514214546", swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, "+453484845122", true, "calling_number", randomString(12), "DEFAULT"})
-      ruleSetActionSlice := make([]swagger.RuleSetAction, 0)
-      ruleSetActionSlice = append(ruleSetActionSlice, swagger.RuleSetAction{randomString(12), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, ruleSetForwardItemSlice, int32(randomNumber(5,90)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, int32(randomNumber(1, 60)), swagger.MenuSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.QueueSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.TrunkSummary{int32(randomNumber(1,9999)), randomString(12)}})
-      rulesetSlice := make([]swagger.RuleSet, 0)
-      rulesetSlice = append(rulesetSlice, swagger.RuleSet{swagger.RuleSetFilter{"schedule", swagger.ScheduleSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ContactSummary{int32(randomNumber(1,9999)), "Mr", randomString(12), randomString(12), randomString(12), "Jr", randomString(12), randomString(12)}, swagger.GroupSummary{int32(randomNumber(1,9999)), randomString(12)}}, ruleSetActionSlice})
-      marshalJson(swagger.RouteFull{int32(randomNumber(1,9999)), randomString(12), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, rulesetSlice},
-        "getRoute.json")
-
-    case getSchedule:
-      marshalJson(swagger.ScheduleFull{int32(randomNumber(1,9999)), randomString(12)}, "getSchedule.json")
-
-    case getSms:
-      recipientSlice := make([]swagger.Recipient, 0)
-      recipientSlice = append(recipientSlice, swagger.Recipient{"+12454354513", "sent"})
-      marshalJson(swagger.SmsFull{randomSmsId(), "+5646517686", recipientSlice, "in", int32(randomNumber(9999,9999999999)), time.Time{}, randomString(12)}, "getSms.json")
-
-    case getTrunk:
-      stringSlice := make([]string, 0)
-      stringSlice = append(stringSlice, "g711u 64k")
-      marshalJson(swagger.TrunkFull{int32(randomNumber(1,9999)), randomString(12), "SIP/01%e@243.1.45.52:5060", int32(randomNumber(1,100)), int32(randomNumber(500,2000)), swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1,9999)), randomString(12)}, stringSlice}, "getTrunk.json")
-
-    }
-    return nil, nil
-  }
-
   switch api := api.(type) {
-
+ 
   case swagger.MediaApi:
 
     switch (command) {
 
-    case listMedia:
+			case listMedia:
 
-      return handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+        return handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getRecording:
+			case getRecording:
 
-      if (recordingId != 0) {
-        id = recordingId
-      }
+        if (recordingId != 0) {
+          id = recordingId
+        }
 
-      return handle(api.GetAccountMedia(accountId, id))
+        return handle(api.GetAccountMedia(accountId, id))
     }
 
   case swagger.MenusApi:
 
     switch (command) {
 
-    case listMenus:
+			case listMenus:
 
-      return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+        return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getMenu:
+			case getMenu:
 
-      if (menuId != 0) {
-        id = menuId
-      }
+        if (menuId != 0) {
+          id = menuId
+        }
 
-      return handle(api.GetAccountMenu(accountId, id))
+				return handle(api.GetAccountMenu(accountId, id))
 
-    case createMenu:
+			case createMenu:
 
-      params := createMenuParams(input)
-      return handle(api.CreateAccountMenu(accountId, params))
+				params := createMenuParams(input)
+				return handle(api.CreateAccountMenu(accountId, params))
 
-    case replaceMenu:
+			case replaceMenu:
 
-      params := replaceMenuParams(input)
-      return handle(api.ReplaceAccountMenu(accountId, id, params))
+				params := replaceMenuParams(input)
+				return handle(api.ReplaceAccountMenu(accountId, id, params))
 
-    case deleteMenu:
+			case deleteMenu:
 
-      return handle(api.DeleteAccountMenu(accountId, id))
-    }
+				return handle(api.DeleteAccountMenu(accountId, id))
+		}
 
   case swagger.QueuesApi:
 
     switch (command) {
 
-    case listQueues:
+			case listQueues:
 
-      return handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getQueue:
+			case getQueue:
 
-      if (queueId != 0) {
-        id = queueId
-      }
+        if (queueId != 0) {
+          id = queueId
+        }
 
-      return handle(api.GetAccountQueue(accountId, id))
+				return handle(api.GetAccountQueue(accountId, id))
 
-    case createQueue:
+			case createQueue:
 
-      params := createQueueParams(input)
-      return handle(api.CreateAccountQueue(accountId, params))
+				params := createQueueParams(input)
+				return handle(api.CreateAccountQueue(accountId, params))
 
-    case replaceQueue:
+			case replaceQueue:
 
-      params := createQueueParams(input)
-      return handle(api.ReplaceAccountQueue(accountId, id, params))
+				params := createQueueParams(input)
+				return handle(api.ReplaceAccountQueue(accountId, id, params))
 
-    case deleteQueue:
+			case deleteQueue:
 
-      return handle(api.DeleteAccountQueue(accountId, id))
-    }
+				return handle(api.DeleteAccountQueue(accountId, id))
+			}
 
   case swagger.RoutesApi:
 
     switch (command) {
 
-    case listRoutes:
+			case listRoutes:
 
-      return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getRoute:
+			case getRoute:
 
-      if (routeId != 0) {
-        id = routeId
-      }
+        if (routeId != 0) {
+          id = routeId
+        }
 
-      return handle(api.GetAccountRoute(accountId, id))
+				return handle(api.GetAccountRoute(accountId, id))
 
-    case createRoute:
+			case createRoute:
 
-      params := createRouteParams(input)
-      return handle(api.CreateRoute(accountId, params))
+				params := createRouteParams(input)
+				return handle(api.CreateRoute(accountId, params))
 
-    case replaceRoute:
+			case replaceRoute:
 
-      params := createRouteParams(input)
-      return handle(api.ReplaceAccountRoute(accountId, id, params))
+				params := createRouteParams(input)
+				return handle(api.ReplaceAccountRoute(accountId, id, params))
 
-    case deleteRoute:
+			case deleteRoute:
 
-      return handle(api.DeleteAccountRoute(accountId, id))
+				return handle(api.DeleteAccountRoute(accountId, id))
     }
 
   case swagger.SchedulesApi:
 
     switch (command) {
 
-    case listSchedules:
+			case listSchedules:
 
-      return handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getSchedule:
+			case getSchedule:
 
-      if (scheduleId != 0) {
-        id = scheduleId
-      }
+        if (scheduleId != 0) {
+          id = scheduleId
+        }
 
-      return handle(api.GetAccountSchedule(accountId, id))
+				return handle(api.GetAccountSchedule(accountId, id))
     }
 
   case swagger.SmsApi:
 
     switch (command) {
 
-    case listSms:
+			case listSms:
 
-      return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
+				return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields, page))
 
-    case getSms:
+			case getSms:
 
-      if (smsId != "") {
-        idString = smsId
-      }
+        if (smsId != "") {
+          idString = smsId
+        }
 
-      return handle(api.GetAccountSms(accountId, idString))
+				return handle(api.GetAccountSms(accountId, idString))
 
-    case createSms:
+			case createSms:
 
-      params := createSmsParams(from,to,text, extensionId)
-      return handle(api.CreateAccountSms(accountId, params))
+				params := createSmsParams(from,to,text, extensionId)
+				return handle(api.CreateAccountSms(accountId, params))
     }
 
   case swagger.AvailablenumbersApi:
 
     switch (command) {
 
-    case listAvailablePhoneNumbers:
+			case listAvailablePhoneNumbers:
 
-      return handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
-    }
+				return handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields, page))
+			}
 
   case swagger.SubaccountsApi:
 
     switch (command) {
 
-    case listSubaccounts:
+			case listSubaccounts:
 
-      return handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
+				return handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields, page))
 
-    case createSubaccount:
+			case createSubaccount:
 
-      params := createSubaccountParams(input, contact, billingContact)
-      return handle(api.CreateAccountSubaccount(accountId, params))
+				params := createSubaccountParams(input, contact, billingContact)
+				return handle(api.CreateAccountSubaccount(accountId, params))
     }
 
   case swagger.AccountsApi:
 
     switch (command) {
 
-    case listAccounts:
+			case listAccounts:
 
-      return handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
+				return handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields, page))
 
-    case getAccount:
+			case getAccount:
 
-      return handle(api.GetAccount(id))
+				return handle(api.GetAccount(id))
     }
 
   case swagger.NumberregionsApi:
 
     switch (command) {
 
-    case listAvailablePhoneNumberRegions:
+			case listAvailablePhoneNumberRegions:
 
-      return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, groupBy))
+				return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, groupBy))
     }
 
   case swagger.ApplicationsApi:
 
     switch (command) {
 
-    case listApplications:
+			case listApplications:
 
-      return handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getApplication:
+			case getApplication:
 
-      return handle(api.GetAccountApplication(accountId, id))
+				return handle(api.GetAccountApplication(accountId, id))
     }
 
   case swagger.CalllogsApi:
 
     switch (command) {
 
-    case listCallLogs:
+			case listCallLogs:
 
-      return handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
+				return handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields, page))
     }
 
   case swagger.DevicesApi:
 
     switch (command) {
 
-    case listDevices:
+			case listDevices:
 
-      return handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getDevice:
+			case getDevice:
 
-      if (deviceId != 0) {
-        id = deviceId
-      }
+        if (deviceId != 0) {
+          id = deviceId
+        }
 
-      return handle(api.GetAccountDevice(accountId, id))
+        return handle(api.GetAccountDevice(accountId, id))
 
-    case createDevice:
+			case createDevice:
 
-      params := createDeviceParams(input)
-      return handle(api.CreateAccountDevice(accountId, params))
+				params := createDeviceParams(input)
+				return handle(api.CreateAccountDevice(accountId, params))
 
-    case replaceDevice:
+			case replaceDevice:
 
-      params := createDeviceParams(input)
-      return handle(api.ReplaceAccountDevice(accountId, id, params))
+				params := createDeviceParams(input)
+				return handle(api.ReplaceAccountDevice(accountId, id, params))
     }
 
   case swagger.ExpressservicecodesApi:
 
     switch (command) {
 
-    case listExpressServiceCodes:
+			case listExpressServiceCodes:
 
-      return handle(api.ListAccountExpressSrvCodes(accountId, slice))
+				return handle(api.ListAccountExpressSrvCodes(accountId, slice))
 
-    case getExpressServiceCode:
+			case getExpressServiceCode:
 
-      if (codeId != 0) {
-        id = codeId
-      }
+        if (codeId != 0) {
+          id = codeId
+        }
 
-      return handle(api.GetAccountExpressSrvCode(accountId, id))
+				return handle(api.GetAccountExpressSrvCode(accountId, id))
     }
 
   case swagger.ExtensionsApi:
 
     switch (command) {
 
-    case listExtensions:
+			case listExtensions:
 
-      return handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields, page))
 
-    case getExtension:
+			case getExtension:
 
-      return handle(api.GetAccountExtension(accountId, id))
+				return handle(api.GetAccountExtension(accountId, id))
 
-    case createExtension:
+			case createExtension:
 
-      params := createExtensionsParams(input)
-      return handle(api.CreateAccountExtension(accountId, params))
+				params := createExtensionsParams(input)
+				return handle(api.CreateAccountExtension(accountId, params))
 
-    case replaceExtension:
+			case replaceExtension:
 
-      params := replaceExtensionParams(input)
-      return handle(api.ReplaceAccountExtension(accountId, id, params))
+				params := replaceExtensionParams(input)
+				return handle(api.ReplaceAccountExtension(accountId, id, params))
 
     }
 
@@ -751,104 +481,104 @@ c *cli.Context) (error, map[string] interface{}) {
 
     switch (command) {
 
-    case getCallerId:
-      return handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields))
+			case getCallerId:
+				return handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields, page))
     }
 
   case swagger.ContactsApi:
 
     switch (command) {
 
-    case listContacts:
+			case listContacts:
 
-      return handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
+				return handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields, page))
 
-    case getContact:
+			case getContact:
 
-      if (extensionId != 0) {
-        id = extensionId
-      }
+        if (extensionId != 0) {
+          id = extensionId
+        }
 
-      if (contactId != 0) {
-        idSecondary = contactId
-      }
+        if (contactId != 0) {
+          idSecondary = contactId
+        }
 
-      return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
+				return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 
-    case createContact:
+			case createContact:
 
-      params := createContactParams(input)
-      return handle(api.CreateAccountExtensionContact(accountId, id, params))
+				params := createContactParams(input)
+				return handle(api.CreateAccountExtensionContact(accountId, id, params))
 
-    case replaceContact:
+			case replaceContact:
 
-      params := createContactParams(input)
-      return handle(api.ReplaceAccountExtensionContact(accountId, id, idSecondary, params))
+				params := createContactParams(input)
+				return handle(api.ReplaceAccountExtensionContact(accountId, id, params))
 
-    case deleteContact:
+			case deleteContact:
 
-      return handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
+				return handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
     }
 
   case swagger.GroupsApi:
 
     switch (command) {
 
-    case listGroups:
+			case listGroups:
 
-      return handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+				return handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
-    case getGroup:
+			case getGroup:
 
-      if (extensionId != 0) {
-        id = extensionId
-      }
+        if (extensionId != 0) {
+          id = extensionId
+        }
 
-      if (groupId != 0) {
-        idSecondary = groupId
-      }
+        if (groupId != 0) {
+          idSecondary = groupId
+        }
 
-      return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
+				return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 
-    case createGroup:
+			case createGroup:
 
-      params := createGroupParams(input)
-      return handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
+				params := createGroupParams(input)
+				return handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
 
-    case replaceGroup:
+			case replaceGroup:
 
-      //params := createGroupParams()
-      return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
-    case deleteGroup:
+				//params := createGroupParams()
+				return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
+			case deleteGroup:
 
-      return handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
+				return handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
     }
 
   case swagger.PhonenumbersApi:
 
     switch (command) {
 
-    case listPhoneNumbers:
+			case listPhoneNumbers:
 
-      return handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
+				return handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields, page))
 
-    case getPhoneNumber:
+			case getPhoneNumber:
 
-      if (numberId != 0) {
-        id = numberId
-      }
+        if (numberId != 0) {
+          id = numberId
+        }
 
-      return handle(api.GetAccountPhoneNumber(accountId, id))
+				return handle(api.GetAccountPhoneNumber(accountId, id))
 
-    case createPhoneNumber:
+			case createPhoneNumber:
 
-      params := createPhoneNumberParams(input)
-      return handle(api.CreateAccountPhoneNumber(accountId, params))
+				params := createPhoneNumberParams(input)
+				return handle(api.CreateAccountPhoneNumber(accountId, params))
 
-    case replacePhoneNumber:
+			case replacePhoneNumber:
 
-      params := replacePhoneNumberParams(input)
-      return handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
+				params := replacePhoneNumberParams(input)
+				return handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
     }
 
   case swagger.TrunksApi:
@@ -857,7 +587,7 @@ c *cli.Context) (error, map[string] interface{}) {
 
     case listTrunks:
 
-      return handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields, page))
 
     case getTrunk:
 
@@ -873,7 +603,7 @@ c *cli.Context) (error, map[string] interface{}) {
 
     case replaceTrunk:
 
-      params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
+        params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
       return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:
@@ -894,8 +624,7 @@ func getApi(
   var api interface{}
   var config = swagger.NewConfiguration()
 
-  mainConfiguration := Config{}
-  var xmlConfig Config = mainConfiguration.getConfig()
+  var xmlConfig Config = getConfig()
   var baseApiPath string = xmlConfig.BaseApiPath
   var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
   var apiKey string = xmlConfig.ApiKey
@@ -1046,14 +775,14 @@ func handle(
     response *swagger.APIResponse,
     error error) (error, map[string] interface{}) {
 
-  if (error != nil) {
+	if (error != nil) {
 
     if (param.verbose) {
       fmt.Println("Error while getting response")
     }
 
-    return error, nil
-  }
+		return error, nil
+	}
 
   payload := response.Payload
 
@@ -1066,53 +795,29 @@ func handle(
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-  validatedJson := validateJson(string(payload))
+	json := validateJson(string(payload))
 
-  if (validatedJson == nil) {
+	if (json == nil) {
 
     if (param.verbose) {
       fmt.Println("Could not unmarshal API json response")
     }
 
-    return errors.New(msgInvalidJson), nil
-  }
+		return errors.New(msgInvalidJson), nil
+	}
 
-  message := validateResponse(validatedJson)
+	message := validateResponse(json)
 
-  if (message != "") {
+	if (message != "") {
 
     if (param.verbose) {
       fmt.Printf("%+v\n%s\n", x, response)
     }
 
-    return errors.New(message), nil
-  } else {
+		return errors.New(message), nil
+	} else {
+		fmt.Printf("%+v\n%s\n", x, response)
+	}
 
-    var output interface{}
-    if (!param.fullList && validatedJson["items"] != nil) {
-      output, _ = json.MarshalIndent(validatedJson["items"], "", "  ")
-    } else {
-      output, _ = json.MarshalIndent(validatedJson, "", "  ")
-    }
-
-    if (param.verbose) {
-      fmt.Printf("API Response:\n%+v\n%s\n", x, output)
-    } else {
-      fmt.Printf("API Response:\n%s\n", output)
-    }
-  }
-
-  return nil, validatedJson
-}
-
-func marshalJson(param interface{}, fileName string) {
-
-  b, err := json.MarshalIndent(param, "", "  ")
-  err = ioutil.WriteFile(fileName, b, 0644)
-
-  if (err != nil) {
-    fmt.Println("Could not create sample json")
-  } else {
-    fmt.Println("Sample json created successfully")
-  }
+	return nil, json
 }

@@ -58,7 +58,7 @@ func NewAvailablenumbersApiWithBasePath(basePath string) *AvailablenumbersApi {
  * @param fields Field set
  * @return *ListAvailableNumbers
  */
-func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string, sortInternal string, sortPrice string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListAvailableNumbers, *APIResponse, error) {
+func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string, sortInternal string, sortPrice string, sortPhoneNumber string, limit int32, offset int32, fields string, page int32) (*ListAvailableNumbers, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -128,6 +128,11 @@ func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []stri
 		localVarQueryParams.Add("sort[phone_number]", a.Configuration.APIClient.ParameterToString(sortPhoneNumber, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
+     if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))

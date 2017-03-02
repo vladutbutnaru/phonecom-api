@@ -185,7 +185,7 @@ func (a SmsApi) GetAccountSms(accountId int32, smsId string) (*SmsFull, *APIResp
  * @param fields Field set
  * @return *ListSms
  */
-func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListSms, *APIResponse, error) {
+func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string, limit int32, offset int32, fields string, page int32) (*ListSms, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -223,7 +223,13 @@ func (a SmsApi) ListAccountSms(accountId int32, filtersId []string, filtersDirec
 		localVarQueryParams.Add("sort[created_at]", a.Configuration.APIClient.ParameterToString(sortCreatedAt, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
+
+
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

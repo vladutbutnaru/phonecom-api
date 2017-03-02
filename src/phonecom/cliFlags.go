@@ -95,38 +95,21 @@ func getCliFlags() []cli.Flag {
       Value: 60,
       Usage: "Maximum concurrent calls for the trunk",
     },
+      cli.IntFlag{
+      Name: "page",
+      Value: 0,
+      Usage: "Page of results you want to fetch",
+    },
+          cli.IntFlag{
+      Name: "page",
+      Value: 0,
+      Usage: "Page of results you want to fetch",
+    },
     cli.IntFlag{
       Name: "max-minutes-per-month",
       Value: 800,
       Usage: "Maximum of minutes per month for the trunk",
     },
-    cli.StringFlag{
-      Name: "filtersType, ft",
-      Usage: "Type of filter",
-    },
-    cli.StringFlag{
-      Name: "filtersValue, fv",
-      Usage: "Type of filter",
-    },
-    cli.StringFlag{
-      Name: "sortType, st",
-      Usage: "Type of filter",
-    },
-    cli.StringFlag{
-      Name: "sortValue, sv",
-      Usage: "Type of filter",
-    },
-    cli.StringFlag{
-      Name: "samplein, si",
-      Usage: "Generate sample input json",
-    },
-    cli.StringFlag{
-      Name: "sampleout, so",
-      Usage: "Generate sample output json",
-    },
-    cli.BoolFlag{
-      Name: "fullList, fl",
-      Usage: "Generate sample output json",
-    },
+
   }
 }

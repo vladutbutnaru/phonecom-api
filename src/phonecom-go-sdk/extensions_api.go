@@ -186,7 +186,7 @@ func (a ExtensionsApi) GetAccountExtension(accountId int32, extensionId int32) (
  * @param fields Field set
  * @return *ListExtensions
  */
-func (a ExtensionsApi) ListAccountExtensions(accountId int32, filtersId []string, filtersExtension []string, filtersName []string, sortId string, sortExtension string, sortName string, limit int32, offset int32, fields string) (*ListExtensions, *APIResponse, error) {
+func (a ExtensionsApi) ListAccountExtensions(accountId int32, filtersId []string, filtersExtension []string, filtersName []string, sortId string, sortExtension string, sortName string, limit int32, offset int32, fields string, page int32) (*ListExtensions, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -229,7 +229,11 @@ func (a ExtensionsApi) ListAccountExtensions(accountId int32, filtersId []string
 		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	 if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

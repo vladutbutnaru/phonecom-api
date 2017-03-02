@@ -4,7 +4,6 @@ import (
   "github.com/urfave/cli"
   "testing"
 	"strconv"
-  "encoding/json"
 )
 
 var commandFlag = "-command"
@@ -225,14 +224,13 @@ func getFirstIdString(json map[string] interface{}) string {
 	return ""
 }
 
-func getFirstId(jsonObject map[string] interface{}) int {
+func getFirstId(json map[string] interface{}) int {
 
-  items := jsonObject["items"].([]interface{})
+  items := json["items"].([]interface{})
   if (len(items) > 0) {
     firstItem := items[0].(map[string] interface{})
-    firstId := firstItem["id"].(json.Number)
-    idToReturn, _ := json.Number.Int64(firstId)
-    return int(idToReturn)
+    firstId := firstItem["id"].(float64)
+    return int(firstId)
   }
 
   return 0
@@ -250,11 +248,10 @@ func getFirstAvailablePhoneNumber(json map[string] interface{}) string {
   return ""
 }
 
-func getId(jsonObject map[string] interface{}) int {
+func getId(json map[string] interface{}) int {
 
-  id := jsonObject["id"].(json.Number)
-  idToReturn, _ := json.Number.Int64(id)
-  return int(idToReturn)
+  id := json["id"].(float64)
+  return int(id)
 }
 
 func getName(json map[string] interface{}) string {

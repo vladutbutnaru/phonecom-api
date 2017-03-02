@@ -117,7 +117,7 @@ func (a MediaApi) GetAccountMedia(accountId int32, recordingId int32) (*MediaFul
  * @param fields Field set
  * @return *ListMedia
  */
-func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListMedia, *APIResponse, error) {
+func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string, page int32) (*ListMedia, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -153,7 +153,11 @@ func (a MediaApi) ListAccountMedia(accountId int32, filtersId []string, filtersN
 		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	 if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

@@ -250,7 +250,7 @@ func (a QueuesApi) GetAccountQueue(accountId int32, queueId int32) (*QueueFull, 
  * @param fields Field set
  * @return *ListQueues
  */
-func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListQueues, *APIResponse, error) {
+func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string, page int32) (*ListQueues, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -286,7 +286,13 @@ func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filter
 		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
+
+
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

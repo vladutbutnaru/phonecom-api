@@ -258,7 +258,7 @@ func (a ContactsApi) GetAccountExtensionContact(accountId int32, extensionId int
  * @param fields Field set
  * @return *ListContacts
  */
-func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId int32, filtersId []string, filtersGroupId []string, filtersUpdatedAt []string, sortId string, sortUpdatedAt string, limit int32, offset int32, fields string) (*ListContacts, *APIResponse, error) {
+func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId int32, filtersId []string, filtersGroupId []string, filtersUpdatedAt []string, sortId string, sortUpdatedAt string, limit int32, offset int32, fields string, page int32) (*ListContacts, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -299,7 +299,11 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
 		localVarQueryParams.Add("sort[updated_at]", a.Configuration.APIClient.ParameterToString(sortUpdatedAt, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	 if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}
@@ -346,18 +350,16 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
  *
  * @param accountId Account ID
  * @param extensionId Extension ID
- * @param contactId Contact ID
  * @param data Contact data
  * @return *ContactFull
  */
-func (a ContactsApi) ReplaceAccountExtensionContact(accountId int32, extensionId int32, contactId int32, data CreateContactParams) (*ContactFull, *APIResponse, error) {
+func (a ContactsApi) ReplaceAccountExtensionContact(accountId int32, extensionId int32, data CreateContactParams) (*ContactFull, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/extensions/{extension_id}/contacts/{contact_id}"
+	localVarPath := a.Configuration.BasePath + "/accounts/{account_id}/extensions/{extension_id}/contacts"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", fmt.Sprintf("%v", accountId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"extension_id"+"}", fmt.Sprintf("%v", extensionId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"contact_id"+"}", fmt.Sprintf("%v", contactId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

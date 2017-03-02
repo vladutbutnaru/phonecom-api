@@ -123,7 +123,7 @@ func (a CalllogsApi) GetAccountCallLog(accountId int32, callLogId int32) (*CallL
  * @param fields Field set
  * @return *ListCallLogs
  */
-func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string, limit int32, offset int32, fields string) (*ListCallLogs, *APIResponse, error) {
+func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string, limit int32, offset int32, fields string, page int32) (*ListCallLogs, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -178,7 +178,11 @@ func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, fi
 		localVarQueryParams.Add("sort[created_at]", a.Configuration.APIClient.ParameterToString(sortCreatedAt, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	 if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

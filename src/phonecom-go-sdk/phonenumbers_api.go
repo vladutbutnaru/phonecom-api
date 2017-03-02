@@ -186,7 +186,7 @@ func (a PhonenumbersApi) GetAccountPhoneNumber(accountId int32, numberId int32) 
  * @param fields Field set
  * @return *ListPhoneNumbers
  */
-func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []string, filtersName []string, filtersPhoneNumber []string, sortId string, sortName string, sortPhoneNumber string, limit int32, offset int32, fields string) (*ListPhoneNumbers, *APIResponse, error) {
+func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []string, filtersName []string, filtersPhoneNumber []string, sortId string, sortName string, sortPhoneNumber string, limit int32, offset int32, fields string, page int32) (*ListPhoneNumbers, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -229,7 +229,13 @@ func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []st
 		localVarQueryParams.Add("sort[phone_number]", a.Configuration.APIClient.ParameterToString(sortPhoneNumber, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
+
+
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

@@ -1,13 +1,13 @@
 package main
 
 import (
+	"strconv"
 	"fmt"
-  "encoding/json"
 )
 
-func validateResponse(jsonObject map[string] interface{}) string {
+func validateResponse(json map[string] interface{}) string {
 
-	jsonError := jsonObject[responseError]
+	jsonError := json[responseError]
 
 	if (jsonError != nil) {
 
@@ -15,7 +15,7 @@ func validateResponse(jsonObject map[string] interface{}) string {
 
 		return fmt.Sprintf(
 			msgHttpError,
-      json.Number.String(jsonError[responseHttpStatusCode].(json.Number)), jsonError[responseMessage].(string))
+			strconv.FormatFloat(jsonError[responseHttpStatusCode].(float64), 'f', -1, 64), jsonError[responseMessage].(string))
 	}
 
 	return ""

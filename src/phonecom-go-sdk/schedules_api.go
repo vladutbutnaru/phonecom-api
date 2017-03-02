@@ -117,7 +117,7 @@ func (a SchedulesApi) GetAccountSchedule(accountId int32, scheduleId int32) (*Sc
  * @param fields Field set
  * @return *ListSchedules
  */
-func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string) (*ListSchedules, *APIResponse, error) {
+func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, filtersName []string, sortId string, sortName string, limit int32, offset int32, fields string, page int32) (*ListSchedules, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -153,7 +153,13 @@ func (a SchedulesApi) ListAccountSchedules(accountId int32, filtersId []string, 
 		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+	if page > 0{
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
+
+
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}

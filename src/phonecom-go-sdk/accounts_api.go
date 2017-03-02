@@ -112,7 +112,7 @@ func (a AccountsApi) GetAccount(accountId int32) (*AccountFull, *APIResponse, er
  * @param fields Field set
  * @return *ListAccounts
  */
-func (a AccountsApi) ListAccounts(filtersId []string, sortId string, limit int32, offset int32, fields string) (*ListAccounts, *APIResponse, error) {
+func (a AccountsApi) ListAccounts(filtersId []string, sortId string, limit int32, offset int32, fields string, page int32) (*ListAccounts, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -140,7 +140,12 @@ func (a AccountsApi) ListAccounts(filtersId []string, sortId string, limit int32
 		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
 	}
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
-	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    if page > 0 {
+	   localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset + page * 5, ""))
+    } else {
+        localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
+    }
+   
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}
