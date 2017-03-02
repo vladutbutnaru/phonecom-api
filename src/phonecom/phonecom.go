@@ -12,12 +12,22 @@ import (
   "io/ioutil"
   "strings"
   "time"
+	"path/filepath"
+	"log"
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
 var param CliParams
 
 func main() {
+
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(0)
+	}
+
+	configPath = dir + "/config.xml"
 
   app := cli.NewApp()
 
