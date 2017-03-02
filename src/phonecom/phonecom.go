@@ -1095,6 +1095,9 @@ func handle(
       output, _ = json.MarshalIndent(validatedJson, "", "  ")
     }
 
+    //keys := []string{"items"}
+    //json2csv(payload, keys)
+
     if (param.verbose) {
       fmt.Printf("API Response:\n%+v\n%s\n", x, output)
     } else {
