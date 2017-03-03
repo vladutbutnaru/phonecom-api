@@ -192,7 +192,7 @@ func TestListReplaceGroup(t *testing.T) {
   b, err := json.Marshal(groupParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, result = createReplaceCliWithJsonIn(replaceGroup, fileName, groupId)
+  err, result = createReplaceContactCliWithJsonIn(replaceGroup, fileName, extensionId, groupId)
   assertErrorNotNull(t, err)
   os.Remove(fileName)
 }
