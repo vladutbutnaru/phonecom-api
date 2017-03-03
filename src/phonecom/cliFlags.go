@@ -129,8 +129,12 @@ func getCliFlags() []cli.Flag {
       Usage: "Generate sample output json",
     },
     cli.StringFlag{
-      Name: "sampleFormat, sf",
-      Usage: "Type of the sample. Can be 'json' or 'xml'. Default is json",
+      Name: "inputFormat, if",
+      Usage: "Input format. Can be 'json' or 'xml'. Default is json",
+    },
+    cli.StringFlag{
+      Name: "outputFormat, of",
+      Usage: "Output format. Can be 'json' or 'csv'. Default is json",
     },
   }
 }

@@ -18,6 +18,7 @@ import (
 )
 
 var configPath = "config.xml" // Used as a variable. To be changed in tests.
+var outputType = "json"
 var param CliParams
 
 func main() {
@@ -65,7 +66,7 @@ type CliParams struct {
 }
 
 func execute(
-c *cli.Context) (error, map[string] interface{}) {
+    c *cli.Context) (error, map[string] interface{}) {
 
   slice := make([]string, 0)
   limit := int32(c.Int("limit"))
@@ -95,7 +96,8 @@ c *cli.Context) (error, map[string] interface{}) {
   samplein := c.String("samplein")
   sampleout := c.String("sampleout")
   fullList := c.Bool("fullList")
-  sampleFormat := c.String("sampleFormat")
+  inputFormat := c.String("inputFormat")
+  outputFormat := c.String("outputFormat")
 
   var filtersId []string
   var groupBy []string
@@ -311,11 +313,22 @@ c *cli.Context) (error, map[string] interface{}) {
     }
   }
 
-  sampleCreateXmlCondition := (sampleFormat != "" && (sampleFormat == "xml"))
+  inputType := "json"
 
-  outputType := "json"
-  if (sampleCreateXmlCondition) {
+  if (strings.EqualFold(inputFormat, "xml")) {
+    inputType = "xml"
+  }
+
+  if (strings.EqualFold(inputFormat, "csv")) {
+    inputType = "csv"
+  }
+
+  if (strings.EqualFold(outputFormat, "xml")) {
     outputType = "xml"
+  }
+
+  if (strings.EqualFold(outputFormat, "csv")) {
+    outputType = "csv"
   }
 
   if samplein != "" {
@@ -326,75 +339,75 @@ c *cli.Context) (error, map[string] interface{}) {
     switch samplein {
     case createDevice:
       createDeviceParamsSample := swagger.CreateDeviceParams{randomString(12), nil}
-      marshal(createDeviceParamsSample, "createDevice", outputType)
+      marshalInput(createDeviceParamsSample, "createDevice", inputType)
 
     case createExtension:
       createExtensionParamsSample := swagger.CreateExtensionParams{"+12019570328", "unlimited", true, int32(randomNumber(10, 9999999)), true, "The name", "The full name", "America/Los_Angeles", swagger.MediaSummary{int32(randomNumber(10, 99999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(10, 99999)), randomString(12)}, 619, true, false, true, false, 12345, "standard", swagger.MediaSummary{int32(randomNumber(10, 99999)), randomString(12)}, "automated", stringEmailSlice, "+18587741111", stringEmailSlice, "+18587748888"}
-      marshal(createExtensionParamsSample, "createExtension", outputType)
+      marshalInput(createExtensionParamsSample, "createExtension", inputType)
 
     case createContact:
       createContactParamsSample := swagger.CreateContactParams{"Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle", nil, nil, nil, nil}
-      marshal(createContactParamsSample, "createContact", outputType)
+      marshalInput(createContactParamsSample, "createContact", inputType)
 
     case createGroup:
       createGroupParamsSample := swagger.CreateGroupParams{"Ferengi Traders"}
-      marshal(createGroupParamsSample, "createGroup", outputType)
+      marshalInput(createGroupParamsSample, "createGroup", inputType)
 
     case createMenu:
       createMenuParamsSample := swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}
-      marshal(createMenuParamsSample, "createMenu", outputType)
+      marshalInput(createMenuParamsSample, "createMenu", inputType)
 
     case createPhoneNumber:
       createPhoneNumberParamsSample := swagger.CreatePhoneNumberParams{"+12546551377", swagger.RouteSummary{123, randomString(12)}, "Phone Name Now", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1, 9999)), randomString(12), int32(randomNumber(1, 9999))}, stringEmailSlice, "+18587740222"}
-      marshal(createPhoneNumberParamsSample, "createPhoneNumber", outputType)
+      marshalInput(createPhoneNumberParamsSample, "createPhoneNumber", inputType)
 
     case createQueue:
       createQueueParamsSample := swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123, randomString(12)}, swagger.MediaSummary{123, randomString(12)}, 60, "called_number", 10, nil}
-      marshal(createQueueParamsSample, "createQueue", outputType)
+      marshalInput(createQueueParamsSample, "createQueue", inputType)
 
     case createRoute:
       createRouteJsonSample := CreateRouteJson{randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{int32(22035), "ntud62prqbl7"}}}}}}
-      marshal(createRouteJsonSample, "createRoute", outputType)
+      marshalInput(createRouteJsonSample, "createRoute", inputType)
 
     case createSms:
       createSmsParamsSample := swagger.CreateSmsParams{"+16309624775", "+12019570328", "Another message for create", 1767963}
-      marshal(createSmsParamsSample, "createSms", outputType)
+      marshalInput(createSmsParamsSample, "createSms", inputType)
 
     case createSubaccount:
       createSubaccountJsonSample := CreateSubaccountJson{randomString(12), randomString(12), ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"},
         ContactJson{"Bobby", AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}, "+18585553333", "asd@sd.co"}}
-      marshal(createSubaccountJsonSample, "createSubaccount", outputType)
+      marshalInput(createSubaccountJsonSample, "createSubaccount", inputType)
 
     case createTrunk:
       createTrunkParamsSample := swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(60), int32(800), swagger.MediaSummary{123, randomString(12)}, swagger.MediaSummary{123, randomString(12)}, nil}
-      marshal(createTrunkParamsSample, "createTrunk", outputType)
+      marshalInput(createTrunkParamsSample, "createTrunk", inputType)
 
     case replaceDevice:
-      marshal(createDeviceParams, "replaceDevice", outputType)
+      marshalInput(createDeviceParams, "replaceDevice", inputType)
 
     case replaceExtension:
       replaceExtensionParamsSample := swagger.ReplaceExtensionParams{nil, nil, randomString(12), "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, nil, "standard", "private", 619, true, true, "automated", nil, "+18587741111", nil, "+18587748888", nil}
-      marshal(replaceExtensionParamsSample, "replaceExtension", outputType)
+      marshalInput(replaceExtensionParamsSample, "replaceExtension", inputType)
 
     case replaceMenu:
       replaceMenuParamsSample := swagger.ReplaceMenuParams{randomString(12), nil, nil, false, 5, nil, nil}
-      marshal(replaceMenuParamsSample, "replaceMenu", outputType)
+      marshalInput(replaceMenuParamsSample, "replaceMenu", inputType)
 
     case replacePhoneNumber:
       replacePhoneNumberParamsSample := swagger.ReplacePhoneNumberParams{swagger.RouteSummary{123, randomString(12)}, "Robert", true, true, "Phone N", "business", "extension", swagger.ApplicationSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.ExtensionSummary{int32(randomNumber(1, 9999)), randomString(12), int32(randomNumber(1, 9999))}, nil, stringEmailSlice, "+18587740222"}
-      marshal(replacePhoneNumberParamsSample, "replacePhoneNumber", outputType)
+      marshalInput(replacePhoneNumberParamsSample, "replacePhoneNumber", inputType)
 
     case replaceQueue:
       createQueueParamsSample := swagger.CreateQueueParams{randomString(12), swagger.MediaSummary{123, randomString(12)}, swagger.MediaSummary{123, randomString(12)}, 60, "called_number", 10, nil}
-      marshal(createQueueParamsSample, "replaceQueue", outputType)
+      marshalInput(createQueueParamsSample, "replaceQueue", inputType)
 
     case replaceRoute:
       replaceRouteJsonSample := ReplaceRouteJson{int32(4705073), randomString(12), []RulesJson{RulesJson{[]ActionsJson{ActionsJson{"queue", QueueJson{22026, "61kkjklmin74"}}}}}}
-      marshal(replaceRouteJsonSample, "replaceRoute", outputType)
+      marshalInput(replaceRouteJsonSample, "replaceRoute", inputType)
 
     case replaceTrunk:
       createTrunkParamsSample := swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(60), int32(800), swagger.MediaSummary{123, randomString(12)}, swagger.MediaSummary{123, randomString(12)}, nil}
-      marshal(createTrunkParamsSample, "replaceTrunk", outputType)
+      marshalInput(createTrunkParamsSample, "replaceTrunk", inputType)
 
     }
 
@@ -408,23 +421,23 @@ c *cli.Context) (error, map[string] interface{}) {
     switch sampleout {
     case getAccount:
       accountFullSample := swagger.AccountFull{int32(randomNumber(10, 9999)), randomString(12), randomString(12), randomString(12), swagger.AccountSummary{int32(randomNumber(10, 9999)), randomString(12)}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}}
-      marshal(accountFullSample, "getAccount", outputType)
+      marshalInput(accountFullSample, "getAccount", inputType)
 
     case getApplication:
       applicationFullSample := swagger.ApplicationFull{int32(randomNumber(10, 9999)), randomString(12)}
-      marshal(applicationFullSample, "getApplication", outputType)
+      marshalInput(applicationFullSample, "getApplication", inputType)
 
     case getDevice:
       deviceFullSample := swagger.DeviceFull{int32(randomNumber(10, 9999)), randomString(12), swagger.SipAuthentication{randomString(12), int32(randomNumber(10, 9999)), randomString(12), randomString(12)}, nil/*[]swagger.Line{int32(randomNumber(1,9999)), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}}*/ }
-      marshal(deviceFullSample, "getDevice", outputType)
+      marshalInput(deviceFullSample, "getDevice", inputType)
 
     case getExpressServiceCode:
       expressServiceCodeFullSample := swagger.ExpressServiceCodeFull{int32(randomNumber(1, 9999)), randomNumericString(8), int32(randomNumber(9999, 9999999999))}
-      marshal(expressServiceCodeFullSample, "getExpressServiceCode", outputType)
+      marshalInput(expressServiceCodeFullSample, "getExpressServiceCode", inputType)
 
     case getExtension:
       extensionFullSample := swagger.ExtensionFull{int32(randomNumber(1, 9999)), randomString(12), int32(randomNumber(1, 9999)), randomString(12), randomString(12), swagger.DeviceMembership{int32(randomNumber(1, 9999)), swagger.DeviceSummary{int32(randomNumber(1, 9999)), randomString(12)}}, randomString(12), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, true, "+454654564534", randomString(12), true, true, swagger.Voicemail{true, randomString(12), swagger.Greeting{randomString(12), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, true}, randomString(12), swagger.Notification{stringEmailSlice, randomString(12)}, randomString(12)}, swagger.Notification{stringEmailSlice, randomString(12)}, swagger.RouteSummary{int32(randomNumber(1, 9999)), randomString(12)}}
-      marshal(extensionFullSample, "getExtension", outputType)
+      marshalInput(extensionFullSample, "getExtension", inputType)
 
     case getContact:
       emailSlice := make([]swagger.Email, 0)
@@ -434,31 +447,31 @@ c *cli.Context) (error, map[string] interface{}) {
       addressListContacts := make([]swagger.AddressListContacts, 0)
       addressListContacts = append(addressListContacts, swagger.AddressListContacts{"home", randomString(12), randomString(12), randomString(12), randomNumericString(5), strings.ToUpper(randomAlphaString(2))})
       contactFullSample := swagger.ContactFull{int32(randomNumber(1, 9999)), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), emailSlice, phoneNumberContactslice, addressListContacts, swagger.GroupListContacts{int32(randomNumber(1, 9999)), randomString(12)}, int32(randomNumber(9999, 9999999999)), int32(randomNumber(9999, 9999999999))}
-      marshal(contactFullSample, "getContact", outputType)
+      marshalInput(contactFullSample, "getContact", inputType)
 
     case getGroup:
       groupFullSample := swagger.GroupFull{int32(randomNumber(1, 9999)), randomString(12)}
-      marshal(groupFullSample, "getGroup", outputType)
+      marshalInput(groupFullSample, "getGroup", inputType)
 
     case getRecording:
       mediaFullSample := swagger.MediaFull{int32(randomNumber(1, 9999)), randomString(12), "hold_music"}
-      marshal(mediaFullSample, "getRecording", outputType)
+      marshalInput(mediaFullSample, "getRecording", inputType)
 
     case getMenu:
       optionSlice := make([]swagger.Option, 0)
       optionSlice = append(optionSlice, swagger.Option{randomNumericString(1), swagger.RouteSummary{int32(randomNumber(1,9999)), randomString(12)}})
       menuFullSample := swagger.MenuFull{int32(randomNumber(1, 9999)), randomString(12), true, int32(randomNumber(1, 9999)), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.RouteSummary{int32(randomNumber(1, 9999)), randomString(12)}, optionSlice}
-      marshal(menuFullSample, "getMenu", outputType)
+      marshalInput(menuFullSample, "getMenu", inputType)
 
     case getPhoneNumber:
       phoneNumberFullSample := swagger.PhoneNumberFull{int32(randomNumber(1, 9999)), randomString(12), "+54654612511", true, true, swagger.RouteSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.CallerIdPhoneNumber{randomString(12), "bussiness"}, swagger.SmsForwarding{"extension", swagger.ExtensionSummary{int32(randomNumber(1, 9999)), randomString(12), int32(randomNumber(1, 9999))}, swagger.ApplicationSummary{int32(randomNumber(1, 9999)), randomString(12)}}, swagger.CallNotifications{stringEmailSlice, "+45456486464"}}
-      marshal(phoneNumberFullSample, "getPhoneNumber", outputType)
+      marshalInput(phoneNumberFullSample, "getPhoneNumber", inputType)
 
     case getQueue:
       memberSlice := make([]swagger.Member, 0)
       memberSlice = append(memberSlice, swagger.Member{swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}, randomString(12)})
       queueFullSample := swagger.QueueFull{int32(randomNumber(1, 9999)), randomString(12), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.HoldMusic{int32(randomNumber(1, 9999)), randomString(12)}, 300, randomString(12), 20, memberSlice}
-      marshal(queueFullSample, "getQueue", outputType)
+      marshalInput(queueFullSample, "getQueue", inputType)
 
     case getRoute:
       ruleSetForwardItemSlice := make([]swagger.RuleSetForwardItem, 0)
@@ -468,23 +481,23 @@ c *cli.Context) (error, map[string] interface{}) {
       rulesetSlice := make([]swagger.RuleSet, 0)
       rulesetSlice = append(rulesetSlice, swagger.RuleSet{swagger.RuleSetFilter{"schedule", swagger.ScheduleSummary{int32(randomNumber(1,9999)), randomString(12)}, swagger.ContactSummary{int32(randomNumber(1,9999)), "Mr", randomString(12), randomString(12), randomString(12), "Jr", randomString(12), randomString(12)}, swagger.GroupSummary{int32(randomNumber(1,9999)), randomString(12)}}, ruleSetActionSlice})
       routeFullSample := swagger.RouteFull{int32(randomNumber(1, 9999)), randomString(12), swagger.ExtensionSummary{int32(randomNumber(1, 9999)), randomString(12), int32(randomNumber(1, 9999))}, rulesetSlice}
-      marshal(routeFullSample, "getRoute", outputType)
+      marshalInput(routeFullSample, "getRoute", inputType)
 
     case getSchedule:
       scheduleFullSample := swagger.ScheduleFull{int32(randomNumber(1, 9999)), randomString(12)}
-      marshal(scheduleFullSample, "getSchedule", outputType)
+      marshalInput(scheduleFullSample, "getSchedule", inputType)
 
     case getSms:
       recipientSlice := make([]swagger.Recipient, 0)
       recipientSlice = append(recipientSlice, swagger.Recipient{"+12454354513", "sent"})
       smsFullSample := swagger.SmsFull{randomSmsId(), "+5646517686", recipientSlice, "in", int32(randomNumber(9999, 9999999999)), time.Time{}, randomString(12)}
-      marshal(smsFullSample, "getSms", outputType)
+      marshalInput(smsFullSample, "getSms", inputType)
 
     case getTrunk:
       stringCodeSlice := make([]string, 0)
       stringCodeSlice = append(stringCodeSlice, "g711u 64k")
       trunkFullSample := swagger.TrunkFull{int32(randomNumber(1, 9999)), randomString(12), "SIP/01%e@243.1.45.52:5060", int32(randomNumber(1, 100)), int32(randomNumber(500, 2000)), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, stringCodeSlice}
-      marshal(trunkFullSample, "getTrunk", outputType)
+      marshalInput(trunkFullSample, "getTrunk", inputType)
 
     }
     return nil, nil
@@ -1117,27 +1130,37 @@ func handle(
     return errors.New(message), nil
   } else {
 
-    var output interface{}
+    var jsonOutput interface{}
+    var jsonObject interface{}
     if (!param.fullList && validatedJson["items"] != nil) {
-      output, _ = json.MarshalIndent(validatedJson["items"], "", "  ")
+      jsonObject = validatedJson["items"]
+      jsonOutput, _ = json.MarshalIndent(jsonObject, "", "  ")
     } else {
-      output, _ = json.MarshalIndent(validatedJson, "", "  ")
+      jsonObject = validatedJson
+      jsonOutput, _ = json.MarshalIndent(validatedJson, "", "  ")
     }
 
-    //keys := []string{"items"}
-    //json2csv(payload, keys)
-
     if (param.verbose) {
-      fmt.Printf("API Response:\n%+v\n%s\n", x, output)
+      fmt.Printf("\nAPI Response [Verbose]:\n%+v\n", x)
+      fmt.Println()
+    }
+
+    fmt.Println("API Response:")
+    fmt.Println()
+
+    if (outputType == "csv") {
+      exportToCsv(jsonObject)
+    } else if (outputType == "json") {
+      fmt.Printf("%s\n", jsonOutput)
     } else {
-      fmt.Printf("API Response:\n%s\n", output)
+      fmt.Println("Invalid output type")
     }
   }
 
   return nil, validatedJson
 }
 
-func marshal(param interface{}, fileName string, outputType string) {
+func marshalInput(param interface{}, fileName string, outputType string) {
 
   var marshalled []byte
   var err error
