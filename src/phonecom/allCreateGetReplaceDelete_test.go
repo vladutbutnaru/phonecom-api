@@ -6,6 +6,7 @@ import (
   "io/ioutil"
   "os"
   "strconv"
+  "phonecom-go-sdk"
 )
 
 func TestCreateDevice(t *testing.T) {
@@ -137,9 +138,9 @@ func TestListReplaceContact(t *testing.T) {
   contactId := getFirstId(result)
 
   randomName := randomString(12)
-  ContactParamsJson := CreateContactJson{int32(extensionId), randomName, "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
+  ContactParamsJson := swagger.CreateContactParams{randomName, "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle", nil, nil, nil, nil}
   fileName := "../test/jsonin/replaceContact" + randomName + ".json"
-  b, err := json.Marshal(ContactParamsJson)
+  b, err := json.MarshalIndent(ContactParamsJson, "", "  ")
   err = ioutil.WriteFile(fileName, b, 0644)
 
   err, result = createReplaceContactCliWithJsonIn(replaceContact, fileName, extensionId, contactId)
