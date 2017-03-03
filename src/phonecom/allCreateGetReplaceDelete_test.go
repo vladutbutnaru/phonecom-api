@@ -171,6 +171,32 @@ func TestCreateDeleteGroup(t *testing.T) {
   os.Remove(fileName)
 }
 
+func TestListReplaceGroup(t *testing.T) {
+
+  var result map[string] interface{}
+  var err error
+
+  err, result = createCli(listExtensions)
+  assertErrorNotNull(t, err)
+
+  extensionId := getFirstId(result)
+
+  err, result = createGetCliStringId(listGroups, strconv.Itoa(extensionId))
+  assertErrorNotNull(t, err)
+
+  groupId := getFirstId(result)
+
+  randomName := randomString(12)
+  groupParamsJson := swagger.CreateGroupParams{randomName}
+  fileName := "../test/jsonin/replaceExtension" + randomName + ".json"
+  b, err := json.Marshal(groupParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createReplaceCliWithJsonIn(replaceGroup, fileName, groupId)
+  assertErrorNotNull(t, err)
+  os.Remove(fileName)
+}
+
 func TestCreateDeleteMenu(t *testing.T) {
 
   var result map[string] interface{}
