@@ -19,17 +19,17 @@ func createCliWithJsonIn(endpoint string, path string) (error, map[string] inter
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func createCreateSmsCliWithJsonIn(endpoint string, path string, from string, to string, text string) (error, map[string] interface{}) {
@@ -44,17 +44,17 @@ func createCreateSmsCliWithJsonIn(endpoint string, path string, from string, to 
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName string, trunkUri string, trunkConcurrentCalls int32, trunkMaxMinutes int32) (error, map[string] interface{}) {
@@ -70,17 +70,17 @@ func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName stri
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, map[string] interface{}) {
@@ -92,17 +92,40 @@ func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, ma
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
+}
+
+func createReplaceContactCliWithJsonIn(endpoint string, path string, id int, idSecondary int) (error, map[string] interface{}) {
+  app := cli.NewApp()
+
+  defaultCommand = endpoint
+  defaultInput = path
+  defaultId = strconv.Itoa(id)
+  defaultIdSecondary = strconv.Itoa(idSecondary)
+
+  app.Flags = getCliFlags()
+  configPath = "../../config.xml"
+  var response (map[string] interface{})
+  var err error
+
+  app.Action = func(c *cli.Context) error {
+    err, response = execute(c)
+    return err
+  }
+
+  app.Run([]string{commandFlag, endpoint})
+
+  return err, response
 }
 
 func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName string, trunkUri string, trunkConcurrentCalls int32, trunkMaxMinutes int32, id int) (error, map[string] interface{}) {
@@ -118,17 +141,17 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func createCli(endpoint string) (error, map[string] interface{}) {
@@ -139,17 +162,17 @@ func createCli(endpoint string) (error, map[string] interface{}) {
 
   app.Flags = getCliFlags()
   configPath = "../../config.xml"
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func createGetCliStringId(endpoint string, id string) (error, map[string] interface{}) {
@@ -158,7 +181,7 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 		return nil, nil
 	}
 
-	var json (map[string] interface{})
+	var response (map[string] interface{})
 	var err error
 
 	app := cli.NewApp()
@@ -170,13 +193,13 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 	configPath = "../../config.xml"
 
 	app.Action = func(c *cli.Context) error {
-		err, json = execute(c)
+		err, response = execute(c)
 		return err
 	}
 
 	app.Run([]string{commandFlag, endpoint})
 
-	return err, json
+	return err, response
 }
 
 func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface{}) {
@@ -185,7 +208,7 @@ func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface
     return nil, nil
   }
 
-  var json (map[string] interface{})
+  var response (map[string] interface{})
   var err error
 
   app := cli.NewApp()
@@ -197,13 +220,13 @@ func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface
   configPath = "../../config.xml"
 
   app.Action = func(c *cli.Context) error {
-    err, json = execute(c)
+    err, response = execute(c)
     return err
   }
 
   app.Run([]string{commandFlag, endpoint})
 
-  return err, json
+  return err, response
 }
 
 func assertErrorNotNull(t *testing.T, err error) {

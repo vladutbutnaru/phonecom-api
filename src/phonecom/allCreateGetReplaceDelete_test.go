@@ -5,6 +5,7 @@ import (
   "encoding/json"
   "io/ioutil"
   "os"
+  "strconv"
 )
 
 func TestCreateDevice(t *testing.T) {
@@ -117,6 +118,32 @@ func TestCreateDeleteContact(t *testing.T) {
   }
 
   createGetOrRemoveCli(deleteContact, id);
+  os.Remove(fileName)
+}
+
+func TestListReplaceContact(t *testing.T) {
+
+  var result map[string] interface{}
+  var err error
+
+  err, result = createCli(listExtensions)
+  assertErrorNotNull(t, err)
+
+  extensionId := getFirstId(result)
+
+  err, result = createGetCliStringId(listContacts, strconv.Itoa(extensionId))
+  assertErrorNotNull(t, err)
+
+  contactId := getFirstId(result)
+
+  randomName := randomString(12)
+  ContactParamsJson := CreateContactJson{int32(extensionId), randomName, "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
+  fileName := "../test/jsonin/replaceContact" + randomName + ".json"
+  b, err := json.Marshal(ContactParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createReplaceContactCliWithJsonIn(replaceContact, fileName, extensionId, contactId)
+  assertErrorNotNull(t, err)
   os.Remove(fileName)
 }
 

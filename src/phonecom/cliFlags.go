@@ -4,6 +4,7 @@ import "github.com/urfave/cli"
 
 var defaultCommand = listAccounts
 var defaultId = ""
+var defaultIdSecondary = ""
 var defaultInput = ""
 var defaultFrom = ""
 var defaultTo = ""
@@ -29,9 +30,9 @@ func getCliFlags() []cli.Flag {
       Value: defaultId,
       Usage: "ID of entity you want to operate",
     },
-    cli.IntFlag{
+    cli.StringFlag{
       Name: "id-secondary, is",
-      Value: 0,
+      Value: defaultIdSecondary,
       Usage: "Secondary ID of entity you want to operate",
     },
     cli.IntFlag{
