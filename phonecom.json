@@ -420,6 +420,9 @@
             "$ref": "#/parameters/filterType"
           },
           {
+            "$ref": "#/parameters/filterExtension"
+          },
+          {
             "$ref": "#/parameters/sortIdParam"
           },
           {
@@ -1509,6 +1512,15 @@
           },
           {
             "$ref": "#/parameters/groupIdParam"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Group name",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateGroupParams"
+            }
           }
         ],
         "responses": {
@@ -4610,6 +4622,10 @@
         "text": {
           "type": "string",
           "description": "Text body of the outgoing SMS message. Maximum 160 characters per message."
+        },
+        "extension_id" : {
+          "type": "integer",
+          "description": "ID of Extension where the sms is saved"
         }
       }
     },

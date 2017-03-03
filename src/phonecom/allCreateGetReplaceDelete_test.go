@@ -188,7 +188,7 @@ func TestListReplaceGroup(t *testing.T) {
 
   randomName := randomString(12)
   groupParamsJson := swagger.CreateGroupParams{randomName}
-  fileName := "../test/jsonin/replaceExtension" + randomName + ".json"
+  fileName := "../test/jsonin/replaceGroup" + randomName + ".json"
   b, err := json.Marshal(groupParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 

@@ -855,8 +855,8 @@ func execute(
 
     case replaceGroup:
 
-      //params := createGroupParams()
-      return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary))
+			params := createGroupParams(input)
+      return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary, params))
     case deleteGroup:
 
       return handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))

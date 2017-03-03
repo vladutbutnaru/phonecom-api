@@ -342,9 +342,10 @@ func (a GroupsApi) ListAccountExtensionContactGroups(accountId int32, extensionI
  * @param accountId Account ID
  * @param extensionId Extension ID
  * @param groupId Group ID
+ * @param data Group name
  * @return *GroupFull
  */
-func (a GroupsApi) ReplaceAccountExtensionContactGroup(accountId int32, extensionId int32, groupId int32) (*GroupFull, *APIResponse, error) {
+func (a GroupsApi) ReplaceAccountExtensionContactGroup(accountId int32, extensionId int32, groupId int32, data CreateGroupParams) (*GroupFull, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
@@ -385,6 +386,8 @@ func (a GroupsApi) ReplaceAccountExtensionContactGroup(accountId int32, extensio
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
+	// body params
+	localVarPostBody = &data
 	var successPayload = new(GroupFull)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
