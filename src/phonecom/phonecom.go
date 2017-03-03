@@ -323,10 +323,6 @@ func execute(
     inputType = "csv"
   }
 
-  if (strings.EqualFold(outputFormat, "xml")) {
-    outputType = "xml"
-  }
-
   if (strings.EqualFold(outputFormat, "csv")) {
     outputType = "csv"
   }
@@ -1130,14 +1126,11 @@ func handle(
     return errors.New(message), nil
   } else {
 
-    var jsonOutput interface{}
     var jsonObject interface{}
     if (!param.fullList && validatedJson["items"] != nil) {
       jsonObject = validatedJson["items"]
-      jsonOutput, _ = json.MarshalIndent(jsonObject, "", "  ")
     } else {
       jsonObject = validatedJson
-      jsonOutput, _ = json.MarshalIndent(validatedJson, "", "  ")
     }
 
     if (param.verbose) {
@@ -1151,10 +1144,15 @@ func handle(
     if (outputType == "csv") {
       exportToCsv(jsonObject)
     } else if (outputType == "json") {
+			jsonOutput, err := json.MarshalIndent(jsonObject, "", "  ")
+			if (err != nil) {
+				return err, nil
+			}
       fmt.Printf("%s\n", jsonOutput)
-    } else {
-      fmt.Println("Invalid output type")
-    }
+		} else {
+			fmt.Println("Invalid output type")
+		}
+
   }
 
   return nil, validatedJson
