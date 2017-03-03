@@ -188,8 +188,9 @@ func TestCreateDeleteMenu(t *testing.T) {
   assertErrorNotNull(t, err)
 
   id := getId(result)
-  if (id == 0) {
-    t.FailNow()
+
+  if (id <= 0) {
+    t.Fatal()
   }
 
   createGetOrRemoveCli(deleteMenu, id);
@@ -327,8 +328,6 @@ func TestCreateDeleteRoute(t *testing.T) {
   if (idQ == 0) {
     t.FailNow()
   }
-
-
 
   queueParam := QueueJson{int32(idQ), nameQ}
   actionParam := ActionsJson{"queue", queueParam}

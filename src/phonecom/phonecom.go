@@ -503,7 +503,7 @@ func execute(
 
   case swagger.MediaApi:
 
-    if (recordingId != 0) {
+    if (recordingId > 0) {
       id = recordingId
     }
 
@@ -520,7 +520,7 @@ func execute(
 
   case swagger.MenusApi:
 
-    if (menuId != 0) {
+    if (menuId > 0) {
       id = menuId
     }
 
@@ -551,7 +551,7 @@ func execute(
 
   case swagger.QueuesApi:
 
-    if (queueId != 0) {
+    if (queueId > 0) {
       id = queueId
     }
 
@@ -582,7 +582,7 @@ func execute(
 
   case swagger.RoutesApi:
 
-    if (routeId != 0) {
+    if (routeId > 0) {
       id = routeId
     }
 
@@ -613,7 +613,7 @@ func execute(
 
   case swagger.SchedulesApi:
 
-    if (scheduleId != 0) {
+    if (scheduleId > 0) {
       id = scheduleId
     }
 
@@ -719,7 +719,7 @@ func execute(
 
   case swagger.DevicesApi:
 
-    if (deviceId != 0) {
+    if (deviceId > 0) {
       id = deviceId
     }
 
@@ -746,7 +746,7 @@ func execute(
 
   case swagger.ExpressservicecodesApi:
 
-    if (codeId != 0) {
+    if (codeId > 0) {
       id = codeId
     }
 
@@ -830,11 +830,11 @@ func execute(
 
   case swagger.GroupsApi:
 
-    if (extensionId != 0) {
+    if (extensionId > 0) {
       id = extensionId
     }
 
-    if (groupId != 0) {
+    if (groupId > 0) {
       idSecondary = groupId
     }
 
@@ -864,7 +864,7 @@ func execute(
 
   case swagger.PhonenumbersApi:
 
-    if (numberId != 0) {
+    if (numberId > 0) {
       id = numberId
     }
 
@@ -891,7 +891,7 @@ func execute(
 
   case swagger.TrunksApi:
 
-    if (trunkId != 0) {
+    if (trunkId > 0) {
       id = trunkId
     }
 
