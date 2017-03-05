@@ -7,7 +7,6 @@ import (
   "github.com/urfave/cli"
   "phonecom-go-sdk"
   "errors"
-  "strconv"
   "encoding/json"
   "io/ioutil"
   "strings"
@@ -19,8 +18,6 @@ var outputType = "json"
 var param CliParams
 
 func main() {
-
-
 
   app := cli.NewApp()
 
@@ -36,322 +33,152 @@ func main() {
   app.Run(os.Args)
 }
 
-type CliParams struct {
-  slice       []string
-  filtersId   []string
-  limit       int32
-  offset      int32
-  id          int32
-  idString    string
-  dryRun      bool
-  verbose     bool
-  input       string
-  command     string
-  idSecondary int32
-  accountId   int32
-  fields      string
-  contact     string
-  billingContact string
-  filterType  string
-  filterValue string
-  fullList    bool
-	inputFormat string
-  outputFormat string
-	apiKey string
-	apiKeyPrefix string
-	sortType string
-  sortValue string
-  samplein string
-  sampleout string
-}
-
 func execute(
     c *cli.Context,
     cliConfig CliConfig) (error, map[string] interface{}) {
 
-  slice := make([]string, 0)
-  limit := int32(c.Int("limit"))
-  offset := int32(c.Int("offset"))
-  idString := c.String("id")
-  var id int32 = 0
+	param, err := createCliParams(c);
 
-  if _, err := strconv.Atoi(idString); err == nil {
-    idInt := 0
-    idInt, err = strconv.Atoi(idString);
-    id = int32(idInt);
-  }
-
-  verbose := c.Bool("verbose")
-  dryRun := c.Bool("dryrun")
-  input := c.String("input")
-  command := c.String("command")
-  idSecondary := int32(c.Int("id-secondary"))
-  accountId := int32(c.Int("account"))
-  contact := c.String("contact")
-  billingContact := c.String("billing-contact")
-  fields := ""
-  filtersType := c.String("filtersType")
-  filtersValue := c.String("filtersValue")
-  sortType := c.String("sortType")
-  sortValue := c.String("sortValue")
-  samplein := c.String("samplein")
-  sampleout := c.String("sampleout")
-  fullList := c.Bool("fullList")
-  inputFormat := c.String("inputFormat")
-  outputFormat := c.String("outputFormat")
-	apiKey := c.String("api-key")
-	apiKeyPrefix := c.String("api-key-prefix")
-
-  var filtersId []string
-  var groupBy []string
-  var extensionId int32
-  var deviceId int32
-  var codeId int32
-  var contactId int32
-  var groupId int32
-  var recordingId int32
-  var menuId int32
-  var numberId int32
-  var queueId int32
-  var routeId int32
-  var scheduleId int32
-  var smsId string
-  var trunkId int32
-
-  var from string
-  var to string
-  var text string
-  from = c.String("from")
-  to = c.String("to")
-  text = c.String("text")
-
-  from = defaultFrom
-  to = defaultTo
-  text = defaultText
-
-  var trunkName = c.String("name")
-  var trunkUri = c.String("uri")
-  var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
-  var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
-
-  trunkName = defaultTrunkName
-  trunkUri = defaultTrunkUri
-  trunkConcurrentCalls = int32(defaultTrunkConcurrentCalls)
-  trunkMaxMinutes = int32(defaultTrunkMaxMinutes)
-
-  var filterParams FilterParams
-  var sortParams SortParams
-  var otherParams OtherParams
-
-
-  if (input != "") {
-    var err error
-    var listParams ListParams
-    err, listParams = getListParams(input)
-    if (err != nil) {
-      return err, nil
-    }
-
-    accountId = listParams.accountId
-    limit = listParams.limit
-    offset = listParams.offset
-    fields = listParams.fields
-
-    err, filterParams = getFiltersParams(input)
-
-    if (err != nil) {
-      return err, nil
-    }
-
-    filtersId = filterParams.filtersId
-
-    err, sortParams = getSortParams(input)
-
-    if (err != nil) {
-      return err, nil
-    }
-
-    err, otherParams = getOtherParams(input)
-    groupBy = otherParams.groupBy
-    extensionId = otherParams.extensionId
-    deviceId = otherParams.deviceId
-    codeId = otherParams.codeId
-    contactId = otherParams.contactId
-    groupId = otherParams.groupId
-    recordingId = otherParams.recordingId
-    menuId = otherParams.menuId
-    numberId = otherParams.numberId
-    queueId = otherParams.queueId
-    routeId = otherParams.routeId
-    scheduleId = otherParams.scheduleId
-    smsId = otherParams.smsId
-    trunkId = otherParams.trunkId
-
-    if (err != nil) {
-      return err, nil
-    }
-  }
-
-  param.verbose = verbose
-	param.dryRun = dryRun
-	param.input = input
-	param.command = command
-	param.idSecondary = idSecondary
-	param.accountId = accountId
-	param.contact = contact
-	param.billingContact = billingContact
-	param.fields = fields
-	param.filterType = filtersType
-	param.filterValue = filtersValue
-	param.sortType = sortType
-	param.sortValue = sortValue
-	param.samplein = samplein
-	param.sampleout = sampleout
-	param.fullList = fullList
-	param.slice = slice
-	param.limit = limit
-	param.offset = offset
-	param.id = id
-	param.idString = idString
-	param.apiKey = apiKey
-	param.apiKeyPrefix = apiKeyPrefix
+	if (err != nil) {
+		return err, nil
+	}
 
   showDryRunVerbose(param)
   if (param.dryRun) {
     return nil, nil
   }
 
-	cliConfig, err := cliConfig.createOrReadCliConfig()
+	cliConfig, err = cliConfig.createOrReadCliConfig()
 
 	if (err != nil) {
     return err, nil
 	}
 
 	swaggerConfig := cliConfig.createSwaggerConfig(cliConfig)
-  api := getApi(swaggerConfig, command)
+  api := getApi(swaggerConfig, param.command)
 
-  accountId = cliConfig.AccountId
+	param.accountId = cliConfig.AccountId
 
   if (api == nil) {
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-  if sortType != "" && sortValue != "" {
-    switch sortType {
+  if param.sortType != "" && param.sortValue != "" {
+    switch param.sortType {
     case "id":
-      sortParams.sortId = sortValue
+      param.sortParams.sortId = param.sortValue
     case "name":
-      sortParams.sortName = sortValue
+			param.sortParams.sortName = param.sortValue
     case "start_time":
-      sortParams.sortStartTime = sortValue
+			param.sortParams.sortStartTime = param.sortValue
     case "created_at":
-      sortParams.sortCreatedAt = sortValue
+			param.sortParams.sortCreatedAt = param.sortValue
     case "extension":
-      sortParams.sortExtension = sortValue
+			param.sortParams.sortExtension = param.sortValue
     case "number":
-      sortParams.sortNumber = sortValue
+			param.sortParams.sortNumber = param.sortValue
     case "updated_at":
-      sortParams.sortUpdatedAt = sortValue
+			param.sortParams.sortUpdatedAt = param.sortValue
     case "phone_number":
-      sortParams.sortPhoneNumber = sortValue
+			param.sortParams.sortPhoneNumber = param.sortValue
     case "internal":
-      sortParams.sortInternal = sortValue
+			param.sortParams.sortInternal = param.sortValue
     case "price":
-      sortParams.sortPrice = sortValue
+			param.sortParams.sortPrice = param.sortValue
     case "npa":
-      sortParams.sortNpa = sortValue
+			param.sortParams.sortNpa = param.sortValue
     case "nxx":
-      sortParams.sortNxx = sortValue
+			param.sortParams.sortNxx = param.sortValue
     case "is_toll_free":
-      sortParams.sortIsTollFree = sortValue
+			param.sortParams.sortIsTollFree = param.sortValue
     case "city":
-      sortParams.sortCity = sortValue
+			param.sortParams.sortCity = param.sortValue
     case "province_postal_code":
-      sortParams.sortProvincePostalCode = sortValue
+			param.sortParams.sortProvincePostalCode = param.sortValue
     case "country_postal_code":
-      sortParams.sortCountryPostalCode = sortValue
+			param.sortParams.sortCountryPostalCode = param.sortValue
     }
   }
 
-  if filtersType != "" && filtersValue != "" {
+  if param.filterType != "" && param.filterValue != "" {
     slice1 := make([]string, 0)
-    slice1 = append(slice1, filtersValue)
-    switch filtersType {
+    slice1 = append(slice1, param.filterValue)
+    switch param.filterType {
     case "id":
-      filtersId = slice1
+			param.filtersId = slice1
     case "name":
-      filterParams.filtersName = slice1
+			param.filterParams.filtersName = slice1
     case "start_time":
-      filterParams.filtersStartTime = slice1
+			param.filterParams.filtersStartTime = slice1
     case "created_at":
-      filterParams.filtersCreatedAt = filtersValue
+			param.filterParams.filtersCreatedAt = param.filterValue
     case "direction":
-      filterParams.filtersDirection = filtersValue
+			param.filterParams.filtersDirection = param.filterValue
     case "called_number":
-      filterParams.filtersCalledNumber = filtersValue
+			param.filterParams.filtersCalledNumber = param.filterValue
     case "type":
-      filterParams.filtersType = filtersValue
+			param.filterParams.filtersType = param.filterValue
     case "extension":
-      filterParams.filtersExtension = slice1
+			param.filterParams.filtersExtension = slice1
     case "number":
-      filterParams.filtersNumber = slice1
+			param.filterParams.filtersNumber = slice1
     case "group_id":
-      filterParams.filtersGroupId = slice1
+			param.filterParams.filtersGroupId = slice1
     case "updated_at":
-      filterParams.filtersUpdatedAt = slice1
+			param.filterParams.filtersUpdatedAt = slice1
     case "phone_number":
-      filterParams.filtersPhoneNumber = slice1
+			param.filterParams.filtersPhoneNumber = slice1
     case "from":
-      filterParams.filtersFrom = filtersValue
+			param.filterParams.filtersFrom = param.filterValue
     case "to":
-      filterParams.filtersTo = slice1
+			param.filterParams.filtersTo = slice1
     case "country_code":
-      filterParams.filtersCountryCode = slice1
+			param.filterParams.filtersCountryCode = slice1
     case "npa":
-      filterParams.filtersNpa = slice1
+			param.filterParams.filtersNpa = slice1
     case "nxx":
-      filterParams.filtersNxx = slice1
+			param.filterParams.filtersNxx = slice1
     case "xxxx":
-      filterParams.filtersXxxx = slice1
+			param.filterParams.filtersXxxx = slice1
     case "city":
-      filterParams.filtersCity = slice1
+			param.filterParams.filtersCity = slice1
     case "province":
-      filterParams.filtersProvince = slice1
+			param.filterParams.filtersProvince = slice1
     case "country":
-      filterParams.filtersCountry = slice1
+			param.filterParams.filtersCountry = slice1
     case "price":
-      filterParams.filtersPrice = slice1
+			param.filterParams.filtersPrice = slice1
     case "category":
-      filterParams.filtersCategory = slice1
+			param.filterParams.filtersCategory = slice1
     case "is_toll_free":
-      filterParams.filtersIsTollFree = slice1
+			param.filterParams.filtersIsTollFree = slice1
     case "province_postal_code":
-      filterParams.filtersProvincePostalCode = slice1
+			param.filterParams.filtersProvincePostalCode = slice1
     case "country_postal_code":
-      filterParams.filtersCountryPostalCode = slice1
+			param.filterParams.filtersCountryPostalCode = slice1
     }
   }
 
   inputType := "json"
 
-  if (strings.EqualFold(inputFormat, "xml")) {
+  if (strings.EqualFold(param.inputFormat, "xml")) {
     inputType = "xml"
   }
 
-  if (strings.EqualFold(inputFormat, "csv")) {
+  if (strings.EqualFold(param.inputFormat, "csv")) {
     inputType = "csv"
   }
 
-  if (strings.EqualFold(outputFormat, "csv")) {
+  if (strings.EqualFold(param.outputFormat, "csv")) {
     outputType = "csv"
   }
 
-  if samplein != "" {
+  if param.samplein != "" {
 
     stringEmailSlice := make([]string, 0)
     stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 
-    switch samplein {
+    switch param.samplein {
     case createDevice:
       createDeviceParamsSample := swagger.CreateDeviceParams{randomString(12), nil}
       marshalInput(createDeviceParamsSample, "createDevice", inputType)
@@ -429,11 +256,11 @@ func execute(
     return nil, nil
   }
 
-  if (sampleout != "") {
+  if (param.sampleout != "") {
     stringEmailSlice := make([]string, 0)
     stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 
-    switch sampleout {
+    switch param.sampleout {
     case getAccount:
       accountFullSample := swagger.AccountFull{int32(randomNumber(10, 9999)), randomString(12), randomString(12), randomString(12), swagger.AccountSummary{int32(randomNumber(10, 9999)), randomString(12)}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}, swagger.ContactAccount{randomString(12), randomString(12), swagger.Address{randomString(12), randomString(12), randomString(12), randomString(12), randomString(12), strings.ToUpper(randomAlphaString(2))}, randomString(12), randomString(12), "primary@email.com", "alternate@email.com"}}
       marshalInput(accountFullSample, "getAccount", inputType)
@@ -518,12 +345,25 @@ func execute(
     return nil, nil
   }
 
+	var command = param.command
+	var accountId = param.accountId
+	var id = param.id
+	var filtersId = param.filtersId
+	var filterParams = param.filterParams
+	var sortParams = param.sortParams
+	var limit = param.limit
+	var offset = param.offset
+	var fields = param.fields
+	var input = param.input
+	var idSecondary = param.idSecondary
+	var idString = param.idString
+
   switch api := api.(type) {
 
   case swagger.MediaApi:
 
-    if (recordingId > 0) {
-      id = recordingId
+    if (param.otherParams.recordingId > 0) {
+      id = param.otherParams.recordingId
     }
 
     switch (command) {
@@ -539,8 +379,8 @@ func execute(
 
   case swagger.MenusApi:
 
-    if (menuId > 0) {
-      id = menuId
+    if (param.otherParams.menuId > 0) {
+      id = param.otherParams.menuId
     }
 
     switch (command) {
@@ -570,8 +410,8 @@ func execute(
 
   case swagger.QueuesApi:
 
-    if (queueId > 0) {
-      id = queueId
+    if (param.otherParams.queueId > 0) {
+      id = param.otherParams.queueId
     }
 
     switch (command) {
@@ -601,8 +441,8 @@ func execute(
 
   case swagger.RoutesApi:
 
-    if (routeId > 0) {
-      id = routeId
+    if (param.otherParams.routeId > 0) {
+      id = param.otherParams.routeId
     }
 
     switch (command) {
@@ -632,8 +472,8 @@ func execute(
 
   case swagger.SchedulesApi:
 
-    if (scheduleId > 0) {
-      id = scheduleId
+    if (param.otherParams.scheduleId > 0) {
+      id = param.otherParams.scheduleId
     }
 
     switch (command) {
@@ -649,8 +489,8 @@ func execute(
 
   case swagger.SmsApi:
 
-    if (smsId != "") {
-      idString = smsId
+    if (param.otherParams.smsId != "") {
+      idString = param.otherParams.smsId
     }
 
     switch (command) {
@@ -665,7 +505,7 @@ func execute(
 
     case createSms:
 
-      params := createSmsParams(from,to,text, extensionId)
+      params := createSmsParams(param.from, param.to, param.text, param.otherParams.extensionId)
       return handle(api.CreateAccountSms(accountId, params))
     }
 
@@ -688,7 +528,7 @@ func execute(
 
     case createSubaccount:
 
-      params := createSubaccountParams(input, contact, billingContact)
+      params := createSubaccountParams(input, param.contact, param.billingContact)
       return handle(api.CreateAccountSubaccount(accountId, params))
     }
 
@@ -711,7 +551,7 @@ func execute(
 
     case listAvailablePhoneNumberRegions:
 
-      return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, groupBy))
+      return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, param.otherParams.groupBy))
     }
 
   case swagger.ApplicationsApi:
@@ -738,8 +578,8 @@ func execute(
 
   case swagger.DevicesApi:
 
-    if (deviceId > 0) {
-      id = deviceId
+    if (param.otherParams.deviceId > 0) {
+      id = param.otherParams.deviceId
     }
 
     switch (command) {
@@ -765,15 +605,15 @@ func execute(
 
   case swagger.ExpressservicecodesApi:
 
-    if (codeId > 0) {
-      id = codeId
+    if (param.otherParams.codeId > 0) {
+      id = param.otherParams.codeId
     }
 
     switch (command) {
 
     case listExpressServiceCodes:
 
-      return handle(api.ListAccountExpressSrvCodes(accountId, slice))
+      return handle(api.ListAccountExpressSrvCodes(accountId, param.slice))
 
     case getExpressServiceCode:
 
@@ -814,12 +654,12 @@ func execute(
 
   case swagger.ContactsApi:
 
-    if (extensionId > 0) {
-      id = extensionId
+    if (param.otherParams.extensionId > 0) {
+      id = param.otherParams.extensionId
     }
 
-    if (contactId > 0) {
-      idSecondary = contactId
+    if (param.otherParams.contactId > 0) {
+			idSecondary = param.otherParams.contactId
     }
 
     switch (command) {
@@ -849,12 +689,12 @@ func execute(
 
   case swagger.GroupsApi:
 
-    if (extensionId > 0) {
-      id = extensionId
+    if (param.otherParams.extensionId > 0) {
+      id = param.otherParams.extensionId
     }
 
-    if (groupId > 0) {
-      idSecondary = groupId
+    if (param.otherParams.groupId > 0) {
+      idSecondary = param.otherParams.groupId
     }
 
     switch (command) {
@@ -883,8 +723,8 @@ func execute(
 
   case swagger.PhonenumbersApi:
 
-    if (numberId > 0) {
-      id = numberId
+    if (param.otherParams.numberId > 0) {
+      id = param.otherParams.numberId
     }
 
     switch (command) {
@@ -910,8 +750,8 @@ func execute(
 
   case swagger.TrunksApi:
 
-    if (trunkId > 0) {
-      id = trunkId
+    if (param.otherParams.trunkId > 0) {
+      id = param.otherParams.trunkId
     }
 
     switch (command) {
@@ -925,12 +765,12 @@ func execute(
       return handle(api.GetAccountTrunk(accountId, id))
 
     case createTrunk:
-      params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
+      params := createTrunkParams(param.trunkName, param.trunkUri, param.trunkConcurrentCalls, param.trunkMaxMinutes)
       return handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
-      params := createTrunkParams(trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes )
+      params := createTrunkParams(param.trunkName, param.trunkUri, param.trunkConcurrentCalls, param.trunkMaxMinutes)
       return handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:

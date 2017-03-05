@@ -73,14 +73,17 @@ func getCliFlags() []cli.Flag {
     },
     cli.StringFlag{
       Name: "from",
+			Value: defaultFrom,
       Usage: "The phone number of the SMS sender",
     },
     cli.StringFlag{
       Name: "to",
+			Value: defaultTo,
       Usage: "The phone number of the SMS receiver",
     },
     cli.StringFlag{
       Name: "text",
+			Value: defaultText,
       Usage: "SMS body",
     },
 		cli.StringFlag{
