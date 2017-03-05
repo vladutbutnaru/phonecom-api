@@ -10,6 +10,14 @@ import (
 var commandFlag = "-command"
 var errorNotNullMessage = "expected no error from Run, got %s"
 
+func createCliConfig() CliConfig{
+
+	var cliConfig CliConfig
+	cliConfig.Path = "../../config.xml"
+
+	return cliConfig
+}
+
 func createCliWithJsonIn(endpoint string, path string) (error, map[string] interface{}) {
 
   app := cli.NewApp()
@@ -18,12 +26,12 @@ func createCliWithJsonIn(endpoint string, path string) (error, map[string] inter
   defaultInput = path
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
+
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+    err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -43,12 +51,11 @@ func createCreateSmsCliWithJsonIn(endpoint string, path string, from string, to 
   defaultText = text
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -69,12 +76,11 @@ func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName stri
   defaultTrunkMaxMinutes = int(trunkMaxMinutes)
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -91,12 +97,11 @@ func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, ma
   defaultId = strconv.Itoa(id)
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -114,12 +119,11 @@ func createReplaceContactCliWithJsonIn(endpoint string, path string, id int, idS
   defaultIdSecondary = strconv.Itoa(idSecondary)
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -140,12 +144,11 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
   defaultTrunkMaxMinutes = int(trunkMaxMinutes)
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -161,12 +164,11 @@ func createCli(endpoint string) (error, map[string] interface{}) {
   defaultCommand = endpoint
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
   var response (map[string] interface{})
   var err error
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 
@@ -190,10 +192,9 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 	defaultId = id
 
 	app.Flags = getCliFlags()
-	configPath = "../../config.xml"
 
 	app.Action = func(c *cli.Context) error {
-		err, response = execute(c)
+		err, response = execute(c, createCliConfig())
 		return err
 	}
 
@@ -217,10 +218,9 @@ func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface
   defaultId = strconv.Itoa(id)
 
   app.Flags = getCliFlags()
-  configPath = "../../config.xml"
 
   app.Action = func(c *cli.Context) error {
-    err, response = execute(c)
+		err, response = execute(c, createCliConfig())
     return err
   }
 

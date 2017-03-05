@@ -12,32 +12,24 @@ import (
   "io/ioutil"
   "strings"
   "time"
-	"path/filepath"
-	"log"
   "encoding/xml"
 )
 
-var configPath = "config.xml" // Used as a variable. To be changed in tests.
 var outputType = "json"
 var param CliParams
 
 func main() {
 
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatal(err)
-		os.Exit(0)
-	}
 
-	configPath = dir + "/config.xml"
 
   app := cli.NewApp()
 
   app.Flags = getCliFlags()
+	var cliConfig CliConfig
 
   app.Action = func(c *cli.Context) error {
     var err error
-    err, _ = execute(c)
+    err, _ = execute(c, cliConfig)
     return err
   }
 
@@ -63,10 +55,19 @@ type CliParams struct {
   filterType  string
   filterValue string
   fullList    bool
+	inputFormat string
+  outputFormat string
+	apiKey string
+	apiKeyPrefix string
+	sortType string
+  sortValue string
+  samplein string
+  sampleout string
 }
 
 func execute(
-    c *cli.Context) (error, map[string] interface{}) {
+    c *cli.Context,
+    cliConfig CliConfig) (error, map[string] interface{}) {
 
   slice := make([]string, 0)
   limit := int32(c.Int("limit"))
@@ -98,6 +99,8 @@ func execute(
   fullList := c.Bool("fullList")
   inputFormat := c.String("inputFormat")
   outputFormat := c.String("outputFormat")
+	apiKey := c.String("api-key")
+	apiKeyPrefix := c.String("api-key-prefix")
 
   var filtersId []string
   var groupBy []string
@@ -189,29 +192,45 @@ func execute(
     }
   }
 
-  param.slice = slice
-  param.limit = limit
-  param.offset = offset
-  param.id = id
-  param.idString = idString
-  param.dryRun = dryRun
   param.verbose = verbose
-  param.input = input
-  param.command = command
-  param.idSecondary = idSecondary
-  param.accountId = accountId
-  param.fields = fields
-  param.contact = contact
-  param.billingContact = billingContact
-  param.fullList = fullList
+	param.dryRun = dryRun
+	param.input = input
+	param.command = command
+	param.idSecondary = idSecondary
+	param.accountId = accountId
+	param.contact = contact
+	param.billingContact = billingContact
+	param.fields = fields
+	param.filterType = filtersType
+	param.filterValue = filtersValue
+	param.sortType = sortType
+	param.sortValue = sortValue
+	param.samplein = samplein
+	param.sampleout = sampleout
+	param.fullList = fullList
+	param.slice = slice
+	param.limit = limit
+	param.offset = offset
+	param.id = id
+	param.idString = idString
+	param.apiKey = apiKey
+	param.apiKeyPrefix = apiKeyPrefix
 
   showDryRunVerbose(param)
   if (param.dryRun) {
     return nil, nil
   }
 
-  api, config := getApi(command)
-  accountId = config.AccountId
+	cliConfig, err := cliConfig.createOrReadCliConfig()
+
+	if (err != nil) {
+    return err, nil
+	}
+
+	swaggerConfig := cliConfig.createSwaggerConfig(cliConfig)
+  api := getApi(swaggerConfig, command)
+
+  accountId = cliConfig.AccountId
 
   if (api == nil) {
     return errors.New(msgCouldNotGetResponse), nil
@@ -927,27 +946,10 @@ func execute(
 }
 
 func getApi(
-    command string) (interface{}, Config) {
+    config *swagger.Configuration,
+    command string) interface{} {
 
   var api interface{}
-  var config = swagger.NewConfiguration()
-
-  mainConfiguration := Config{}
-  var xmlConfig Config = mainConfiguration.getConfig()
-  var baseApiPath string = xmlConfig.BaseApiPath
-  var apiKeyPrefix string = xmlConfig.ApiKeyPrefix
-  var apiKey string = xmlConfig.ApiKey
-
-  if (len(apiKeyPrefix) == 0 || len(apiKey) == 0) {
-    return nil, xmlConfig
-  }
-
-  if (len(baseApiPath) > 0) {
-    config.BasePath = baseApiPath
-  }
-
-  config.APIKeyPrefix["Authorization"] = apiKeyPrefix
-  config.APIKey["Authorization"] = apiKey
 
   switch (command) {
 
@@ -1073,10 +1075,10 @@ func getApi(
 
   default:
     fmt.Printf("Invalid command: %v\n", command)
-    return nil, xmlConfig
+    return nil
   }
 
-  return api, xmlConfig
+  return api
 }
 
 func handle(

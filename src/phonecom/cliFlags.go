@@ -137,5 +137,13 @@ func getCliFlags() []cli.Flag {
       Name: "outputFormat, of",
       Usage: "Output format. Can be 'json' or 'csv'. Default is json",
     },
+		cli.StringFlag{
+			Name: "api-key, ak",
+			Usage: "The API key for Phone.com",
+		},
+		cli.StringFlag{
+			Name: "api-key-prefix, akp",
+			Usage: "The API key prefix for Phone.com",
+		},
   }
 }
