@@ -206,17 +206,19 @@ func (a ExtensionsApi) ListAccountExtensions(accountId int32, filtersId []string
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersIdCollectionFormat = "multi"
 	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 	}
 
+	var filtersExtensionCollectionFormat = "multi"
 	if len(filtersExtension) > 0 {
-		localVarQueryParams.Add("filters[extension]", a.Configuration.APIClient.ParameterToString(filtersExtension, collectionFormat))
+		localVarQueryParams.Add("filters[extension]", a.Configuration.APIClient.ParameterToString(filtersExtension, filtersExtensionCollectionFormat))
 	}
 
+	var filtersNameCollectionFormat = "multi"
 	if len(filtersName) > 0 {
-		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
+		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, filtersNameCollectionFormat))
 	}
 
 	if sortId != "" {

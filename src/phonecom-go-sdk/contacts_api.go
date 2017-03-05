@@ -279,17 +279,19 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersIdCollectionFormat = "multi"
 	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 	}
 
+	var filtersGroupIdCollectionFormat = "multi"
 	if len(filtersGroupId) > 0 {
-		localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, collectionFormat))
+		localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, filtersGroupIdCollectionFormat))
 	}
 
+	var filtersUpdatedAtCollectionFormat = "multi"
 	if len(filtersUpdatedAt) > 0 {
-		localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, collectionFormat))
+		localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, filtersUpdatedAtCollectionFormat))
 	}
 
 	if sortId != "" {

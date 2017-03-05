@@ -77,45 +77,54 @@ func (a AvailablenumbersApi) ListAvailablePhoneNumbers(filtersPhoneNumber []stri
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersPhoneNumberCollectionFormat = "multi"
 	if len(filtersPhoneNumber) > 0 {
-		localVarQueryParams.Add("filters[phone_number]", a.Configuration.APIClient.ParameterToString(filtersPhoneNumber, collectionFormat))
+		localVarQueryParams.Add("filters[phone_number]", a.Configuration.APIClient.ParameterToString(filtersPhoneNumber, filtersPhoneNumberCollectionFormat))
 	}
 
+	var filtersCountryCodeCollectionFormat = "multi"
 	if len(filtersCountryCode) > 0 {
-		localVarQueryParams.Add("filters[country_code]", a.Configuration.APIClient.ParameterToString(filtersCountryCode, collectionFormat))
+		localVarQueryParams.Add("filters[country_code]", a.Configuration.APIClient.ParameterToString(filtersCountryCode, filtersCountryCodeCollectionFormat))
 	}
 
+	var filtersNpaCollectionFormat = "multi"
 	if len(filtersNpa) > 0 {
-		localVarQueryParams.Add("filters[npa]", a.Configuration.APIClient.ParameterToString(filtersNpa, collectionFormat))
+		localVarQueryParams.Add("filters[npa]", a.Configuration.APIClient.ParameterToString(filtersNpa, filtersNpaCollectionFormat))
 	}
 
+	var filtersNxxCollectionFormat = "multi"
 	if len(filtersNxx) > 0 {
-		localVarQueryParams.Add("filters[nxx]", a.Configuration.APIClient.ParameterToString(filtersNxx, collectionFormat))
+		localVarQueryParams.Add("filters[nxx]", a.Configuration.APIClient.ParameterToString(filtersNxx, filtersNxxCollectionFormat))
 	}
 
+	var filtersXxxxCollectionFormat = "multi"
 	if len(filtersXxxx) > 0 {
-		localVarQueryParams.Add("filters[xxxx]", a.Configuration.APIClient.ParameterToString(filtersXxxx, collectionFormat))
+		localVarQueryParams.Add("filters[xxxx]", a.Configuration.APIClient.ParameterToString(filtersXxxx, filtersXxxxCollectionFormat))
 	}
 
+	var filtersCityCollectionFormat = "multi"
 	if len(filtersCity) > 0 {
-		localVarQueryParams.Add("filters[city]", a.Configuration.APIClient.ParameterToString(filtersCity, collectionFormat))
+		localVarQueryParams.Add("filters[city]", a.Configuration.APIClient.ParameterToString(filtersCity, filtersCityCollectionFormat))
 	}
 
+	var filtersProvinceCollectionFormat = "multi"
 	if len(filtersProvince) > 0 {
-		localVarQueryParams.Add("filters[province]", a.Configuration.APIClient.ParameterToString(filtersProvince, collectionFormat))
+		localVarQueryParams.Add("filters[province]", a.Configuration.APIClient.ParameterToString(filtersProvince, filtersProvinceCollectionFormat))
 	}
 
+	var filtersCountryCollectionFormat = "multi"
 	if len(filtersCountry) > 0 {
-		localVarQueryParams.Add("filters[country]", a.Configuration.APIClient.ParameterToString(filtersCountry, collectionFormat))
+		localVarQueryParams.Add("filters[country]", a.Configuration.APIClient.ParameterToString(filtersCountry, filtersCountryCollectionFormat))
 	}
 
+	var filtersPriceCollectionFormat = "multi"
 	if len(filtersPrice) > 0 {
-		localVarQueryParams.Add("filters[price]", a.Configuration.APIClient.ParameterToString(filtersPrice, collectionFormat))
+		localVarQueryParams.Add("filters[price]", a.Configuration.APIClient.ParameterToString(filtersPrice, filtersPriceCollectionFormat))
 	}
 
+	var filtersCategoryCollectionFormat = "multi"
 	if len(filtersCategory) > 0 {
-		localVarQueryParams.Add("filters[category]", a.Configuration.APIClient.ParameterToString(filtersCategory, collectionFormat))
+		localVarQueryParams.Add("filters[category]", a.Configuration.APIClient.ParameterToString(filtersCategory, filtersCategoryCollectionFormat))
 	}
 
 	if sortInternal != "" {

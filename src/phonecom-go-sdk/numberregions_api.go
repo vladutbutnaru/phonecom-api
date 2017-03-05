@@ -79,33 +79,39 @@ func (a NumberregionsApi) ListAvailablePhoneNumberRegions(filtersCountryCode []s
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersCountryCodeCollectionFormat = "multi"
 	if len(filtersCountryCode) > 0 {
-		localVarQueryParams.Add("filters[country_code]", a.Configuration.APIClient.ParameterToString(filtersCountryCode, collectionFormat))
+		localVarQueryParams.Add("filters[country_code]", a.Configuration.APIClient.ParameterToString(filtersCountryCode, filtersCountryCodeCollectionFormat))
 	}
 
+	var filtersNpaCollectionFormat = "multi"
 	if len(filtersNpa) > 0 {
-		localVarQueryParams.Add("filters[npa]", a.Configuration.APIClient.ParameterToString(filtersNpa, collectionFormat))
+		localVarQueryParams.Add("filters[npa]", a.Configuration.APIClient.ParameterToString(filtersNpa, filtersNpaCollectionFormat))
 	}
 
+	var filtersNxxCollectionFormat = "multi"
 	if len(filtersNxx) > 0 {
-		localVarQueryParams.Add("filters[nxx]", a.Configuration.APIClient.ParameterToString(filtersNxx, collectionFormat))
+		localVarQueryParams.Add("filters[nxx]", a.Configuration.APIClient.ParameterToString(filtersNxx, filtersNxxCollectionFormat))
 	}
 
+	var filtersIsTollFreeCollectionFormat = "multi"
 	if len(filtersIsTollFree) > 0 {
-		localVarQueryParams.Add("filters[is_toll_free]", a.Configuration.APIClient.ParameterToString(filtersIsTollFree, collectionFormat))
+		localVarQueryParams.Add("filters[is_toll_free]", a.Configuration.APIClient.ParameterToString(filtersIsTollFree, filtersIsTollFreeCollectionFormat))
 	}
 
+	var filtersCityCollectionFormat = "multi"
 	if len(filtersCity) > 0 {
-		localVarQueryParams.Add("filters[city]", a.Configuration.APIClient.ParameterToString(filtersCity, collectionFormat))
+		localVarQueryParams.Add("filters[city]", a.Configuration.APIClient.ParameterToString(filtersCity, filtersCityCollectionFormat))
 	}
 
+	var filtersProvincePostalCodeCollectionFormat = "multi"
 	if len(filtersProvincePostalCode) > 0 {
-		localVarQueryParams.Add("filters[province_postal_code]", a.Configuration.APIClient.ParameterToString(filtersProvincePostalCode, collectionFormat))
+		localVarQueryParams.Add("filters[province_postal_code]", a.Configuration.APIClient.ParameterToString(filtersProvincePostalCode, filtersProvincePostalCodeCollectionFormat))
 	}
 
+	var filtersCountryPostalCodeCollectionFormat = "multi"
 	if len(filtersCountryPostalCode) > 0 {
-		localVarQueryParams.Add("filters[country_postal_code]", a.Configuration.APIClient.ParameterToString(filtersCountryPostalCode, collectionFormat))
+		localVarQueryParams.Add("filters[country_postal_code]", a.Configuration.APIClient.ParameterToString(filtersCountryPostalCode, filtersCountryPostalCodeCollectionFormat))
 	}
 
 	if sortCountryCode != "" {
@@ -134,8 +140,10 @@ func (a NumberregionsApi) ListAvailablePhoneNumberRegions(filtersCountryCode []s
 	if fields != "" {
 		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
 	}
+
+	var groupByCollectionFormat = "multi"
 	if len(groupBy) > 0 {
-		localVarQueryParams.Add("group_by", a.Configuration.APIClient.ParameterToString(groupBy, collectionFormat))
+		localVarQueryParams.Add("group_by", a.Configuration.APIClient.ParameterToString(groupBy, groupByCollectionFormat))
 	}
 
 

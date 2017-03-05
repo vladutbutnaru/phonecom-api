@@ -143,13 +143,14 @@ func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, fi
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersIdCollectionFormat = "multi"
 	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 	}
 
+	var filtersStartTimeCollectionFormat = "multi"
 	if len(filtersStartTime) > 0 {
-		localVarQueryParams.Add("filters[start_time]", a.Configuration.APIClient.ParameterToString(filtersStartTime, collectionFormat))
+		localVarQueryParams.Add("filters[start_time]", a.Configuration.APIClient.ParameterToString(filtersStartTime, filtersStartTimeCollectionFormat))
 	}
 
 	if filtersCreatedAt != "" {
@@ -164,8 +165,10 @@ func (a CalllogsApi) ListAccountCallLogs(accountId int32, filtersId []string, fi
 	if filtersType != "" {
 		localVarQueryParams.Add("filters[type]", a.Configuration.APIClient.ParameterToString(filtersType, ""))
 	}
+
+	var filtersExtensionCollectionFormat = "multi"
 	if len(filtersExtension) > 0 {
-		localVarQueryParams.Add("filters[extension]", a.Configuration.APIClient.ParameterToString(filtersExtension, collectionFormat))
+		localVarQueryParams.Add("filters[extension]", a.Configuration.APIClient.ParameterToString(filtersExtension, filtersExtensionCollectionFormat))
 	}
 
 	if sortId != "" {

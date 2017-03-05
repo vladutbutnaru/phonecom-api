@@ -206,17 +206,19 @@ func (a PhonenumbersApi) ListAccountPhoneNumbers(accountId int32, filtersId []st
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersIdCollectionFormat = "multi"
 	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, collectionFormat))
+		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 	}
 
+	var filtersNameCollectionFormat = "multi"
 	if len(filtersName) > 0 {
-		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
+		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, filtersNameCollectionFormat))
 	}
 
+	var filtersPhoneNumberCollectionFormat = "multi"
 	if len(filtersPhoneNumber) > 0 {
-		localVarQueryParams.Add("filters[phone_number]", a.Configuration.APIClient.ParameterToString(filtersPhoneNumber, collectionFormat))
+		localVarQueryParams.Add("filters[phone_number]", a.Configuration.APIClient.ParameterToString(filtersPhoneNumber, filtersPhoneNumberCollectionFormat))
 	}
 
 	if sortId != "" {

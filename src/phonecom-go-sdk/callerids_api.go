@@ -73,13 +73,14 @@ func (a CalleridsApi) GetCallerIds(accountId int32, extensionId int32, filtersNu
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var filtersNumberCollectionFormat = "multi"
 	if len(filtersNumber) > 0 {
-		localVarQueryParams.Add("filters[number]", a.Configuration.APIClient.ParameterToString(filtersNumber, collectionFormat))
+		localVarQueryParams.Add("filters[number]", a.Configuration.APIClient.ParameterToString(filtersNumber, filtersNumberCollectionFormat))
 	}
 
+	var filtersNameCollectionFormat = "multi"
 	if len(filtersName) > 0 {
-		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, collectionFormat))
+		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, filtersNameCollectionFormat))
 	}
 
 	if sortNumber != "" {
