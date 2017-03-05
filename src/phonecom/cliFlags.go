@@ -13,6 +13,8 @@ var defaultTrunkName = ""
 var defaultTrunkUri = ""
 var defaultTrunkConcurrentCalls = -1
 var defaultTrunkMaxMinutes = -1
+var defaultLimit = 25
+var defaultOffset = 0
 const defaultAccountId = 1315091
 
 
@@ -37,12 +39,12 @@ func getCliFlags() []cli.Flag {
     },
     cli.IntFlag{
       Name: "limit, l",
-      Value: 5,
+      Value: defaultLimit,
       Usage: "Upper limit of results you want to fetch",
     },
     cli.IntFlag{
       Name: "offset, o",
-      Value: 0,
+      Value: defaultOffset,
       Usage: "Offset of results you want to fetch",
     },
     cli.IntFlag{

@@ -8,12 +8,9 @@ import (
   "phonecom-go-sdk"
   "errors"
   "encoding/json"
-  "io/ioutil"
   "strings"
-  "encoding/xml"
 )
 
-var outputType = "json"
 var param CliParams
 
 func main() {
@@ -36,7 +33,8 @@ func execute(
     c *cli.Context,
     cliConfig CliConfig) (error, map[string] interface{}) {
 
-	param, err := createCliParams(c);
+  var err error
+	param, err = createCliParams(c);
 
 	if (err != nil) {
 		return err, nil
@@ -53,6 +51,17 @@ func execute(
     return err, nil
 	}
 
+  if (param.verbose) {
+    fmt.Printf("CLI configuration: %+v", cliConfig)
+  }
+
+  var sampleJsonCreator SampleJsonCreator
+  sampleJsonCreator.createSampleInOutIfNeeded(param.inputFormat)
+
+  if param.samplein != "" || param.sampleout != "" {
+    return nil, nil
+  }
+
 	swaggerConfig := cliConfig.createSwaggerConfig(cliConfig)
   api := getApi(swaggerConfig, param.command)
 
@@ -62,28 +71,23 @@ func execute(
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-	createSampleInOutIfNeeded(param.inputFormat)
+	return invokeCommand(api)
+}
 
-	if param.samplein != "" || param.sampleout != "" {
-		return nil, nil
-	}
+func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
-  if (strings.EqualFold(param.outputFormat, "csv")) {
-    outputType = "csv"
-  }
-
-	var command = param.command
-	var accountId = param.accountId
-	var id = param.id
-	var filtersId = param.filtersId
-	var filterParams = param.filterParams
-	var sortParams = param.sortParams
-	var limit = param.limit
-	var offset = param.offset
-	var fields = param.fields
-	var input = param.input
-	var idSecondary = param.idSecondary
-	var idString = param.idString
+  var command = param.command
+  var accountId = param.accountId
+  var id = param.id
+  var filtersId = param.filtersId
+  var filterParams = param.filterParams
+  var sortParams = param.sortParams
+  var limit = param.limit
+  var offset = param.offset
+  var fields = param.fields
+  var input = param.input
+  var idSecondary = param.idSecondary
+  var idString = param.idString
 
   switch api := api.(type) {
 
@@ -386,7 +390,7 @@ func execute(
     }
 
     if (param.otherParams.contactId > 0) {
-			idSecondary = param.otherParams.contactId
+      idSecondary = param.otherParams.contactId
     }
 
     switch (command) {
@@ -441,7 +445,7 @@ func execute(
 
     case replaceGroup:
 
-			params := createGroupParams(input)
+      params := createGroupParams(input)
       return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary, params))
     case deleteGroup:
 
@@ -710,6 +714,11 @@ func handle(
     fmt.Println("API Response:")
     fmt.Println()
 
+    var outputType = "json"
+    if (strings.EqualFold(param.outputFormat, "csv")) {
+      outputType = "csv"
+    }
+
     if (outputType == "csv") {
       exportToCsv(jsonObject)
     } else if (outputType == "json") {
@@ -725,28 +734,4 @@ func handle(
   }
 
   return nil, validatedJson
-}
-
-func marshalInput(param interface{}, fileName string, outputType string) {
-
-  var marshalled []byte
-  var err error
-
-  if (outputType == "json") {
-    marshalled, err = json.MarshalIndent(param, "", "  ")
-  } else if (outputType == "xml") {
-    marshalled, err = xml.MarshalIndent(param, "", "  ")
-  }
-
-  if (err == nil) {
-    err = ioutil.WriteFile(fileName + "." + outputType, marshalled, 0644)
-  }
-
-  if (err != nil) {
-
-    fmt.Printf("Could not create sample %s\n", outputType)
-  } else {
-    fmt.Println("Sample " + outputType + " created successfully")
-  }
-
 }
