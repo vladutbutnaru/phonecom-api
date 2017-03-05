@@ -118,7 +118,7 @@ func TestCreateDeleteContact(t *testing.T) {
     t.FailNow()
   }
 
-  createGetOrRemoveCli(deleteContact, id);
+  createCliWithId(deleteContact, id);
   os.Remove(fileName)
 }
 
@@ -167,7 +167,7 @@ func TestCreateDeleteGroup(t *testing.T) {
     t.FailNow()
   }
 
-  createGetOrRemoveCli(deleteGroup, id);
+  createCliWithId(deleteGroup, id);
   os.Remove(fileName)
 }
 
@@ -219,7 +219,7 @@ func TestCreateDeleteMenu(t *testing.T) {
     t.Fatal()
   }
 
-  createGetOrRemoveCli(deleteMenu, id);
+  createCliWithId(deleteMenu, id);
   os.Remove(fileName)
 }
 
@@ -310,7 +310,7 @@ func TestCreateDeleteQueue(t *testing.T) {
     t.FailNow()
   }
 
-  createGetOrRemoveCli(deleteQueue, id);
+  createCliWithId(deleteQueue, id);
   os.Remove(fileName)
 }
 
@@ -375,10 +375,10 @@ func TestCreateDeleteRoute(t *testing.T) {
 
 
 
-  createGetOrRemoveCli(deleteRoute, id);
+  createCliWithId(deleteRoute, id);
   os.Remove(fileName)
 
-  createGetOrRemoveCli(deleteQueue, idQ);
+  createCliWithId(deleteQueue, idQ);
   os.Remove(fileNameQ)
 }
 
@@ -482,7 +482,7 @@ func TestCreateDeleteTrunk(t *testing.T) {
     t.FailNow()
   }
 
-  createGetOrRemoveCli(deleteTrunk, id);
+  createCliWithId(deleteTrunk, id);
   os.Remove(fileName)
 }
 

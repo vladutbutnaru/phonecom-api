@@ -70,7 +70,7 @@ func (c *CliConfig) createSwaggerConfig(xmlConfig CliConfig) *swagger.Configurat
 	return swaggerConfig
 }
 
-func (c *CliConfig) createOrReadCliConfig() (CliConfig, error) {
+func (c *CliConfig) createOrReadCliConfig(param CliParams) (CliConfig, error) {
 
 	var cliConfig CliConfig = c.getConfig()
 

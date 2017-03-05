@@ -8,14 +8,18 @@ import (
   "errors"
 )
 
-func handle(
+type ResponseHandler struct {
+  param CliParams
+}
+
+func (h *ResponseHandler) handle(
     x interface{},
     response *swagger.APIResponse,
     error error) (error, map[string] interface{}) {
 
   if (error != nil) {
 
-    if (param.verbose) {
+    if (h.param.verbose) {
       fmt.Println("Error while getting response")
     }
 
@@ -26,7 +30,7 @@ func handle(
 
   if (payload == nil) {
 
-    if (param.verbose) {
+    if (h.param.verbose) {
       fmt.Println("Null response payload")
     }
 
@@ -37,7 +41,7 @@ func handle(
 
   if (validatedJson == nil) {
 
-    if (param.verbose) {
+    if (h.param.verbose) {
       fmt.Println("Could not unmarshal API json response")
     }
 
@@ -48,7 +52,7 @@ func handle(
 
   if (message != "") {
 
-    if (param.verbose) {
+    if (h.param.verbose) {
       fmt.Printf("%+v\n%s\n", x, response)
     }
 
@@ -56,13 +60,13 @@ func handle(
   } else {
 
     var jsonObject interface{}
-    if (!param.fullList && validatedJson["items"] != nil) {
+    if (!h.param.fullList && validatedJson["items"] != nil) {
       jsonObject = validatedJson["items"]
     } else {
       jsonObject = validatedJson
     }
 
-    if (param.verbose) {
+    if (h.param.verbose) {
       fmt.Printf("\nAPI Response [Verbose]:\n%+v\n", x)
       fmt.Println()
     }
@@ -71,7 +75,7 @@ func handle(
     fmt.Println()
 
     var outputType = "json"
-    if (strings.EqualFold(param.outputFormat, "csv")) {
+    if (strings.EqualFold(h.param.outputFormat, "csv")) {
       outputType = "csv"
     }
 

@@ -9,8 +9,6 @@ import (
   "errors"
 )
 
-var param CliParams
-
 func main() {
 
   app := cli.NewApp()
@@ -31,8 +29,7 @@ func execute(
     c *cli.Context,
     cliConfig CliConfig) (error, map[string] interface{}) {
 
-  var err error
-	param, err = createCliParams(c);
+	param, err := createCliParams(c);
 
 	if (err != nil) {
 		return err, nil
@@ -43,7 +40,7 @@ func execute(
     return nil, nil
   }
 
-	cliConfig, err = cliConfig.createOrReadCliConfig()
+	cliConfig, err = cliConfig.createOrReadCliConfig(param)
 
 	if (err != nil) {
     return err, nil
@@ -54,7 +51,7 @@ func execute(
   }
 
   var sampleJsonCreator SampleJsonCreator
-  sampleJsonCreator.createSampleInOutIfNeeded(param.inputFormat)
+  sampleJsonCreator.createSampleInOutIfNeeded(param)
 
   if param.samplein != "" || param.sampleout != "" {
     return nil, nil
@@ -70,10 +67,10 @@ func execute(
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-	return invokeCommand(api)
+	return invokeCommand(param, api)
 }
 
-func invokeCommand(api interface{}) (error, map[string] interface{}) {
+func invokeCommand(param CliParams, api interface{}) (error, map[string] interface{}) {
 
   var command = param.command
   var accountId = param.accountId
@@ -88,6 +85,8 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
   var idSecondary = param.idSecondary
   var idString = param.idString
 
+  rh := ResponseHandler{param}
+
   switch api := api.(type) {
 
   case swagger.MediaApi:
@@ -100,11 +99,11 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listMedia:
 
-      return handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getRecording:
 
-      return handle(api.GetAccountMedia(accountId, id))
+      return rh.handle(api.GetAccountMedia(accountId, id))
     }
 
   case swagger.MenusApi:
@@ -117,25 +116,25 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listMenus:
 
-      return handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getMenu:
 
-      return handle(api.GetAccountMenu(accountId, id))
+      return rh.handle(api.GetAccountMenu(accountId, id))
 
     case createMenu:
 
       params := createMenuParams(input)
-      return handle(api.CreateAccountMenu(accountId, params))
+      return rh.handle(api.CreateAccountMenu(accountId, params))
 
     case replaceMenu:
 
       params := replaceMenuParams(input)
-      return handle(api.ReplaceAccountMenu(accountId, id, params))
+      return rh.handle(api.ReplaceAccountMenu(accountId, id, params))
 
     case deleteMenu:
 
-      return handle(api.DeleteAccountMenu(accountId, id))
+      return rh.handle(api.DeleteAccountMenu(accountId, id))
     }
 
   case swagger.QueuesApi:
@@ -148,25 +147,25 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listQueues:
 
-      return handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getQueue:
 
-      return handle(api.GetAccountQueue(accountId, id))
+      return rh.handle(api.GetAccountQueue(accountId, id))
 
     case createQueue:
 
       params := createQueueParams(input)
-      return handle(api.CreateAccountQueue(accountId, params))
+      return rh.handle(api.CreateAccountQueue(accountId, params))
 
     case replaceQueue:
 
       params := createQueueParams(input)
-      return handle(api.ReplaceAccountQueue(accountId, id, params))
+      return rh.handle(api.ReplaceAccountQueue(accountId, id, params))
 
     case deleteQueue:
 
-      return handle(api.DeleteAccountQueue(accountId, id))
+      return rh.handle(api.DeleteAccountQueue(accountId, id))
     }
 
   case swagger.RoutesApi:
@@ -179,25 +178,25 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listRoutes:
 
-      return handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getRoute:
 
-      return handle(api.GetAccountRoute(accountId, id))
+      return rh.handle(api.GetAccountRoute(accountId, id))
 
     case createRoute:
 
       params := createRouteParams(input)
-      return handle(api.CreateRoute(accountId, params))
+      return rh.handle(api.CreateRoute(accountId, params))
 
     case replaceRoute:
 
       params := createRouteParams(input)
-      return handle(api.ReplaceAccountRoute(accountId, id, params))
+      return rh.handle(api.ReplaceAccountRoute(accountId, id, params))
 
     case deleteRoute:
 
-      return handle(api.DeleteAccountRoute(accountId, id))
+      return rh.handle(api.DeleteAccountRoute(accountId, id))
     }
 
   case swagger.SchedulesApi:
@@ -210,11 +209,11 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listSchedules:
 
-      return handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getSchedule:
 
-      return handle(api.GetAccountSchedule(accountId, id))
+      return rh.handle(api.GetAccountSchedule(accountId, id))
     }
 
   case swagger.SmsApi:
@@ -227,16 +226,16 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listSms:
 
-      return handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
+      return rh.handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
 
     case getSms:
 
-      return handle(api.GetAccountSms(accountId, idString))
+      return rh.handle(api.GetAccountSms(accountId, idString))
 
     case createSms:
 
       params := createSmsParams(param.from, param.to, param.text, param.otherParams.extensionId)
-      return handle(api.CreateAccountSms(accountId, params))
+      return rh.handle(api.CreateAccountSms(accountId, params))
     }
 
   case swagger.AvailablenumbersApi:
@@ -245,7 +244,7 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listAvailablePhoneNumbers:
 
-      return handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
+      return rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
     }
 
   case swagger.SubaccountsApi:
@@ -254,12 +253,12 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listSubaccounts:
 
-      return handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
+      return rh.handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
 
     case createSubaccount:
 
       params := createSubaccountParams(input, param.contact, param.billingContact)
-      return handle(api.CreateAccountSubaccount(accountId, params))
+      return rh.handle(api.CreateAccountSubaccount(accountId, params))
     }
 
   case swagger.AccountsApi:
@@ -268,11 +267,11 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listAccounts:
 
-      return handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
+      return rh.handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
 
     case getAccount:
 
-      return handle(api.GetAccount(id))
+      return rh.handle(api.GetAccount(id))
     }
 
   case swagger.NumberregionsApi:
@@ -281,7 +280,7 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listAvailablePhoneNumberRegions:
 
-      return handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, param.otherParams.groupBy))
+      return rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, param.otherParams.groupBy))
     }
 
   case swagger.ApplicationsApi:
@@ -290,11 +289,11 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listApplications:
 
-      return handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getApplication:
 
-      return handle(api.GetAccountApplication(accountId, id))
+      return rh.handle(api.GetAccountApplication(accountId, id))
     }
 
   case swagger.CalllogsApi:
@@ -303,7 +302,7 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listCallLogs:
 
-      return handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
+      return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
     }
 
   case swagger.DevicesApi:
@@ -316,21 +315,21 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listDevices:
 
-      return handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getDevice:
 
-      return handle(api.GetAccountDevice(accountId, id))
+      return rh.handle(api.GetAccountDevice(accountId, id))
 
     case createDevice:
 
       params := createDeviceParams(input)
-      return handle(api.CreateAccountDevice(accountId, params))
+      return rh.handle(api.CreateAccountDevice(accountId, params))
 
     case replaceDevice:
 
       params := createDeviceParams(input)
-      return handle(api.ReplaceAccountDevice(accountId, id, params))
+      return rh.handle(api.ReplaceAccountDevice(accountId, id, params))
     }
 
   case swagger.ExpressservicecodesApi:
@@ -343,11 +342,11 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listExpressServiceCodes:
 
-      return handle(api.ListAccountExpressSrvCodes(accountId, param.slice))
+      return rh.handle(api.ListAccountExpressSrvCodes(accountId, param.slice))
 
     case getExpressServiceCode:
 
-      return handle(api.GetAccountExpressSrvCode(accountId, id))
+      return rh.handle(api.GetAccountExpressSrvCode(accountId, id))
     }
 
   case swagger.ExtensionsApi:
@@ -356,21 +355,21 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listExtensions:
 
-      return handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
 
     case getExtension:
 
-      return handle(api.GetAccountExtension(accountId, id))
+      return rh.handle(api.GetAccountExtension(accountId, id))
 
     case createExtension:
 
       params := createExtensionsParams(input)
-      return handle(api.CreateAccountExtension(accountId, params))
+      return rh.handle(api.CreateAccountExtension(accountId, params))
 
     case replaceExtension:
 
       params := replaceExtensionParams(input)
-      return handle(api.ReplaceAccountExtension(accountId, id, params))
+      return rh.handle(api.ReplaceAccountExtension(accountId, id, params))
 
     }
 
@@ -379,7 +378,7 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
     switch (command) {
 
     case getCallerId:
-      return handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields))
     }
 
   case swagger.ContactsApi:
@@ -396,25 +395,25 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listContacts:
 
-      return handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
+      return rh.handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
 
     case getContact:
 
-      return handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
+      return rh.handle(api.GetAccountExtensionContact(accountId, id, idSecondary))
 
     case createContact:
 
       params := createContactParams(input)
-      return handle(api.CreateAccountExtensionContact(accountId, id, params))
+      return rh.handle(api.CreateAccountExtensionContact(accountId, id, params))
 
     case replaceContact:
 
       params := createContactParams(input)
-      return handle(api.ReplaceAccountExtensionContact(accountId, id, idSecondary, params))
+      return rh.handle(api.ReplaceAccountExtensionContact(accountId, id, idSecondary, params))
 
     case deleteContact:
 
-      return handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
+      return rh.handle(api.DeleteAccountExtensionContact(accountId, id, idSecondary))
     }
 
   case swagger.GroupsApi:
@@ -431,24 +430,24 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listGroups:
 
-      return handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getGroup:
 
-      return handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
+      return rh.handle(api.GetAccountExtensionContactGroup(accountId, id, idSecondary))
 
     case createGroup:
 
       params := createGroupParams(input)
-      return handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
+      return rh.handle(api.CreateAccountExtensionContactGroup(accountId, id, params))
 
     case replaceGroup:
 
       params := createGroupParams(input)
-      return handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary, params))
+      return rh.handle(api.ReplaceAccountExtensionContactGroup(accountId, id, idSecondary, params))
     case deleteGroup:
 
-      return handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
+      return rh.handle(api.DeleteAccountExtensionContactGroup(accountId, id, idSecondary))
     }
 
   case swagger.PhonenumbersApi:
@@ -461,21 +460,21 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listPhoneNumbers:
 
-      return handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
+      return rh.handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
 
     case getPhoneNumber:
 
-      return handle(api.GetAccountPhoneNumber(accountId, id))
+      return rh.handle(api.GetAccountPhoneNumber(accountId, id))
 
     case createPhoneNumber:
 
       params := createPhoneNumberParams(input)
-      return handle(api.CreateAccountPhoneNumber(accountId, params))
+      return rh.handle(api.CreateAccountPhoneNumber(accountId, params))
 
     case replacePhoneNumber:
 
       params := replacePhoneNumberParams(input)
-      return handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
+      return rh.handle(api.ReplaceAccountPhoneNumber(accountId, id, params))
     }
 
   case swagger.TrunksApi:
@@ -488,24 +487,24 @@ func invokeCommand(api interface{}) (error, map[string] interface{}) {
 
     case listTrunks:
 
-      return handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+      return rh.handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getTrunk:
 
-      return handle(api.GetAccountTrunk(accountId, id))
+      return rh.handle(api.GetAccountTrunk(accountId, id))
 
     case createTrunk:
       params := createTrunkParams(param.trunkName, param.trunkUri, param.trunkConcurrentCalls, param.trunkMaxMinutes)
-      return handle(api.CreateAccountTrunk(accountId, params))
+      return rh.handle(api.CreateAccountTrunk(accountId, params))
 
     case replaceTrunk:
 
       params := createTrunkParams(param.trunkName, param.trunkUri, param.trunkConcurrentCalls, param.trunkMaxMinutes)
-      return handle(api.ReplaceAccountTrunk(accountId, id, params))
+      return rh.handle(api.ReplaceAccountTrunk(accountId, id, params))
 
     case deleteTrunk:
 
-      return handle(api.DeleteAccountTrunk(accountId, id))
+      return rh.handle(api.DeleteAccountTrunk(accountId, id))
     }
 
   default:

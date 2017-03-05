@@ -110,6 +110,27 @@ func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, ma
   return err, response
 }
 
+func createCliWithIdIdSecondary(endpoint string, id int, idSecondary int) (error, map[string] interface{}) {
+  app := cli.NewApp()
+
+  defaultCommand = endpoint
+  defaultId = strconv.Itoa(id)
+  defaultIdSecondary = strconv.Itoa(idSecondary)
+
+  app.Flags = getCliFlags()
+  var response (map[string] interface{})
+  var err error
+
+  app.Action = func(c *cli.Context) error {
+    err, response = execute(c, createCliConfig())
+    return err
+  }
+
+  app.Run([]string{commandFlag, endpoint})
+
+  return err, response
+}
+
 func createReplaceContactCliWithJsonIn(endpoint string, path string, id int, idSecondary int) (error, map[string] interface{}) {
   app := cli.NewApp()
 
@@ -203,7 +224,7 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 	return err, response
 }
 
-func createGetOrRemoveCli(endpoint string, id int) (error, map[string] interface{}) {
+func createCliWithId(endpoint string, id int) (error, map[string] interface{}) {
 
   if (id <= 0) {
     return nil, nil

@@ -10,19 +10,17 @@ import (
   "fmt"
 )
 
-type SampleJsonCreator struct {
+type SampleJsonCreator struct {}
 
-}
-
-func (s *SampleJsonCreator) createSampleInOutIfNeeded(inputFormat string) {
+func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 
 	inputType := "json"
 
-	if (strings.EqualFold(inputFormat, "xml")) {
+	if (strings.EqualFold(param.inputFormat, "xml")) {
 		inputType = "xml"
 	}
 
-	if (strings.EqualFold(inputFormat, "csv")) {
+	if (strings.EqualFold(param.inputFormat, "csv")) {
 		inputType = "csv"
 	}
 
