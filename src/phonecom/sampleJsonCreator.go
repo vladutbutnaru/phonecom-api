@@ -103,6 +103,8 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			createTrunkParamsSample := swagger.CreateTrunkParams{randomString(12), "SIP/1234@phone.com:5060", int32(60), int32(800), swagger.MediaSummary{123, randomString(12)}, swagger.MediaSummary{123, randomString(12)}, nil}
 			s.marshalInput(createTrunkParamsSample, "replaceTrunk", inputType)
 
+    default:
+      fmt.Printf("Could not create sample input file for command: %s\n", param.samplein)
 		}
 
 	}
@@ -192,6 +194,8 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			trunkFullSample := swagger.TrunkFull{int32(randomNumber(1, 9999)), randomString(12), "SIP/01%e@243.1.45.52:5060", int32(randomNumber(1, 100)), int32(randomNumber(500, 2000)), swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, swagger.MediaSummary{int32(randomNumber(1, 9999)), randomString(12)}, stringCodeSlice}
 			s.marshalInput(trunkFullSample, "getTrunk", inputType)
 
+    default:
+      fmt.Printf("Could not create sample output file for command: %s\n", param.samplein)
 		}
 	}
 }
