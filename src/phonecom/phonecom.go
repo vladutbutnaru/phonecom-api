@@ -50,7 +50,7 @@ func execute(
 	}
 
   if (param.verbose) {
-    fmt.Printf("CLI configuration: %+v", cliConfig)
+    fmt.Printf("CLI configuration: %+v\n\n", cliConfig)
   }
 
   var sampleJsonCreator SampleJsonCreator
