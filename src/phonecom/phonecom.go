@@ -14,7 +14,7 @@ func main() {
   app := cli.NewApp()
 
   app.Flags = getCliFlags()
-	var cliConfig CliConfig
+  var cliConfig CliConfig
 
   app.Action = func(c *cli.Context) error {
     var err error
@@ -27,24 +27,24 @@ func main() {
 
 func execute(
     c *cli.Context,
-    cliConfig CliConfig) (error, map[string] interface{}) {
+    cliConfig CliConfig) (error, map[string]interface{}) {
 
-	param, err := createCliParams(c);
+  param, err := createCliParams(c);
 
-	if (err != nil) {
-		return err, nil
-	}
+  if (err != nil) {
+    return err, nil
+  }
 
   showDryRunVerbose(param)
   if (param.dryRun) {
     return nil, nil
   }
 
-	cliConfig, err = cliConfig.createOrReadCliConfig(param)
+  cliConfig, err = cliConfig.createOrReadCliConfig(param)
 
-	if (err != nil) {
+  if (err != nil) {
     return err, nil
-	}
+  }
 
   if (param.verbose) {
     fmt.Printf("CLI configuration: %+v\n\n", cliConfig)
@@ -57,20 +57,20 @@ func execute(
     return nil, nil
   }
 
-	swaggerConfig := cliConfig.createSwaggerConfig(cliConfig)
+  swaggerConfig := cliConfig.createSwaggerConfig(cliConfig)
   apiResolver := ApiResolver{swaggerConfig, param.command}
   api := apiResolver.resolve()
 
-	param.accountId = cliConfig.AccountId
+  param.accountId = cliConfig.AccountId
 
   if (api == nil) {
     return errors.New(msgCouldNotGetResponse), nil
   }
 
-	return invokeCommand(param, api)
+  return invokeCommand(param, api)
 }
 
-func invokeCommand(param CliParams, api interface{}) (error, map[string] interface{}) {
+func invokeCommand(param CliParams, api interface{}) (error, map[string]interface{}) {
 
   var command = param.command
   var accountId = param.accountId
