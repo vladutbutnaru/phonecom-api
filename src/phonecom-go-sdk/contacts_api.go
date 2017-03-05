@@ -280,31 +280,21 @@ func (a ContactsApi) ListAccountExtensionContacts(accountId int32, extensionId i
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var filtersIdCollectionFormat = "multi"
-	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 
 	var filtersGroupIdCollectionFormat = "multi"
-	if len(filtersGroupId) > 0 {
-		localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, filtersGroupIdCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[group_id]", a.Configuration.APIClient.ParameterToString(filtersGroupId, filtersGroupIdCollectionFormat))
 
 	var filtersUpdatedAtCollectionFormat = "multi"
-	if len(filtersUpdatedAt) > 0 {
-		localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, filtersUpdatedAtCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[updated_at]", a.Configuration.APIClient.ParameterToString(filtersUpdatedAt, filtersUpdatedAtCollectionFormat))
 
-	if sortId != "" {
-		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	}
-	if sortUpdatedAt != "" {
-		localVarQueryParams.Add("sort[updated_at]", a.Configuration.APIClient.ParameterToString(sortUpdatedAt, ""))
-	}
+	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
+	localVarQueryParams.Add("sort[updated_at]", a.Configuration.APIClient.ParameterToString(sortUpdatedAt, ""))
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	if fields != "" {
-		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
-	}
+	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

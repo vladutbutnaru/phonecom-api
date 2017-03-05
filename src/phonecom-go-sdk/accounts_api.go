@@ -132,18 +132,14 @@ func (a AccountsApi) ListAccounts(filtersId []string, sortId string, limit int32
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var filtersIdCollectionFormat = "multi"
-	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 
-	if sortId != "" {
-		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	}
+	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	if fields != "" {
-		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
-	}
+	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

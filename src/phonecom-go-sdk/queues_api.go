@@ -271,26 +271,18 @@ func (a QueuesApi) ListAccountQueues(accountId int32, filtersId []string, filter
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var filtersIdCollectionFormat = "multi"
-	if len(filtersId) > 0 {
-		localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
 
 	var filtersNameCollectionFormat = "multi"
-	if len(filtersName) > 0 {
-		localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, filtersNameCollectionFormat))
-	}
+	localVarQueryParams.Add("filters[name]", a.Configuration.APIClient.ParameterToString(filtersName, filtersNameCollectionFormat))
 
-	if sortId != "" {
-		localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
-	}
-	if sortName != "" {
-		localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
-	}
+	localVarQueryParams.Add("sort[id]", a.Configuration.APIClient.ParameterToString(sortId, ""))
+	localVarQueryParams.Add("sort[name]", a.Configuration.APIClient.ParameterToString(sortName, ""))
 	localVarQueryParams.Add("limit", a.Configuration.APIClient.ParameterToString(limit, ""))
 	localVarQueryParams.Add("offset", a.Configuration.APIClient.ParameterToString(offset, ""))
-	if fields != "" {
-		localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
-	}
+	localVarQueryParams.Add("fields", a.Configuration.APIClient.ParameterToString(fields, ""))
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
