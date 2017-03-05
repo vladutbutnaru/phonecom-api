@@ -182,5 +182,101 @@ func createCliParams(c *cli.Context) (CliParams, error) {
 	par.trunkConcurrentCalls = trunkConcurrentCalls
 	par.trunkMaxMinutes = trunkMaxMinutes
 
+	if par.sortType != "" && par.sortValue != "" {
+		switch par.sortType {
+		case "id":
+			par.sortParams.sortId = par.sortValue
+		case "name":
+			par.sortParams.sortName = par.sortValue
+		case "start_time":
+			par.sortParams.sortStartTime = par.sortValue
+		case "created_at":
+			par.sortParams.sortCreatedAt = par.sortValue
+		case "extension":
+			par.sortParams.sortExtension = par.sortValue
+		case "number":
+			par.sortParams.sortNumber = par.sortValue
+		case "updated_at":
+			par.sortParams.sortUpdatedAt = par.sortValue
+		case "phone_number":
+			par.sortParams.sortPhoneNumber = par.sortValue
+		case "internal":
+			par.sortParams.sortInternal = par.sortValue
+		case "price":
+			par.sortParams.sortPrice = par.sortValue
+		case "npa":
+			par.sortParams.sortNpa = par.sortValue
+		case "nxx":
+			par.sortParams.sortNxx = par.sortValue
+		case "is_toll_free":
+			par.sortParams.sortIsTollFree = par.sortValue
+		case "city":
+			par.sortParams.sortCity = par.sortValue
+		case "province_postal_code":
+			par.sortParams.sortProvincePostalCode = par.sortValue
+		case "country_postal_code":
+			par.sortParams.sortCountryPostalCode = par.sortValue
+		}
+	}
+
+	if par.filterType != "" && par.filterValue != "" {
+		slice1 := make([]string, 0)
+		slice1 = append(slice1, par.filterValue)
+		switch par.filterType {
+		case "id":
+			par.filtersId = slice1
+		case "name":
+			par.filterParams.filtersName = slice1
+		case "start_time":
+			par.filterParams.filtersStartTime = slice1
+		case "created_at":
+			par.filterParams.filtersCreatedAt = par.filterValue
+		case "direction":
+			par.filterParams.filtersDirection = par.filterValue
+		case "called_number":
+			par.filterParams.filtersCalledNumber = par.filterValue
+		case "type":
+			par.filterParams.filtersType = par.filterValue
+		case "extension":
+			par.filterParams.filtersExtension = slice1
+		case "number":
+			par.filterParams.filtersNumber = slice1
+		case "group_id":
+			par.filterParams.filtersGroupId = slice1
+		case "updated_at":
+			par.filterParams.filtersUpdatedAt = slice1
+		case "phone_number":
+			par.filterParams.filtersPhoneNumber = slice1
+		case "from":
+			par.filterParams.filtersFrom = par.filterValue
+		case "to":
+			par.filterParams.filtersTo = slice1
+		case "country_code":
+			par.filterParams.filtersCountryCode = slice1
+		case "npa":
+			par.filterParams.filtersNpa = slice1
+		case "nxx":
+			par.filterParams.filtersNxx = slice1
+		case "xxxx":
+			par.filterParams.filtersXxxx = slice1
+		case "city":
+			par.filterParams.filtersCity = slice1
+		case "province":
+			par.filterParams.filtersProvince = slice1
+		case "country":
+			par.filterParams.filtersCountry = slice1
+		case "price":
+			par.filterParams.filtersPrice = slice1
+		case "category":
+			par.filterParams.filtersCategory = slice1
+		case "is_toll_free":
+			par.filterParams.filtersIsTollFree = slice1
+		case "province_postal_code":
+			par.filterParams.filtersProvincePostalCode = slice1
+		case "country_postal_code":
+			par.filterParams.filtersCountryPostalCode = slice1
+		}
+	}
+
 	return par, nil
 }
