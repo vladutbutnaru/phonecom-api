@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/urfave/cli"
 	"strconv"
-	"errors"
 )
 
 type CliParams struct {
@@ -64,10 +63,6 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 		idInt := 0
 		idInt, err = strconv.Atoi(idString);
 		id = int32(idInt);
-	}
-
-	if (err != nil && idString != "") {
-		return par, errors.New("Could not parse id flag: " + idString)
 	}
 
 	verbose := context.Bool(verboseLong)
