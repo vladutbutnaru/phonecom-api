@@ -462,54 +462,54 @@ func TestCreateSubaccount(t *testing.T) {
   os.Remove(fileName)
 }
 
-//func TestCreateDeleteTrunk(t *testing.T) {
-//
-//  var result map[string] interface{}
-//  var err error
-//
-//  randomName := randomString(12)
-//  trunkName := randomName
-//  trunkUri := "SIP/1234@phone.com:5060"
-//  trunkConcurrentCalls := 60
-//  trunkMaxMinutes := 800
-//  TrunkParamsJson := CreateTrunkJson{trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
-//  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
-//  b, err := json.Marshal(TrunkParamsJson)
-//  err = ioutil.WriteFile(fileName, b, 0644)
-//
-//  err, result = createCreateTrunkCliWithJsonIn(createTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes)
-//  assertErrorNotNull(t, err)
-//
-//  id := getId(result)
-//  if (id == 0) {
-//    t.FailNow()
-//  }
-//
-//  createCliWithId(deleteTrunk, id);
-//  os.Remove(fileName)
-//}
+func TestCreateDeleteTrunk(t *testing.T) {
 
-//func TestListReplaceTrunk(t *testing.T) {
-//
-//  var result map[string] interface{}
-//  var err error
-//
-//  err, result = createCli(listTrunks)
-//  assertErrorNotNull(t, err)
-//
-//  firstId := getFirstId(result)
-//
-//  randomName := randomString(12)
-//  trunkName := randomName
-//  trunkUri := "SIP/1234@phone.com:5060"
-//  trunkConcurrentCalls := 80
-//  trunkMaxMinutes := 800
-//  TrunkParamsJson := ReplaceTrunkJson{int32(firstId), trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
-//  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
-//  b, err := json.Marshal(TrunkParamsJson)
-//  err = ioutil.WriteFile(fileName, b, 0644)
-//
-//  err, result = createReplaceTrunkCliWithJsonIn(replaceTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes, firstId)
-//  assertErrorNotNull(t, err)
-//  os.Remove(fileName)
-//}
+  var result map[string] interface{}
+  var err error
+
+  randomName := randomString(12)
+  trunkName := randomName
+  trunkUri := "SIP/1234@phone.com:5060"
+  trunkConcurrentCalls := 60
+  trunkMaxMinutes := 800
+  TrunkParamsJson := CreateTrunkJson{trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
+  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
+  b, err := json.Marshal(TrunkParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createCreateTrunkCliWithJsonIn(createTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes)
+  assertErrorNotNull(t, err)
+
+  id := getId(result)
+  if (id == 0) {
+    t.FailNow()
+  }
+
+  createCliWithId(deleteTrunk, id);
+  os.Remove(fileName)
+}
+
+func TestListReplaceTrunk(t *testing.T) {
+
+  var result map[string] interface{}
+  var err error
+
+  err, result = createCli(listTrunks)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
+
+  randomName := randomString(12)
+  trunkName := randomName
+  trunkUri := "SIP/1234@phone.com:5060"
+  trunkConcurrentCalls := 80
+  trunkMaxMinutes := 800
+  TrunkParamsJson := ReplaceTrunkJson{int32(firstId), trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes)}
+  fileName := "../test/jsonin/createTrunk" + randomName + ".json"
+  b, err := json.Marshal(TrunkParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createReplaceTrunkCliWithJsonIn(replaceTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes, firstId)
+  assertErrorNotNull(t, err)
+  os.Remove(fileName)
+}

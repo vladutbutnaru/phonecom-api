@@ -111,6 +111,9 @@ func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName stri
 			Name: maxMinutesPerMonthLong,
 			Value: trunkMaxMinutes,
 		},
+		cli.BoolTFlag{
+			Name: verboseLong,
+		},
 	}
 
   return doCreateCli(endpoint, flags)
@@ -131,6 +134,9 @@ func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, ma
 		cli.StringFlag{
 			Name: idLong,
 			Value: strconv.Itoa(id),
+		},
+		cli.BoolTFlag{
+			Name: verboseLong,
 		},
 	}
 
@@ -214,6 +220,9 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
 		cli.IntFlag{
 			Name: maxMinutesPerMonthLong,
 			Value: trunkMaxMinutes,
+		},
+		cli.BoolTFlag{
+			Name: verboseLong,
 		},
 	}
 
