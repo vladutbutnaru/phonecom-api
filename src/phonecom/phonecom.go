@@ -79,6 +79,15 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
   var filterParams = param.filterParams
   var sortParams = param.sortParams
   var limit = param.limit
+    var numOfListCalls = 1
+    if limit > 10 {
+        if limit % 10 == 0 {
+            numOfListCalls = numOfListCalls +  int(limit) / 10
+        } else {
+            numOfListCalls = numOfListCalls + int(limit) / 10 + 1
+        }
+        
+    }
   var offset = param.offset
   var fields = param.fields
   var input = param.input
@@ -98,8 +107,10 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listMedia:
-
-      return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+        for i := 0; i < numOfListCalls; i++ {
+		rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+	}
+      
 
     case getRecording:
 
@@ -115,8 +126,10 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listMenus:
-
-      return rh.handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+for i := 0; i < numOfListCalls; i++ {
+    rh.handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+	
+	}
 
     case getMenu:
 
@@ -146,8 +159,11 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listQueues:
-
-      return rh.handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+for i := 0; i < numOfListCalls; i++ {
+    rh.handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+  
+	
+	}
 
     case getQueue:
 
@@ -177,8 +193,11 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listRoutes:
-
-      return rh.handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+for i := 0; i < numOfListCalls; i++ {
+  rh.handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+	
+	}
+    
 
     case getRoute:
 
@@ -208,8 +227,11 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listSchedules:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+	 rh.handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+	}
+    
 
     case getSchedule:
 
@@ -225,8 +247,10 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listSms:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
+    rh.handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset + int32(i * 10), fields))
+	}
 
     case getSms:
 
@@ -243,8 +267,14 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listAvailablePhoneNumbers:
+for i := 0; i < numOfListCalls; i++ {
+rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset + int32(i * 10), fields))
 
-      return rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
+	}
+ 
+        
+        
+        
     }
 
   case swagger.SubaccountsApi:
@@ -252,8 +282,12 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listSubaccounts:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
+
+    rh.handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset + int32(i * 10), fields))
+	}
+    
 
     case createSubaccount:
 
@@ -266,8 +300,12 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listAccounts:
+for i := 0; i < numOfListCalls; i++ {
+ rh.handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset + int32(i * 10), fields))
 
-      return rh.handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
+  
+	}
+   
 
     case getAccount:
 
@@ -280,7 +318,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
 
     case listAvailablePhoneNumberRegions:
 
-      return rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, param.otherParams.groupBy))
+        
+        
+        for i := 0; i < numOfListCalls; i++ {
+
+rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset + int32(i * 10), fields, param.otherParams.groupBy))
+  
+	}
     }
 
   case swagger.ApplicationsApi:
@@ -288,8 +332,11 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listApplications:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+}
+     
 
     case getApplication:
 
@@ -301,8 +348,11 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listCallLogs:
+for i := 0; i < numOfListCalls; i++ {
+rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset + int32(i * 10), fields))
 
-      return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
+}
+     
     }
 
   case swagger.DevicesApi:
@@ -314,8 +364,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listDevices:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+
+    
+    rh.handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+}
+     
 
     case getDevice:
 
@@ -354,8 +409,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listExtensions:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
+ rh.handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit,  offset + int32(i * 10), fields))
+    
+ 
+}
+      
 
     case getExtension:
 
@@ -394,8 +454,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listContacts:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
+    
+      rh.handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit,  offset + int32(i * 10), fields))
+    
+}
+     
 
     case getContact:
 
@@ -429,8 +494,14 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listGroups:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+    
+    
+      rh.handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
+    
+}
+     
 
     case getGroup:
 
@@ -459,8 +530,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listPhoneNumbers:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
+      rh.handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit,  offset + int32(i * 10), fields))
+    
+    
+}
+     
 
     case getPhoneNumber:
 
@@ -486,8 +562,13 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listTrunks:
+for i := 0; i < numOfListCalls; i++ {
 
-      return rh.handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
+  
+      rh.handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit,  offset + int32(i * 10), fields))
+    
+}
+ 
 
     case getTrunk:
 
