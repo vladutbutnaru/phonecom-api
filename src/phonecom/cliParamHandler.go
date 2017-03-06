@@ -47,12 +47,12 @@ type CliParams struct {
   trunkMaxMinutes int32
 }
 
-func createCliParams(c *cli.Context) (CliParams, error) {
+func createCliParams(context *cli.Context) (CliParams, error) {
 
 	slice := make([]string, 0)
-	limit := int32(c.Int("limit"))
-	offset := int32(c.Int("offset"))
-	idString := c.String("id")
+	limit := int32(context.Int("limit"))
+	offset := int32(context.Int("offset"))
+	idString := context.String("id")
 	var id int32 = 0
 
 	if _, err := strconv.Atoi(idString); err == nil {
@@ -61,40 +61,40 @@ func createCliParams(c *cli.Context) (CliParams, error) {
 		id = int32(idInt);
 	}
 
-	verbose := c.Bool("verbose")
-	dryRun := c.Bool("dryrun")
-	input := c.String("input")
-	command := c.String("command")
-	idSecondary := int32(c.Int("id-secondary"))
-	accountId := int32(c.Int("account"))
-	contact := c.String("contact")
-	billingContact := c.String("billing-contact")
+	verbose := context.Bool("verbose")
+	dryRun := context.Bool("dryrun")
+	input := context.String("input")
+	command := context.String("command")
+	idSecondary := int32(context.Int("id-secondary"))
+	accountId := int32(context.Int("account"))
+	contact := context.String("contact")
+	billingContact := context.String("billing-contact")
 	fields := ""
-	filtersType := c.String("filtersType")
-	filtersValue := c.String("filtersValue")
-	sortType := c.String("sortType")
-	sortValue := c.String("sortValue")
-	samplein := c.String("samplein")
-	sampleout := c.String("sampleout")
-	fullList := c.Bool("fullList")
-	inputFormat := c.String("inputFormat")
-	outputFormat := c.String("outputFormat")
-	apiKey := c.String("api-key")
-	apiKeyPrefix := c.String("api-key-prefix")
+	filtersType := context.String("filtersType")
+	filtersValue := context.String("filtersValue")
+	sortType := context.String("sortType")
+	sortValue := context.String("sortValue")
+	samplein := context.String("samplein")
+	sampleout := context.String("sampleout")
+	fullList := context.Bool("fullList")
+	inputFormat := context.String("inputFormat")
+	outputFormat := context.String("outputFormat")
+	apiKey := context.String("api-key")
+	apiKeyPrefix := context.String("api-key-prefix")
 
 	var filtersId []string
 
 	var from string
 	var to string
 	var text string
-	from = c.String("from")
-	to = c.String("to")
-	text = c.String("text")
+	from = context.String("from")
+	to = context.String("to")
+	text = context.String("text")
 
-	var trunkName = c.String("name")
-	var trunkUri = c.String("uri")
-	var trunkConcurrentCalls = int32(c.Int("max-concurrent-calls"))
-	var trunkMaxMinutes = int32(c.Int("max-minutes-per-month"))
+	var trunkName = context.String("name")
+	var trunkUri = context.String("uri")
+	var trunkConcurrentCalls = int32(context.Int("max-concurrent-calls"))
+	var trunkMaxMinutes = int32(context.Int("max-minutes-per-month"))
 
 	trunkName = defaultTrunkName
 	trunkUri = defaultTrunkUri

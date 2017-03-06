@@ -26,10 +26,10 @@ func main() {
 }
 
 func execute(
-    c *cli.Context,
+    context *cli.Context,
     cliConfig CliConfig) (error, map[string]interface{}) {
 
-  param, err := createCliParams(c);
+  param, err := createCliParams(context);
 
   if (err != nil) {
     return err, nil
