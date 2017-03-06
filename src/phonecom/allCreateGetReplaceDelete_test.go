@@ -104,8 +104,13 @@ func TestCreateDeleteContact(t *testing.T) {
   var result map[string] interface{}
   var err error
 
+  err, result = createCli(listExtensions)
+  assertErrorNotNull(t, err)
+
+  extensionId := getFirstId(result)
+
   randomName := randomString(12)
-  ContactParamsJson := CreateContactJson{1764590, "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
+  ContactParamsJson := CreateContactJson{int32(extensionId), "Geordi", "middle name", "last name", "prefix", "phoneticFirstName", "phoneticMiddleName", "phoneticLastName", "suffix", "nickname", "company", "department", "jobTitle"}
   fileName := "../test/jsonin/createContact" + randomName + ".json"
   b, err := json.Marshal(ContactParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
@@ -153,9 +158,14 @@ func TestCreateDeleteGroup(t *testing.T) {
   var result map[string] interface{}
   var err error
 
+  err, result = createCli(listExtensions)
+  assertErrorNotNull(t, err)
+
+  extensionId := getFirstId(result)
+
   randomName := randomString(12)
   fileName := "../test/jsonin/createGroup" + randomName + ".json"
-  GroupParamsJson := CreateGroupJson{1764590, "Ferengi Traders"}
+  GroupParamsJson := CreateGroupJson{int32(extensionId), "Ferengi Traders"}
   b, err := json.Marshal(GroupParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 
@@ -373,8 +383,6 @@ func TestCreateDeleteRoute(t *testing.T) {
     t.FailNow()
   }
 
-
-
   createCliWithId(deleteRoute, id);
   os.Remove(fileName)
 
@@ -434,7 +442,6 @@ func TestCreateSubaccount(t *testing.T) {
   var result map[string] interface{}
   var err error
 
-
   randomName := randomString(12)
   randomPassword := randomString(12)
   AddressObject1 := AddressJson{"100 Main St", "San Diego", "CA", "92129", "US"}
@@ -445,7 +452,6 @@ func TestCreateSubaccount(t *testing.T) {
   fileName := "../test/jsonin/createSubaccount" + randomName + ".json"
   b, err := json.Marshal(SubaccountParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
-
 
   err, result = createCliWithJsonIn(createSubaccount, fileName)
   assertErrorNotNull(t, err)
@@ -462,7 +468,6 @@ func TestCreateDeleteTrunk(t *testing.T) {
   var result map[string] interface{}
   var err error
 
-
   randomName := randomString(12)
   trunkName := randomName
   trunkUri := "SIP/1234@phone.com:5060"
@@ -472,7 +477,6 @@ func TestCreateDeleteTrunk(t *testing.T) {
   fileName := "../test/jsonin/createTrunk" + randomName + ".json"
   b, err := json.Marshal(TrunkParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
-
 
   err, result = createCreateTrunkCliWithJsonIn(createTrunk, fileName, trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes))
   assertErrorNotNull(t, err)
