@@ -277,6 +277,10 @@ func createCliWithId(endpoint string, id int) (error, map[string] interface{}) {
 			Name: idLong,
 			Value: strconv.Itoa(id),
 		},
+		cli.IntFlag{
+			Name: limitLong,
+			Value: 5,
+		},
 	}
 
   return doCreateCli(endpoint, flags)
