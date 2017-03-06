@@ -50,9 +50,9 @@ type CliParams struct {
 func createCliParams(context *cli.Context) (CliParams, error) {
 
 	slice := make([]string, 0)
-	limit := int32(context.Int("limit"))
-	offset := int32(context.Int("offset"))
-	idString := context.String("id")
+	limit := int32(context.Int(limitLong))
+	offset := int32(context.Int(offsetLong))
+	idString := context.String(idLong)
 	var id int32 = 0
 
 	if _, err := strconv.Atoi(idString); err == nil {
@@ -61,40 +61,40 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 		id = int32(idInt);
 	}
 
-	verbose := context.Bool("verbose")
-	dryRun := context.Bool("dryrun")
-	input := context.String("input")
-	command := context.String("command")
-	idSecondary := int32(context.Int("id-secondary"))
-	accountId := int32(context.Int("account"))
-	contact := context.String("contact")
-	billingContact := context.String("billing-contact")
+	verbose := context.Bool(verboseLong)
+	dryRun := context.Bool(dryrunLong)
+	input := context.String(inputLong)
+	command := context.String(commandLong)
+	idSecondary := int32(context.Int(idSecondaryLong))
+	accountId := int32(context.Int(accountIdLong))
+	contact := context.String(contactLong)
+	billingContact := context.String(billingContactLong)
 	fields := ""
-	filtersType := context.String("filtersType")
-	filtersValue := context.String("filtersValue")
-	sortType := context.String("sortType")
-	sortValue := context.String("sortValue")
-	samplein := context.String("samplein")
-	sampleout := context.String("sampleout")
-	fullList := context.Bool("fullList")
-	inputFormat := context.String("inputFormat")
-	outputFormat := context.String("outputFormat")
-	apiKey := context.String("api-key")
-	apiKeyPrefix := context.String("api-key-prefix")
+	filtersType := context.String(filtersTypeLong)
+	filtersValue := context.String(filtersValueLong)
+	sortType := context.String(sortTypeLong)
+	sortValue := context.String(sortValueLong)
+	samplein := context.String(sampleInLong)
+	sampleout := context.String(sampleOutLong)
+	fullList := context.Bool(fullListLong)
+	inputFormat := context.String(inputFormatLong)
+	outputFormat := context.String(outputFormatLong)
+	apiKey := context.String(apiKeyLong)
+	apiKeyPrefix := context.String(apiKeyPrefixLong)
 
 	var filtersId []string
 
 	var from string
 	var to string
 	var text string
-	from = context.String("from")
-	to = context.String("to")
-	text = context.String("text")
+	from = context.String(fromLong)
+	to = context.String(toLong)
+	text = context.String(textLong)
 
-	var trunkName = context.String("name")
-	var trunkUri = context.String("uri")
-	var trunkConcurrentCalls = int32(context.Int("max-concurrent-calls"))
-	var trunkMaxMinutes = int32(context.Int("max-minutes-per-month"))
+	var trunkName = context.String(trunkNameLong)
+	var trunkUri = context.String(trunkUriLong)
+	var trunkConcurrentCalls = int32(context.Int(maxConcurrentCallsLong))
+	var trunkMaxMinutes = int32(context.Int(maxMinutesPerMonthLong))
 
 	trunkName = defaultTrunkName
 	trunkUri = defaultTrunkUri

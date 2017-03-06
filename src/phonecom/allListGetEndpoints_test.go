@@ -85,10 +85,13 @@ func TestListExtensions(t *testing.T) {
 func TestListCallerIds(t *testing.T) {
 
   var err error
+	var json map[string] interface{}
 
-  err, _ = createCli(getCallerId)
-  assertErrorNotNull(t, err)
+	err, json = createCli(listExtensions)
+	assertErrorNotNull(t, err)
+	extensionId := getFirstId(json)
 
+  err, _ = createCliWithId(getCallerId, extensionId)
   assertErrorNotNull(t, err)
 }
 

@@ -17,137 +17,166 @@ var defaultLimit = 25
 var defaultOffset = 0
 const defaultAccountId = 1315091
 
+const commandLong = "command"
+const idLong = "id"
+const idSecondaryLong = "id-secondary"
+const limitLong = "limit"
+const offsetLong = "offset"
+const accountIdLong = "account"
+const dryrunLong = "dryrun"
+const inputLong = "input"
+const verboseLong = "verbose"
+const contactLong = "contact"
+const billingContactLong = "billing-contact"
+const fromLong = "from"
+const toLong = "to"
+const textLong = "text"
+const trunkNameLong = "name"
+const trunkUriLong = "uri"
+const maxConcurrentCallsLong = "max-concurrent-calls"
+const maxMinutesPerMonthLong = "max-minutes-per-month"
+const filtersTypeLong = "filtersType"
+const filtersValueLong = "filtersValue"
+const sortTypeLong = "sortType"
+const sortValueLong = "sortValue"
+const sampleInLong = "samplein"
+const sampleOutLong = "sampleout"
+const fullListLong = "fullList"
+const inputFormatLong = "inputFormat"
+const outputFormatLong = "outputFormat"
+const apiKeyLong = "api-key"
+const apiKeyPrefixLong = "api-key-prefix"
 
 func getCliFlags() []cli.Flag {
 
   return []cli.Flag{
 
     cli.StringFlag{
-      Name: "command, c",
+      Name: commandLong + ", c",
       Value: defaultCommand,
       Usage: "Phone.com API command that you want to execute",
     },
     cli.StringFlag{
-      Name: "id",
+      Name: idLong,
       Value: defaultId,
       Usage: "ID of entity you want to operate",
     },
     cli.StringFlag{
-      Name: "id-secondary, is",
+      Name: idSecondaryLong + ", is",
       Value: defaultIdSecondary,
       Usage: "Secondary ID of entity you want to operate",
     },
     cli.IntFlag{
-      Name: "limit, l",
+      Name: limitLong + ", l",
       Value: defaultLimit,
       Usage: "Upper limit of results you want to fetch",
     },
     cli.IntFlag{
-      Name: "offset, o",
+      Name: offsetLong + ", o",
       Value: defaultOffset,
       Usage: "Offset of results you want to fetch",
     },
     cli.IntFlag{
-      Name: "account, a",
+      Name: accountIdLong + ", a",
       Value: defaultAccountId,
       Usage: "Phone.com API account to use in API calls",
     },
     cli.BoolFlag{
-      Name: "dryrun, d",
+      Name: dryrunLong + ", d",
       Usage: "Print the expected action without executing the API command",
     },
     cli.StringFlag{
-      Name: "input, i",
+      Name: inputLong + ", i",
       Value: defaultInput,
       Usage: "Specify the path to the JSON file for making the API call",
     },
     cli.BoolFlag{
-      Name: "verbose, vr",
+      Name: verboseLong + ", vr",
       Usage: "Activate verbose mode",
     },
     cli.StringFlag{
-      Name: "contact",
+      Name: contactLong,
       Usage: "Path to the local JSON descriptor to a contact object",
     },
     cli.StringFlag{
-      Name: "billing-contact",
+      Name: billingContactLong,
       Usage: "Path to the local JSON descriptor to a billing contact object",
     },
     cli.StringFlag{
-      Name: "from",
+      Name: fromLong,
 			Value: defaultFrom,
       Usage: "The phone number of the SMS sender",
     },
     cli.StringFlag{
-      Name: "to",
+      Name: toLong,
 			Value: defaultTo,
       Usage: "The phone number of the SMS receiver",
     },
     cli.StringFlag{
-      Name: "text",
+      Name: textLong,
 			Value: defaultText,
       Usage: "SMS body",
     },
 		cli.StringFlag{
-      Name: "name",
+      Name: trunkNameLong,
       Usage: "Trunk name",
     },
 		cli.StringFlag{
-      Name: "uri",
+      Name: trunkUriLong,
       Usage: "Trunk uri",
     },
 		cli.IntFlag{
-      Name: "max-concurrent-calls",
+      Name: maxConcurrentCallsLong,
       Value: 60,
       Usage: "Maximum concurrent calls for the trunk",
     },
     cli.IntFlag{
-      Name: "max-minutes-per-month",
+      Name: maxMinutesPerMonthLong,
       Value: 800,
       Usage: "Maximum of minutes per month for the trunk",
     },
     cli.StringFlag{
-      Name: "filtersType, ft",
+      Name: filtersTypeLong + ", ft",
       Usage: "Type of filter",
     },
     cli.StringFlag{
-      Name: "filtersValue, fv",
+      Name: filtersValueLong + ", fv",
       Usage: "Type of filter",
     },
     cli.StringFlag{
-      Name: "sortType, st",
+      Name: sortTypeLong + ", st",
       Usage: "Type of filter",
     },
     cli.StringFlag{
-      Name: "sortValue, sv",
+      Name: sortValueLong + ", sv",
       Usage: "Type of filter",
     },
     cli.StringFlag{
-      Name: "samplein, si",
+      Name: sampleInLong + ", si",
       Usage: "Generate sample input json",
     },
     cli.StringFlag{
-      Name: "sampleout, so",
+      Name: sampleOutLong + ", so",
       Usage: "Generate sample output json",
     },
     cli.BoolFlag{
-      Name: "fullList, fl",
+      Name: fullListLong + ", fl",
       Usage: "Generate sample output json",
     },
     cli.StringFlag{
-      Name: "inputFormat, if",
+      Name: inputFormatLong + ", if",
       Usage: "Input format. Can be 'json' or 'xml'. Default is json",
     },
     cli.StringFlag{
-      Name: "outputFormat, of",
+      Name: outputFormatLong + ", of",
       Usage: "Output format. Can be 'json' or 'csv'. Default is json",
     },
 		cli.StringFlag{
-			Name: "api-key, ak",
+			Name: apiKeyLong + ", ak",
 			Usage: "The API key for Phone.com",
 		},
 		cli.StringFlag{
-			Name: "api-key-prefix, akp",
+			Name: apiKeyPrefixLong + ", akp",
 			Usage: "The API key prefix for Phone.com",
 		},
   }

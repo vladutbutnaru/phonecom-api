@@ -478,7 +478,7 @@ func TestCreateDeleteTrunk(t *testing.T) {
   b, err := json.Marshal(TrunkParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, result = createCreateTrunkCliWithJsonIn(createTrunk, fileName, trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes))
+  err, result = createCreateTrunkCliWithJsonIn(createTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes)
   assertErrorNotNull(t, err)
 
   id := getId(result)
@@ -510,7 +510,7 @@ func TestListReplaceTrunk(t *testing.T) {
   b, err := json.Marshal(TrunkParamsJson)
   err = ioutil.WriteFile(fileName, b, 0644)
 
-  err, result = createReplaceTrunkCliWithJsonIn(replaceTrunk, fileName, trunkName, trunkUri, int32(trunkConcurrentCalls), int32(trunkMaxMinutes), firstId)
+  err, result = createReplaceTrunkCliWithJsonIn(replaceTrunk, fileName, trunkName, trunkUri, trunkConcurrentCalls, trunkMaxMinutes, firstId)
   assertErrorNotNull(t, err)
   os.Remove(fileName)
 }
