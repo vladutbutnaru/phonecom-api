@@ -79,15 +79,6 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
   var filterParams = param.filterParams
   var sortParams = param.sortParams
   var limit = param.limit
-    var numOfListCalls = 1
-    if limit > 10 {
-        if limit % 10 == 0 {
-            numOfListCalls = numOfListCalls +  int(limit) / 10
-        } else {
-            numOfListCalls = numOfListCalls + int(limit) / 10 + 1
-        }
-        
-    }
   var offset = param.offset
   var fields = param.fields
   var input = param.input
@@ -107,10 +98,8 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listMedia:
-        for i := 0; i < numOfListCalls; i++ {
-		rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-	}
-      
+
+      return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getRecording:
 
@@ -126,10 +115,8 @@ func invokeCommand(param CliParams, api interface{}) (error, map[string]interfac
     switch (command) {
 
     case listMenus:
-for i := 0; i < numOfListCalls; i++ {
-    rh.handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-	
-	}
+
+      return rh.handle(api.ListAccountMenus(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getMenu:
 
@@ -159,11 +146,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listQueues:
-for i := 0; i < numOfListCalls; i++ {
-    rh.handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-  
-	
-	}
+
+      return rh.handle(api.ListAccountQueues(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getQueue:
 
@@ -193,11 +177,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listRoutes:
-for i := 0; i < numOfListCalls; i++ {
-  rh.handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-	
-	}
-    
+
+      return rh.handle(api.ListAccountRoutes(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getRoute:
 
@@ -227,11 +208,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listSchedules:
-for i := 0; i < numOfListCalls; i++ {
 
-	 rh.handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-	}
-    
+      return rh.handle(api.ListAccountSchedules(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getSchedule:
 
@@ -247,10 +225,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listSms:
-for i := 0; i < numOfListCalls; i++ {
 
-    rh.handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset + int32(i * 10), fields))
-	}
+      return rh.handle(api.ListAccountSms(accountId, filtersId, filterParams.filtersDirection, filterParams.filtersFrom, sortParams.sortId, sortParams.sortCreatedAt, limit, offset, fields))
 
     case getSms:
 
@@ -267,14 +243,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listAvailablePhoneNumbers:
-for i := 0; i < numOfListCalls; i++ {
-rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset + int32(i * 10), fields))
 
-	}
- 
-        
-        
-        
+      return rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersXxxx, filterParams.filtersCity, filterParams.filtersProvince, filterParams.filtersCountry, filterParams.filtersPrice, filterParams.filtersCategory, sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber, limit, offset, fields))
     }
 
   case swagger.SubaccountsApi:
@@ -282,12 +252,8 @@ rh.handle(api.ListAvailablePhoneNumbers(filterParams.filtersPhoneNumber, filterP
     switch (command) {
 
     case listSubaccounts:
-for i := 0; i < numOfListCalls; i++ {
 
-
-    rh.handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset + int32(i * 10), fields))
-	}
-    
+      return rh.handle(api.ListAccountSubaccounts(accountId, filtersId, sortParams.sortId, limit, offset, fields))
 
     case createSubaccount:
 
@@ -300,12 +266,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listAccounts:
-for i := 0; i < numOfListCalls; i++ {
- rh.handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset + int32(i * 10), fields))
 
-  
-	}
-   
+      return rh.handle(api.ListAccounts(filtersId, sortParams.sortId, limit, offset, fields))
 
     case getAccount:
 
@@ -318,13 +280,7 @@ for i := 0; i < numOfListCalls; i++ {
 
     case listAvailablePhoneNumberRegions:
 
-        
-        
-        for i := 0; i < numOfListCalls; i++ {
-
-rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset + int32(i * 10), fields, param.otherParams.groupBy))
-  
-	}
+      return rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, filterParams.filtersNpa, filterParams.filtersNxx, filterParams.filtersIsTollFree, filterParams.filtersCity, filterParams.filtersProvincePostalCode, filterParams.filtersCountryPostalCode, sortParams.sortCountryCode, sortParams.sortNpa, sortParams.sortNxx, sortParams.sortIsTollFree, sortParams.sortCity, sortParams.sortProvincePostalCode, sortParams.sortCountryPostalCode, limit, offset, fields, param.otherParams.groupBy))
     }
 
   case swagger.ApplicationsApi:
@@ -332,11 +288,8 @@ rh.handle(api.ListAvailablePhoneNumberRegions(filterParams.filtersCountryCode, f
     switch (command) {
 
     case listApplications:
-for i := 0; i < numOfListCalls; i++ {
 
-rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-}
-     
+      return rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getApplication:
 
@@ -348,11 +301,8 @@ rh.handle(api.ListAccountApplications(accountId, filtersId, filterParams.filters
     switch (command) {
 
     case listCallLogs:
-for i := 0; i < numOfListCalls; i++ {
-rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset + int32(i * 10), fields))
 
-}
-     
+      return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
     }
 
   case swagger.DevicesApi:
@@ -364,13 +314,8 @@ rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStar
     switch (command) {
 
     case listDevices:
-for i := 0; i < numOfListCalls; i++ {
 
-
-    
-    rh.handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-}
-     
+      return rh.handle(api.ListAccountDevices(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getDevice:
 
@@ -409,13 +354,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listExtensions:
-for i := 0; i < numOfListCalls; i++ {
 
- rh.handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit,  offset + int32(i * 10), fields))
-    
- 
-}
-      
+      return rh.handle(api.ListAccountExtensions(accountId, filtersId, filterParams.filtersExtension, filterParams.filtersName, sortParams.sortId, sortParams.sortExtension, sortParams.sortName, limit, offset, fields))
 
     case getExtension:
 
@@ -454,13 +394,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listContacts:
-for i := 0; i < numOfListCalls; i++ {
 
-    
-      rh.handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit,  offset + int32(i * 10), fields))
-    
-}
-     
+      return rh.handle(api.ListAccountExtensionContacts(accountId, id, filtersId, filterParams.filtersGroupId, filterParams.filtersUpdatedAt, sortParams.sortId, sortParams.sortUpdatedAt, limit, offset, fields))
 
     case getContact:
 
@@ -494,14 +429,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listGroups:
-for i := 0; i < numOfListCalls; i++ {
 
-    
-    
-      rh.handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + int32(i * 10), fields))
-    
-}
-     
+      return rh.handle(api.ListAccountExtensionContactGroups(accountId, id, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getGroup:
 
@@ -530,13 +459,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listPhoneNumbers:
-for i := 0; i < numOfListCalls; i++ {
 
-      rh.handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit,  offset + int32(i * 10), fields))
-    
-    
-}
-     
+      return rh.handle(api.ListAccountPhoneNumbers(accountId, filtersId, filterParams.filtersName, filterParams.filtersPhoneNumber, sortParams.sortId, sortParams.sortName, sortParams.sortPhoneNumber, limit, offset, fields))
 
     case getPhoneNumber:
 
@@ -562,13 +486,8 @@ for i := 0; i < numOfListCalls; i++ {
     switch (command) {
 
     case listTrunks:
-for i := 0; i < numOfListCalls; i++ {
 
-  
-      rh.handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit,  offset + int32(i * 10), fields))
-    
-}
- 
+      return rh.handle(api.ListAccountTrunks(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
     case getTrunk:
 
