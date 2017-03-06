@@ -20,10 +20,15 @@ func createCliConfig() CliConfig{
 
 func createCliWithJsonIn(endpoint string, path string) (error, map[string] interface{}) {
 
-  app := cli.NewApp()
-
   defaultCommand = endpoint
   defaultInput = path
+
+  return doCreateCli(endpoint)
+}
+
+func doCreateCli(endpoint string) (error, map[string] interface{}) {
+
+  app := cli.NewApp()
 
   app.Flags = getCliFlags()
 
@@ -42,32 +47,17 @@ func createCliWithJsonIn(endpoint string, path string) (error, map[string] inter
 
 func createCreateSmsCliWithJsonIn(endpoint string, path string, from string, to string, text string) (error, map[string] interface{}) {
 
-  app := cli.NewApp()
-
   defaultCommand = endpoint
   defaultInput = path
   defaultFrom = from
   defaultTo = to
   defaultText = text
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName string, trunkUri string, trunkConcurrentCalls int32, trunkMaxMinutes int32) (error, map[string] interface{}) {
 
-  app := cli.NewApp()
-
   defaultCommand = endpoint
   defaultInput = path
   defaultTrunkName = trunkName
@@ -75,86 +65,38 @@ func createCreateTrunkCliWithJsonIn(endpoint string, path string, trunkName stri
   defaultTrunkConcurrentCalls = int(trunkConcurrentCalls)
   defaultTrunkMaxMinutes = int(trunkMaxMinutes)
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createReplaceCliWithJsonIn(endpoint string, path string, id int) (error, map[string] interface{}) {
-  app := cli.NewApp()
 
   defaultCommand = endpoint
   defaultInput = path
   defaultId = strconv.Itoa(id)
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createCliWithIdIdSecondary(endpoint string, id int, idSecondary int) (error, map[string] interface{}) {
-  app := cli.NewApp()
 
   defaultCommand = endpoint
   defaultId = strconv.Itoa(id)
   defaultIdSecondary = strconv.Itoa(idSecondary)
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-    err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createReplaceContactCliWithJsonIn(endpoint string, path string, id int, idSecondary int) (error, map[string] interface{}) {
-  app := cli.NewApp()
 
   defaultCommand = endpoint
   defaultInput = path
   defaultId = strconv.Itoa(id)
   defaultIdSecondary = strconv.Itoa(idSecondary)
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName string, trunkUri string, trunkConcurrentCalls int32, trunkMaxMinutes int32, id int) (error, map[string] interface{}) {
-  app := cli.NewApp()
 
   defaultCommand = endpoint
   defaultInput = path
@@ -164,38 +106,14 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
   defaultTrunkConcurrentCalls = int(trunkConcurrentCalls)
   defaultTrunkMaxMinutes = int(trunkMaxMinutes)
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createCli(endpoint string) (error, map[string] interface{}) {
 
-  app := cli.NewApp()
-
   defaultCommand = endpoint
 
-  app.Flags = getCliFlags()
-  var response (map[string] interface{})
-  var err error
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func createGetCliStringId(endpoint string, id string) (error, map[string] interface{}) {
@@ -204,24 +122,10 @@ func createGetCliStringId(endpoint string, id string) (error, map[string] interf
 		return nil, nil
 	}
 
-	var response (map[string] interface{})
-	var err error
-
-	app := cli.NewApp()
-
 	defaultCommand = endpoint
 	defaultId = id
 
-	app.Flags = getCliFlags()
-
-	app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-		return err
-	}
-
-	app.Run([]string{commandFlag, endpoint})
-
-	return err, response
+  return doCreateCli(endpoint)
 }
 
 func createCliWithId(endpoint string, id int) (error, map[string] interface{}) {
@@ -230,24 +134,10 @@ func createCliWithId(endpoint string, id int) (error, map[string] interface{}) {
     return nil, nil
   }
 
-  var response (map[string] interface{})
-  var err error
-
-  app := cli.NewApp()
-
   defaultCommand = endpoint
   defaultId = strconv.Itoa(id)
 
-  app.Flags = getCliFlags()
-
-  app.Action = func(c *cli.Context) error {
-		err, response = execute(c, createCliConfig())
-    return err
-  }
-
-  app.Run([]string{commandFlag, endpoint})
-
-  return err, response
+  return doCreateCli(endpoint)
 }
 
 func assertErrorNotNull(t *testing.T, err error) {
