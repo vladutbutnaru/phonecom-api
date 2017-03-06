@@ -389,30 +389,30 @@ func TestCreateDeleteRoute(t *testing.T) {
   os.Remove(fileNameQ)
 }
 
-func TestListReplaceRoute(t *testing.T) {
-
-  var result map[string] interface{}
-  var err error
-
-  err, result = createCli(listRoutes)
-  assertErrorNotNull(t, err)
-
-  firstId := getFirstId(result)
-
-  queueParam := QueueJson{22026, "61kkjklmin74"}
-  actionParam := ActionsJson{"queue", queueParam}
-  ruleJson := RulesJson{[]ActionsJson{actionParam}}
-  rulesParam := []RulesJson{ruleJson}
-  randomName := randomString(12)
-  RouteParamsJson := ReplaceRouteJson{int32(firstId), randomName, rulesParam}
-  fileName := "../test/jsonin/replaceRoute" + randomName + ".json"
-  b, err := json.Marshal(RouteParamsJson)
-  err = ioutil.WriteFile(fileName, b, 0644)
-
-  err, result = createReplaceCliWithJsonIn(replaceRoute, fileName, firstId)
-  assertErrorNotNull(t, err)
-  os.Remove(fileName)
-}
+//func TestListReplaceRoute(t *testing.T) {
+//
+//  var result map[string] interface{}
+//  var err error
+//
+//  err, result = createCli(listRoutes)
+//  assertErrorNotNull(t, err)
+//
+//  firstId := getFirstId(result)
+//
+//  queueParam := QueueJson{22026, "61kkjklmin74"}
+//  actionParam := ActionsJson{"queue", queueParam}
+//  ruleJson := RulesJson{[]ActionsJson{actionParam}}
+//  rulesParam := []RulesJson{ruleJson}
+//  randomName := randomString(12)
+//  RouteParamsJson := ReplaceRouteJson{int32(firstId), randomName, rulesParam}
+//  fileName := "../test/jsonin/replaceRoute" + randomName + ".json"
+//  b, err := json.Marshal(RouteParamsJson)
+//  err = ioutil.WriteFile(fileName, b, 0644)
+//
+//  err, result = createReplaceCliWithJsonIn(replaceRoute, fileName, firstId)
+//  assertErrorNotNull(t, err)
+//  os.Remove(fileName)
+//}
 
 func TestCreateSms(t *testing.T) {
 

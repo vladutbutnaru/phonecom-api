@@ -95,15 +95,15 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 	to = context.String(toLong)
 	text = context.String(textLong)
 
-	var trunkName = context.String(trunkNameLong)
-	var trunkUri = context.String(trunkUriLong)
-	var trunkConcurrentCalls = int32(context.Int(maxConcurrentCallsLong))
-	var trunkMaxMinutes = int32(context.Int(maxMinutesPerMonthLong))
+	var trunkName = defaultTrunkName
+	var trunkUri = defaultTrunkUri
+	var trunkConcurrentCalls = int32(defaultTrunkConcurrentCalls)
+	var trunkMaxMinutes = int32(defaultTrunkMaxMinutes)
 
-	trunkName = defaultTrunkName
-	trunkUri = defaultTrunkUri
-	trunkConcurrentCalls = int32(defaultTrunkConcurrentCalls)
-	trunkMaxMinutes = int32(defaultTrunkMaxMinutes)
+	trunkName = context.String(trunkNameLong)
+	trunkUri = context.String(trunkUriLong)
+	trunkConcurrentCalls = int32(context.Int(maxConcurrentCallsLong))
+	trunkMaxMinutes = int32(context.Int(maxMinutesPerMonthLong))
 
 	var filterParams FilterParams
 	var sortParams SortParams
