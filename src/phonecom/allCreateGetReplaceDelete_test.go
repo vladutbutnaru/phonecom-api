@@ -389,30 +389,47 @@ func TestCreateDeleteRoute(t *testing.T) {
   os.Remove(fileNameQ)
 }
 
-//func TestListReplaceRoute(t *testing.T) {
-//
-//  var result map[string] interface{}
-//  var err error
-//
-//  err, result = createCli(listRoutes)
-//  assertErrorNotNull(t, err)
-//
-//  firstId := getFirstId(result)
-//
-//  queueParam := QueueJson{22026, "61kkjklmin74"}
-//  actionParam := ActionsJson{"queue", queueParam}
-//  ruleJson := RulesJson{[]ActionsJson{actionParam}}
-//  rulesParam := []RulesJson{ruleJson}
-//  randomName := randomString(12)
-//  RouteParamsJson := ReplaceRouteJson{int32(firstId), randomName, rulesParam}
-//  fileName := "../test/jsonin/replaceRoute" + randomName + ".json"
-//  b, err := json.Marshal(RouteParamsJson)
-//  err = ioutil.WriteFile(fileName, b, 0644)
-//
-//  err, result = createReplaceCliWithJsonIn(replaceRoute, fileName, firstId)
-//  assertErrorNotNull(t, err)
-//  os.Remove(fileName)
-//}
+func TestListReplaceRoute(t *testing.T) {
+
+  var result map[string] interface{}
+  var err error
+
+  err, result = createCli(listRoutes)
+  assertErrorNotNull(t, err)
+
+  firstId := getFirstId(result)
+
+  randomNameQ := randomString(12)
+  QueueParamsJson := CreateQueueJson{randomNameQ, 60, "called_number", 10}
+  fileNameQ := "../test/jsonin/createQueue" + randomNameQ + ".json"
+  bQ, errQ := json.Marshal(QueueParamsJson)
+  err = ioutil.WriteFile(fileNameQ, bQ, 0644)
+
+  errQ, result = createCliWithJsonIn(createQueue, fileNameQ)
+  assertErrorNotNull(t, errQ)
+
+  idQ := getId(result)
+  nameQ := getName(result)
+  if (idQ == 0) {
+    t.FailNow()
+  }
+
+  queueParam := QueueJson{int32(idQ), nameQ}
+  actionParam := ActionsJson{"queue", queueParam}
+  ruleJson := RulesJson{[]ActionsJson{actionParam}}
+  rulesParam := []RulesJson{ruleJson}
+  randomName := randomString(12)
+  RouteParamsJson := ReplaceRouteJson{int32(firstId), randomName, rulesParam}
+  fileName := "../test/jsonin/replaceRoute" + randomName + ".json"
+  b, err := json.Marshal(RouteParamsJson)
+  err = ioutil.WriteFile(fileName, b, 0644)
+
+  err, result = createReplaceCliWithJsonIn(replaceRoute, fileName, firstId)
+  assertErrorNotNull(t, err)
+
+  os.Remove(fileNameQ)
+  os.Remove(fileName)
+}
 
 func TestCreateSms(t *testing.T) {
 
