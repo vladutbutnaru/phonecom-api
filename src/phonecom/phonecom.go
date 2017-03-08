@@ -75,7 +75,7 @@ func execute(
 			defaultApi := swagger.DefaultApi{Configuration:swaggerConfig}
 			return responseHandler.handle(defaultApi.Ping())
 		} else {
-			return errors.New(fmt.Sprintf(invalidCommand, param.command)), nil
+			return errors.New(fmt.Sprintf(invalidCommand, param.command, getAllCommands())), nil
 		}
   }
 
