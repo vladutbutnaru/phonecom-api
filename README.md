@@ -40,10 +40,14 @@ The **phonecom-go-sdk** package contains all the generated swagger code along wi
 The **phonecom** package contains the code that adapts the generated Swagger code for the CLI.
 
 # Libraries
-There were 3 Go libraries that were used while developing the code. This libraries can be installed with go in the following way:
-* go get github.com/urfave/cli
-* go get -u github.com/go-resty/resty
-* go get github.com/yukithm/json2csv/cmd/json2csv
+There were 4 Go libraries that were used while developing the code. This libraries can be installed with go in the following way:
+```bash
+go get github.com/urfave/cli
+go get -u github.com/go-resty/resty
+go get github.com/yukithm/json2csv/cmd/json2csv
+go get github.com/stretchr/testify
+``` 
+
 
 # XML Configuration
 In order the Phone.com API to be invoked, an XML configuration file should be provided. The configuration file is used to provide the OAuth2 Authentication information. It is defined with the following format:  
