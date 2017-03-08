@@ -6863,7 +6863,7 @@
           "type": "string"
         },
         "npa": {
-          "type": "integer"
+          "type": "string"
         },
         "nxx": {
           "type": "string"
@@ -6895,7 +6895,7 @@
           "type": "string"
         },
         "npa": {
-          "type": "integer"
+          "type": "string"
         },
         "nxx": {
           "type": "string"
