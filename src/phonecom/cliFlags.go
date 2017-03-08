@@ -22,7 +22,7 @@ const offsetLong = "offset"
 const accountIdLong = "account"
 const dryrunLong = "dryrun"
 const inputLong = "input"
-const verboseLong = "verbose"
+const verboseLong = "verbose-mode"
 const contactLong = "contact"
 const billingContactLong = "billing-contact"
 const fromLong = "from"
@@ -89,7 +89,7 @@ func getCliFlags() []cli.Flag {
       Usage: "Specify the path to the JSON file for making the API call",
     },
     cli.BoolFlag{
-      Name: verboseLong + ", vr",
+      Name: verboseLong + ", vrm",
       Usage: "Activate verbose mode",
     },
     cli.StringFlag{

@@ -189,8 +189,8 @@ func TestFilterSortExpressServiceCodes(t *testing.T) {
 
   err, response := createFilterSortExpressServiceCodesCli(listExpressServiceCodes, idSlice)
   assert.NoError(t, err)
-_ = response
-  //filters := getFilters(response)
+
+  getFilters(response)
   //id := filters["id"].(string)
   //assert.Equal(t, expectedId, id)
 }
