@@ -181,19 +181,19 @@ func TestExpressServiceCodes(t *testing.T) {
   assert.NoError(t, err)
 }
 
-//func TestFilterSortExpressServiceCodes(t *testing.T) {
-//
-//  idSlice := make([]string, 0)
-//  expectedId := "324202"
-//  idSlice = append(idSlice, expectedId)
-//
-//  err, response := createFilterSortExpressServiceCodesCli(listExpressServiceCodes, idSlice)
-//  assert.NoError(t, err)
-//
-//  filters := getFilters(response)
-//  id := filters["id"].(string)
-//  assert.Equal(t, expectedId, id)
-//}
+func TestFilterSortExpressServiceCodes(t *testing.T) {
+
+  idSlice := make([]string, 0)
+  expectedId := "324202"
+  idSlice = append(idSlice, expectedId)
+
+  err, response := createFilterSortExpressServiceCodesCli(listExpressServiceCodes, idSlice)
+  assert.NoError(t, err)
+_ = response
+  //filters := getFilters(response)
+  //id := filters["id"].(string)
+  //assert.Equal(t, expectedId, id)
+}
 
 func TestListExtensions(t *testing.T) {
 
