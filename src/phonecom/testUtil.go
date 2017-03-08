@@ -626,6 +626,46 @@ func createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli2
   return doCreateCli(endpoint, flags)
 }
 
+func createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli3(endpoint string, filtersId []string, filtersName []string, sortId string/*, sortName string*/) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersName[0]
+  sortValues := sortId// + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id",//;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
 func createFilterSortSmsCli(endpoint string, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string) (error, map[string] interface{}) {
 
   filterValues := filtersId[0] + ";" + filtersDirection + ";" + filtersFrom
@@ -754,9 +794,9 @@ func createFilterSortGroupsCli(endpoint string, id int, filtersId []string, filt
   return doCreateCli(endpoint, flags)
 }
 
-func createFilterSortCallLogsCli(endpoint string, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string) (error, map[string] interface{}) {
+func createFilterSortCallLogsCli(endpoint string, filtersId []string, filtersStartTime []string, filtersCreatedAt string, /*filtersDirection string, */filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string) (error, map[string] interface{}) {
 
-  filterValues := filtersId[0] + ";" + filtersStartTime[0] + ";" + filtersCreatedAt+ ";" + filtersDirection+ ";" + filtersCalledNumber + ";" + filtersType + ";" + filtersExtension[0]
+  filterValues := filtersId[0] + ";" + filtersStartTime[0] + ";" + filtersCreatedAt+ ";" /*+ filtersDirection+ ";" */+ filtersCalledNumber + ";" + filtersType + ";" + filtersExtension[0]
   sortValues := sortId + ";" + sortStartTime + ";" + sortCreatedAt
   flags := []cli.Flag{
     cli.StringFlag{
@@ -772,7 +812,7 @@ func createFilterSortCallLogsCli(endpoint string, filtersId []string, filtersSta
     },
     cli.StringFlag{
       Name: filtersTypeLong,
-      Value: "id;start_time;created_at;direction;called_number;type;extension",
+      Value: "id;start_time;created_at;"/*direction;*/ + "called_number;type;extension",
     },
     cli.StringFlag{
       Name: filtersValueLong,

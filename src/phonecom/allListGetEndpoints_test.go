@@ -86,46 +86,46 @@ func TestListCallLogs(t *testing.T) {
   assert.NoError(t, err)
 }
 
-//func TestFilterSortListCallLogs(t *testing.T) {
-//
-//  idSlice := make([]string, 0)
-//  expectedId := "1356077"
-//  idSlice = append(idSlice, expectedId)
-//  startTimeSlice := make([]string, 0)
-//  expectedStartTime := "internal_only"
-//  startTimeSlice = append(startTimeSlice, expectedStartTime)
-//  expectedCreatedAt := "internal_only"
-//  expectedDirection := "internal_only"
-//  expectedCalledNumber := "internal_only"
-//  expectedType := "internal_only"
-//  extensionSlice := make([]string, 0)
-//  expectedExtension := "internal_only"
-//  extensionSlice = append(extensionSlice, expectedExtension)
-//
-//  sortId := "asc"
-//  sortStartTime := "asc"
-//  sortCreatedAt := "asc"
-//
-//  err, response := createFilterSortCallLogsCli(listCallLogs, idSlice, startTimeSlice, expectedCreatedAt, expectedDirection, expectedCalledNumber, expectedType, extensionSlice, sortId, sortStartTime, sortCreatedAt)
-//  assert.NoError(t, err)
-//
-//  filters := getFilters(response)
-//  id := filters["id"].(string)
-//  assert.Equal(t, expectedId, id)
-//  startTime := filters["start_time"].(string)
-//  assert.Equal(t, expectedStartTime, startTime)
-//  assert.Equal(t, expectedCreatedAt, filters["created_at"])
-//  assert.Equal(t, expectedDirection, filters["direction"])
-//  assert.Equal(t, expectedCalledNumber, filters["called_number"])
-//  assert.Equal(t, expectedType, filters["type"])
-//  extension := filters["extension"].(string)
-//  assert.Equal(t, expectedExtension, extension)
-//
-//  sorts := getSorts(response)
-//  assert.Equal(t, sortId, sorts["id"])
-//  assert.Equal(t, sortStartTime, sorts["start_time"])
-//  assert.Equal(t, sortCreatedAt, sorts["created_at"])
-//}
+func TestFilterSortListCallLogs(t *testing.T) {
+
+  idSlice := make([]string, 0)
+  expectedId := "1356077"
+  idSlice = append(idSlice, expectedId)
+  startTimeSlice := make([]string, 0)
+  expectedStartTime := "internal_only"
+  startTimeSlice = append(startTimeSlice, expectedStartTime)
+  expectedCreatedAt := "internal_only"
+  //expectedDirection := "internal_only"
+  expectedCalledNumber := "internal_only"
+  expectedType := "internal_only"
+  extensionSlice := make([]string, 0)
+  expectedExtension := "internal_only"
+  extensionSlice = append(extensionSlice, expectedExtension)
+
+  sortId := "asc"
+  sortStartTime := "asc"
+  sortCreatedAt := "asc"
+
+  err, response := createFilterSortCallLogsCli(listCallLogs, idSlice, startTimeSlice, expectedCreatedAt, /*expectedDirection, */expectedCalledNumber, expectedType, extensionSlice, sortId, sortStartTime, sortCreatedAt)
+  assert.NoError(t, err)
+
+  filters := getFilters(response)
+  id := filters["id"].(string)
+  assert.Equal(t, expectedId, id)
+  startTime := filters["start_time"].(string)
+  assert.Equal(t, expectedStartTime, startTime)
+  assert.Equal(t, expectedCreatedAt, filters["created_at"])
+  //assert.Equal(t, expectedDirection, filters["direction"])
+  assert.Equal(t, expectedCalledNumber, filters["called_number"])
+  assert.Equal(t, expectedType, filters["type"])
+  extension := filters["extension"].(string)
+  assert.Equal(t, expectedExtension, extension)
+
+  sorts := getSorts(response)
+  assert.Equal(t, sortId, sorts["id"])
+  assert.Equal(t, sortStartTime, sorts["start_time"])
+  assert.Equal(t, sortCreatedAt, sorts["created_at"])
+}
 
 func TestListDevices(t *testing.T) {
 
@@ -614,31 +614,31 @@ func TestListSchedules(t *testing.T) {
   assert.NoError(t, err)
 }
 
-//func TestFilterSortListSchedules(t *testing.T) {
-//
-//  idSlice := make([]string, 0)
-//  expectedId := "1356077"
-//  idSlice = append(idSlice, expectedId)
-//  nameSlice := make([]string, 0)
-//  expectedName := "internal_only"
-//  nameSlice = append(nameSlice, expectedName)
-//
-//  sortId := "asc"
-//  sortName := "asc"
-//
-//  err, response := createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli(listSchedules, idSlice, nameSlice, sortId, sortName)
-//  assert.NoError(t, err)
-//
-//  filters := getFilters(response)
-//  id := filters["id"].(string)
-//  assert.Equal(t, expectedId, id)
-//  name := filters["name"].(string)
-//  assert.Equal(t, expectedName, name)
-//
-//  sorts := getSorts(response)
-//  assert.Equal(t, sortId, sorts["id"])
-//  assert.Equal(t, sortName, sorts["name"])
-//}
+func TestFilterSortListSchedules(t *testing.T) {
+
+  idSlice := make([]string, 0)
+  expectedId := "1356077"
+  idSlice = append(idSlice, expectedId)
+  nameSlice := make([]string, 0)
+  expectedName := "internal_only"
+  nameSlice = append(nameSlice, expectedName)
+
+  sortId := "asc"
+  //sortName := "asc"
+
+  err, response := createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli3(listSchedules, idSlice, nameSlice, sortId)
+  assert.NoError(t, err)
+
+  filters := getFilters(response)
+  id := filters["id"].(string)
+  assert.Equal(t, expectedId, id)
+  name := filters["name"].(string)
+  assert.Equal(t, expectedName, name)
+
+  sorts := getSorts(response)
+  assert.Equal(t, sortId, sorts["id"])
+  //assert.Equal(t, sortName, sorts["name"])
+}
 
 func TestListSms(t *testing.T) {
 
