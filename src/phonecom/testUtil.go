@@ -5,7 +5,6 @@ import (
   "testing"
   "encoding/json"
 	"strconv"
-  "fmt"
 )
 
 var commandFlag = "-command"
@@ -230,9 +229,10 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
   return doCreateCli(endpoint, flags)
 }
 
-func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string) (error, map[string] interface{}) {
+func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string, sortInternal string, sortPrice string, sortPhoneNumber string) (error, map[string] interface{}) {
 
-  values := filtersPhoneNumber[0] + ";" + filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersXxxx[0] + ";" + filtersCity[0] + ";" + filtersProvince[0] + ";" + filtersCountry[0] + ";" + filtersPrice[0]/* + ";" + filtersCategory[0]*/
+  filterValues := filtersPhoneNumber[0] + ";" + filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersXxxx[0] + ";" + filtersCity[0] + ";" + filtersProvince[0] + ";" + filtersCountry[0] + ";" + filtersPrice[0]/* + ";" + filtersCategory[0]*/
+  sortValues:= sortInternal + ";" + sortPrice + ";" + sortPhoneNumber
   flags := []cli.Flag{
     cli.StringFlag{
       Name: commandLong,
@@ -251,7 +251,15 @@ func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []st
     },
     cli.StringFlag{
       Name: filtersValueLong,
-      Value: values,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "internal;price;phone_number",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
     },
     cli.BoolTFlag{
       Name: fullListLong,
@@ -261,10 +269,10 @@ func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []st
   return doCreateCli(endpoint, flags)
 }
 
-func createCliListAvailablePhoneNumberRegions(endpoint string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersIsTollFree []string, filtersCity []string, filtersProvincePostalCode []string, filtersCountryPostalCode []string) (error, map[string] interface{}) {
+func createCliListAvailablePhoneNumberRegions(endpoint string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersIsTollFree []string, filtersCity []string, filtersProvincePostalCode []string, filtersCountryPostalCode []string, sortCountryCode string, sortNpa string, sortNxx string, sortIsTollFree string, sortCity string, sortProvincePostalCode string, sortCountryPostalCode string) (error, map[string] interface{}) {
 
-  values := filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersIsTollFree[0] + ";" + filtersCity[0] + ";" + filtersProvincePostalCode[0] + ";" + filtersCountryPostalCode[0]
-  fmt.Println(values)
+  filterValues := filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersIsTollFree[0] + ";" + filtersCity[0] + ";" + filtersProvincePostalCode[0] + ";" + filtersCountryPostalCode[0]
+  sortValues := sortCountryCode + ";" + sortNpa + ";" + sortNxx + ";" + sortIsTollFree + ";" + sortCity + ";" + sortProvincePostalCode + ";" + sortCountryPostalCode
   flags := []cli.Flag{
     cli.StringFlag{
       Name: commandLong,
@@ -283,7 +291,46 @@ func createCliListAvailablePhoneNumberRegions(endpoint string, filtersCountryCod
     },
     cli.StringFlag{
       Name: filtersValueLong,
-      Value: values,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "country_code;npa;nxx;is_toll_free;city;province_postal_code;country_postal_code",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createCliSortAvailablePhoneNumberRegions(endpoint string, sortCountryCode string, sortNpa string, sortNxx string, sortIsTollFree string, sortCity string, sortProvincePostalCode string, sortCountryPostalCode string) (error, map[string] interface{}) {
+
+  sortValues := sortCountryCode + ";" + sortNpa + ";" + sortNxx + ";" + sortIsTollFree + ";" + sortCity + ";" + sortProvincePostalCode + ";" + sortCountryPostalCode
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "country_code;npa;nxx;is_toll_free;city;province_postal_code;country_postal_code",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
     },
     cli.BoolTFlag{
       Name: fullListLong,
@@ -396,6 +443,13 @@ func getFilters(jsonObject map[string] interface{}) map[string] interface{} {
   filters := jsonObject["filters"].(map[string] interface{})
 
   return filters
+}
+
+func getSorts(jsonObject map[string] interface{}) map[string] interface{} {
+
+  sorts := jsonObject["sort"].(map[string] interface{})
+
+  return sorts
 }
 
 func getFirstAvailablePhoneNumber(json map[string] interface{}) string {

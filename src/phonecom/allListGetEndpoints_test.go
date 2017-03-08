@@ -301,7 +301,12 @@ func TestFilterSortListAvailablePhoneNumbers(t *testing.T) {
   expectedCategory := "10"
   categorySlice = append(categorySlice, expectedCategory)
 
-  err, response := createCliListAvailablePhoneNumbers(listAvailablePhoneNumbers, phoneNumberSlice, countryCodeSlice, npaSlice, nxxSlice, xxxxSlice, citySlice, provinceSlice, countrySlice, priceSlice, categorySlice)
+  //sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber
+  sortInternal := "asc"
+  sortPrice := "asc"
+  sortPhoneNumber := "desc"
+
+  err, response := createCliListAvailablePhoneNumbers(listAvailablePhoneNumbers, phoneNumberSlice, countryCodeSlice, npaSlice, nxxSlice, xxxxSlice, citySlice, provinceSlice, countrySlice, priceSlice, categorySlice, sortInternal, sortPrice, sortPhoneNumber)
   assertErrorNotNull(t, err)
 
   filters := getFilters(response)
@@ -325,6 +330,11 @@ func TestFilterSortListAvailablePhoneNumbers(t *testing.T) {
   assert.Equal(t, expectedPrice, price)
   //category := filters["category"].(string)
   //assert.Equal(t, expectedCategory, category)
+
+  sorts := getSorts(response)
+  assert.Equal(t, sortInternal, sorts["internal"])
+  assert.Equal(t, sortPrice, sorts["price"])
+  assert.Equal(t, sortPhoneNumber, sorts["phone_number"])
 }
 
 func TestFilterSortListAvailablePhoneNumberRegions(t *testing.T) {
@@ -351,12 +361,20 @@ func TestFilterSortListAvailablePhoneNumberRegions(t *testing.T) {
   expectedCountryPostalCode := "23453"
   countryPostalCodeSlice = append(countryPostalCodeSlice, expectedCountryPostalCode)
 
-  err, response := createCliListAvailablePhoneNumberRegions(listAvailablePhoneNumberRegions, countryCodeSlice, npaSlice, nxxSlice, isTollFreeSlice, citySlice, provincePostalCodeSlice, countryPostalCodeSlice)
+  sortCountryCode := "asc"
+  sortNpa := "asc"
+  sortNxx := "desc"
+  sortIsTollFree := "asc"
+  sortCity := "desc"
+  sortProvincePostalCode := "asc"
+  sortCountryPostalCode := "desc"
+
+  err, response := createCliListAvailablePhoneNumberRegions(listAvailablePhoneNumberRegions, countryCodeSlice, npaSlice, nxxSlice, isTollFreeSlice, citySlice, provincePostalCodeSlice, countryPostalCodeSlice, sortCountryCode, sortNpa, sortNxx, sortIsTollFree, sortCity, sortProvincePostalCode, sortCountryPostalCode)
   assertErrorNotNull(t, err)
 
   filters := getFilters(response)
-  countryCode := filters["country_code"].(string)
-  assert.Equal(t, expectedCountryCode, countryCode)
+  //countryCode := filters["country_code"].(string)
+  //assert.Equal(t, expectedCountryCode, countryCode)
   npa := filters["npa"].(string)
   assert.Equal(t, expectedNpa, npa)
   nxx := filters["nxx"].(string)
@@ -369,4 +387,36 @@ func TestFilterSortListAvailablePhoneNumberRegions(t *testing.T) {
   assert.Equal(t, expectedProvincePostalCode, provincePostalCode)
   countryPostalCode := filters["country_postal_code"].(string)
   assert.Equal(t, expectedCountryPostalCode, countryPostalCode)
+
+  sorts := getSorts(response)
+  //assert.Equal(t, sortCountryCode, sorts["country_code"])
+  assert.Equal(t, sortNpa, sorts["npa"])
+  assert.Equal(t, sortNxx, sorts["nxx"])
+  assert.Equal(t, sortIsTollFree, sorts["is_toll_free"])
+  assert.Equal(t, sortCity, sorts["city"])
+  assert.Equal(t, sortProvincePostalCode, sorts["province_postal_code"])
+  assert.Equal(t, sortCountryPostalCode, sorts["country_postal_code"])
+}
+
+func TestSortListAvailablePhoneNumberRegions(t *testing.T) {
+
+  sortCountryCode := "asc"
+  sortNpa := "desc"
+  sortNxx := "desc"
+  sortIsTollFree := "asc"
+  sortCity := "desc"
+  sortProvincePostalCode := "asc"
+  sortCountryPostalCode := "desc"
+
+  err, response := createCliSortAvailablePhoneNumberRegions(listAvailablePhoneNumberRegions, sortCountryCode, sortNpa, sortNxx, sortIsTollFree, sortCity, sortProvincePostalCode, sortCountryPostalCode)
+  assertErrorNotNull(t, err)
+
+  sorts := getSorts(response)
+  //assert.Equal(t, sortCountryCode, sorts["country_code"])
+  assert.Equal(t, sortNpa, sorts["npa"])
+  assert.Equal(t, sortNxx, sorts["nxx"])
+  assert.Equal(t, sortIsTollFree, sorts["is_toll_free"])
+  assert.Equal(t, sortCity, sorts["city"])
+  assert.Equal(t, sortProvincePostalCode, sorts["province_postal_code"])
+  assert.Equal(t, sortCountryPostalCode, sorts["country_postal_code"])
 }

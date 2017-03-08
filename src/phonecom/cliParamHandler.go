@@ -7,6 +7,8 @@ import (
   "math"
 )
 
+const multiValueDelimiter = "#"
+
 type CliParams struct {
   slice       []string
   filtersId   []string
@@ -182,39 +184,46 @@ func createCliParams(context *cli.Context) (CliParams, error) {
   par.trunkMaxMinutes = trunkMaxMinutes
 
   if par.sortType != "" && par.sortValue != "" {
-    switch par.sortType {
-    case "id":
-      par.sortParams.sortId = par.sortValue
-    case "name":
-      par.sortParams.sortName = par.sortValue
-    case "start_time":
-      par.sortParams.sortStartTime = par.sortValue
-    case "created_at":
-      par.sortParams.sortCreatedAt = par.sortValue
-    case "extension":
-      par.sortParams.sortExtension = par.sortValue
-    case "number":
-      par.sortParams.sortNumber = par.sortValue
-    case "updated_at":
-      par.sortParams.sortUpdatedAt = par.sortValue
-    case "phone_number":
-      par.sortParams.sortPhoneNumber = par.sortValue
-    case "internal":
-      par.sortParams.sortInternal = par.sortValue
-    case "price":
-      par.sortParams.sortPrice = par.sortValue
-    case "npa":
-      par.sortParams.sortNpa = par.sortValue
-    case "nxx":
-      par.sortParams.sortNxx = par.sortValue
-    case "is_toll_free":
-      par.sortParams.sortIsTollFree = par.sortValue
-    case "city":
-      par.sortParams.sortCity = par.sortValue
-    case "province_postal_code":
-      par.sortParams.sortProvincePostalCode = par.sortValue
-    case "country_postal_code":
-      par.sortParams.sortCountryPostalCode = par.sortValue
+
+    sortTypes := strings.Split(par.sortType, ";")
+    sortValues := strings.Split(par.sortValue, ";")
+    min := int(math.Min(float64(len(sortTypes)), float64(len(sortValues))))
+
+    for counter := 0; counter < min; counter++ {
+      switch sortTypes[counter] {
+      case "id":
+        par.sortParams.sortId = sortValues[counter]
+      case "name":
+        par.sortParams.sortName = sortValues[counter]
+      case "start_time":
+        par.sortParams.sortStartTime = sortValues[counter]
+      case "created_at":
+        par.sortParams.sortCreatedAt = sortValues[counter]
+      case "extension":
+        par.sortParams.sortExtension = sortValues[counter]
+      case "number":
+        par.sortParams.sortNumber = sortValues[counter]
+      case "updated_at":
+        par.sortParams.sortUpdatedAt = sortValues[counter]
+      case "phone_number":
+        par.sortParams.sortPhoneNumber = sortValues[counter]
+      case "internal":
+        par.sortParams.sortInternal = sortValues[counter]
+      case "price":
+        par.sortParams.sortPrice = sortValues[counter]
+      case "npa":
+        par.sortParams.sortNpa = sortValues[counter]
+      case "nxx":
+        par.sortParams.sortNxx = sortValues[counter]
+      case "is_toll_free":
+        par.sortParams.sortIsTollFree = sortValues[counter]
+      case "city":
+        par.sortParams.sortCity = sortValues[counter]
+      case "province_postal_code":
+        par.sortParams.sortProvincePostalCode = sortValues[counter]
+      case "country_postal_code":
+        par.sortParams.sortCountryPostalCode = sortValues[counter]
+      }
     }
   }
 
@@ -230,20 +239,14 @@ func createCliParams(context *cli.Context) (CliParams, error) {
     for counter := 0; counter < min; counter++ {
       switch filtersTypes[counter] {
       case "id":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterIdValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filtersId = filterIdValues
 
       case "name":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterNameValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersName = filterNameValues
 
       case "start_time":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterStartTimeValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersStartTime = filterStartTimeValues
 
@@ -260,32 +263,22 @@ func createCliParams(context *cli.Context) (CliParams, error) {
         par.filterParams.filtersType = filtersValues[counter]
 
       case "extension":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterExtensionValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersExtension = filterExtensionValues
 
       case "number":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterNumberValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersNumber = filterNumberValues
 
       case "group_id":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterGroupIdValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersGroupId = filterGroupIdValues
 
       case "updated_at":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterUpdatedAtValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersUpdatedAt = filterUpdatedAtValues
 
       case "phone_number":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterPhoneNumberValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersPhoneNumber = filterPhoneNumberValues
 
@@ -293,80 +286,54 @@ func createCliParams(context *cli.Context) (CliParams, error) {
         par.filterParams.filtersFrom = filtersValues[counter]
 
       case "to":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterToValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersTo = filterToValues
 
       case "country_code":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterCountryCodeValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersCountryCode = filterCountryCodeValues
 
       case "npa":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterNpaValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersNpa = filterNpaValues
 
       case "nxx":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterNxxValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersNxx = filterNxxValues
 
       case "xxxx":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterXxxxValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersXxxx = filterXxxxValues
 
       case "city":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterCityValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersCity = filterCityValues
 
       case "province":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterProvinceValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersProvince = filterProvinceValues
 
       case "country":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterCountryValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersCountry = filterCountryValues
 
       case "price":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterPriceValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersPrice = filterPriceValues
 
       case "category":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterCategoryValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersCategory = filterCategoryValues
 
       case "is_toll_free":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterIsTollFreeValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersIsTollFree = filterIsTollFreeValues
 
       case "province_postal_code":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterProvincePostalCodeValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersProvincePostalCode = filterProvincePostalCodeValues
 
       case "country_postal_code":
-        slice1 := make([]string, 0)
-        slice1 = append(slice1, filtersValues[counter])
         filterCountryPostalCodeValues := strings.Split(filtersValues[counter], multiValueDelimiter)
         par.filterParams.filtersCountryPostalCode = filterCountryPostalCodeValues
       }
@@ -376,5 +343,3 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 
   return par, nil
 }
-
-const multiValueDelimiter = " "
