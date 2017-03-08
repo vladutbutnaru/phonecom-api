@@ -2,7 +2,6 @@ package main
 
 import (
   "github.com/urfave/cli"
-  "testing"
   "encoding/json"
 	"strconv"
 )
@@ -340,6 +339,461 @@ func createCliSortAvailablePhoneNumberRegions(endpoint string, sortCountryCode s
   return doCreateCli(endpoint, flags)
 }
 
+func createFilterSortAccountsSubaccountsCli(endpoint string, filtersId []string, sortId string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0]
+  sortValues := sortId
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortExpressServiceCodesCli(endpoint string, filtersId []string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0]
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortExtensionsCli(endpoint string, filtersId []string, filtersExtension []string, filtersName []string, sortId string, sortExtension string, sortName string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersExtension[0] + ";" + filtersName[0]
+  sortValues := sortId + ";" + sortExtension + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;extension;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;extension;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortCallerIdsCliWithId(endpoint string, id int, filtersNumber []string, filtersName []string, sortNumber string, sortName string) (error, map[string] interface{}) {
+
+  if (id <= 0) {
+    return nil, nil
+  }
+
+  filterValues := filtersNumber[0] + ";" + filtersName[0]
+  sortValues := sortNumber + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.StringFlag{
+      Name: idLong,
+      Value: strconv.Itoa(id),
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "number;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "number;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortContactsCliWithId(endpoint string, id int, filtersId []string, filtersGroupId []string, filtersUpdatedAt []string, sortId string, sortUpdatedAt string) (error, map[string] interface{}) {
+
+  if (id <= 0) {
+    return nil, nil
+  }
+
+  filterValues := filtersId[0] + ";" + filtersGroupId[0] + ";" + filtersUpdatedAt[0]
+  sortValues := sortId + ";" + sortUpdatedAt
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.StringFlag{
+      Name: idLong,
+      Value: strconv.Itoa(id),
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;group_id;updated_at",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;updated_at",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli(endpoint string, filtersId []string, filtersName []string, sortId string, sortName string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersName[0]
+  sortValues := sortId + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortApplicationsDevicesMediaMenusQueusRoutesSchedulesTrunksCli2(endpoint string, filtersId []string, /*filtersName []string, */sortId string/*, sortName string*/) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0]// + ";" + filtersName[0]
+  sortValues := sortId// + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id",//;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id",//;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortSmsCli(endpoint string, filtersId []string, filtersDirection string, filtersFrom string, sortId string, sortCreatedAt string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersDirection + ";" + filtersFrom
+  sortValues := sortId + ";" + sortCreatedAt
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;direction;from",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;created_at",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortPhoneNumbersCli(endpoint string, filtersId []string, filtersName []string, /*filtersPhoneNumber []string, */sortId string, sortName string/*, sortPhoneNumber string*/) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersName[0]// + ";" + filtersPhoneNumber[0]
+  sortValues := sortId + ";" + sortName// + ";" + sortPhoneNumber
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;name",//;phone_number",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;name",//;phone_number",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortGroupsCli(endpoint string, id int, filtersId []string, filtersName []string, sortId string, sortName string) (error, map[string] interface{}) {
+
+  if (id <= 0) {
+    return nil, nil
+  }
+
+  filterValues := filtersId[0] + ";" + filtersName[0]
+  sortValues := sortId + ";" + sortName
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.StringFlag{
+      Name: idLong,
+      Value: strconv.Itoa(id),
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;name",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;name",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
+func createFilterSortCallLogsCli(endpoint string, filtersId []string, filtersStartTime []string, filtersCreatedAt string, filtersDirection string, filtersCalledNumber string, filtersType string, filtersExtension []string, sortId string, sortStartTime string, sortCreatedAt string) (error, map[string] interface{}) {
+
+  filterValues := filtersId[0] + ";" + filtersStartTime[0] + ";" + filtersCreatedAt+ ";" + filtersDirection+ ";" + filtersCalledNumber + ";" + filtersType + ";" + filtersExtension[0]
+  sortValues := sortId + ";" + sortStartTime + ";" + sortCreatedAt
+  flags := []cli.Flag{
+    cli.StringFlag{
+      Name: commandLong,
+      Value: endpoint,
+    },
+    cli.BoolTFlag{
+      Name: verboseLong,
+    },
+    cli.IntFlag{
+      Name: limitLong,
+      Value: 25,
+    },
+    cli.StringFlag{
+      Name: filtersTypeLong,
+      Value: "id;start_time;created_at;direction;called_number;type;extension",
+    },
+    cli.StringFlag{
+      Name: filtersValueLong,
+      Value: filterValues,
+    },
+    cli.StringFlag{
+      Name: sortTypeLong,
+      Value: "id;start_time;created_at",
+    },
+    cli.StringFlag{
+      Name: sortValueLong,
+      Value: sortValues,
+    },
+    cli.BoolTFlag{
+      Name: fullListLong,
+    },
+  }
+
+  return doCreateCli(endpoint, flags)
+}
+
 func createCli(endpoint string) (error, map[string] interface{}) {
 
 	flags := []cli.Flag{
@@ -404,13 +858,6 @@ func createCliWithId(endpoint string, id int) (error, map[string] interface{}) {
 	}
 
   return doCreateCli(endpoint, flags)
-}
-
-func assertErrorNotNull(t *testing.T, err error) {
-
-  if err != nil {
-    t.Fatalf(errorNotNullMessage, err)
-  }
 }
 
 func getFirstIdString(json map[string] interface{}) string {
