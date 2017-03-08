@@ -2,6 +2,7 @@ package main
 
 import (
   "testing"
+  "github.com/stretchr/testify/assert"
 )
 
 func TestListAccounts(t *testing.T) {
@@ -235,8 +236,6 @@ func TestListSubaccounts(t *testing.T) {
 
   err, _ = createCli(listSubaccounts)
   assertErrorNotNull(t, err)
-
-  assertErrorNotNull(t, err)
 }
 
 func TestListTrunks(t *testing.T) {
@@ -269,55 +268,105 @@ func TestListAvailablePhoneNumberRegions(t *testing.T) {
   assertErrorNotNull(t, err)
 }
 
-func TestListAvailablePhoneNumbers2(t *testing.T) {
-
-  var err error
+func TestFilterSortListAvailablePhoneNumbers(t *testing.T) {
 
   phoneNumberSlice := make([]string, 0)
-  phoneNumberSlice = append(phoneNumberSlice, "+12234687")
+  expectedPhoneNumber := "+12234687"
+  phoneNumberSlice = append(phoneNumberSlice, expectedPhoneNumber)
   countryCodeSlice := make([]string, 0)
-  countryCodeSlice = append(countryCodeSlice, "1")
+  expectedCountryCode := "1"
+  countryCodeSlice = append(countryCodeSlice, expectedCountryCode)
   npaSlice := make([]string, 0)
-  npaSlice = append(npaSlice, "gt:10")
+  expectedNpa := "gt:10"
+  npaSlice = append(npaSlice, expectedNpa)
   nxxSlice := make([]string, 0)
-  nxxSlice = append(nxxSlice, "831")
+  expectedNxx := "831"
+  nxxSlice = append(nxxSlice, expectedNxx)
   xxxxSlice := make([]string, 0)
-  xxxxSlice = append(xxxxSlice, "7863")
+  expectedXxxx := "7863"
+  xxxxSlice = append(xxxxSlice, expectedXxxx)
   citySlice := make([]string, 0)
-  citySlice = append(citySlice, "Martinsville")
+  expectedCity := "Martinsville"
+  citySlice = append(citySlice, expectedCity)
   provinceSlice := make([]string, 0)
-  provinceSlice = append(provinceSlice, "IN")
+  expectedProvince := "IN"
+  provinceSlice = append(provinceSlice, expectedProvince)
   countrySlice := make([]string, 0)
-  countrySlice = append(countrySlice, "US")
+  expectedCountry := "US"
+  countrySlice = append(countrySlice, expectedCountry)
   priceSlice := make([]string, 0)
-  priceSlice = append(priceSlice, "0")
-  categorySlice := make([]string, 0)
-  categorySlice = append(categorySlice, "1")
+  expectedPrice := "0"
+  priceSlice = append(priceSlice, expectedPrice)
+  categorySlice := make([]string, 0) // check filter
+  expectedCategory := "10"
+  categorySlice = append(categorySlice, expectedCategory)
 
-
-  err, _ = createCliListAvailablePhoneNumbers(listAvailablePhoneNumbers, phoneNumberSlice, countryCodeSlice, npaSlice, nxxSlice, xxxxSlice, citySlice, provinceSlice, countrySlice, priceSlice, categorySlice)
+  err, response := createCliListAvailablePhoneNumbers(listAvailablePhoneNumbers, phoneNumberSlice, countryCodeSlice, npaSlice, nxxSlice, xxxxSlice, citySlice, provinceSlice, countrySlice, priceSlice, categorySlice)
   assertErrorNotNull(t, err)
+
+  filters := getFilters(response)
+  phoneNumber := filters["phone_number"].(string)
+  assert.Equal(t, expectedPhoneNumber, phoneNumber)
+  countryCode := filters["country_code"].(string)
+  assert.Equal(t, expectedCountryCode, countryCode)
+  npa := filters["npa"].(string)
+  assert.Equal(t, expectedNpa, npa)
+  nxx := filters["nxx"].(string)
+  assert.Equal(t, expectedNxx, nxx)
+  xxxx := filters["xxxx"].(string)
+  assert.Equal(t, expectedXxxx, xxxx)
+  city := filters["city"].(string)
+  assert.Equal(t, expectedCity, city)
+  province := filters["province"].(string)
+  assert.Equal(t, expectedProvince, province)
+  country := filters["country"].(string)
+  assert.Equal(t, expectedCountry, country)
+  price := filters["price"].(string)
+  assert.Equal(t, expectedPrice, price)
+  //category := filters["category"].(string)
+  //assert.Equal(t, expectedCategory, category)
 }
 
-func TestListAvailablePhoneNumberRegions2(t *testing.T) {
-
-  var err error
+func TestFilterSortListAvailablePhoneNumberRegions(t *testing.T) {
 
   countryCodeSlice := make([]string, 0)
-  countryCodeSlice = append(countryCodeSlice, "1")
+  expectedCountryCode := "1"
+  countryCodeSlice = append(countryCodeSlice, expectedCountryCode)
   npaSlice := make([]string, 0)
-  npaSlice = append(npaSlice, "not-empty")
+  expectedNpa := "gt:10"
+  npaSlice = append(npaSlice, expectedNpa)
   nxxSlice := make([]string, 0)
-  nxxSlice = append(nxxSlice, "249")
+  expectedNxx := "249"
+  nxxSlice = append(nxxSlice, expectedNxx)
   isTollFreeSlice := make([]string, 0)
-  isTollFreeSlice = append(isTollFreeSlice, "true")
+  expectedIsTollFree := "true"
+  isTollFreeSlice = append(isTollFreeSlice, expectedIsTollFree)
   citySlice := make([]string, 0)
-  citySlice = append(citySlice, "Prilep")
+  expectedCity := "Prilep"
+  citySlice = append(citySlice, expectedCity)
   provincePostalCodeSlice := make([]string, 0)
-  provincePostalCodeSlice = append(provincePostalCodeSlice, "2345")
+  expectedProvincePostalCode := "2345"
+  provincePostalCodeSlice = append(provincePostalCodeSlice, expectedProvincePostalCode)
   countryPostalCodeSlice := make([]string, 0)
-  countryPostalCodeSlice = append(countryPostalCodeSlice, "2345")
+  expectedCountryPostalCode := "23453"
+  countryPostalCodeSlice = append(countryPostalCodeSlice, expectedCountryPostalCode)
 
-  err, _ = createCliListAvailablePhoneNumberRegions(listAvailablePhoneNumberRegions, countryCodeSlice, npaSlice, nxxSlice, isTollFreeSlice, citySlice, provincePostalCodeSlice, countryPostalCodeSlice)
+  err, response := createCliListAvailablePhoneNumberRegions(listAvailablePhoneNumberRegions, countryCodeSlice, npaSlice, nxxSlice, isTollFreeSlice, citySlice, provincePostalCodeSlice, countryPostalCodeSlice)
   assertErrorNotNull(t, err)
+
+  filters := getFilters(response)
+  countryCode := filters["country_code"].(string)
+  assert.Equal(t, expectedCountryCode, countryCode)
+  npa := filters["npa"].(string)
+  assert.Equal(t, expectedNpa, npa)
+  nxx := filters["nxx"].(string)
+  assert.Equal(t, expectedNxx, nxx)
+  isTollFree := filters["is_toll_free"].(string)
+  assert.Equal(t, expectedIsTollFree, isTollFree)
+  city := filters["city"].(string)
+  assert.Equal(t, expectedCity, city)
+  provincePostalCode := filters["province_postal_code"].(string)
+  assert.Equal(t, expectedProvincePostalCode, provincePostalCode)
+  countryPostalCode := filters["country_postal_code"].(string)
+  assert.Equal(t, expectedCountryPostalCode, countryPostalCode)
 }

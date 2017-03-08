@@ -232,7 +232,7 @@ func createReplaceTrunkCliWithJsonIn(endpoint string, path string, trunkName str
 
 func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersXxxx []string, filtersCity []string, filtersProvince []string, filtersCountry []string, filtersPrice []string, filtersCategory []string) (error, map[string] interface{}) {
 
-  values := filtersPhoneNumber[0] + ";" + filtersCountryCode[0] + ";" + /*filtersNpa[0] + ";" + */filtersNxx[0] + ";" + filtersXxxx[0] + ";" + filtersCity[0] + ";" + filtersProvince[0] + ";" + filtersCountry[0] + ";" + filtersPrice[0]/* + ";" + filtersCategory[0]*/
+  values := filtersPhoneNumber[0] + ";" + filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersXxxx[0] + ";" + filtersCity[0] + ";" + filtersProvince[0] + ";" + filtersCountry[0] + ";" + filtersPrice[0]/* + ";" + filtersCategory[0]*/
   flags := []cli.Flag{
     cli.StringFlag{
       Name: commandLong,
@@ -247,7 +247,7 @@ func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []st
     },
     cli.StringFlag{
       Name: filtersTypeLong,
-      Value: "phone_number;country_code;nxx;xxxx,city;province;country;price",
+      Value: "phone_number;country_code;npa;nxx;xxxx;city;province;country;price",
     },
     cli.StringFlag{
       Name: filtersValueLong,
@@ -263,7 +263,7 @@ func createCliListAvailablePhoneNumbers(endpoint string, filtersPhoneNumber []st
 
 func createCliListAvailablePhoneNumberRegions(endpoint string, filtersCountryCode []string, filtersNpa []string, filtersNxx []string, filtersIsTollFree []string, filtersCity []string, filtersProvincePostalCode []string, filtersCountryPostalCode []string) (error, map[string] interface{}) {
 
-  values := filtersCountryCode[0] + ";" + /*filtersNpa[0] + ";" + */filtersNxx[0] + ";" + filtersIsTollFree[0] + ";" + filtersCity[0] + ";" + filtersProvincePostalCode[0] + ";" + filtersCountryPostalCode[0]
+  values := filtersCountryCode[0] + ";" + filtersNpa[0] + ";" + filtersNxx[0] + ";" + filtersIsTollFree[0] + ";" + filtersCity[0] + ";" + filtersProvincePostalCode[0] + ";" + filtersCountryPostalCode[0]
   fmt.Println(values)
   flags := []cli.Flag{
     cli.StringFlag{
@@ -279,7 +279,7 @@ func createCliListAvailablePhoneNumberRegions(endpoint string, filtersCountryCod
     },
     cli.StringFlag{
       Name: filtersTypeLong,
-      Value: "country_code;nxx;is_toll_free;city;province_postal_code;country_postal_code",
+      Value: "country_code;npa;nxx;is_toll_free;city;province_postal_code;country_postal_code",
     },
     cli.StringFlag{
       Name: filtersValueLong,
@@ -389,6 +389,13 @@ func getFirstId(jsonObject map[string] interface{}) int {
   }
 
   return 0
+}
+
+func getFilters(jsonObject map[string] interface{}) map[string] interface{} {
+
+  filters := jsonObject["filters"].(map[string] interface{})
+
+  return filters
 }
 
 func getFirstAvailablePhoneNumber(json map[string] interface{}) string {
