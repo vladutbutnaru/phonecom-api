@@ -54,3 +54,19 @@ func TestFlagEmptyCommand(t *testing.T) {
 
 	assert.EqualError(t, err, fmt.Sprintf(invalidCommand, errorCommand, getAllCommands()))
 }
+
+func TestFlagBadJsonIn(t *testing.T) {
+
+	path := "../test/errorhandling/badJson.json"
+	err, _ := createCliWithJsonIn(listAccounts, path)
+
+	assert.EqualError(t, err, fmt.Sprintf(couldNotUnmarshal, path))
+}
+
+func TestFlagNonExistingFile(t *testing.T) {
+
+	path := "non-existingfile"
+	err, _ := createCliWithJsonIn(listAccounts, path)
+
+	assert.EqualError(t, err, fmt.Sprintf(couldNotReadFile, path))
+}
