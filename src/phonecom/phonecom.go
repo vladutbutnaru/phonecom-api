@@ -246,7 +246,11 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
     case createSms:
 
-      params := createSmsParams(param.from, param.to, param.text, param.otherParams.extensionId)
+			if (param.otherParams.extensionId > 0) {
+				id = param.otherParams.extensionId
+			}
+
+      params := createSmsParams(param.from, param.to, param.text, id)
       return rh.handle(api.CreateAccountSms(accountId, params))
     }
 
