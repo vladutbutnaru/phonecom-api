@@ -794,7 +794,6 @@ func TestFilterSortListAvailablePhoneNumbers(t *testing.T) {
   expectedCategory := "10"
   categorySlice = append(categorySlice, expectedCategory)
 
-  //sortParams.sortInternal, sortParams.sortPrice, sortParams.sortPhoneNumber
   sortInternal := "asc"
   sortPrice := "asc"
   sortPhoneNumber := "desc"
@@ -905,7 +904,7 @@ func TestSortListAvailablePhoneNumberRegions(t *testing.T) {
   assert.NoError(t, err)
 
   sorts := getSorts(response)
-  //assert.Equal(t, sortCountryCode, sorts["country_code"])
+  assert.Equal(t, sortCountryCode, sorts["country_code"])
   assert.Equal(t, sortNpa, sorts["npa"])
   assert.Equal(t, sortNxx, sorts["nxx"])
   assert.Equal(t, sortIsTollFree, sorts["is_toll_free"])
