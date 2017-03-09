@@ -223,6 +223,8 @@ func createCliParams(context *cli.Context) (CliParams, error) {
         par.sortParams.sortProvincePostalCode = sortValues[counter]
       case "country_postal_code":
         par.sortParams.sortCountryPostalCode = sortValues[counter]
+      case "country_code":
+        par.sortParams.sortCountryCode = sortValues[counter]
       }
     }
   }

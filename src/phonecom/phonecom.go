@@ -354,7 +354,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
     case listExpressServiceCodes:
 
-      return rh.handle(api.ListAccountExpressSrvCodes(accountId, param.slice))
+      return rh.handle(api.ListAccountExpressSrvCodes(accountId, filtersId))
 
     case getExpressServiceCode:
 
