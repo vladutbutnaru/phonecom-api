@@ -32,8 +32,8 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 		switch param.samplein {
 
 		case createCall:
-      createCallParamsSample := swagger.CreateCallParams{"+18189640647", 1767963, "+19109485024", true, "+19109485024", 1750618, "+18189640647", true}
-      s.marshalInput(createCallParamsSample, "createCall", inputType)
+			createCallParamsSample := swagger.CreateCallParams{"+18189640647", 1767963, "+19109485024", true, "+19109485024", 1750618, "+18189640647", true}
+			s.marshalInput(createCallParamsSample, "createCall", inputType)
 
 		case createDevice:
 			createDeviceParamsSample := swagger.CreateDeviceParams{randomString(12), nil}
