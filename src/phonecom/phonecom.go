@@ -319,16 +319,16 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 			return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
 		}
 
-  case swagger.CallsApi:
+	case swagger.CallsApi:
 
-    switch command {
+		switch command {
 
-    case createCall:
+		case createCall:
 
-      params := createCallParams(input);
-      return rh.handle(api.CreateAccountCalls(accountId, params))
+			params := createCallParams(input)
+			return rh.handle(api.CreateAccountCalls(accountId, params))
 
-    }
+		}
 
 	case swagger.DevicesApi:
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -8,7 +9,6 @@ import (
 	"os"
 	"path/filepath"
 	"phonecom-go-sdk"
-	"encoding/json"
 )
 
 type Query struct {
