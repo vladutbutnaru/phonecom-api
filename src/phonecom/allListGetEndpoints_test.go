@@ -38,6 +38,20 @@ func TestFilterSortListAccounts(t *testing.T) {
 	assert.Equal(t, sortId, sorts["id"])
 }
 
+func TestFilterWithSpaceInParamValue(t *testing.T) {
+
+	idSlice := make([]string, 0)
+	expectedId := "str1 str2"
+	idSlice = append(idSlice, expectedId)
+
+	err, response := createFilterSortExpressServiceCodesCli(listAccounts, idSlice)
+	assert.NoError(t, err)
+
+	filters := getFilters(response)
+	id := filters["id"].(string)
+	assert.Equal(t, expectedId, id)
+}
+
 func TestListApplications(t *testing.T) {
 
 	var json map[string]interface{}
