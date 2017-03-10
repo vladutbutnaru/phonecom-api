@@ -29,7 +29,7 @@ func clearEmptyParams(paramMap map[string][]string) {
 Which is called in each generated API endpoint after the list of parameters is created.
 
 ## Code organization
-The there are 2 main Go packages that are used for the CLI operation:
+There are 2 main Go packages that are used for the CLI operation:
 * phonecom-go-sdk
 * phonecom
 
@@ -66,7 +66,7 @@ You can also define the API key token as a CLI parameter by specifying it with t
 
 ## Flags
 This section describes the flags that are used in the CLI. For each flag there is a short version and a long version for the flags. They can be used interchangeably. An excerpt from the code is given below which provides the definition of the flags.
-```golang
+```go
 cli.StringFlag{
   Name: "command, c",
   Value: defaultCommand,

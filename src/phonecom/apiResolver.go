@@ -95,6 +95,10 @@ func (r *ApiResolver) resolve() interface{} {
 
 		api = swagger.TrunksApi{Configuration: r.config}
 
+	case createCall:
+
+		api = swagger.CallsApi{Configuration: r.config}
+
 	default:
 		return nil
 	}

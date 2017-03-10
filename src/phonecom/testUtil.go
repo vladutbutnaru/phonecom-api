@@ -957,6 +957,12 @@ func getId(jsonObject map[string]interface{}) int {
 	return int(idToReturn)
 }
 
+func getCallId(jsonObject map[string]interface{}) string {
+
+	id := jsonObject["id"].(string)
+	return id
+}
+
 func getName(json map[string]interface{}) string {
 
 	name := json["name"].(string)
