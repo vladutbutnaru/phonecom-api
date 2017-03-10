@@ -75,7 +75,7 @@ func (r *ApiResolver) resolve() interface{} {
 
     api = swagger.ExtensionsApi{Configuration:r.config}
 
-  case getCallerId:
+  case listCallerIds:
 
     api = swagger.CalleridsApi{Configuration:r.config}
 

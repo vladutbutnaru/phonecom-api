@@ -250,7 +250,7 @@ func TestListCallerIds(t *testing.T) {
 	assert.NoError(t, err)
 	extensionId := getFirstId(json)
 
-  err, _ = createCliWithId(getCallerId, extensionId)
+  err, _ = createCliWithId(listCallerIds, extensionId)
   assert.NoError(t, err)
 }
 
@@ -273,7 +273,7 @@ func TestFilterSortListCallerIds(t *testing.T) {
 	assert.NoError(t, err)
 	extensionId := getFirstId(json)
 
-  err, response := createFilterSortCallerIdsCliWithId(getCallerId, extensionId, numberSlice, nameSlice, sortNumber, sortName)
+  err, response := createFilterSortCallerIdsCliWithId(listCallerIds, extensionId, numberSlice, nameSlice, sortNumber, sortName)
   assert.NoError(t, err)
 
   filters := getFilters(response)

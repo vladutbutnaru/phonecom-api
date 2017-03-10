@@ -393,7 +393,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
     switch (command) {
 
-    case getCallerId:
+    case listCallerIds:
       return rh.handle(api.GetCallerIds(accountId, id, filterParams.filtersNumber, filterParams.filtersName, sortParams.sortNumber, sortParams.sortName, limit, offset, fields))
     }
 
