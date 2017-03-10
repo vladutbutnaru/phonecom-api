@@ -1,12 +1,12 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/urfave/cli"
 	"math"
 	"strconv"
 	"strings"
-  "errors"
 )
 
 type CliParams struct {
@@ -246,7 +246,8 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 		}
 
 		for counter := 0; counter < min; counter++ {
-      filter := []string{filtersValues[counter]}
+			filter := []string{filtersValues[counter]}
+
 			switch filtersTypes[counter] {
 			case "id":
 				par.filtersId = filter
@@ -326,8 +327,8 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 			case "country_postal_code":
 				par.filterParams.filtersCountryPostalCode = filter
 
-      default:
-        return par, errors.New("The filter type is not recognized.")
+			default:
+				return par, errors.New(fmt.Sprintf(msgFilterTypeNotRecognized, par.filterType))
 			}
 		}
 
