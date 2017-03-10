@@ -70,8 +70,6 @@ const replaceTrunk = "replace-account-trunk"
 const replaceContact = "replace-account-extension-contact"
 const replaceGroup = "replace-account-extension-contact-group"
 
-
-
 /******************* Code constants ***********************/
 
 const responseError = "@error"
