@@ -7,12 +7,11 @@ import (
 )
 
 var commandFlag = "-command"
-var errorNotNullMessage = "expected no error from Run, got %s"
 
 func createCliConfig() CliConfig {
 
 	var cliConfig CliConfig
-	cliConfig.Path = "../../config.xml"
+	cliConfig.Path = "../../config.json"
 
 	return cliConfig
 }

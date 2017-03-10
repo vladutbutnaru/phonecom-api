@@ -46,18 +46,19 @@ go get -u github.com/stretchr/testify
 ``` 
 
 
-## XML Configuration
-In order the Phone.com API to be invoked, an XML configuration file should be provided. The configuration file is used to provide the OAuth2 Authentication information. It is defined with the following format:  
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<Data>
-    <Config>
-        <Type>main</Type>
-        <ApiKeyPrefix>Bearer</ApiKeyPrefix>
-        <ApiKey>The API Key for Phone.com</ApiKey>
-        <AccountId>The account id</AccountId>
-    </Config>
-</Data>
+## JSON Configuration
+In order the Phone.com API to be invoked, a JSON configuration file should be provided. The configuration file is used to provide the OAuth2 Authentication information. It is defined with the following format:  
+```json
+{
+  "config": [
+    {
+      "type" : "main",
+      "apiKeyPrefix" : "Bearer",
+      "apiKey" : "Place your API key here",
+      "accountId" : 1315091
+    }
+  ]
+}
 ```
 In the current version the configuration file contains information about the authentication. This can be extended in future versions if needed.
 
