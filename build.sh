@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo "Updating libraries..."
 export GOPATH=`pwd`
 
 go get -u github.com/urfave/cli
@@ -7,7 +8,11 @@ go get -u github.com/go-resty/resty
 go get -u github.com/yukithm/json2csv/cmd/json2csv
 go get -u github.com/stretchr/testify
 
+echo "Removing old phonecom Go SDK"
 rm -r src/phonecom-go-sdk/
+
+echo "Copying and modifying new Go SDK"
+
 cp -r SDKs/go-client-generated src/phonecom-go-sdk
 sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' src/phonecom-go-sdk/*_api.go
 sed -i '/case "ssv":/c\\tcase "ssv", "multi":' src/phonecom-go-sdk/api_client.go
@@ -24,6 +29,10 @@ func clearEmptyParams(paramMap map[string][]string) {
 	}
 }' > src/phonecom-go-sdk/util.go
 
+echo "Generating executables for Windows, Linux and Mac"
+
 GOARCH=amd64 GOOS=darwin go build -o phonecom-mac phonecom
 GOARCH=amd64 GOOS=windows go build -o phonecom-windows phonecom
 GOARCH=amd64 GOOS=linux go build -o phonecom-linux phonecom
+
+echo "Done"
