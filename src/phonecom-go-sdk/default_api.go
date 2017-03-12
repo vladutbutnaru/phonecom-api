@@ -62,6 +62,8 @@ func (a DefaultApi) Ping() (*PingResponse, *APIResponse, error) {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

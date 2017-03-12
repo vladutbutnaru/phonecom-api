@@ -68,6 +68,8 @@ func (a GroupsApi) CreateAccountExtensionContactGroup(accountId int32, extension
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -138,6 +140,8 @@ func (a GroupsApi) DeleteAccountExtensionContactGroup(accountId int32, extension
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -205,6 +209,8 @@ func (a GroupsApi) GetAccountExtensionContactGroup(accountId int32, extensionId 
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -360,6 +366,8 @@ func (a GroupsApi) ReplaceAccountExtensionContactGroup(accountId int32, extensio
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

@@ -67,6 +67,8 @@ func (a ExpressservicecodesApi) GetAccountExpressSrvCode(accountId int32, codeId
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -133,6 +135,7 @@ func (a ExpressservicecodesApi) ListAccountExpressSrvCodes(accountId int32, filt
 	}
 	var filtersIdCollectionFormat = "multi"
 	localVarQueryParams.Add("filters[id]", a.Configuration.APIClient.ParameterToString(filtersId, filtersIdCollectionFormat))
+
 
 	clearEmptyParams(localVarQueryParams)
 

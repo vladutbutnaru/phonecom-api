@@ -68,6 +68,8 @@ func (a ContactsApi) CreateAccountExtensionContact(accountId int32, extensionId 
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -138,6 +140,8 @@ func (a ContactsApi) DeleteAccountExtensionContact(accountId int32, extensionId 
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -205,6 +209,8 @@ func (a ContactsApi) GetAccountExtensionContact(accountId int32, extensionId int
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -364,6 +370,8 @@ func (a ContactsApi) ReplaceAccountExtensionContact(accountId int32, extensionId
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

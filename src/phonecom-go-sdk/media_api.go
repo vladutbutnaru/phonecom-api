@@ -67,6 +67,8 @@ func (a MediaApi) GetAccountMedia(accountId int32, recordingId int32) (*MediaFul
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

@@ -66,6 +66,8 @@ func (a RoutesApi) CreateRoute(accountId int32, data CreateRouteParams) (*RouteF
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -134,6 +136,8 @@ func (a RoutesApi) DeleteAccountRoute(accountId int32, routeId int32) (*DeleteRo
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -199,6 +203,8 @@ func (a RoutesApi) GetAccountRoute(accountId int32, routeId int32) (*RouteFull, 
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -350,6 +356,8 @@ func (a RoutesApi) ReplaceAccountRoute(accountId int32, routeId int32, data Crea
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

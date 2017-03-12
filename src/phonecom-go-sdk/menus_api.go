@@ -66,6 +66,8 @@ func (a MenusApi) CreateAccountMenu(accountId int32, data CreateMenuParams) (*Me
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -134,6 +136,8 @@ func (a MenusApi) DeleteAccountMenu(accountId int32, menuId int32) (*DeleteMenu,
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -199,6 +203,8 @@ func (a MenusApi) GetAccountMenu(accountId int32, menuId int32) (*MenuFull, *API
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -350,6 +356,8 @@ func (a MenusApi) ReplaceAccountMenu(accountId int32, menuId int32, data Replace
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

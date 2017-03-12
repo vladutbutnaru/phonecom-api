@@ -66,6 +66,8 @@ func (a SubaccountsApi) CreateAccountSubaccount(accountId int32, data CreateSuba
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

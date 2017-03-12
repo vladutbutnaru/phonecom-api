@@ -66,6 +66,8 @@ func (a SmsApi) CreateAccountSms(accountId int32, data CreateSmsParams) (*SmsFul
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -133,6 +135,8 @@ func (a SmsApi) GetAccountSms(accountId int32, smsId string) (*SmsFull, *APIResp
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

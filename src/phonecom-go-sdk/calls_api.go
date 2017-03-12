@@ -66,6 +66,8 @@ func (a CallsApi) CreateAccountCalls(accountId int32, data CreateCallParams) (*C
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

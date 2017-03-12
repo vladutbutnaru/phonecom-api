@@ -66,6 +66,8 @@ func (a TrunksApi) CreateAccountTrunk(accountId int32, data CreateTrunkParams) (
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -134,6 +136,8 @@ func (a TrunksApi) DeleteAccountTrunk(accountId int32, trunkId int32) (*DeleteTr
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -199,6 +203,8 @@ func (a TrunksApi) GetAccountTrunk(accountId int32, trunkId int32) (*TrunkFull, 
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -350,6 +356,8 @@ func (a TrunksApi) ReplaceAccountTrunk(accountId int32, trunkId int32, data Crea
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

@@ -65,6 +65,8 @@ func (a AccountsApi) GetAccount(accountId int32) (*AccountFull, *APIResponse, er
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

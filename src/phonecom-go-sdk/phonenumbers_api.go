@@ -66,6 +66,8 @@ func (a PhonenumbersApi) CreateAccountPhoneNumber(accountId int32, data CreatePh
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -133,6 +135,8 @@ func (a PhonenumbersApi) GetAccountPhoneNumber(accountId int32, numberId int32) 
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -290,6 +294,8 @@ func (a PhonenumbersApi) ReplaceAccountPhoneNumber(accountId int32, numberId int
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

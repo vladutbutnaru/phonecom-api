@@ -67,6 +67,8 @@ func (a SchedulesApi) GetAccountSchedule(accountId int32, scheduleId int32) (*Sc
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 

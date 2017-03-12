@@ -113,6 +113,7 @@ func (a NumberregionsApi) ListAvailablePhoneNumberRegions(filtersCountryCode []s
 	var groupByCollectionFormat = "multi"
 	localVarQueryParams.Add("group_by", a.Configuration.APIClient.ParameterToString(groupBy, groupByCollectionFormat))
 
+
 	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header

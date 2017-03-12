@@ -66,6 +66,8 @@ func (a QueuesApi) CreateAccountQueue(accountId int32, data CreateQueueParams) (
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -134,6 +136,8 @@ func (a QueuesApi) DeleteAccountQueue(accountId int32, queueId int32) (*DeleteQu
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	clearEmptyParams(localVarQueryParams)
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -199,6 +203,8 @@ func (a QueuesApi) GetAccountQueue(accountId int32, queueId int32) (*QueueFull, 
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -350,6 +356,8 @@ func (a QueuesApi) ReplaceAccountQueue(accountId int32, queueId int32, data Crea
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+	clearEmptyParams(localVarQueryParams)
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
