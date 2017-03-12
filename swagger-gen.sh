@@ -17,7 +17,11 @@ declare -a sdks=(
   "typescript-node"
 )
 
+sdkDir=SDKs
+
+rm -r $sdkDir
+
 for sdk in "${sdks[@]}"
 do
-  java -jar swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o SDKs/$sdk-client-generated
+  java -jar swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $sdkDir/$sdk-client-generated
 done
