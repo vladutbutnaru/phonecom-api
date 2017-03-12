@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export GOPATH=`pwd`
+
 go get -u github.com/urfave/cli
 go get -u github.com/go-resty/resty
 go get -u github.com/yukithm/json2csv/cmd/json2csv
