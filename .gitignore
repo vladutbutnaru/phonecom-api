@@ -2,3 +2,6 @@
 bin/
 .idea/workspace.xml
 pkg/
+SDKs/
+swagger-codegen.jar
+
