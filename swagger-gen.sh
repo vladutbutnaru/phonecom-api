@@ -5,9 +5,9 @@ swaggerFilePath=phonecom.json
 mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:get -DremoteRepositories=central -Dartifact=io.swagger:swagger-codegen-cli:LATEST -Dpackaging=jar -Ddest=swagger-codegen.jar
 
 declare -a sdks=(
+  "go"
   "android"
   "csharp"
-  "go"
   "java"
   "objc"
   "php"
