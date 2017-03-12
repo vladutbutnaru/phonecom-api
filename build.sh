@@ -8,14 +8,18 @@ go get -u github.com/go-resty/resty
 go get -u github.com/yukithm/json2csv/cmd/json2csv
 go get -u github.com/stretchr/testify
 
+# Directories
+cliSwaggerDir=src/phonecom-go-sdk
+goSourceDir=SDKs/go-client-generated
+
 echo "Removing old phonecom Go SDK"
-rm -r src/phonecom-go-sdk/
+rm -r $cliSwaggerDir
 
 echo "Copying and modifying new Go SDK"
 
-cp -r SDKs/go-client-generated src/phonecom-go-sdk
-sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' src/phonecom-go-sdk/*_api.go
-sed -i '/case "ssv":/c\\tcase "ssv", "multi":' src/phonecom-go-sdk/api_client.go
+cp -r $goSourceDir $cliSwaggerDir
+sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' $cliSwaggerDir/*_api.go
+sed -i '/case "ssv":/c\\tcase "ssv", "multi":' $cliSwaggerDir/api_client.go
 
 echo 'package swagger
 
@@ -35,4 +39,4 @@ GOARCH=amd64 GOOS=darwin go build -o phonecom-mac phonecom
 GOARCH=amd64 GOOS=windows go build -o phonecom-windows phonecom
 GOARCH=amd64 GOOS=linux go build -o phonecom-linux phonecom
 
-echo "Done"
+echo "Done."
