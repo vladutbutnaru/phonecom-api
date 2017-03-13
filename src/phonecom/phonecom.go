@@ -318,7 +318,11 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		case listCallLogs:
 
 			return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
-		}
+
+    case getCallLog:
+
+      return rh.handle(api.GetAccountCallLogs(accountId, idString))
+    }
 
 	case swagger.CallsApi:
 

@@ -556,6 +556,52 @@
         ]
       }
     },
+    "/accounts/{account_id}/call-logs/{call_id}": {
+      "get": {
+        "tags": [
+          "call-logs"
+        ],
+        "summary": "Show details of an individual Call Log entry",
+        "description": "See Call Logs for more detail.",
+        "operationId": "get-account-call-logs",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accountIdParam"
+          },
+          {
+            "$ref": "#/parameters/callIdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CallLogFull"
+            }
+          },
+					"401": {
+						"$ref": "#/responses/response401"
+					},
+					"403": {
+						"$ref": "#/responses/response403"
+					},
+					"404": {
+						"$ref": "#/responses/response404"
+					}
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/accounts/{account_id}/devices": {
       "get": {
         "security": [
@@ -3595,10 +3641,8 @@
             "description": "Fields to group by (supports the same set of fields as the filters and sorting)",
             "required": false,
             "type": "array",
-            "collectionFormat": "multi",
             "items": {
-              "type": "string",
-              "pattern": "^eq:.*|^ne:.*|^lt:.*|^gt:.*|^lte:.*|^gte:.*|^starts-with:.*|^ends-with:.*|^contains:.*|^not-starts-with:.*|^not-ends-with:.*|^not-contains:.*|^between:.*,.*|^not-between:.*,.*"
+              "type": "string"
             }
           }
         ],
@@ -3901,10 +3945,8 @@
       "description": "Country filter",
       "required": false,
       "type": "array",
-      "collectionFormat": "multi",
       "items": {
-        "type": "string",
-        "pattern": "^eq:.*|^ne:.*|^lt:.*|^gt:.*|^lte:.*|^gte:.*|^starts-with:.*|^ends-with:.*|^contains:.*|^not-starts-with:.*|^not-ends-with:.*|^not-contains:.*|^between:.*,.*|^not-between:.*,.*"
+        "type": "string"
       }
     },
     "sortIdParam": {
@@ -4084,6 +4126,13 @@
       "description": "Extension ID",
       "required": true,
       "type": "integer"
+    },
+    "callIdParam": {
+      "name": "call_id",
+      "in": "path",
+      "description": "Call ID",
+      "required": true,
+      "type": "string"
     },
     "deviceIdParam": {
       "name": "device_id",

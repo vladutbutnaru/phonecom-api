@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/igorsimevski/phonecom-goclient"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
-	"github.com/igorsimevski/phonecom-goclient"
 )
 
 func TestCreateCall(t *testing.T) {

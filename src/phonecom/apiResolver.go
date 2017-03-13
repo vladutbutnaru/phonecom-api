@@ -59,7 +59,7 @@ func (r *ApiResolver) resolve() interface{} {
 
 		api = swagger.ApplicationsApi{Configuration: r.config}
 
-	case listCallLogs:
+	case listCallLogs, getCallLog:
 
 		api = swagger.CalllogsApi{Configuration: r.config}
 

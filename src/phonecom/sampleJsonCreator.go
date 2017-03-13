@@ -126,6 +126,10 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			applicationFullSample := swagger.ApplicationFull{int32(randomNumber(10, 9999)), randomString(12)}
 			s.marshalInput(applicationFullSample, "getApplication", inputType)
 
+		case getCallLog:
+			callLogFullSample := swagger.CallFull{"45ab77e8-05ac-11e7-9437-26f1abd8fe53"}
+			s.marshalInput(callLogFullSample, "getCallLog", inputType)
+
 		case getDevice:
 			deviceFullSample := swagger.DeviceFull{int32(randomNumber(10, 9999)), randomString(12), swagger.SipAuthentication{randomString(12), int32(randomNumber(10, 9999)), randomString(12), randomString(12)}, nil /*[]swagger.Line{int32(randomNumber(1,9999)), swagger.ExtensionSummary{int32(randomNumber(1,9999)), randomString(12), int32(randomNumber(1,9999))}}*/}
 			s.marshalInput(deviceFullSample, "getDevice", inputType)
