@@ -377,6 +377,10 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 	case swagger.ExtensionsApi:
 
+		if param.otherParams.extensionId > 0 {
+			id = param.otherParams.extensionId
+		}
+
 		switch command {
 
 		case listExtensions:
