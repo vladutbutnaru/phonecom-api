@@ -437,7 +437,7 @@
         ],
         "summary": "Make a phone call",
         "description": "",
-        "operationId": "create-account-calls",
+        "operationId": "create-account-call",
         "consumes": [
           "application/json"
         ],

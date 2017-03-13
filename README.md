@@ -280,7 +280,7 @@ phonecom -c create-account-sms -from {number1} -to {number2} -text {text} -id {e
 The following commands can be invoked from the API:
 
 ```
-create-account-calls
+create-account-call
 create-account-device
 create-account-extension
 create-account-menu

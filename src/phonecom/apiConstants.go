@@ -2,7 +2,7 @@ package main
 
 /******************* Phone.com API endpoints *********************/
 
-const createCall = "create-account-calls"
+const createCall = "create-account-call"
 const createDevice = "create-account-device"
 const createExtension = "create-account-extension"
 const createMenu = "create-account-menu"
