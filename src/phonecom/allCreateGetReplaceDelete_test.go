@@ -5,8 +5,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
-	"phonecom-go-sdk"
 	"testing"
+	"github.com/igorsimevski/phonecom-goclient"
 )
 
 func TestCreateCall(t *testing.T) {
