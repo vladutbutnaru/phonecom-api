@@ -32,7 +32,7 @@ func clearEmptyParams(paramMap map[string][]string) {
 			delete(paramMap, key)
 		}
 	}
-}' > src/phonecom-go-sdk/util.go
+}' > $cliSwaggerDir/util.go
 
 echo "Generating executables for Windows, Linux and Mac"
 
