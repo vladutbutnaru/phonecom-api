@@ -23,5 +23,5 @@ rm -r $sdkDir
 
 for sdk in "${sdks[@]}"
 do
-  java -jar swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $sdkDir/$sdk-client-generated
+  java -jar swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $sdkDir/$sdk-client
 done

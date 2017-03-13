@@ -7,6 +7,7 @@ go get -u github.com/urfave/cli
 go get -u github.com/go-resty/resty
 go get -u github.com/yukithm/json2csv/cmd/json2csv
 go get -u github.com/stretchr/testify
+go get -u github.com/igorsimevski/phonecom-goclient
 
 # Directories
 cliSwaggerDir=src/phonecom-go-sdk

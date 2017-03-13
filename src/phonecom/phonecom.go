@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"errors"
+	"github.com/igorsimevski/phonecom-goclient"
 	"github.com/urfave/cli"
-	"phonecom-go-sdk"
 )
 
 func main() {
