@@ -300,6 +300,10 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 	case swagger.ApplicationsApi:
 
+		if param.otherParams.applicationId > 0 {
+			id = param.otherParams.applicationId
+		}
+
 		switch command {
 
 		case listApplications:
@@ -313,16 +317,20 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 	case swagger.CalllogsApi:
 
+		if param.otherParams.callId != "" {
+			idString = param.otherParams.callId
+		}
+
 		switch command {
 
 		case listCallLogs:
 
 			return rh.handle(api.ListAccountCallLogs(accountId, filtersId, filterParams.filtersStartTime, filterParams.filtersCreatedAt, filterParams.filtersDirection, filterParams.filtersCalledNumber, filterParams.filtersType, filterParams.filtersExtension, sortParams.sortId, sortParams.sortStartTime, sortParams.sortCreatedAt, limit, offset, fields))
 
-    case getCallLog:
+		case getCallLog:
 
-      return rh.handle(api.GetAccountCallLogs(accountId, idString))
-    }
+			return rh.handle(api.GetAccountCallLogs(accountId, idString))
+		}
 
 	case swagger.CallsApi:
 
@@ -408,6 +416,10 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		}
 
 	case swagger.CalleridsApi:
+
+		if param.otherParams.extensionId > 0 {
+			id = param.otherParams.extensionId
+		}
 
 		switch command {
 
