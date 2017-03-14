@@ -1785,7 +1785,57 @@
             "$ref": "#/responses/response403"
           }
         }
-      }
+      },
+			"post": {
+				"security": [
+					{
+						"apiKey": []
+					}
+				],
+				"tags": [
+					"media"
+				],
+				"summary": "Add a media object to your account that can be used as a greeting or hold music. Users may create a media by using the built-in Text-to-speech (TTS) facility or upload a file of their choice. (Note: The maximum size for media files or JSON objects included with a POST or PUT request is 10 MB)",
+				"description": "See Account Media for more info on the properties.",
+				"operationId": "create-account-media",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"$ref": "#/parameters/accountIdParam"
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Media data",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/CreateMediaParams"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Created",
+						"schema": {
+							"$ref": "#/definitions/MediaFull"
+						}
+					},
+					"401": {
+						"$ref": "#/responses/response401"
+					},
+					"403": {
+						"$ref": "#/responses/response403"
+					},
+					"422": {
+						"$ref": "#/responses/response422"
+					}
+				}
+			}
     },
     "/accounts/{account_id}/media/{recording_id}": {
       "get": {
@@ -4579,6 +4629,51 @@
         }
       }
     },
+		"CreateMediaParams": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of media"
+				},
+				"origin": {
+					"type": "string",
+					"description": "'tts', 'file'"
+				},
+				"type": {
+					"type": "string",
+					"description": "'hold_music', 'greeting'"
+				},
+				"tts_voice": {
+					"type": "string",
+					"description": "'allison', 'amy', 'belle', 'callie', 'callieq', 'dallas', 'damien', 'david', 'designerdave', 'diane', 'diesel', 'dog', 'duchess', 'duncan', 'emily', 'evilgenius', 'frank', 'french-fry', 'gregory', 'isabelle', 'jean-pierre', 'jerkface', 'katrin', 'kayla', 'kidaroo', 'lawrence', 'layo', 'linda', 'marta', 'matthias', 'miguel', 'millie', 'princess', 'ransomnote', 'robin', 'shouty', 'shygirl', 'tamika', 'tophat', 'vittoria', 'vixen', 'vlad', 'walter', 'whispery', 'william', 'wiseguy', 'zach'"
+				},
+				"tts_text": {
+					"type": "string",
+					"description": "Text used for text-to-speech conversion, maximum 800 characters"
+				},
+				"is_temparary": {
+					"type": "string",
+					"description": "'Y', 'N'. Media file is temporary, will be deleted after a specified period."
+				},
+				"expiration_date": {
+					"type": "integer",
+					"description": "If is_temporary is 'Y', media will be deleted after the specified time in seconds"
+				},
+				"duration": {
+					"type": "integer",
+					"description": "Length of media in seconds"
+				},
+				"notes": {
+					"type": "string",
+					"description": "Notes about the media object"
+				},
+				"randomized": {
+					"type": "string",
+					"description": "'Y', 'N'. Start playing the media file in random location, instead of from the beginning"
+				}
+			}
+		},
     "CreateMenuParams": {
       "type": "object",
       "properties": {

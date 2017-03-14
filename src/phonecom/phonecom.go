@@ -112,9 +112,14 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 			return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
-		case getRecording:
+		case getMedia:
 
 			return rh.handle(api.GetAccountMedia(accountId, id))
+
+    case createMedia:
+
+      params := createMediaParams(input)
+      return rh.handle(api.CreateAccountMedia(accountId, params))
 		}
 
 	case swagger.MenusApi:
@@ -339,7 +344,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		case createCall:
 
 			params := createCallParams(input)
-			return rh.handle(api.CreateAccountCalls(accountId, params))
+			return rh.handle(api.CreateAccountCall(accountId, params))
 
 		}
 

@@ -283,6 +283,7 @@ The following commands can be invoked from the API:
 create-account-call
 create-account-device
 create-account-extension
+create-account-media
 create-account-menu
 create-account-phone-number
 create-account-queue

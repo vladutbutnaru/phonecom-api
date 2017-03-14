@@ -45,7 +45,7 @@ func NewCallsApiWithBasePath(basePath string) *CallsApi {
  * @param data Call data
  * @return *CallFull
  */
-func (a CallsApi) CreateAccountCalls(accountId int32, data CreateCallParams) (*CallFull, *APIResponse, error) {
+func (a CallsApi) CreateAccountCall(accountId int32, data CreateCallParams) (*CallFull, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -93,7 +93,7 @@ func (a CallsApi) CreateAccountCalls(accountId int32, data CreateCallParams) (*C
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "CreateAccountCalls", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	var localVarAPIResponse = &APIResponse{Operation: "CreateAccountCall", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()

@@ -15,7 +15,7 @@ func (r *ApiResolver) resolve() interface{} {
 
 	switch r.command {
 
-	case listMedia, getRecording:
+	case listMedia, getMedia, createMedia:
 
 		api = swagger.MediaApi{Configuration: r.config}
 

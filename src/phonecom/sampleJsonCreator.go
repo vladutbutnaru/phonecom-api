@@ -51,6 +51,10 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			createGroupParamsSample := swagger.CreateGroupParams{"Ferengi Traders"}
 			s.marshalInput(createGroupParamsSample, "createGroup", inputType)
 
+		case createMedia:
+			createMediaParamsSample := swagger.CreateMediaParams{randomString(12), "tts", "hold_music", "allison", randomString(100), "Y", 900, 100, "Notes aboute the media", "N"}
+			s.marshalInput(createMediaParamsSample, "createMedia", inputType)
+
 		case createMenu:
 			createMenuParamsSample := swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}
 			s.marshalInput(createMenuParamsSample, "createMenu", inputType)
@@ -156,7 +160,7 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			groupFullSample := swagger.GroupFull{int32(randomNumber(1, 9999)), randomString(12)}
 			s.marshalInput(groupFullSample, "getGroup", inputType)
 
-		case getRecording:
+		case getMedia:
 			mediaFullSample := swagger.MediaFull{int32(randomNumber(1, 9999)), randomString(12), "hold_music"}
 			s.marshalInput(mediaFullSample, "getRecording", inputType)
 

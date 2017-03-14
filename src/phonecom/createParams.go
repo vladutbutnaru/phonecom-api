@@ -289,6 +289,14 @@ func readAndUnmarshalFile(inputFile string, params interface{}) error {
 	return nil
 }
 
+func createMediaParams(inputFile string) swagger.CreateMediaParams {
+
+	var params swagger.CreateMediaParams
+	readAndUnmarshalFile(inputFile, &params)
+
+	return params
+}
+
 func createMenuParams(inputFile string) swagger.CreateMenuParams {
 
 	var params swagger.CreateMenuParams

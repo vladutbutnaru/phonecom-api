@@ -4,11 +4,11 @@ All URIs are relative to *https://api.phone.com/v4*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateAccountCalls**](CallsApi.md#CreateAccountCalls) | **Post** /accounts/{account_id}/calls | Make a phone call
+[**CreateAccountCall**](CallsApi.md#CreateAccountCall) | **Post** /accounts/{account_id}/calls | Make a phone call
 
 
-# **CreateAccountCalls**
-> CallFull CreateAccountCalls($accountId, $data)
+# **CreateAccountCall**
+> CallFull CreateAccountCall($accountId, $data)
 
 Make a phone call
 

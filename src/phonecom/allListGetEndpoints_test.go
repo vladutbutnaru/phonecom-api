@@ -437,7 +437,7 @@ func TestListMedia(t *testing.T) {
 	assert.NoError(t, err)
 
 	firstId := getFirstId(json)
-	err, json = createCliWithId(getRecording, int(firstId))
+	err, json = createCliWithId(getMedia, int(firstId))
 
 	assert.NoError(t, err)
 }
