@@ -7,3 +7,4 @@ swagger-codegen.jar
 phonecom-mac
 phonecom-linux
 phonecom-windows
+*.patch
