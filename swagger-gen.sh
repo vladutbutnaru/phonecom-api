@@ -1,8 +1,18 @@
 #!/bin/bash
 
-swaggerFilePath=../phonecom.json
 
-mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:get -DremoteRepositories=central -Dartifact=io.swagger:swagger-codegen-cli:LATEST -Dpackaging=jar -Ddest=swagger-codegen.jar
+scriptDir=`pwd`
+sdkDir=$1
+swaggerFilePath=$scriptDir/phonecom.json
+
+if [[ $# -eq 0 ]] ; then
+  echo 'Please enter path to the SDKs folder'
+  exit 0
+fi
+
+echo "SDK dir path: $sdkDir"
+
+mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:get -DremoteRepositories=central -Dartifact=io.swagger:swagger-codegen-cli:LATEST -Dpackaging=jar -Ddest=$scriptDir/swagger-codegen.jar
 
 declare -a sdks=(
   "go"
@@ -17,18 +27,15 @@ declare -a sdks=(
   "typescript-node"
 )
 
-sdkDir=SDKs
-
-rm -r $sdkDir
-mkdir $sdkDir
+find $sdkDir/*-client/* ! -iregex '(.git)' | xargs rm -r
 cd $sdkDir
 
 for sdk in "${sdks[@]}"
 do
-  dir=$sdk-client
-  java -jar ../swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $dir
+  dir=$sdkDir/$sdk-client
+  java -jar $scriptDir/swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $dir
 
-echo "Building SDK: $sdk..."
+  echo "Building SDK: $sdk..."
 
   if [ $sdk == "go" ]
   then
@@ -37,7 +44,7 @@ echo "Building SDK: $sdk..."
     sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' $dir/*_api.go
     sed -i '/case "ssv":/c\\tcase "ssv", "multi":' $dir/api_client.go
 
-echo 'package swagger
+  echo 'package swagger
 
 func clearEmptyParams(paramMap map[string][]string) {
 
@@ -49,5 +56,5 @@ func clearEmptyParams(paramMap map[string][]string) {
 }' > $dir/util.go
   fi
 
-  zip -r $dir.zip $dir
+  #zip -r $dir.zip $dir
 done
