@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/igorsimevski/phonecom-goclient"
 	"github.com/stretchr/testify/assert"
+	"github.com/waiyuen/Phone.com-API-SDK-go"
 	"io/ioutil"
 	"os"
 	"testing"

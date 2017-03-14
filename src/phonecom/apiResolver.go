@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/igorsimevski/phonecom-goclient"
-)
+import "github.com/waiyuen/Phone.com-API-SDK-go"
 
 type ApiResolver struct {
 	config  *swagger.Configuration

@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"errors"
-	"github.com/igorsimevski/phonecom-goclient"
 	"github.com/urfave/cli"
+	"github.com/waiyuen/Phone.com-API-SDK-go"
 )
 
 func main() {
@@ -116,10 +116,10 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 			return rh.handle(api.GetAccountMedia(accountId, id))
 
-    case createMedia:
+		case createMedia:
 
-      params := createMediaParams(input)
-      return rh.handle(api.CreateAccountMedia(accountId, params))
+			params := createMediaParams(input)
+			return rh.handle(api.CreateAccountMedia(accountId, params))
 		}
 
 	case swagger.MenusApi:

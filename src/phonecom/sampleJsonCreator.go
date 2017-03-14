@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"github.com/igorsimevski/phonecom-goclient"
+	"github.com/waiyuen/Phone.com-API-SDK-go"
 	"io/ioutil"
 	"strings"
 	"time"
