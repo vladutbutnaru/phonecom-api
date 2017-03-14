@@ -5,8 +5,8 @@ scriptDir=`pwd`
 sdkDir=$1
 swaggerFilePath=$scriptDir/phonecom.json
 
-if [[ $# -eq 0 ]] ; then
-  echo 'Please enter path to the SDKs folder'
+if [[ $# -lt 2 ]] ; then
+  echo 'Usage: First argument: path to SDK, Second Argument: Path to Java SDK'
   exit 0
 fi
 
@@ -33,7 +33,11 @@ cd $sdkDir
 for sdk in "${sdks[@]}"
 do
   dir=$sdkDir/$sdk-client
-  java -jar $scriptDir/swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $dir
+
+  if [ $sdk != "java" ]
+  then
+    java -jar $scriptDir/swagger-codegen.jar generate -i $swaggerFilePath -l $sdk -o $dir
+  fi
 
   echo "Building SDK: $sdk..."
 
@@ -44,7 +48,7 @@ do
     sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' $dir/*_api.go
     sed -i '/case "ssv":/c\\tcase "ssv", "multi":' $dir/api_client.go
 
-  echo 'package swagger
+    echo 'package swagger
 
 func clearEmptyParams(paramMap map[string][]string) {
 
@@ -54,6 +58,11 @@ func clearEmptyParams(paramMap map[string][]string) {
 		}
 	}
 }' > $dir/util.go
+
+  elif [ $sdk == "java" ]
+  then
+    echo "Copying Java SDK..."
+    cp -r $2/* $dir
   fi
 
   #zip -r $dir.zip $dir
