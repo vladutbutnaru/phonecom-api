@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ $# -lt 1 ]] ; then
-  echo 'Please enter path to the SDKs folder'
+if [[ $# -lt 2 ]] ; then
+  echo 'Usage: Please enter path to the SDKs folder and a git command: status or add'
   exit 0
 fi
 
@@ -20,9 +20,27 @@ declare -a sdks=(
   "typescript-node"
 )
 
-for sdk in "${sdks[@]}"
-do
-  dir=$sdkDir/$sdk-client
-  echo "Checking status for client: $sdk"
-  git --git-dir=$dir/.git/ --work-tree=$dir/ status
-done
+if [ $2 == "status" ]
+then
+
+  for sdk in "${sdks[@]}"
+  do
+    dir=$sdkDir/$sdk-client
+    echo "Checking status for client: $sdk"
+    git --git-dir=$dir/.git/ --work-tree=$dir/ status
+  done
+
+fi
+
+if [ $2 == "add" ]
+then
+
+  for sdk in "${sdks[@]}"
+  do
+    dir=$sdkDir/$sdk-client
+    echo "Adding all for client: $sdk"
+    git --git-dir=$dir/.git/ --work-tree=$dir/ add --all
+    git --git-dir=$dir/.git/ --work-tree=$dir/ commit -m "Updating $sdk SDK"
+  done
+
+fi
