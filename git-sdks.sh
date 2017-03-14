@@ -44,3 +44,15 @@ then
   done
 
 fi
+
+if [ $2 == "push" ]
+then
+
+  for sdk in "${sdks[@]}"
+  do
+    dir=$sdkDir/$sdk-client
+    echo "Pushing for client: $sdk"
+    echo "git --git-dir=$dir/.git/ --work-tree=$dir/ push origin master"
+  done
+
+fi
