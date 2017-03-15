@@ -283,6 +283,10 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 	case swagger.AccountsApi:
 
+		if param.otherParams.accountId > 0 {
+			id = param.otherParams.accountId
+		}
+
 		switch command {
 
 		case listAccounts:

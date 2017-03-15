@@ -39,7 +39,7 @@ type CliParams struct {
 
 	filterParams FilterParams
 	sortParams   SortParams
-	otherParams  OtherParams
+	otherParams OtherParams
 
 	from string
 	to   string

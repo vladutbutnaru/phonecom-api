@@ -158,6 +158,7 @@ func createStringArray(filter interface{}) []string {
 type OtherParams struct {
 	groupBy       []string
 	applicationId int32
+	accountId     int32
 	extensionId   int32
 	callId        string
 	deviceId      int32
@@ -202,6 +203,7 @@ func getOtherParams(inputFile string) (
 	params.smsId = getFieldString(data["sms_id"])
 	params.trunkId = getField(data["trunk_id"])
 	params.applicationId = getField(data["application_id"])
+	params.accountId = getField(data["account_id"])
 
 	return err, params
 }
