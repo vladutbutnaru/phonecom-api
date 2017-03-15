@@ -3,7 +3,7 @@
 
 scriptDir=`pwd`
 sdkDir=$1
-swaggerFilePath=$scriptDir/phonecom.json
+swaggerFilePath=$scriptDir/phonecom-apiv4.swagger.json
 
 if [[ $# -lt 2 ]] ; then
   echo 'Usage: First argument: path to SDK, Second Argument: Path to Java SDK'
