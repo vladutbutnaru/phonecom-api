@@ -97,7 +97,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 	var input = param.input
 	var idSecondary = param.idSecondary
 	var idString = param.idString
-
+    var page = param.page
 	switch api := api.(type) {
 
 	case swagger.MediaApi:
@@ -109,7 +109,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		switch command {
 
 		case listMedia:
-
+            
 			return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 		case getMedia:
