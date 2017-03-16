@@ -82,16 +82,6 @@ func execute(
 
 	return invokeCommand(responseHandler, param, api)
 }
-// overwriting duplicate keys, you should handle that if there is a need
-func mergeMaps(maps ...map[string]interface{}) map[string]interface{} {
-    result := make(map[string]interface{})
-    for _, m := range maps {
-        for k, v := range m {
-            result[k] = v
-        }
-    }
-    return result
-}
 
 func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error, map[string]interface{}) {
 
@@ -107,7 +97,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 	var input = param.input
 	var idSecondary = param.idSecondary
 	var idString = param.idString
-    var page = param.page
+
 	switch api := api.(type) {
 
 	case swagger.MediaApi:
@@ -119,22 +109,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		switch command {
 
 		case listMedia:
-               err,resp := rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields));
-            
-            if page > 1 {
-                err,resp2 := rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset + limit, fields));
-              v := []map[string]interface{}{
-                  resp,
-                  resp2,
-              }
-                return err, mergeMaps(v...)
-            }
-         
-            if err != nil {
-                return err, resp
-            }
-            
-			return err, resp
+            return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields));         
 
 		case getMedia:
 

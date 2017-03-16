@@ -43,7 +43,7 @@ const inputFormatLong = "inputFormat"
 const outputFormatLong = "outputFormat"
 const apiKeyLong = "api-key"
 const apiKeyPrefixLong = "api-key-prefix"
-const pageLong = "page"
+
 
 func getCliFlags() []cli.Flag {
 
@@ -177,11 +177,7 @@ func getCliFlags() []cli.Flag {
 			Name:  apiKeyPrefixLong + ", akp",
 			Usage: "The API key prefix for Phone.com",
 		},
-        cli.IntFlag{
-			Name:  pageLong,
-            Value: 1,
-			Usage: "The page you want to fetch",
-		},
+      
 	}
 }
 

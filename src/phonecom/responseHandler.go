@@ -6,11 +6,15 @@ import (
 	"fmt"
 	"github.com/waiyuen/Phone.com-API-SDK-go"
 	"strings"
+     "github.com/imdario/mergo"
+     
 )
 
 type ResponseHandler struct {
 	param CliParams
 }
+
+
 
 func (h *ResponseHandler) handle(
 	x interface{},
@@ -78,7 +82,41 @@ func (h *ResponseHandler) handle(
 		if strings.EqualFold(h.param.outputFormat, "csv") {
 			outputType = "csv"
 		}
-
+        
+       
+        
+        if validatedJson["total"] != nil {
+            var currentNum = 0
+            var items = validatedJson["items"].([]interface{})
+            currentNum = len(items)
+           
+               firstId :=validatedJson["total"].(json.Number)
+            totalGood, _ := json.Number.Int64(firstId)
+            var total = int(totalGood)
+       
+           
+            
+            for  total  >   currentNum {
+               
+                
+                 err,respPage := h.handle(x,response,error)
+                if err != nil {
+                    return err, nil
+                    
+                }
+                 if err := mergo.Merge(&validatedJson, respPage); err != nil {
+                     
+                    }   
+  
+                
+                //join validatedJson with respPage and that is it
+                 currentNum = currentNum + currentNum
+            }
+            
+           
+        }
+        
+        
 		if outputType == "csv" {
 			exportToCsv(jsonObject)
 		} else if outputType == "json" {
