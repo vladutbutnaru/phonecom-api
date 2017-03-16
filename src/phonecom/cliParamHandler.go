@@ -90,7 +90,7 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 	outputFormat := context.String(outputFormatLong)
 	apiKey := context.String(apiKeyLong)
 	apiKeyPrefix := context.String(apiKeyPrefixLong)
-    page := int32(context.Int(page))
+    page := int32(context.Int(pageLong))
 
 	var filtersId []string
 
