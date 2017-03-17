@@ -88,9 +88,11 @@ func execute(
           return err,response
         
     }else{
+        
         var items = response["items"].([]interface{})
         var currentNum  = len(items)
         var firstItems = currentNum
+        if param.limit > int32(currentNum) {
           for  total  >   currentNum {
                 
                  
@@ -102,6 +104,7 @@ func execute(
                 //join validatedJson with respPage and that is it
                 currentNum = currentNum + currentNum
             }
+        }
         
     }
     
