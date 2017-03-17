@@ -74,42 +74,38 @@ func execute(
 	if api == nil {
 		if param.command == defaultCommand {
 			defaultApi := swagger.DefaultApi{Configuration: swaggerConfig}
-            
-            err,response, _ := responseHandler.handle(defaultApi.Ping())
-            return err,response
+
+			err, response, _ := responseHandler.handle(defaultApi.Ping())
+			return err, response
 		} else {
 			return errors.New(fmt.Sprintf(invalidCommand, param.command, getAllCommands())), nil
 		}
 	}
 
-	  err,response, total := invokeCommand(responseHandler, param, api)
-    
-    if total == 0 {
-          return err,response
-        
-    }else{
-        
-        var items = response["items"].([]interface{})
-        var currentNum  = len(items)
-        var firstItems = currentNum
-        if param.limit > int32(currentNum) {
-          for  total  >   currentNum {
-                
-                 
-              param.offset = param.offset + int32(firstItems)
-                invokeCommand(responseHandler, param, api)
-                 
-  
-                
-                //join validatedJson with respPage and that is it
-                currentNum = currentNum + currentNum
-            }
-        }
-        
-    }
-    
-    
-    return err,response
+	err, response, total := invokeCommand(responseHandler, param, api)
+
+	if total == 0 {
+		return err, response
+
+	} else {
+
+		var items = response["items"].([]interface{})
+		var currentNum = len(items)
+		var firstItems = currentNum
+		if param.limit > int32(currentNum) {
+			for total > currentNum {
+
+				param.offset = param.offset + int32(firstItems)
+				invokeCommand(responseHandler, param, api)
+
+				//join validatedJson with respPage and that is it
+				currentNum = currentNum + currentNum
+			}
+		}
+
+	}
+
+	return err, response
 }
 
 func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error, map[string]interface{}, int) {
@@ -138,7 +134,7 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		switch command {
 
 		case listMedia:
-            return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields));         
+			return rh.handle(api.ListAccountMedia(accountId, filtersId, filterParams.filtersName, sortParams.sortId, sortParams.sortName, limit, offset, fields))
 
 		case getMedia:
 

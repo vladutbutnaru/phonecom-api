@@ -37,10 +37,9 @@ type CliParams struct {
 	samplein       string
 	sampleout      string
 
-
 	filterParams FilterParams
 	sortParams   SortParams
-	otherParams OtherParams
+	otherParams  OtherParams
 
 	from string
 	to   string
@@ -90,7 +89,6 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 	outputFormat := context.String(outputFormatLong)
 	apiKey := context.String(apiKeyLong)
 	apiKeyPrefix := context.String(apiKeyPrefixLong)
-   
 
 	var filtersId []string
 
@@ -169,7 +167,6 @@ func createCliParams(context *cli.Context) (CliParams, error) {
 	par.apiKeyPrefix = apiKeyPrefix
 	par.inputFormat = inputFormat
 	par.outputFormat = outputFormat
-
 
 	par.filterParams = filterParams
 	par.sortParams = sortParams

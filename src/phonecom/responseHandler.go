@@ -6,14 +6,11 @@ import (
 	"fmt"
 	"github.com/waiyuen/Phone.com-API-SDK-go"
 	"strings"
-     
 )
 
 type ResponseHandler struct {
 	param CliParams
 }
-
-
 
 func (h *ResponseHandler) handle(
 	x interface{},
@@ -52,7 +49,7 @@ func (h *ResponseHandler) handle(
 	}
 
 	message := validateResponse(validatedJson)
-    var total = 0
+	var totalListItems = 0
 	if message != "" {
 
 		if h.param.verbose {
@@ -81,14 +78,15 @@ func (h *ResponseHandler) handle(
 		if strings.EqualFold(h.param.outputFormat, "csv") {
 			outputType = "csv"
 		}
-        
-       
-          firstId :=validatedJson["total"].(json.Number)
-            totalGood, _ := json.Number.Int64(firstId)
-             total = int(totalGood)
-       
-        
-        
+
+		totalFromJson := validatedJson["total"]
+
+		if totalFromJson != nil {
+			totalAsNumber := totalFromJson.(json.Number)
+			totalGood, _ := json.Number.Int64(totalAsNumber)
+			totalListItems = int(totalGood)
+		}
+
 		if outputType == "csv" {
 			exportToCsv(jsonObject)
 		} else if outputType == "json" {
@@ -103,5 +101,5 @@ func (h *ResponseHandler) handle(
 
 	}
 
-	return nil, validatedJson, total
+	return nil, validatedJson, totalListItems
 }

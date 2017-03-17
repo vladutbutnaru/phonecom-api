@@ -44,7 +44,6 @@ const outputFormatLong = "outputFormat"
 const apiKeyLong = "api-key"
 const apiKeyPrefixLong = "api-key-prefix"
 
-
 func getCliFlags() []cli.Flag {
 
 	return []cli.Flag{
@@ -177,7 +176,6 @@ func getCliFlags() []cli.Flag {
 			Name:  apiKeyPrefixLong + ", akp",
 			Usage: "The API key prefix for Phone.com",
 		},
-      
 	}
 }
 
