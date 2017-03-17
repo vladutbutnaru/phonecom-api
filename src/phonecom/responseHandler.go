@@ -82,9 +82,15 @@ func (h *ResponseHandler) handle(
 		totalFromJson := validatedJson["total"]
 
 		if totalFromJson != nil {
+
 			totalAsNumber := totalFromJson.(json.Number)
-			totalGood, _ := json.Number.Int64(totalAsNumber)
-			totalListItems = int(totalGood)
+			totalGood, err := json.Number.Int64(totalAsNumber)
+
+			if err != nil {
+				fmt.Println("Could not get total number of list items from respose")
+			} else {
+				totalListItems = int(totalGood)
+			}
 		}
 
 		if outputType == "csv" {
