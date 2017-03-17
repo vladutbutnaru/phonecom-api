@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/waiyuen/Phone.com-API-SDK-go"
 	"strings"
-     "github.com/imdario/mergo"
      
 )
 
@@ -19,7 +18,7 @@ type ResponseHandler struct {
 func (h *ResponseHandler) handle(
 	x interface{},
 	response *swagger.APIResponse,
-	error error) (error, map[string]interface{}) {
+	error error) (error, map[string]interface{}, int) {
 
 	if error != nil {
 
@@ -27,7 +26,7 @@ func (h *ResponseHandler) handle(
 			fmt.Println("Error while getting response")
 		}
 
-		return error, nil
+		return error, nil, 0
 	}
 
 	payload := response.Payload
@@ -38,7 +37,7 @@ func (h *ResponseHandler) handle(
 			fmt.Println("Null response payload")
 		}
 
-		return errors.New(msgCouldNotGetResponse), nil
+		return errors.New(msgCouldNotGetResponse), nil, 0
 	}
 
 	validatedJson := validateJson(string(payload))
@@ -49,18 +48,18 @@ func (h *ResponseHandler) handle(
 			fmt.Println("Could not unmarshal API json response")
 		}
 
-		return errors.New(msgInvalidJson), nil
+		return errors.New(msgInvalidJson), nil, 0
 	}
 
 	message := validateResponse(validatedJson)
-
+    var total = 0
 	if message != "" {
 
 		if h.param.verbose {
 			fmt.Printf("%+v\n%s\n", x, response)
 		}
 
-		return errors.New(message), nil
+		return errors.New(message), nil, 0
 	} else {
 
 		var jsonObject interface{}
@@ -84,37 +83,10 @@ func (h *ResponseHandler) handle(
 		}
         
        
-        
-        if validatedJson["total"] != nil {
-            var currentNum = 0
-            var items = validatedJson["items"].([]interface{})
-            currentNum = len(items)
-           
-               firstId :=validatedJson["total"].(json.Number)
+          firstId :=validatedJson["total"].(json.Number)
             totalGood, _ := json.Number.Int64(firstId)
-            var total = int(totalGood)
+             total = int(totalGood)
        
-           
-            
-            for  total  >   currentNum {
-               
-                
-                 err,respPage := h.handle(x,response,error)
-                if err != nil {
-                    return err, nil
-                    
-                }
-                 if err := mergo.Merge(&validatedJson, respPage); err != nil {
-                     
-                    }   
-  
-                
-                //join validatedJson with respPage and that is it
-                 currentNum = currentNum + currentNum
-            }
-            
-           
-        }
         
         
 		if outputType == "csv" {
@@ -122,7 +94,7 @@ func (h *ResponseHandler) handle(
 		} else if outputType == "json" {
 			jsonOutput, err := json.MarshalIndent(jsonObject, "", "  ")
 			if err != nil {
-				return err, nil
+				return err, nil, 0
 			}
 			fmt.Printf("%s\n", jsonOutput)
 		} else {
@@ -131,5 +103,5 @@ func (h *ResponseHandler) handle(
 
 	}
 
-	return nil, validatedJson
+	return nil, validatedJson, total
 }

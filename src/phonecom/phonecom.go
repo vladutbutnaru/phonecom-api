@@ -74,16 +74,42 @@ func execute(
 	if api == nil {
 		if param.command == defaultCommand {
 			defaultApi := swagger.DefaultApi{Configuration: swaggerConfig}
-			return responseHandler.handle(defaultApi.Ping())
+            
+            err,response, _ := responseHandler.handle(defaultApi.Ping())
+            return err,response
 		} else {
 			return errors.New(fmt.Sprintf(invalidCommand, param.command, getAllCommands())), nil
 		}
 	}
 
-	return invokeCommand(responseHandler, param, api)
+	  err,response, total := invokeCommand(responseHandler, param, api)
+    
+    if total == 0 {
+          return err,response
+        
+    }else{
+        var items = response["items"].([]interface{})
+        var currentNum  = len(items)
+        var firstItems = currentNum
+          for  total  >   currentNum {
+                
+                 
+              param.offset = param.offset + int32(firstItems)
+                invokeCommand(responseHandler, param, api)
+                 
+  
+                
+                //join validatedJson with respPage and that is it
+                currentNum = currentNum + currentNum
+            }
+        
+    }
+    
+    
+    return err,response
 }
 
-func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error, map[string]interface{}) {
+func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error, map[string]interface{}, int) {
 
 	var command = param.command
 	var accountId = param.accountId
@@ -562,8 +588,8 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 		}
 
 	default:
-		return nil, nil
+		return nil, nil, 0
 	}
 
-	return nil, nil
+	return nil, nil, 0
 }
