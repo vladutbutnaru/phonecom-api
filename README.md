@@ -47,7 +47,7 @@ go get -u github.com/stretchr/testify
 
 Also, the Phone.com go client need sto be installed
 ```bash
-go get -u github.com/waiyuen/Phone.com-API-SDK-go
+go get -u github.com/phonedotcom/API-SDK-go
 ```
 
 

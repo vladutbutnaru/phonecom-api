@@ -6,7 +6,7 @@ import (
 
 	"errors"
 	"github.com/urfave/cli"
-	"github.com/waiyuen/Phone.com-API-SDK-go"
+	"github.com/phonedotcom/API-SDK-go"
 )
 
 func main() {

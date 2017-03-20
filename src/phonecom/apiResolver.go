@@ -1,6 +1,6 @@
 package main
 
-import "github.com/waiyuen/Phone.com-API-SDK-go"
+import "github.com/phonedotcom/API-SDK-go"
 
 type ApiResolver struct {
 	config  *swagger.Configuration
