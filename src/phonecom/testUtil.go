@@ -28,6 +28,9 @@ func createCliWithJsonIn(endpoint string, path string) (error, map[string]interf
 			Name:  inputLong,
 			Value: path,
 		},
+    cli.BoolTFlag{
+      Name:  verboseLong,
+    },
 	}
 
 	return doCreateCli(endpoint, flags)

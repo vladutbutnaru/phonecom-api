@@ -1837,7 +1837,7 @@
 				}
 			}
     },
-    "/accounts/{account_id}/media/{recording_id}": {
+    "/accounts/{account_id}/media/{media_id}": {
       "get": {
         "security": [
           {
@@ -1861,11 +1861,7 @@
             "$ref": "#/parameters/accountIdParam"
           },
           {
-            "name": "recording_id",
-            "in": "path",
-            "description": "Recording ID",
-            "required": true,
-            "type": "integer"
+						"$ref": "#/parameters/mediaIdParam"
           }
         ],
         "responses": {
@@ -1885,7 +1881,110 @@
             "$ref": "#/responses/response404"
           }
         }
-      }
+      },
+			"put": {
+				"security": [
+					{
+						"apiKey": []
+					}
+				],
+				"tags": [
+					"media"
+				],
+				"summary": "Update a media object to your account. Note: The maximum size for media files or JSON objects included with a POST or PUT request is 10 MB.",
+				"description": "See Account Media for more info on the properties.",
+				"operationId": "replace-account-media",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"$ref": "#/parameters/accountIdParam"
+					},
+					{
+						"$ref": "#/parameters/mediaIdParam"
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Media data",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/CreateMediaParams"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Replaced",
+						"schema": {
+							"$ref": "#/definitions/MediaFull"
+						}
+					},
+					"401": {
+						"$ref": "#/responses/response401"
+					},
+					"403": {
+						"$ref": "#/responses/response403"
+					},
+					"404": {
+						"$ref": "#/responses/response404"
+					},
+					"422": {
+						"$ref": "#/responses/response422"
+					}
+				}
+			},
+			"delete": {
+				"security": [
+					{
+						"apiKey": []
+					}
+				],
+				"tags": [
+					"media"
+				],
+				"summary": "Delete an individual media record",
+				"description": "See Account Media for more info on the properties.",
+				"operationId": "delete-account-media",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"$ref": "#/parameters/accountIdParam"
+					},
+					{
+						"$ref": "#/parameters/mediaIdParam"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/DeleteMedia"
+						}
+					},
+					"401": {
+						"$ref": "#/responses/response401"
+					},
+					"403": {
+						"$ref": "#/responses/response403"
+					},
+					"404": {
+						"$ref": "#/responses/response404"
+					},
+					"409": {
+						"$ref": "#/responses/response409"
+					}
+				}
+			}
     },
     "/accounts/{account_id}/menus": {
       "get": {
@@ -2053,7 +2152,7 @@
           "menus"
         ],
         "summary": "Replace an individual menu",
-        "description": "This service replaces the details of an individual Menu.",
+        "description": "See Account Menus for more info on the properties.",
         "operationId": "replace-account-menu",
         "consumes": [
           "application/json"
@@ -2109,7 +2208,7 @@
           "menus"
         ],
         "summary": "Delete an individual menu",
-        "description": "This service shows the details of an individual menu.",
+        "description": "See Account Menus for more info on the properties.",
         "operationId": "delete-account-menu",
         "consumes": [
           "application/json"
@@ -4205,6 +4304,13 @@
       "required": true,
       "type": "integer"
     },
+		"mediaIdParam": {
+			"name": "media_id",
+			"in": "path",
+			"description": "Media ID",
+			"required": true,
+			"type": "integer"
+		},
     "menuIdParam": {
       "name": "menu_id",
       "in": "path",
@@ -6994,6 +7100,14 @@
         }
       }
     },
+		"DeleteMedia": {
+			"type": "object",
+			"properties": {
+				"success": {
+					"type": "boolean"
+				}
+			}
+		},
     "DeleteMenu": {
       "type": "object",
       "properties": {

@@ -127,8 +127,8 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 	case swagger.MediaApi:
 
-		if param.otherParams.recordingId > 0 {
-			id = param.otherParams.recordingId
+		if param.otherParams.mediaId > 0 {
+			id = param.otherParams.mediaId
 		}
 
 		switch command {
@@ -144,6 +144,15 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 			params := createMediaParams(input)
 			return rh.handle(api.CreateAccountMedia(accountId, params))
+
+    case replaceMedia:
+
+			params := createMediaParams(input)
+			return rh.handle(api.ReplaceAccountMedia(accountId, id, params))
+
+    case deleteMedia:
+
+      return rh.handle(api.DeleteAccountMedia(accountId, id))
 		}
 
 	case swagger.MenusApi:

@@ -262,7 +262,7 @@ func TestCreateDeleteMenu(t *testing.T) {
 	os.Remove(fileName)
 }
 
-func TestCreateMedia(t *testing.T) {
+func TestCreateDeleteMedia(t *testing.T) {
 
 	var result map[string]interface{}
 	var err error
@@ -282,6 +282,7 @@ func TestCreateMedia(t *testing.T) {
 		t.Fatal()
 	}
 
+  createCliWithId(deleteMedia, id)
 	os.Remove(fileName)
 }
 
@@ -302,6 +303,27 @@ func TestListReplaceMenu(t *testing.T) {
 	err = ioutil.WriteFile(fileName, b, 0644)
 
 	err, result = createReplaceCliWithJsonIn(replaceMenu, fileName, firstId)
+	assert.NoError(t, err)
+	os.Remove(fileName)
+}
+
+func TestListReplaceMedia(t *testing.T) {
+
+	var result map[string]interface{}
+	var err error
+
+	err, result = createCli(listMedia)
+	assert.NoError(t, err)
+
+	firstId := getFirstId(result)
+
+	randomName := randomString(12)
+	MediaParamsJson := swagger.CreateMediaParams{randomName, "tts", "hold_music", "allison", randomString(100), "Y", 900, 100, "Notes aboute the media", "N"}
+	fileName := "../test/jsonin/replaceMedia" + randomName + ".json"
+	b, err := json.Marshal(MediaParamsJson)
+	err = ioutil.WriteFile(fileName, b, 0644)
+
+	err, result = createReplaceCliWithJsonIn(replaceMedia, fileName, firstId)
 	assert.NoError(t, err)
 	os.Remove(fileName)
 }

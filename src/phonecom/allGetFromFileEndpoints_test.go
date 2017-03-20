@@ -182,7 +182,7 @@ func TestGetMedia(t *testing.T) {
 	firstId := getFirstId(json)
 	mediaSample := GetMediaJson{int32(firstId)}
 
-	filePath := "../../getRecording"
+	filePath := "../../getMedia"
 	testJsonCreator.marshalInput(mediaSample, filePath, testJsonType)
 	err, _ = createCliWithFile(getMedia, filePath+testJsonExtension)
 

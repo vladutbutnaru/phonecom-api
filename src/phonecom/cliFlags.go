@@ -196,6 +196,7 @@ func getAllCommands() string {
 		createContact + ", " +
 		createGroup + "\n\n" +
 
+    deleteMedia + ", " +
 		deleteMenu + ", " +
 		deleteQueue + ", " +
 		deleteRoute + ", " +
@@ -243,6 +244,7 @@ func getAllCommands() string {
 
 		replaceDevice + ", " +
 		replaceExtension + ", " +
+    replaceMedia + ", " +
 		replaceMenu + ", " +
 		replacePhoneNumber + ", " +
 		replaceQueue + ", " +
