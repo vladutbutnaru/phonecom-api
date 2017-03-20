@@ -27,12 +27,12 @@ declare -a sdks=(
   "typescript-node"
 )
 
-find $sdkDir/*-client/* ! -iregex '(.git)' | xargs rm -r
+find $sdkDir/API-SDK-*/* ! -iregex '(.git)' | xargs rm -r
 cd $sdkDir
 
 for sdk in "${sdks[@]}"
 do
-  dir=$sdkDir/$sdk-client
+  dir=$sdkDir/API-SDK-$sdk
 
   if [ $sdk != "java" ]
   then
