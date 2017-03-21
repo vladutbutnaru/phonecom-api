@@ -5403,7 +5403,7 @@
           "description": "Array of Contact Phone Number Objects. See below for details.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/PhoneNumberContact"
+            "$ref": "#/definitions/PhoneNumberFull"
           }
         }
       }
