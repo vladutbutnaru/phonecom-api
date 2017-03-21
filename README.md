@@ -294,6 +294,7 @@ create-account-trunk
 create-account-extension-contact
 create-account-extension-contact-group
 
+delete-account-media
 delete-account-menu
 delete-account-queue
 delete-account-route
@@ -341,6 +342,7 @@ list-available-phone-number-regions
 
 replace-account-device
 replace-account-extension
+replace-account-media
 replace-account-menu
 replace-account-phone-number
 replace-account-queue
