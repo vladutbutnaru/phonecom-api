@@ -226,7 +226,7 @@ type GetGroupJson struct {
 }
 
 type GetMediaJson struct {
-  MediaId int32 `json:"media_id"`
+	MediaId int32 `json:"media_id"`
 }
 
 type GetMenuJson struct {

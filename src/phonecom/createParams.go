@@ -156,23 +156,23 @@ func createStringArray(filter interface{}) []string {
 }
 
 type OtherParams struct {
-  groupBy       []string
-  applicationId int32
-  accountId     int32
-  extensionId   int32
-  callId        string
-  deviceId      int32
-  codeId        int32
-  contactId     int32
-  groupId       int32
-  mediaId       int32
-  menuId        int32
-  numberId      int32
-  queueId       int32
-  routeId       int32
-  scheduleId    int32
-  smsId         string
-  trunkId       int32
+	groupBy       []string
+	applicationId int32
+	accountId     int32
+	extensionId   int32
+	callId        string
+	deviceId      int32
+	codeId        int32
+	contactId     int32
+	groupId       int32
+	mediaId       int32
+	menuId        int32
+	numberId      int32
+	queueId       int32
+	routeId       int32
+	scheduleId    int32
+	smsId         string
+	trunkId       int32
 }
 
 func getOtherParams(inputFile string) (

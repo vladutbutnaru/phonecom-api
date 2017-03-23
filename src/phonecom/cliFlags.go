@@ -28,6 +28,7 @@ const billingContactLong = "billing-contact"
 const fromLong = "from"
 const toLong = "to"
 const textLong = "text"
+const mediaFileLong = "mediaFile"
 const trunkNameLong = "name"
 const trunkUriLong = "uri"
 const maxConcurrentCallsLong = "max-concurrent-calls"
@@ -115,6 +116,10 @@ func getCliFlags() []cli.Flag {
 			Usage: "SMS body",
 		},
 		cli.StringFlag{
+			Name:  mediaFileLong + ", mf",
+			Usage: "The path to the media file for Create/Replace Media",
+		},
+		cli.StringFlag{
 			Name:  trunkNameLong,
 			Usage: "Trunk name",
 		},
@@ -196,7 +201,7 @@ func getAllCommands() string {
 		createContact + ", " +
 		createGroup + "\n\n" +
 
-    deleteMedia + ", " +
+		deleteMedia + ", " +
 		deleteMenu + ", " +
 		deleteQueue + ", " +
 		deleteRoute + ", " +
@@ -244,7 +249,7 @@ func getAllCommands() string {
 
 		replaceDevice + ", " +
 		replaceExtension + ", " +
-    replaceMedia + ", " +
+		replaceMedia + ", " +
 		replaceMenu + ", " +
 		replacePhoneNumber + ", " +
 		replaceQueue + ", " +

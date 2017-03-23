@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"github.com/phonedotcom/API-SDK-go"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -282,7 +282,7 @@ func TestCreateDeleteMedia(t *testing.T) {
 		t.Fatal()
 	}
 
-  createCliWithId(deleteMedia, id)
+	createCliWithId(deleteMedia, id)
 	os.Remove(fileName)
 }
 
