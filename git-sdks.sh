@@ -25,7 +25,7 @@ then
 
   for sdk in "${sdks[@]}"
   do
-    dir=$sdkDirPrefix-$sdk
+    dir=$sdkDirPrefix$sdk
     echo "Checking status for client: $sdk"
     git --git-dir=$dir/.git/ --work-tree=$dir/ status
   done
@@ -37,7 +37,7 @@ then
 
   for sdk in "${sdks[@]}"
   do
-    dir=$sdkDirPrefix-$sdk
+    dir=$sdkDirPrefix$sdk
     echo "Adding all for client: $sdk"
     git --git-dir=$dir/.git/ --work-tree=$dir/ add --all
     git --git-dir=$dir/.git/ --work-tree=$dir/ commit -m "Updating $sdk SDK"
@@ -50,7 +50,7 @@ then
 
   for sdk in "${sdks[@]}"
   do
-    dir=$sdkDirPrefix-$sdk
+    dir=$sdkDirPrefix$sdk
     echo "Pushing for client: $sdk"
     echo "git --git-dir=$dir/.git/ --work-tree=$dir/ push origin master"
   done
