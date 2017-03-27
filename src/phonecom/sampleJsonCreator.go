@@ -51,9 +51,13 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			createGroupParamsSample := swagger.CreateGroupParams{"Ferengi Traders"}
 			s.marshalInput(createGroupParamsSample, "createGroup", inputType)
 
-		case createMedia:
-			createMediaParamsSample := swagger.CreateMediaParams{randomString(12), "tts", "hold_music", "allison", randomString(100), "Y", 900, 100, "Notes aboute the media", "N"}
-			s.marshalInput(createMediaParamsSample, "createMedia", inputType)
+		case createMediaFiles:
+			createMediaParamsSample := swagger.CreateMediaParams{randomString(12), "file", "hold_music", "", "", "Y", 900, 100, "Notes about the media file", "N"}
+			s.marshalInput(createMediaParamsSample, "createMediaFiles", inputType)
+
+		case createMediaTts:
+			createMediaParamsSample := swagger.CreateMediaParams{randomString(12), "tts", "hold_music", "allison", randomString(100), "Y", 900, 100, "Notes about the media TTS", "N"}
+			s.marshalInput(createMediaParamsSample, "createMediaTts", inputType)
 
 		case createMenu:
 			createMenuParamsSample := swagger.CreateMenuParams{randomString(12), nil, nil, true, 3, nil, nil}
@@ -91,7 +95,7 @@ func (s *SampleJsonCreator) createSampleInOutIfNeeded(param CliParams) {
 			replaceExtensionParamsSample := swagger.ReplaceExtensionParams{nil, nil, randomString(12), "America/Los_Angeles", true, 111, true, "unlimited", 12344, "bobby McFerrin", true, nil, "standard", "private", 619, true, true, "automated", nil, "+18587741111", nil, "+18587748888", nil}
 			s.marshalInput(replaceExtensionParamsSample, "replaceExtension", inputType)
 
-		case replaceMedia:
+		case replaceMediaTts:
 			replaceMediaParamsSample := swagger.CreateMediaParams{randomString(12), "tts", "hold_music", "allison", randomString(100), "Y", 900, 100, "Notes aboute the media", "N"}
 			s.marshalInput(replaceMediaParamsSample, "replaceMedia", inputType)
 

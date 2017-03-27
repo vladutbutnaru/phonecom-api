@@ -262,7 +262,7 @@ func TestCreateDeleteMenu(t *testing.T) {
 	os.Remove(fileName)
 }
 
-func TestCreateDeleteMedia(t *testing.T) {
+func TestCreateDeleteMediaTts(t *testing.T) {
 
 	var result map[string]interface{}
 	var err error
@@ -273,7 +273,7 @@ func TestCreateDeleteMedia(t *testing.T) {
 	b, err := json.Marshal(MediaParamsJson)
 	err = ioutil.WriteFile(fileName, b, 0644)
 
-	err, result = createCliWithJsonIn(createMedia, fileName)
+	err, result = createCliWithJsonIn(createMediaTts, fileName)
 	assert.NoError(t, err)
 
 	id := getId(result)
@@ -323,7 +323,7 @@ func TestListReplaceMedia(t *testing.T) {
 	b, err := json.Marshal(MediaParamsJson)
 	err = ioutil.WriteFile(fileName, b, 0644)
 
-	err, result = createReplaceCliWithJsonIn(replaceMedia, fileName, firstId)
+	err, result = createReplaceCliWithJsonIn(replaceMediaTts, fileName, firstId)
 	assert.NoError(t, err)
 	os.Remove(fileName)
 }

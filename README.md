@@ -283,7 +283,8 @@ The following commands can be invoked from the API:
 create-account-call
 create-account-device
 create-account-extension
-create-account-media
+create-account-media-files
+create-account-media-tts
 create-account-menu
 create-account-phone-number
 create-account-queue
@@ -342,7 +343,7 @@ list-available-phone-number-regions
 
 replace-account-device
 replace-account-extension
-replace-account-media
+replace-account-media-tts
 replace-account-menu
 replace-account-phone-number
 replace-account-queue

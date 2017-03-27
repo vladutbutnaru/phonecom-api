@@ -5,8 +5,9 @@ import (
 	"os"
 
 	"errors"
-	"github.com/urfave/cli"
 	"github.com/phonedotcom/API-SDK-go"
+	"github.com/urfave/cli"
+	"io/ioutil"
 )
 
 func main() {
@@ -140,19 +141,54 @@ func invokeCommand(rh ResponseHandler, param CliParams, api interface{}) (error,
 
 			return rh.handle(api.GetAccountMedia(accountId, id))
 
-		case createMedia:
+		case createMediaFiles:
+
+			mediaInfo, err := ioutil.ReadFile(param.input)
+
+			if err != nil {
+				return err, nil, 0
+			}
+
+			mediaInfoString := string(mediaInfo)
+			file, err := os.Open(param.mediaFilePath)
+
+			if err != nil {
+				return err, nil, 0
+			}
+
+			return rh.handle(api.CreateAccountMediaFiles(accountId, mediaInfoString, file))
+
+		case createMediaTts:
 
 			params := createMediaParams(input)
-			return rh.handle(api.CreateAccountMedia(accountId, params))
+			return rh.handle(api.CreateAccountMediaTts(accountId, params))
 
-    case replaceMedia:
+		// Note: non-existing endpoint
+		//case replaceMediaFiles:
+		//
+		//	mediaInfo, err := ioutil.ReadFile(param.input)
+		//
+		//	if (err != nil) {
+		//		return err, nil, 0
+		//	}
+		//
+		//	mediaInfoString := string(mediaInfo)
+		//	file, err := os.Open(param.mediaFilePath)
+		//
+		//	if (err != nil) {
+		//		return err, nil, 0
+		//	}
+		//
+		//	return rh.handle(api.ReplaceAccountMediaFiles(accountId, mediaInfoString, file))
+
+		case replaceMediaTts:
 
 			params := createMediaParams(input)
-			return rh.handle(api.ReplaceAccountMedia(accountId, id, params))
+			return rh.handle(api.ReplaceAccountMediaTts(accountId, id, params))
 
-    case deleteMedia:
+		case deleteMedia:
 
-      return rh.handle(api.DeleteAccountMedia(accountId, id))
+			return rh.handle(api.DeleteAccountMedia(accountId, id))
 		}
 
 	case swagger.MenusApi:

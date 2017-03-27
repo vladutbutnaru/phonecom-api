@@ -48,6 +48,11 @@ do
     sed -i '/\/\/ to determine the Content-Type header/c\\tclearEmptyParams(localVarQueryParams)\n\n\t\/\/ to determine the Content-Type header' $dir/*_api.go
     sed -i '/case "ssv":/c\\tcase "ssv", "multi":' $dir/api_client.go
 
+    # Patch media api
+    sed -i 's/json string/jsonParam string/' $dir/media_api.go
+    sed -i 's/(json, "")/(jsonParam, "")/' $dir/media_api.go
+    sed -i 's/@param json/@param jsonParam/' $dir/media_api.go
+
     echo 'package swagger
 
 func clearEmptyParams(paramMap map[string][]string) {
