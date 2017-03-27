@@ -51,7 +51,7 @@ then
   for sdk in "${sdks[@]}"
   do
     dir=$sdkDirPrefix$sdk
-    echo "Pushing for client: $sdk"
+    #echo "Pushing for client: $sdk"
     echo "git --git-dir=$dir/.git/ --work-tree=$dir/ push origin master"
   done
 
