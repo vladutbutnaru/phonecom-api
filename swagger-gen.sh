@@ -70,5 +70,4 @@ func clearEmptyParams(paramMap map[string][]string) {
     cp -r $2/* $dir
   fi
 
-  #zip -r $dir.zip $dir
 done
