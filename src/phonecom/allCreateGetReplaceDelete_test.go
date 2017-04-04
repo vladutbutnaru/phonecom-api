@@ -94,8 +94,8 @@ func TestCreateExtension(t *testing.T) {
 
 	randomName := randomString(12)
 	randomNum := randomNumber(10, 9999999)
-  stringEmailSlice := make([]string, 0)
-  stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
+	stringEmailSlice := make([]string, 0)
+	stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 
 	ExtensionParamsJson := CreateExtensionJson{swagger.Voicemail{true, "12345", swagger.Greeting{"alternate", swagger.MediaSummary{}, swagger.MediaSummary{}, true}, "wav", swagger.Notification{stringEmailSlice, "+18189640644"}, "human"}, swagger.CallNotifications{stringEmailSlice, "+12546551378"}, "+12019570328", "unlimited", true, int32(randomNum), true, "The name", "The full name", "America/Los_Angeles", nil, 619, true, false}
 
@@ -124,8 +124,8 @@ func TestListReplaceExtension(t *testing.T) {
 	firstId := getFirstId(result)
 
 	randomName := randomString(12)
-  stringEmailSlice := make([]string, 0)
-  stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
+	stringEmailSlice := make([]string, 0)
+	stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 	ExtensionParamsJson := ReplaceExtensionJson{int32(firstId), swagger.Voicemail{true, "12345", swagger.Greeting{"alternate", swagger.MediaSummary{}, swagger.MediaSummary{}, true}, "wav", swagger.Notification{stringEmailSlice, "+18189640644"}, "human"}, swagger.CallNotifications{stringEmailSlice, "+12546551378"}, nil, randomName, "America/Los_Angeles", true, 111, true, "unlimited", "bobby McFerrin", true, "private", 619, ""}
 	fileName := "../test/jsonin/replaceExtension" + randomName + ".json"
 	b, err := json.Marshal(ExtensionParamsJson)
@@ -339,10 +339,10 @@ func TestCreatePhoneNumber(t *testing.T) {
 	var result map[string]interface{}
 	var err error
 
-  err, result = createCli(listExtensions)
-  assert.NoError(t, err)
+	err, result = createCli(listExtensions)
+	assert.NoError(t, err)
 
-  firstExtensionId := getFirstId(result)
+	firstExtensionId := getFirstId(result)
 
 	err, result = createCli(listAvailablePhoneNumbers)
 	assert.NoError(t, err)
@@ -350,8 +350,8 @@ func TestCreatePhoneNumber(t *testing.T) {
 	firstId := getFirstAvailablePhoneNumber(result)
 
 	randomName := randomString(12)
-  stringEmailSlice := make([]string, 0)
-  stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
+	stringEmailSlice := make([]string, 0)
+	stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 	PhoneNumberParamsJson := CreatePhoneNumberJson{firstId, "", "Phone Name Now", true, true, swagger.CallerIdPhoneNumber{"nameOfOwner", "business"}, swagger.SmsForwardingParams{"extension", int32(firstExtensionId), 0}, swagger.CallNotifications{stringEmailSlice, "+12546551378"}}
 	fileName := "../test/jsonin/createPhoneNumber" + randomName + ".json"
 	b, err := json.Marshal(PhoneNumberParamsJson)
@@ -372,10 +372,10 @@ func TestListReplacePhoneNumber(t *testing.T) {
 	var result map[string]interface{}
 	var err error
 
-  err, result = createCli(listExtensions)
-  assert.NoError(t, err)
+	err, result = createCli(listExtensions)
+	assert.NoError(t, err)
 
-  firstExtensionId := getFirstId(result)
+	firstExtensionId := getFirstId(result)
 
 	err, result = createCli(listPhoneNumbers)
 	assert.NoError(t, err)
@@ -383,8 +383,8 @@ func TestListReplacePhoneNumber(t *testing.T) {
 	firstId := getFirstId(result)
 
 	randomName := randomString(12)
-  stringEmailSlice := make([]string, 0)
-  stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
+	stringEmailSlice := make([]string, 0)
+	stringEmailSlice = append(stringEmailSlice, "asd@asd.com")
 	PhoneNumberParamsJson := ReplacePhoneNumberJson{int32(firstId), "", "Robert", true, true, swagger.CallerIdPhoneNumber{"nameOfOwner", "business"}, swagger.SmsForwardingParams{"extension", int32(firstExtensionId), 0}, nil, swagger.CallNotifications{stringEmailSlice, "+12546551378"}}
 	fileName := "../test/jsonin/replacePhoneNumber" + randomName + ".json"
 	b, err := json.Marshal(PhoneNumberParamsJson)
